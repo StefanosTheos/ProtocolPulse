@@ -7,7 +7,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: { DEFAULT: '#1c2430', muted: '#4a5565', faint: '#6b7585' },
+        ink: { DEFAULT: '#1c2430', muted: '#4a5565', faint: '#566173' },
         line: { DEFAULT: '#d9dee5', strong: '#b8c0cc' },
         canvas: '#f5f6f8',
         surface: '#ffffff',
