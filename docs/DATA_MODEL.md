@@ -1,10 +1,10 @@
 # ProtocolPulse — Relational Data Model and Synthetic Fixture Contract
 
-**Freeze:** `PP-S2-CF-20261114-01`, schema design `1.0.0-rc1` (pending approval). **Engine:** SQLite via SQLAlchemy 2.0 ORM/Alembic, Python 3.12. All tables use snake_case physical names, API exposes the canonical snake_case DTOs in API_CONTRACTS. `ID` = nonempty stable `VARCHAR(64)` unless noted. `source_id` is a logical identifier with explicit `source_version`; database FK targets a source-row surrogate where necessary. `*_at` always UTC in DB; protocol/site calendar windows use IANA timezone and local `DATE` fields.
+**Freeze:** `PP-S2-CF-20261114-01`, schema design `1.0.0-rc2` (**APPROVED documentation design**; approval basis in [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md)). **Engine:** SQLite via SQLAlchemy 2.0 ORM/Alembic, Python 3.12. All tables use snake_case physical names, API exposes the canonical snake_case DTOs in API_CONTRACTS. `ID` = nonempty stable `VARCHAR(64)` unless noted. `source_id` is a logical identifier with explicit `source_version`; database FK targets a source-row surrogate where necessary. `*_at` always UTC in DB; protocol/site calendar windows use IANA timezone and local `DATE` fields.
 
 ## 1. Core relational invariants
 
-- Only **synthetic** fixtures: exactly **15** patients, no real names, contact details, MRNs, addresses or live EHR links. `patient.synthetic_only=1` CHECK; trial.synthetic_only likewise. The older specification's 250-record scenario is overridden by the newer user data instruction, but fixture IDs `P-042`, `P-175` etc. remain.
+- Only **synthetic** fixtures: exactly **15** patients, no real names, contact details, MRNs, addresses or live EHR links. `patient.synthetic_only=1` CHECK; trial.synthetic_only likewise. Product v1.1 and this fixture registry use the same patient IDs.
 - Structured clinical facts are authoritative input to deterministic evaluation; narrative is independently sourced. Conflicting note assertion creates `OpenItem`/`UNKNOWN` until documented reconciliation. A narrative never mutates a structured fact and can be displayed as a **claim** with evidence and review state.
 - Every clinical fact/observation has clinical timestamp or onset/local date/uncertain interval, recorded timestamp, ingestion timestamp, logical `source_id`/`source_version`, evidence quality and evidence state. Facts with no measured value use `NULL` plus `NOT_RECORDED|NOT_ASSESSED|UNCERTAIN|NOT_APPLICABLE` as appropriate, not a fabricated negative. `EXPLICITLY_NEGATIVE` requires affirmative source/reconciliation coverage, not `NULL` by itself.
 - All `CriterionResult` and `PatientTrialAssessment` rows are immutable and reference frozen criterion set hash, `EvidenceSnapshot`, engine version, evaluation instant and triggering event if monitoring. `EVALUATION_ERROR` returns **null** candidate status. Old data does not get updated during late-event processing.
@@ -14,6 +14,8 @@
 ## 2. Essential SQLAlchemy tables, keys, columns, constraints and indexes
 
 Conventions: `PK` primary key, `FK` foreign key, `UQ` unique, `CK` check. All row mutable status changes increment `revision INTEGER NOT NULL DEFAULT 1`; every update uses optimistic guard. Immutable tables still have `revision` or `source_version` for replay. `created_at`/`updated_at` UTC recorded by server; SQLite stores fixed-width UTC ISO text via a SQLAlchemy `UTCDateTime` TypeDecorator (parse to aware datetime, fail on naive dates), not inconsistent local timestamps. `json` columns stored as validated JSON strings with SQLAlchemy JSON type and application schema checks; indexed clinical fields use concrete typed columns.
+
+`source_span.start_offset/end_offset` are zero-based `[start,end)` Unicode code-point offsets into persisted page text (PDF) or complete note text. Store and validate that exact extracted text by source version; byte hashes remain independent. `Job.status=SUCCEEDED` and `ScreeningRun.status=COMPLETE` are distinct completion checks. Screening assessments reference the five eligibility rules; monitoring assessments reference affected monitoring rules.
 
 | Table / ORM | PK/FKs and relevant fields | Constraints, indexes, mutation policy |
 |---|---|---|
@@ -112,7 +114,7 @@ Fixture registry ID list: `P-042,P-175,P-124,P-161,P-117,P-118,P-083,P-140,P-151
 
 ## 7. Schema evolution, migration/seed order and FHIR R4 boundary
 
-Migration `0001_initial` creates enums as `VARCHAR + CK` (SQLite), actor/trial, source, protocol, criteria, patient/fact/med/lab/history, snapshot/evaluations, events/findings/cases, agent, jobs, idempotency and audit tables with FK order. Follow-up `0002_fixture_constraints` adds missing composite indexes/partial unique and validated data guards. Alembic migrations are reviewed; SQLite ALTER limitations use batch recreate only when necessary. `backend/app/seed.py` is **backend-owned**; seed order: actors→trial→protocol/PDF source→version/coverage/draft criteria→approved terminology map→15 patients→evidence sources/spans→structured facts & notes→open items→encounters/prior trial→reviewed *synthetic* approvals through same service path→optional baseline screening. Do not insert bogus `approved_by` directly to bypass service. Seed check verifies patient IDs unique, =15, section completeness, fixture source hashes and AC scenario expectations. Default app startup does **not** seed or drop database.
+Migration `0001_initial` creates enums as `VARCHAR + CK` (SQLite), actor/trial, source, protocol, criteria, patient/fact/med/lab/history, snapshot/evaluations, events/findings/cases, agent, jobs, idempotency and audit tables with FK order. Follow-up `0002_fixture_constraints` adds missing composite indexes/partial unique and validated data guards. Alembic migrations are reviewed; SQLite ALTER limitations use batch recreate only when necessary. `backend/app/seed.py` is **backend-owned**; reset seed order: actors→trial→protocol/PDF source→version/coverage/draft criteria→approved terminology map→15 patients→evidence sources/spans→structured facts & notes→open items→encounters/prior trial. Default reset leaves protocol rules unapproved and no baseline screening, matching the J-01 demo. The investigator then approves through the normal service and starts screening; do not insert bogus `approved_by` to bypass that service. Seed check verifies patient IDs unique, =15, section completeness, source hashes and AC fixture inputs. Default app startup does **not** seed or drop database.
 
 FHIR R4 future mapping only (not live integration):
 
@@ -134,7 +136,7 @@ FHIR resource import is **future/P2 only**, using local synthetic fixture bundle
 
 - `Criterion` has *physical* surrogate `criterion_row_id`, public logical `criterion_id` + `protocol_version_id`; assessment API always returns both public references. Condition/lab/med evidence has stable record ID, source ID/version and effective/record times.
 - `EvidenceSource` includes source hash/spans; no response with a made-up page or missing reference. `AuditEntry` and `ReviewDecision` immutable. Events idempotent and case family unique; no false duplicate.
-- `screening_run.patient_count == 15` for baseline all-patients request, not historical 250. Compute candidate counts from actual results; join `ScreeningRun` and `PatientTrialAssessment` only after job is `COMPLETE`.
+- `screening_run.patient_count == 15` for baseline all-patients request. Compute candidate counts from actual results; expose completed `ScreeningRun`/`PatientTrialAssessment` results only after the job is `SUCCEEDED` and the screening run is `COMPLETE`.
 - Indexes/unique constraints and exact field names require migration assertions and Pydantic contract tests; PostgreSQL portability is aspirational and not required for this demo.
 
-Do not create `PROJECT_CONTEXT.md` until Stage 2.1 signoff.
+[PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) is synchronized to this documentation freeze. DATA_MODEL governs persistence, API_CONTRACTS governs transport and TEAM_OWNERSHIP governs ownership. Disagreements require IC review and a versioned revision. Seed generation, migrations and tests remain implementation obligations.

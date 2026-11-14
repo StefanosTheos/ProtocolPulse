@@ -2,11 +2,13 @@
 
 # ProtocolPulse — Protocol-Grounded Recruitment and Continuous Clinical Trial Monitoring
 
-**Document status:** Product definition for Stage 2 architecture; no software implementation is asserted.  
-**Version:** 1.0 · **Prepared:** 2026-11-14  
+**Document status:** APPROVED documentation design; no software implementation is asserted.
+**Version:** 1.1 · **Reconciled:** 2026-11-14 · **Contract:** `PP-S2-CF-20261114-01` / `1.0.0-rc2`
 **Challenge:** Clinical Trial Monitoring · **Team:** 3 engineers · **Build window:** 20 hours  
 **Data policy:** Entirely synthetic demonstration data; fictional protocol PX-104 and fictional clinical restrictions.  
 **Decision ownership:** Research clinicians approve clinical criteria, assess findings and determine participant actions. The software provides evidence-backed decision support only.
+
+**Revision record:** User-authorized reconciliation incorporates the already-documented 15-patient scope, separates job success from screening completion, standardizes Unicode source spans and separates gateway/model timeouts. This documentation approval does not approve clinical criteria or certify working software. [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) records the freeze decisions. Approved [API_CONTRACTS](docs/API_CONTRACTS.md), [DATA_MODEL](docs/DATA_MODEL.md) and [TEAM_OWNERSHIP](docs/TEAM_OWNERSHIP.md) govern their respective domains; all disagreements require coordinator review and a versioned revision, not local reinterpretation. Clinical PX-104 protocol version remains **v1.0**.
 
 ## 0. Evidence basis, interpretation and glossary
 
@@ -123,7 +125,7 @@ No automatic clinical diagnosis, pharmacological interaction discovery, adjudica
 | Screening run | `QUEUED`, `RUNNING`, `COMPLETE`, `FAILED` | Results become available only when bound to approved rules and snapshot; failed runs may retry with idempotency key. |
 | Candidate workflow | `NOT_REVIEWED`, `REVIEW_PENDING`, `INVESTIGATOR_DISPOSITIONED` | Selection status is calculated separately; a human disposition references a screening-run ID; later evidence may flag disposition as needing reassessment. |
 | Participation (human-entered) | `NOT_ENROLLED`, `PARTICIPATING`, `ENDED` | System cannot set `PARTICIPATING` by screening result alone; synthetic demo operator simulates an external authorized enrollment record. |
-| Finding | `OPEN`, `ACKNOWLEDGED`, `INVESTIGATING`, `RESOLVED`, `CLOSED`, `REOPENED` | Finding created by rule/event logic; reviewer owns acknowledgement, conclusion and closure. Same event/criterion cannot create duplicate open cases. Reopened on material new evidence. |
+| Review case (linked findings remain immutable) | `OPEN`, `ACKNOWLEDGED`, `INVESTIGATING`, `RESOLVED`, `CLOSED`, `REOPENED` | Finding created by rule/event logic; case carries reviewer acknowledgement, conclusion and closure. Same event/criterion cannot create duplicate open cases. Reopened on material new evidence. |
 | Amendment | `DRAFT`, `SIMULATED`, `APPROVAL_PENDING`, `APPROVED`, `ACTIVATED`, `REJECTED` | Simulation is isolated; only approved amendment can activate, triggering full/affected baseline rescreen. |
 
 **Important separation:** Candidate status describes evidence relative to screening rules. Study participation status is a human-recorded workflow fact. Safety finding status describes investigation. None implies the other.
@@ -161,7 +163,7 @@ No automatic clinical diagnosis, pharmacological interaction discovery, adjudica
 | Entity | Minimum conceptual fields | Invariants |
 |---|---|---|
 | `Trial` | `trial_id`, title, fictional product label, stage, planned start/end, site | Trial identity immutable. |
-| `ProtocolVersion` | `protocol_version_id`, trial ID, version label, source-file hash, pages, authored/uploaded times, state | Original content immutable; exactly one active version per trial. |
+| `ProtocolVersion` | `protocol_version_id`, trial ID, version label, source-file hash, pages, authored/uploaded times, state | Original content immutable; at most one active version per trial; none until first approval. |
 | `Criterion` | `criterion_id`, version ID, polarity, type, operator, values/units, window semantics, approved terminology map ID, source quote/page/anchor, reviewer and approval time | Approved content frozen; source anchor required. |
 | `ExtractionCoverage` | source sections/pages, discovered clauses, mapped/rejected/ambiguous statuses, reviewer attestations | No silent omission of blocking eligibility/safety clauses. |
 | `Patient` | synthetic patient ID, synthetic DOB, site, synthetic-marker | No real identifiers or free-text imports from live systems. |
@@ -172,14 +174,14 @@ No automatic clinical diagnosis, pharmacological interaction discovery, adjudica
 | `RecordEvent` | event ID, patient ID, clinical-effective time, recorded time, ingested time, event type, source version, payload hash, supersedes/correction reference | Idempotent ingestion, immutable event versions and correction trace. |
 | `EvidenceSnapshot` | evidence IDs and versions, snapshot watermark, evaluation as-of time | Reproducible evaluation over fixed facts. |
 | `ScreeningEvaluation` | patient ID, criterion set ID, engine version, evidence snapshot ID, as-of time, criterion outcomes, aggregate status | Immutable history; re-evaluation produces new record. |
-| `Investigation` / `Finding` | finding ID, patient and trial refs, rule, triggering events, category, evidence, priority, assigned reviewer, status | Case deduplication; categorical distinction between documented conflict and uncertainty. |
+| `MonitoringFinding` / `ReviewCase` | immutable finding ID, patient/trial/rule/event refs, category, evidence, priority; case ID, assigned reviewer and review status | Findings link to a deduplicated case family; case carries lifecycle, finding preserves causal history. |
 | `ReviewDecision` | finding/screening ID, reviewer identity/role, disposition, rationale, timestamp, cited evidence | Append-only, no retroactive overwriting. |
 | `AuditEvent` | actor, role, action, object ID/version, timestamp, input/output references, outcome, correlation ID | Searchable and attributable; do not store patient data unnecessarily in logs. |
 | `TerminologyMapVersion` | controlled code-to-class mapping, mapping provenance, approved version | Unknown drug/class codes remain unresolved, never auto-mapped by model intuition. |
 
 ### 6.2 Time, provenance and evidence strength
 
-Four different clocks may matter: **clinical effective time** (when a condition/test/exposure applied), **source record time** (when source documented it), **ingestion time** (when ProtocolPulse received it) and **decision time** (when evaluation/reviewer acted). A late-arriving event may have an earlier clinical date and require retrospective review; audit logs must retain both the old finding and later correction. Every time-window comparison defines timezone, inclusive/exclusive boundaries and how date-only records are treated.
+Four different clocks may matter: **clinical effective time** (when a condition/test/exposure applied), **source record time** (when source documented it), **ingestion time** (when ProtocolPulse received it) and **decision time** (when evaluation/reviewer acted). A late-arriving event may have an earlier clinical date and require retrospective review; audit logs must retain both the old finding and later correction. Every time-window comparison defines timezone, inclusive/exclusive boundaries and how date-only records are treated. Text citations use zero-based `[start,end)` Unicode code-point offsets into persisted page text (PDF) or complete note text; file hashes use original bytes.
 
 Medication subtypes must stay distinct:
 
@@ -215,9 +217,9 @@ A **coverage checklist** links all eligibility and monitoring-related protocol s
 
 For inclusion and exclusion alike, rule evaluation returns whether the **whole criterion is satisfied**, avoiding ambiguous polarity. Example: an exclusion clause “no documented use of CLASS-A within 30 days” yields `PASS` only with an explicit, approved completeness basis or qualified reviewed reconciliation; confirmed prohibited use yields `FAIL`; incomplete history yields `UNKNOWN`.
 
-**Aggregate candidate status:**
+**Aggregate candidate status:** apply the following to required approved **eligibility** rules (`INCLUSION|EXCLUSION`) only. The three `MONITORING` rules are evaluated separately on relevant events during participation. All eight fixture rules require approval and coverage before activation.
 
-1. If **any approved criterion is `FAIL`**, return `PROTOCOL_CONFLICT`, with all other unknowns still displayed.
+1. If **any approved eligibility criterion is `FAIL`**, return `PROTOCOL_CONFLICT`, with all other unknowns still displayed.
 2. Else if **any criterion is `UNKNOWN`**, or any required protocol clause remains unapproved/unmapped, return `NEEDS_REVIEW`.
 3. Else if **every required criterion is `PASS`**, return `POTENTIAL_MATCH`.
 4. An engine, extraction or data-validation failure yields an operational `EVALUATION_ERROR` and **no authoritative candidate status** for that run; do not convert infrastructure failure to clinical `UNKNOWN`. The prior snapshot remains visible and explicitly stale.
@@ -239,7 +241,7 @@ For inclusion and exclusion alike, rule evaluation returns whether the **whole c
 
 ### 7.4 Monitoring statuses versus screening outcomes
 
-Each event may produce one of these **finding categories**, independent of `PASS/FAIL/UNKNOWN`:
+Each event may produce one of these **finding categories**, independent of `PASS/FAIL/UNKNOWN`; `NO_ACTION` is a relevance-trace outcome only and is never stored as a finding:
 
 | Category | Trigger example | Meaning and required behavior |
 |---|---|---|
@@ -304,14 +306,14 @@ A static rule matcher can compare structured facts; it cannot reliably interpret
 | **Protocol Intelligence** | PDF/version upload; pages, current approved vocabulary | `parse_protocol`, `locate_clause`, `propose_rule`, `validate_rule_schema`, `report_coverage`. Chooses sections to reread when clauses are incomplete, splits conjunctions into atomic rules, requests clarification rather than guessing. | Iterates over extraction gaps under page/token budget; stores proposed, source-anchored rules and extraction status only. **Cannot approve/activate**. | Reviewer verifies every rule and coverage. On corrupt PDF/ambiguous clause, return `EXTRACTION_FAILED`/`NEEDS_CLARIFICATION`. Benefit: reviewer time and fewer missed mapped clauses. |
 | **Patient Evidence Investigator** | Patient/run/unknown criterion; evidence snapshot | `retrieve_patient_evidence`, `search_notes`, `get_lab_history`, `get_condition_history`, `request_verification_task`. Chooses which missing source or contradictory assertion to inspect next based on criterion and gaps. | Bounded evidence expansion; produces evidence bundle, discrepancy list and unresolved reason codes. May prepare review task, no chart mutation. | Clinician/site staff resolve contradictory or missing evidence. Fails closed on source unavailable or contradictory dates. Benefit: number of sourced unknowns resolved or efficiently queued, audit completeness. |
 | **Medication & Safety Investigator** | Medication rule under screening, or new med event | `get_medication_timeline`, `resolve_approved_terminology`, `get_evidence_link`, `evaluate_approved_rule`, `request_med_reconciliation`. Chooses to fetch related dispense/admin/report and examine possible time overlap. | Iterates only within allowed evidence budget; writes investigation report/verification task with exact events and distinction between order and actual use. The deterministic evaluator owns status. | Investigator decides clinical importance. Unknown class, incomplete timeline or possible use -> review. Benefit: correct exposure-type handling, time-to-evidence, false-positive suppression. |
-| **Monitoring & Workflow** | Approved event ingress or scheduled safety recheck; affected participant and criteria | `classify_event_relevance`, `reevaluate_affected`, `get_prior_evaluation`, `create_or_update_finding`, `get_case_status`, `draft_review_summary`, `append_audit`. Can branch: ignore irrelevant, investigate uncertain, escalate supported conflict, merge into existing case. | Event ID/criterion fingerprint prevents duplicates; retries idempotently; retains before/after snapshots. Side effect limited to creating/updating a review task/case and audit records. | Human confirms/qualifies findings, documents any action, closes case. Event stream down -> retry queue and visible stale status. Benefit: relevant-event recall, alert precision, closure cycle and event-to-case traceability. |
+| **Monitoring & Workflow** | Accepted event or new material case evidence; affected participant and criteria | Model may read `classify_event_relevance`, `get_prior_evaluation`, `get_case_status`, verified evidence and draft a summary. **Backend-worker only:** `reevaluate_affected`, `create_or_update_finding`; **backend-service only:** `append_audit`. None of these writes is exposed to the model. | Backend deterministically handles relevance, evaluation, finding/case deduplication and audit before optional AI enrichment. Model may request constrained verification tasks; it cannot change clinical outcomes or case lifecycle. | Human confirms/qualifies findings, documents any action, closes case. Event processing failure -> retry queue and visible stale status. Benefit: relevant-event recall, alert precision, closure cycle and event-to-case traceability. |
 
 ### 9.3 Required bounded agent execution protocol
 
 1. **Trigger:** known trial, patient, event, protocol version and explicit objective.
 2. **Authorize:** verify role-scoped tool access, synthetic-only boundary, active approved rule set and allowed patient/site.
 3. **Plan briefly:** select from fixed permitted evidence/tool actions; do not invent new side-effecting tools or clinical criteria.
-4. **Investigate:** at most an agreed tool-call budget, e.g. eight tool invocations per task for demo; explicit timeout and partial-result state.
+4. **Investigate:** at most `MAX_AGENT_STEPS=8` gateway invocations per execution including retries; `TOOL_TIMEOUT_SECONDS=5` per gateway call, `LLM_CALL_TIMEOUT_SECONDS=10` per model call (including internal AI procedures), all within the remaining `AGENT_TIMEOUT_SECONDS=30` execution deadline. Internal AI procedures do not consume gateway steps or reset the deadline.
 5. **Validate:** structured output against schema; verify every cited evidence ID, time and source quote exists; evaluator recalculates rule outcomes independently.
 6. **Branch:** complete/evidence sufficient; gap→request verification; contradictory→review; technical failure→operational error/retry; confirmed conflict→review case.
 7. **Persist:** source references, tool activity summary, criterion/evidence snapshots, human-readable explanation, case status and correlation ID.
@@ -330,9 +332,9 @@ The following interfaces are **conceptual I/O contracts** for Stage 2 to refine 
 | `retrieve_patient_evidence` | Trial/site, patient ID, evidence types, as-of watermark → versioned coded facts, note anchors, provenance | Source may be incomplete or contradictory; do not treat omission as absence | Local synthetic dataset, site-scoped access, minimal data disclosure |
 | `evaluate_approved_rule` | Criterion-set hash, patient snapshot, evaluation time → per-rule statuses and reason codes | Deterministic semantics; invalid inputs produce error, not clinical classification | Local pure evaluator; no model arithmetic; reviewer sees evidence IDs |
 | `get_medication_timeline` | Patient, time interval, evidence types → dated order/dispense/admin/report/stop events | Class and timestamps may be unknown; preserve provenance | Hand-seeded history; scoped to trial patient and minimal interval |
-| `resolve_approved_terminology` | Source code, terminology map version → mapped class, provenance or `UNMAPPED` | Mapping is curated and versioned, not automatically authoritative | Four synthetic codes; offline lookup; reviewer controls map |
+| `resolve_approved_terminology` | Source code, terminology map version → mapped class, provenance or `UNMAPPED` | Mapping is curated and versioned, not automatically authoritative | Three synthetic medication codes; offline lookup; reviewer controls map |
 | `ingest_record_event` / `classify_event_relevance` | Source event ID/version, timestamps, coded payload → accepted/deduplicated event, affected criteria list | Delivery may be duplicate, out of order or corrected | Demo “simulate event” control; idempotency and immutable raw event; IT/admin access |
-| `create_or_update_finding` | Patient, criterion, trigger, evidence, finding class, dedup key → finding ID/status | Case writes may retry; same event must not create duplicate | Local transactional store; only system may open automatic findings; reviewer closes |
+| `create_or_update_finding` | Patient, criterion, trigger, evidence, finding class, dedup key → finding ID, case ID, deduplication result | Backend-worker only; same event must not create duplicate | Local transactional store; reviewer owns case closure |
 | `request_verification_task` | Unresolved reason, evidence refs, reviewer/site → task and owner | AI cannot compel data collection; avoid invented data | Site coordinator task queue; no real patient messaging |
 | `append_audit` / `replay_evaluation` | Actor/action/input hashes, version refs or replay ID → signed-in-demo audit row/reproduced status | Audit write failure is an operational fault; replay needs same source snapshots | Append-only logical log, simple export; auditor read-only |
 | `import_fhir_r4` *(future/optional)* | Authorized FHIR R4 Patient/Condition/Observation/Medication* bundle → normalized versioned data + mapping warnings | FHIR format alone does not ensure semantics, completeness, access rights or clinical verification | Bundled Synthea-style synthetic FHIR fixture only; no live EHR API/token |
@@ -395,14 +397,14 @@ All targets are **design goals for the synthetic demo**, not measured claims or 
 |---|---|---|
 | **NFR-001** | Local/offline core works without real patient systems or live clinical APIs; demonstrated with seeded inputs. | J-01–J-06 / AC-01, AC-08 |
 | **NFR-002** | Synthetic-only enforcement: no actual identity/medical data, no external patient upload; fixtures labeled synthetic. | All / AC-17 |
-| **NFR-003** | 250-record screen target: under 10 seconds for deterministic evaluation on a normal hackathon laptop, excluding model extraction latency. | J-02 / performance test |
+| **NFR-003** | 15-record screen target: under 10 seconds for deterministic evaluation on a normal hackathon laptop, excluding model extraction latency. | J-02 / performance test |
 | **NFR-004** | Event to finding visibility target: under 5 seconds after accepted local event for core deterministic case; display actual measured timing only if tested. | J-04 / AC-08 |
 | **NFR-005** | Upload/extraction is asynchronous or progress-visible; failure and retries do not block unrelated screens. | J-01 / AC-12 |
 | **NFR-006** | Event ingestion and case opening are idempotent; processing same source ID/version twice produces one active result. | J-04 / AC-10 |
 | **NFR-007** | Deterministic replay yields identical statuses and reason codes for same versions/snapshot/time. | J-06 / AC-13 |
 | **NFR-008** | Every decisive result links valid source evidence and approved criterion version; no unsupported citations. | J-02–J-06 / AC-13 |
 | **NFR-009** | Role-aware UI and simulated controls; production-ready identity/access control explicitly not claimed. | J-01,J-05,J-06 / authorization checks |
-| **NFR-010** | Input/schema validation rejects invalid dates, units, unsupported code and malformed payload with safe errors. | All / AC-03, AC-14 |
+| **NFR-010** | Input/schema validation rejects invalid dates, invalid units, malformed codes/payloads and unsupported operators. A syntactically valid unmapped medication code is accepted as evidence and evaluated `UNKNOWN/UNMAPPED_CODE`; existing unsupported-unit evidence yields `UNKNOWN/UNIT_UNSUPPORTED`. | All / AC-03, AC-14, AC-19 |
 | **NFR-011** | Accessible UX target: keyboard navigation, visible focus, contrast-conscious statuses with text labels, labeled forms and table semantics, aiming at WCAG 2.2 AA. | J-01–J-06 / accessibility check |
 | **NFR-012** | Explainability: decision explanations display raw source references, normalized facts, criteria and window math; avoid unsupported certainty. | J-03,J-05 / AC-05–AC-08 |
 | **NFR-013** | Observability: correlation ID from event to evaluation to tool action to finding; errors visible with retry status. | J-06 / AC-08, AC-14 |
@@ -454,7 +456,7 @@ A capability merits the label **agentic** only if it can (i) pursue a bounded ob
 | Horizon | Scope | Claim boundary |
 |---|---|---|
 | **Full product vision** | Multi-trial protocol library and amendments; rigorous protocol-rule authoring; synthetic/EHR-authorized cohort handling; site permissions; candidate and participant timelines; temporal evidence reconciliation; event-driven monitoring; deviation and safety-workflow integration; searchable reviews; quality metrics; audit exports | Conceptual target, not in scope for proof of clinical suitability. |
-| **20-hour committed experience (P0)** | One fictional 12-week PX-104 trial; one PDF and reviewed rule set; exactly 250 synthetic patients; seeded evidence types and 8+ archetypes; candidate selector and Patient 360; event simulator; correct rule reevaluation; case queue and audit; functional UX across six screens | Intended build target, not implemented at specification time. |
+| **20-hour committed experience (P0)** | One fictional 12-week PX-104 trial; one PDF and reviewed rule set; exactly 15 synthetic patients with 12 provenance-bearing sections; candidate selector and Patient 360; event simulator; correct rule reevaluation; case queue and audit; functional UX across six screens | Intended build target, not implemented at specification time. |
 | **20-hour conditional enhancements (P1)** | AI protocol extraction with coverage checks, note investigation loop, complete semantic timeline, enhanced audit/replay UI, accessible keyboard polish | Ship only if P0 integration and safety tests are passing. |
 | **Stretch (P2)** | Amendment simulation, FHIR R4 synthetic import and visual diff, richer agent investigations | Explicitly label as prototype/stub if incomplete; never suggest supported production integration. |
 | **Post-hackathon validated product** | Real-source connectors, institutional approvals, interoperability mapping, security architecture, audit retention, clinical evaluation, monitoring-plan alignment, regulatory/ethics assessment, investigator/site training, incident and safety escalation procedures, multi-site operation | Requires formal design controls, clinical and data governance, contractual responsibilities, fit-for-purpose validation and jurisdiction-specific regulatory review. |
@@ -464,8 +466,8 @@ A capability merits the label **agentic** only if it can (i) pursue a bounded ob
 | Elapsed hours | Shared focus | Completion gate |
 |---|---|---|
 | 0–2 | Freeze product rules, synthetic trial dates, canonical IDs/statuses, API/agent contracts, seed fixture; assign exclusive workstreams | Signed shared context and sample payloads; no unresolved critical schema contradictions |
-| 2–9 | Parallel implementation: frontend screen skeletons and adapters; backend rule/data/event/case logic; AI extraction/evidence tools with structured fixtures | Each workstream passes its mock-contract tests |
-| 9–13 | Early integrated vertical slice: approved rule → candidate → day-18 relevant event → case | Full slice demonstrated with fixed synthetic IDs |
+| 2–6 | Parallel scaffolds and first real integration: approved rule → screen → P-042 detail | H6 smoke uses real backend responses; AI gateway may still use typed mocks |
+| 6–13 | Event → targeted evaluation → case → human review; integrate agent adapter and real frontend client | H10 core workflow and H14 integrated checks; see DEVELOPMENT_PLAN for exact gates |
 | 13–16 | Expand uncertainty/reliability cases, fix blockers, check role/approval and replay semantics | AC-01 through AC-14 core matrix passing; no unsafe claims |
 | 16–18 | UX clarity, audit explanation, test and accessibility; P1 only if stable | Repeatable live walkthrough; explicit known limitations |
 | 18–20 | Freeze functionality, rehearsals, repository documentation, concise video and submission checks | No unverified safety/clinical claims, clear demo reset, no real patient data |
@@ -509,9 +511,9 @@ Every scenario uses the **same approved fictional PX-104 v1.0** unless its setup
 
 ### 15.1 Fixed trial story
 
-A fictional sponsor launches a **12-week PX-104 study** for synthetic condition `SYN-CONDITION-A`. A coordinator loads an invented protocol containing the eight requirements in Section 8 and reviews the extracted rules with a fictional investigator. The database contains **250 intentionally synthetic patient records** with longitudinal medication evidence and dated laboratory observations. All protocol restrictions and nomenclature are invented; no claim of pharmacological relevance is made.
+A fictional sponsor launches a **12-week PX-104 study** for synthetic condition `SYN-CONDITION-A`. A coordinator loads an invented protocol containing the eight requirements in Section 8 and reviews the extracted rules with a fictional investigator. The database contains **15 intentionally synthetic patient records** with longitudinal medication evidence and dated laboratory observations. All protocol restrictions and nomenclature are invented; no claim of pharmacological relevance is made.
 
-**Illustrative seeded snapshot** (demonstration targets, not study findings or scientifically plausible prevalence): 250 patients screened; **34 `POTENTIAL_MATCH`**, **89 `NEEDS_REVIEW`** and **127 `PROTOCOL_CONFLICT`**. These totals sum to 250 and must be produced by actual seed fixtures and the evaluator, not hardcoded display counters. If fixtures change, counts must be recalculated and labels updated. A subset of the review group may have multiple missing pieces; counts are by unique patient, not flagged criteria.
+**Seeded snapshot contract:** screen all 15 patients; compute `POTENTIAL_MATCH`, `NEEDS_REVIEW`, `PROTOCOL_CONFLICT` and `EVALUATION_ERROR` counts from actual persisted assessments, summing to 15. Counts are by patient, not flagged criteria. No fixed distribution or clinical prevalence is asserted. Named acceptance expectations below must follow the underlying evidence.
 
 ### 15.2 Deliberately designed patient archetypes
 
@@ -527,7 +529,7 @@ A fictional sponsor launches a **12-week PX-104 study** for synthetic condition 
 | **P-140 — contradictory notes** | Conflicting reports of continuing/stopped restricted-class medication | `NEEDS_REVIEW` | Trigger evidence-investigator branch and reconciliation |
 | **P-151 — nonrelevant change** | New `SYN-MED-N1` event, no restricted class | No monitoring case | Demonstrate precise alert suppression |
 
-The remainder of the 250-patient fixture should include varied ages, lab date freshness, coded conditions, missing dates, medication evidence types, negative reconciliation quality and plausible longitudinal timelines. Synthetic variety should avoid hidden hardcoding of UI statuses: the deterministic evaluator computes results from the fixture.
+Exact registry: `P-042,P-175,P-124,P-161,P-117,P-118,P-083,P-140,P-151,P-201,P-202,P-203,P-204,P-205,P-206`. Supplemental `P-201`–`P-206` respectively exercise age-low, age-high, unmapped medication code, partial-month date, unverified absence and serial eGFR decline. All 15 include the 12 source-linked sections defined in DATA_MODEL plus concise sourced narratives; empty sections do not imply negative evidence. The deterministic evaluator computes results from the fixture.
 
 ### 15.3 Day-18 story and before/after evidence
 
@@ -540,7 +542,7 @@ The remainder of the 250-patient fixture should include varied ages, lab date fr
 | Initial screening result dated Oct 31 | `POTENTIAL_MATCH` | Remains historical `POTENTIAL_MATCH` (not retroactively overwritten) |
 | Participation state | `PARTICIPATING` (human-entered) | `PARTICIPATING`, pending external clinical decision |
 | `PX-MON-01` assessment | No current finding | Approved protocol restriction triggered by documented event |
-| Active finding | None | `CONFIRMED_PROTOCOL_CONFLICT`, `OPEN`, assigned for investigator review |
+| Active finding / linked review case | None | Immutable `CONFIRMED_PROTOCOL_CONFLICT` finding linked to an `OPEN` case assigned for investigator review |
 | Reviewer guidance | No review pending | Inspect event, verify source and clinical context, document medical assessment; **no automatic stop/withdraw decision** |
 | Audit | Approval/screen/participation records | New event → affected rule → evaluation delta → case ID → action summary |
 
@@ -551,7 +553,7 @@ The remainder of the 250-patient fixture should include varied ages, lab date fr
 - The PDF and patients are prominently labeled **fictional/synthetic**.
 - Approved criterion values and citations come from an actual bundled mock PDF; IDs, statuses and case references resolve to persistent fixture records.
 - The display never claims real drug-drug interactions or measured reduction in adverse events.
-- Pre-seeded statistics must match recalculated backend outputs; tests assert the chosen 250-patient counts if those exact totals are retained.
+- Pre-seeded statistics must match recalculated backend outputs; tests assert exactly 15 patients and named scenario expectations without hardcoded UI totals.
 - The demo reset restores fixed data, protocol version, event timeline and case state with deterministic IDs or a clear ID mapping.
 - The UI visibly distinguishes AI investigation steps from deterministic evaluation and clinician-review decisions.
 
@@ -568,7 +570,7 @@ The remainder of the 250-patient fixture should include varied ages, lab date fr
 | **HIGH** | Missed relevant change or wrong event window | Deterministic event-to-criterion dependencies, event-effective timestamp, replay and boundary/backdated tests. |
 | **HIGH** | False positive flood from irrelevant events | Relevance filtering and explicit category conditions, idempotent case deduplication, AC-09 and AC-10 tests. |
 | **HIGH** | Untraceable extraction or fabricated evidence reference | Validate anchors and evidence IDs against actual persisted source; block unsupported summaries. |
-| **HIGH** | Partial implementation across three teams breaks one end-to-end workflow | Freeze types/contracts early, adapters/mocks, shared synthetic fixtures, integrate by hour 9. |
+| **HIGH** | Partial implementation across three teams breaks one end-to-end workflow | Freeze types/contracts early, adapters/mocks, shared synthetic fixtures, first real smoke by H6 and core event/case workflow by H10. |
 | **HIGH** | Clinical safety inferred from lack of known interactions | State “interaction risk not assessed” and allow only approved fictional class restrictions. |
 | **MEDIUM** | Large or scanned PDF causes extractor failure | Explicit failure mode, prepared text-searchable PDF, fixture fallback and manual correction. |
 | **MEDIUM** | Ambiguous timezones, partial dates, lab units | Site-local date rules, strict date precision, approved units and `UNKNOWN` fallback. |
@@ -594,7 +596,7 @@ The remainder of the 250-patient fixture should include varied ages, lab date fr
 | Decision | Recommended default | Tradeoff / revisit trigger |
 |---|---|---|
 | Number of trials | One fully functional PX-104 trial, data model supports many | Helps 20-hour completeness; multitrial UI can follow. |
-| Cohort size | Fixed 250 patients | Small enough for repeatable tests; broad enough for selection UX; not representative epidemiology. |
+| Cohort size | Fixed 15 patients | Twelve-section source-linked records and named edge cases; not representative epidemiology. |
 | Core source | Text-based fictional PDF plus curated seeded evidence and notes | Reliable hackathon path; true scan/OCR and live FHIR deferred. |
 | Time convention | Site-local calendar with ISO timestamps, explicit offset and `[start,end)` comparisons | Simpler reproducibility; future multi-site timezone normalization needed. |
 | Negative medication evidence | Explicit reconciled no-use assertion covering the lookback, not silent chart absence | More unknowns, fewer unjustified passes. |
@@ -606,9 +608,9 @@ The remainder of the 250-patient fixture should include varied ages, lab date fr
 | Amendment impact | Read-only isolated simulation, P2 | Distinctive but risks consuming critical integration time. |
 | Real connectivity | None; mock FHIR optional | Protects privacy and schedule, limits claims of interoperability. |
 
-## Decisions to freeze before Stage 2
+## Approved product decisions for Stage 2.1
 
-The following decisions must become the authoritative inputs to `SYSTEM_ARCHITECTURE.md`, `AGENT_DESIGN.md`, `API_CONTRACTS.md`, `DATA_MODEL.md`, `TEAM_OWNERSHIP.md`, `DEVELOPMENT_PLAN.md` and `PROJECT_CONTEXT.md`. Architecture work must flag conflicts with these freezes instead of silently changing product semantics.
+The following decisions are incorporated into the approved `docs/` contracts and `PROJECT_CONTEXT.md` at `1.0.0-rc2`. Further changes require coordinator review and a versioned revision; implementation and clinical approval gates remain separate.
 
 | Freeze ID | Required frozen decision | Recommended value / approval check |
 |---|---|---|
@@ -618,9 +620,9 @@ The following decisions must become the authoritative inputs to `SYSTEM_ARCHITEC
 | **FZ-04** | Candidate status enumeration | `POTENTIAL_MATCH`, `NEEDS_REVIEW`, `PROTOCOL_CONFLICT`; per-criterion `PASS/FAIL/UNKNOWN`; separate operational error. |
 | **FZ-05** | Clinical/event evidence semantics | Order ≠ dispense ≠ administration ≠ reported use; record dates ≠ clinical dates; absent record ≠ proven absent exposure. |
 | **FZ-06** | Reviewer authority | Approved rules and clinical disposition require investigator/delegated qualified reviewer; system can only prepare findings and cases. |
-| **FZ-07** | Monitoring categories | `CONFIRMED_PROTOCOL_CONFLICT`, `POTENTIAL_SAFETY_REVIEW`, `DATA_QUALITY_DISCREPANCY`, `POSSIBLE_PROTOCOL_DEVIATION`, `NO_ACTION`. |
+| **FZ-07** | Monitoring categories | Persisted: `CONFIRMED_PROTOCOL_CONFLICT`, `POTENTIAL_SAFETY_REVIEW`, `DATA_QUALITY_DISCREPANCY`, `POSSIBLE_PROTOCOL_DEVIATION`; `NO_ACTION` is relevance trace only. |
 | **FZ-08** | Event and case identity | Immutable event source/version, explicit effective time, idempotent ingestion, deterministic dedup case keys and replay. |
-| **FZ-09** | Seed and demo acceptance | Exactly 250 synthetic patients, archetypes Section 15, scripted day-18 event, actual computed (not hardcoded) cohort counts. |
+| **FZ-09** | Seed and demo acceptance | Exactly 15 synthetic patients, registry Section 15, scripted day-18 event, actual computed cohort counts. |
 | **FZ-10** | AI safety boundary | Only approved fictional restrictions; AI investigation/extraction cannot approve rules, infer safety or alter medication or participation. |
 | **FZ-11** | Agent topology | One bounded coordinator, four logical responsibilities, evaluator separate; no unnecessary multi-agent processes. |
 | **FZ-12** | Functional release scope | P0 six screens, end-to-end rule approval → selection → evidence → event → case → human review → audit; amendment simulation stretch. |
@@ -629,7 +631,7 @@ The following decisions must become the authoritative inputs to `SYSTEM_ARCHITEC
 | **FZ-15** | Terminology fixture | Explicit synthetic codes and reviewer-approved `SYN-CLASS-R` mapping; unmatched codes unresolved. |
 | **FZ-16** | Privacy and truthfulness | Synthetic-only, no real/EHR integration or medical validity claim; clear labels in UI, demo and submission. |
 
-**Approval gate before architecture:** A team representative confirms the FZ table, especially clinical-rule fiction, negative-evidence completeness, status semantics, patient fixture IDs and day-18 timing. If a rule must be revised, update this specification and associated acceptance expectations first, then produce Stage 2 contracts from the approved revision.
+**Documentation approval:** The user's instruction to choose and reconcile discrepancies authorizes this Stage 2.1 design handoff. No engineer acknowledgement, runtime test, clinical rule approval or signed medical decision is implied. Changes to product rules require an IC-reviewed product revision and aligned acceptance/contracts before implementation.
 
 ---
 

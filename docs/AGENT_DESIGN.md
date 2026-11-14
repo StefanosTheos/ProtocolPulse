@@ -1,6 +1,6 @@
 # ProtocolPulse — Agent and Tool-Use Design
 
-**Contract:** `PP-S2-CF-20261114-01` / `1.0.0-rc1` (approval pending). **One orchestrator with four logical responsibilities**, not four communicating autonomous services. All tool calls are local, scoped to synthetic records, and mediated by backend-owned authorization. The deterministic evaluator and database own every authoritative classification and persisted lifecycle transition.
+**Contract:** `PP-S2-CF-20261114-01` / `1.0.0-rc2` (**APPROVED documentation design**; approval basis in [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md)). **One orchestrator with four logical responsibilities**, not four communicating autonomous services. All tool calls are local, scoped to synthetic records, and mediated by backend-owned authorization. The deterministic evaluator and database own every authoritative classification and persisted lifecycle transition.
 
 ## 1. Why a bounded agent exists
 
@@ -31,7 +31,7 @@ AgentRole = Literal['PROTOCOL_INTELLIGENCE', 'EVIDENCE_INVESTIGATOR',
 AgentStatus = Literal['QUEUED','RUNNING','SUCCEEDED','FAILED','UNAVAILABLE','PARTIAL']
 
 class AgentRequest(BaseModel):
-    contract_version: Literal['1.0.0-rc1']
+    contract_version: Literal['1.0.0-rc2']
     execution_id: str
     role: AgentRole
     objective: str
@@ -62,7 +62,7 @@ class ToolTrace(BaseModel):
     error_code: str | None = None
 
 class AgentResult(BaseModel):
-    contract_version: Literal['1.0.0-rc1']
+    contract_version: Literal['1.0.0-rc2']
     execution_id: str
     status: AgentStatus
     role: AgentRole
@@ -82,12 +82,12 @@ No free-form `chain_of_thought` field. All evidence references are checked again
 
 ## 3. Shared tool I/O primitives
 
-All tool calls use a tagged JSON object with `{contract_version, execution_id, trial_id, protocol_version_id, correlation_id, ...tool_specific_fields}`. `patient_id` is required for patient-scoped tools; backend derives site authorization and does not trust a user-supplied role field. Every successful result contains `{tool_name, data, evidence_refs, source_watermark, result_code}`. Every error contains `{tool_name,error_code,retryable}`; `SOURCE_UNAVAILABLE`, `TIMEOUT`, `UNMAPPED_CODE`, `UNAUTHORIZED`, `BAD_INPUT` are nonclinical codes. `EvidenceReference` uses source ID + version + exact evidence ID; optional PDF/note source span in Unicode code-point offsets. Date-only and unknown-precision dates use API `TimeUncertainty`: `{raw_date,precision:'INSTANT'|'DAY'|'MONTH'|'YEAR'|'UNKNOWN',possible_interval:{earliest,latest_exclusive}}`, with RFC-3339 offset-aware bounds; those are possible bounds, not a fabricated clinical instant.
+Gateway tool calls use a tagged JSON object with `{contract_version, execution_id, trial_id, protocol_version_id, correlation_id, ...tool_specific_fields}`. `patient_id` is required for patient-scoped tools; backend derives site authorization and does not trust a user-supplied role field. Every successful result contains `{tool_name, data, evidence_refs, source_watermark, result_code}`. Every error contains `{tool_name,error_code,retryable}`; `SOURCE_UNAVAILABLE`, `TIMEOUT`, `UNMAPPED_CODE`, `UNAUTHORIZED`, `BAD_INPUT` are nonclinical codes. `EvidenceReference` uses source ID + version + exact evidence ID. PDF/note spans use zero-based `[start,end)` Unicode code-point offsets into persisted page text (PDF) or complete note text; these are neither byte offsets nor JavaScript UTF-16 indices. Date-only and unknown-precision dates use API `TimeUncertainty`: `{raw_date,precision:'INSTANT'|'DAY'|'MONTH'|'YEAR'|'UNKNOWN',possible_interval:{earliest,latest_exclusive}}`, with RFC-3339 offset-aware bounds; those are possible bounds, not a fabricated clinical instant.
 
 Schema shapes used below:
 
 - `PageSpan`: `{source_id:string,source_version:int,page:int,text:string,start:int,end:int,sha256:string,quality:'OK'|'LOW'|'UNREADABLE'}`.
-- `CriterionDraft`: `{criterion_id:string,criterion_type:'INCLUSION'|'EXCLUSION'|'MONITORING',clinical_subject:string,operator:string,threshold:number|string|null,unit:string|null,window:WindowSpec|null,evidence_requirement:string,missing_data_policy:string,source_quote:string,source_id:string,source_page:int,source_anchor:{start:int,end:int},status:'PROPOSED'|'NEEDS_CLARIFICATION',unresolved_reason:string|null}`. Allowed operators fixed by backend registry.
+- `CriterionDraft` is the agent-side name for the exact `CriterionDraftInput` JSON shape in [API_CONTRACTS.md §2](API_CONTRACTS.md#2-canonical-typescript-api-dtos-normative-field-presence), including `protocol_version_id`, `type`, `workflow_status`, `ambiguity`, `applicable_site_ids`, `terminology_map_version`, `logical_group_id` and tuple thresholds. Do not introduce alternate keys such as `criterion_type` or `unresolved_reason`. Allowed operators are fixed by the backend registry.
 - `CoverageItem`: `{section_id:string,source_id:string,page:int,span_start:int,span_end:int,status:'MAPPED'|'INFORMATIONAL'|'BLOCKING',criterion_ids:string[],review_note:string|null}`.
 - `FactRef`: `{evidence_id:string,kind:string,value:unknown,unit:string|null,effective_at:string|null,recorded_at:string,source_id:string,source_version:int,evidence_quality:'HIGH'|'MODERATE'|'LOW'|'UNVERIFIED',evidence_state:'NOT_RECORDED'|'EXPLICITLY_NEGATIVE'|'NOT_ASSESSED'|'NOT_APPLICABLE'|'UNCERTAIN'|'POSITIVE'}`.
 - `EvaluationDelta`: `{criterion_id:string,before_result:'PASS'|'FAIL'|'UNKNOWN'|null,after_result:'PASS'|'FAIL'|'UNKNOWN',before_assessment_id:string|null,after_assessment_id:string,trigger_event_id:string}`.
@@ -95,7 +95,7 @@ Schema shapes used below:
 
 ## 4. Tool catalogue (typed schema, authorization, semantics)
 
-**Default call budget**: <= `MAX_AGENT_STEPS=8` *total* per execution, each call `TOOL_TIMEOUT_SECONDS=5`; overall `AGENT_TIMEOUT_SECONDS=30`; at most `JOB_MAX_ATTEMPTS=3` on explicitly retryable transport failures; no automatic retry for malformed evidence, missing authority, unknown terminology or invalid source. Read calls idempotent per snapshot; writes must use `execution_id + tool_name + semantic_key`, server unique constraint. Every call emits `ToolTrace` and backend `AuditEntry` with references only (not raw medical paragraphs). `EVIDENCE_INVESTIGATOR`, `MEDICATION_SAFETY_INVESTIGATOR`, `MONITORING_WORKFLOW` use the permitted read tools based on evidence, not a scripted fixed sequence.
+**Frozen budgets:** <= `MAX_AGENT_STEPS=8` gateway invocations total per execution, including retries; each gateway invocation uses `TOOL_TIMEOUT_SECONDS=5`. Each model invocation, including `propose_rule`, `draft_review_summary` and tool selection, uses `LLM_CALL_TIMEOUT_SECONDS=10`. Internal AI procedures are not gateway tools and do not consume gateway steps. Every operation is also capped by the remaining `AGENT_TIMEOUT_SECONDS=30` execution deadline; neither a retry nor an internal procedure resets it. Durable jobs have at most `JOB_MAX_ATTEMPTS=3` on explicitly retryable failures; an exhausted execution is not restarted under the same execution ID with fresh step/time budgets. No automatic retry for malformed evidence, missing authority, unknown terminology or invalid source. Read calls are idempotent per snapshot; task writes use `execution_id + tool_name + semantic_key` and a server unique constraint. Gateway calls emit `ToolTrace` and backend `AuditEntry` with references only (not raw medical paragraphs). The evidence, medication and monitoring roles select permitted tools from intermediate evidence rather than a scripted sequence.
 
 | Tool name (owner) | Tool-specific required input ⇒ typed output | Authorized caller, preconditions | Side effect; replay, timeout, fallback; human gate; evaluation |
 |---|---|---|---|
@@ -164,4 +164,4 @@ The backend deterministic process **does not wait** for this loop to classify ne
 | `EV-FAIL-01` | timeout and bad evidence ID | explicit `PARTIAL`/`FAILED`, no invented evidence; AC-14 |
 | `EV-OFF-01` | LLM disabled | `UNAVAILABLE`; deterministic screen/event/case still works; AC-01/08 |
 
-**Evaluation scorecard**: reference precision (every claimed evidence ID resolvable), proper order/use distinction, unknown preservation, unnecessary tool-call rate, task duplication rate, elapsed time and source-blocker recall. No hidden chain-of-thought logging or claims of clinical validity. The protocol has eight fixture rules: five eligibility and three monitoring; use source §8 unchanged.
+**Evaluation scorecard**: reference precision (every claimed evidence ID resolvable), proper order/use distinction, unknown preservation, unnecessary tool-call rate, task duplication rate, elapsed time and source-blocker recall. No hidden chain-of-thought logging or claims of clinical validity. The protocol has eight fixture rules: five eligibility and three monitoring; use product §8. API_CONTRACTS, DATA_MODEL and TEAM_OWNERSHIP govern their respective domains; disagreements require IC review and a versioned revision.

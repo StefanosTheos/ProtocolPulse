@@ -1,6 +1,6 @@
 # ProtocolPulse — 20-Hour Parallel Development and Release Plan
 
-**Contract freeze candidate:** `PP-S2-CF-20261114-01`, version `1.0.0-rc1`. **Approval status:** NOT YET APPROVED. Time windows are **elapsed hackathon hours**, not promises. Exactly 3 engineers + coordinator integration duty (the coordinator can be one of the engineers acting only on owned IC paths). Build the full evidence-backed protocol→selection→event→case→human review→audit slice, not a selection-only demo. The sole seed cohort has **15** fully synthetic patients with the 12-section blueprint; the earlier spec's 250-person target and illustrative status totals are superseded.
+**Contract freeze:** `PP-S2-CF-20261114-01`, version `1.0.0-rc2`. **Approval status:** APPROVED documentation design; approval basis in [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md). Time windows are **elapsed hackathon hours**, not promises or completed milestones. Exactly 3 engineers + coordinator integration duty (the coordinator can be one of the engineers acting only on owned IC paths). Build the full evidence-backed protocol→selection→event→case→human review→audit slice. The sole seed cohort has **15** fully synthetic patients with the 12-section blueprint, consistent with product v1.1. Runtime implementation, engineer acknowledgements and release checks remain pending.
 
 ## 1. Frozen P0 acceptance and prioritization
 
@@ -14,8 +14,8 @@
 
 | Elapsed | Critical path / exact mandatory gate | E1 frontend | E2 backend | E3 AI | IC decision |
 |---|---|---|---|---|---|
-| **H0–H1** | Review full source, freeze 15 fixtures, 8 rules, 20 AC identifiers, dates, status enums, 12-section DTOs | Mark UI dependencies | Inspect rule/data contract | Inspect available tools/capabilities | Resolve 250→15 precedence visibly; accept/modify scope |
-| **H1–H2** | Sign `PP-S2-CF-20261114-01`; no coding before contract approval | Freeze `Envelope<T>` and routes | Freeze Pydantic DTO, migrations and event/key | Freeze `run_agent`/gateway schema | Approve checklist at end of this file; publish manifest Stage 2.1 |
+| **H0–H1** | Review approved source, 15 fixtures, 8 rules, 20 AC identifiers, dates, status enums, 12-section DTOs | Mark UI dependencies | Inspect rule/data contract | Inspect available tools/capabilities | Confirm workstream readiness against approved scope |
+| **H1–H2** | Each engineer acknowledges `PP-S2-CF-20261114-01 / 1.0.0-rc2` before coding | Accept `Envelope<T>` and routes | Accept DTO, migrations and event/key | Accept `run_agent`/gateway schema | Record acknowledgements and assign human IC; documentation approval is already recorded |
 | **H2–H4** | Parallel scaffolds + meaningful mocks | Create six routes, API type/client, fake fixture transport | FastAPI lifespan, SQLite migration, actor/approval tables, jobs scaffold | Entry point with fake gateway and role evaluation fixtures | Ensure ownership and package manifests |
 | **H4–H6** | **H6 FIRST REAL SMOKE**: protocol fetch/approval → actual screen → one Patient360 | Replace mock trial and selector calls with real API; poll jobs | Seed 15, signed rule fixture, deterministic evaluator, GET/POST routes | Implement protocol/evidence tools with mock snapshots; dynamic tests | Inspect OpenAPI vs TypeScript; patch only via revision |
 | **H6–H8** | End-to-end day-18 backend behavior | Event simulator and monitor/case UI with pending/stale state | Event T1/T2, affected-rule dependencies, findings and dedup case | Medication order→timeline→verification branch | Test AC-07–10 without waiting for AI |
@@ -76,9 +76,9 @@
 ## 6. High-value integration script and expected assertions
 
 1. **Reset** `python -m backend.app.seed --dataset px104-15 --reset-demo`; `GET health` ready and `GET trials` one PX-104 trial. Show PDF and eight proposed rule anchors. Mock investigator `ACT-INV-01` approves eight rules + complete coverage (approved set hash persisted).
-2. `POST screenings` for 2026-10-31, poll `GET jobs/{id}` to `SUCCEEDED`, then `GET assessments`. Exactly **15** records; count totals sum to 15, P-042 and P-118 `POTENTIAL_MATCH`, P-175/P-161/P-117 `PROTOCOL_CONFLICT`, P-124/P-083/P-140 `NEEDS_REVIEW`. Other six fixture statuses come from real evidence. Confirm no patient auto-enrolled.
+2. `POST screenings` for 2026-10-31, poll `GET jobs/{id}` to `SUCCEEDED`, verify screening run `COMPLETE`, then `GET assessments`. Exactly **15** records; count totals sum to 15, P-042 and P-118 `POTENTIAL_MATCH`, P-175/P-161/P-117 `PROTOCOL_CONFLICT`, P-124/P-083/P-140 `NEEDS_REVIEW`. Other seven fixture statuses (P-151 plus P-201–P-206) come from real evidence. Confirm no patient auto-enrolled.
 3. Open Patient 360: medication evidence type, clinical-effective vs recorded dates, explicit reconciled no-use, notes, labs, source links and `open_items`; show P-083 `ORDER_ONLY`, P-140 `CONFLICTING_SOURCES` rather than clinical pass/fail by inference.
-4. Investigator records a synthetic **external** participation reference for P-042 (`PARTICIPATING`); it is not a system enrollment action. Post day-18 `SYN-MED-R1/ADMINISTRATION` with `effective_at=2026-11-19T09:30+02` and `recorded_at=2026-11-20T11:00+02`, poll job. Historical Oct 31 screen remains `POTENTIAL_MATCH`, new monitoring criterion `PX-MON-01` triggers one `CONFIRMED_PROTOCOL_CONFLICT` finding and case with before/after and source.
+4. Investigator records a synthetic **external** participation reference for P-042 (`PARTICIPATING`); it is not a system enrollment action. Post day-18 `SYN-MED-R1/ADMINISTRATION` with `effective_at=2026-11-19T09:30:00+02:00` and `recorded_at=2026-11-20T11:00:00+02:00`, poll job. Historical Oct 31 screen remains `POTENTIAL_MATCH`, new monitoring criterion `PX-MON-01` triggers one `CONFIRMED_PROTOCOL_CONFLICT` finding and case with before/after and source.
 5. Duplicate identical event same source version; `200 deduplicated=true`, no second logical event/finding/case. Post unrelated `SYN-MED-N1` for P-151; `NO_ACTION`, no case. Show restricted `ORDER` variant `POTENTIAL_SAFETY_REVIEW` rather than confirmed use.
 6. Investigator acknowledges, investigates, resolves/closes with cited evidence and rationale; audit shows actor/timestamps, source/event/assessment/case/agent references. New material evidence can reopen; no autonomous drug withdrawal. Turn LLM off and repeat step 4: core works, agent shows `UNAVAILABLE`.
 
@@ -98,41 +98,24 @@
 | **MEDIUM — polish** | responsive UI, filters, richer notes, advanced dynamic agent exploration | simplify only after base story passes |
 | **STRETCH** | draft amendment simulation, FHIR export/import, decorative charts, multi-site | cut first, with explicit disabled UI not false success |
 
-Scenario priority: **must** pass AC-01–10, AC-12–14, AC-16–18, AC-20. **Should** pass AC-15 and AC-19; AC-11 is P2. Scenarios are unchanged from the product specification except fixture size, and are run over the 15 patients. `EVALUATION_ERROR` from backend/LLM failure is distinct from legitimate rule `UNKNOWN`. Warnings about reduced functionality must remain visible rather than disappearing behind a green status.
+Scenario priority: **must** pass AC-01–10, AC-12–14, AC-16–18, AC-20. **Should** pass AC-15 and AC-19; AC-11 is P2. Scenarios follow product v1.1 and run over the 15 patients. Backend evaluator failure yields `EVALUATION_ERROR`, distinct from legitimate rule `UNKNOWN`. An LLM-only failure yields agent `FAILED|PARTIAL|UNAVAILABLE` without changing an independently valid deterministic assessment. Reduced functionality remains visible.
 
-## 8. Approval before parallel coding — frozen sign-off checklist
+## 8. Stage 2.1 documentation approval and pending engineering handoff
 
-This is the handoff gate, not a representation that sign-off has happened.
+**Approved documentation freeze:** `PP-S2-CF-20261114-01` / `1.0.0-rc2`. Approval basis: the user instructed the maintainer to choose appropriate resolutions and reconcile all source documents. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) is the freeze manifest and derived context. Product v1.1 incorporates the 15-patient scope. Approval applies to design choices; clinical rule approval, engineer acknowledgements, worktree readiness and runtime acceptance are separate obligations.
 
-- [ ] Read and accept the full `PRODUCT_SPECIFICATION.md` and **newer 15-patient override**; confirm names/IDs of all 15 and 12-section provenance-bearing schema.
-- [ ] Confirm trial dates, site-local time policy, eight PX-104 rules, `SYN-CLASS-R` mapping, and medical fiction/no real-world interaction claim.
-- [ ] Approve status enums and candidate vs participation vs finding vs case distinction; clinical-error null case.
-- [ ] Accept API v1 route table, Pydantic/TS DTOs, required request/role/idempotency headers, job-polling statuses, sample event, all human-only POST/PATCH routes.
-- [ ] Approve relational table names, UTC normalization, snapshots/versions, SQLite-one-worker, Alembic startup, source spans and event/case transaction boundaries.
-- [ ] Confirm one `run_agent` in-process boundary, backend gateway allowlist, **LLM_OFF → UNAVAILABLE** honesty, no agent clinical writes or invented restrictions.
-- [ ] Confirm E1/E2/E3/IC exclusive file tree and package/CI change procedure; separate worktrees ready.
-- [ ] Confirm `.env.example` names and secure public/private split; persistent volume path, seed/reset workflow and startup commands.
-- [ ] Assign owner to each high-risk AC test and sign H6/H10/H14 integration gates; freeze scope cuts and video narrative.
+Design decisions accepted: eight source-anchored rules; five eligibility rules per baseline; human-only clinical approvals; one SQLite worker; immutable evidence and case history; job `SUCCEEDED` versus run `COMPLETE`; Unicode code-point spans; five-second gateway calls, ten-second model calls and a thirty-second execution deadline; exclusive path ownership and coordinated contract revision.
 
-**Final proposed freeze identifier:** `PP-S2-CF-20261114-01` (**version** `1.0.0-rc1`; **status** `AWAITING_APPROVAL`). After every box is approved by the team representative, IC may mark it `APPROVED` in the **Stage 2.1** context handoff, generate `PROJECT_CONTEXT.md` and authorize three engineering branches. Do **not** claim that file has already been created or that approval has occurred.
+Before independent coding, the assigned human IC records each engineer's acknowledgement of the revision and creates the planned worktrees. E1 owns UI/API-client tests; E2 owns rule, approval, event, persistence and API tests; E3 owns gateway/agent evaluations; IC owns cross-module release checks. H6/H10/H14/H17/H20 are still **pending**, not signed or executed by this documentation update.
 
-## 9. Authoring-time cross-document consistency audit (performed)
+## 9. Documentation verification scope and remaining work
 
-The following checks inspect **design artifacts**, not running code. They do not imply the actual frontend/backend/AI services, migrations or clinical tests have been implemented.
+The reconciliation checks source paths, relative document links, revision markers, all 26 API route pairs, status distinctions, fixture IDs, configuration keys, tool boundaries and the context's source references. These checks inspect design artifacts, not running services. Executable commands in SYSTEM_ARCHITECTURE and TEAM_OWNERSHIP are planned implementation contracts.
 
-| Check | Observed design result | Outcome |
-|---|---|---|
-| File set | Exactly six required `docs/*.md` files + one root `.env.example`; no `PROJECT_CONTEXT.md` | **PASS** |
-| Freeze and version | All seven documents reference `PP-S2-CF-20261114-01` / `1.0.0-rc1`, still awaiting human approval | **PASS** |
-| Product/source precedence | Uploaded v1.0 spec ingested; later explicit **15**-patient blueprint replaces 250 target; 15 fixture IDs identical in architecture/data model | **PASS** |
-| Routes | **26** explicitly versioned method/path pairs documented, including all **19** mandatory pairs and seven operational paths; job polling documented | **PASS** |
-| Type definitions | Normative TypeScript DTO block compiled with `tsc --strict --noEmit --target ES2022`; Pydantic demonstration code parsed as valid Python | **PASS (static)** |
-| Semantic enums | Criterion/candidate/job states, evidence six-state taxonomy, medication subtypes, finding categories present and distinctly scoped | **PASS (static)** |
-| Env/config/startup | 25 documented `.env.example` keys; backend root `.env`, browser public-only `NEXT_PUBLIC_API_BASE_URL`, single SQLite worker, specified startup commands | **PASS (design)** |
-| Integration boundaries | E2 owns `backend/app/integrations/agent_adapter.py`; E3 owns `ai/entrypoints.py`; E1 owns frontend API client; IC owns docs/manifests; no implied cross-owner edits | **PASS (design)** |
-| Clinical behavior and seeded data | PX-104 fixed rulebook and AC test oracle mapped, but **not executed** against a running app or all 15 completed patient JSON fixtures | **PENDING IMPLEMENTATION** |
-| Runtime verification | FastAPI OpenAPI generation, actual Alembic migrations, provider SDK tool support, test suite, browser end-to-end path | **PENDING IMPLEMENTATION** |
+Documentation checks for `1.0.0-rc2`: nine synchronized files, 26 unique API route pairs matching the context exactly, 26 configuration keys, matching 15-patient registries, valid relative file/section links, and parseable embedded Python/JSON examples. No stale approval/version markers or unresolved documentation conflicts were found. These checks do not compile TypeScript or execute the planned application tests.
 
-**Source trace:** `PRODUCT_SPECIFICATION(3).md` SHA-256 `6909b4479a5c8ee81e1731d30e37efb957bbf2bd7eb71ef4055259e3c918b93a` (uploaded specification read for this architecture). The six-state patient blueprint is a newer user requirement; its precedence is explicit rather than a silent source rewrite.
+FastAPI OpenAPI generation, Alembic migrations, the complete 15-patient JSON seed, provider SDK/tool compatibility, clinical-rule tests, frontend typecheck/build and browser integration remain **PENDING IMPLEMENTATION**. Historical authoring checks are not evidence that this revised design has run.
 
-**Freeze disposition:** Design is ready for the team's **Approve Before Parallel Coding** review, **not** approved, not an implemented product, and not a clinically validated system. No `PROJECT_CONTEXT.md` exists at this stage.
+**Historical source trace:** the original uploaded `PRODUCT_SPECIFICATION(3).md` was recorded with SHA-256 `6909b4479a5c8ee81e1731d30e37efb957bbf2bd7eb71ef4055259e3c918b93a`. This is historical provenance, not a checksum of revised product v1.1.
+
+**Precedence:** API_CONTRACTS governs API/wire behavior, DATA_MODEL governs persistence and TEAM_OWNERSHIP governs path/change ownership. All disagreements require IC review and a versioned revision. Documentation approval makes no implementation or clinical-validation claim.

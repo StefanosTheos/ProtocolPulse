@@ -1,7 +1,7 @@
 # ProtocolPulse — System Architecture
 
-**Contract freeze candidate:** `PP-S2-CF-20261114-01` · **Version:** `1.0.0-rc1` · **Status:** awaiting team approval before parallel coding.  
-**Authority:** uploaded `PRODUCT_SPECIFICATION.md` v1.0, especially §§4–10, 14–16. **Explicit superseding scope:** exactly **15** fictional demo patients (the newer patient-blueprint instruction replaces the source specification's historical 250-patient fixture and illustrative 34/89/127 counts). All other PX-104 rule semantics, calendar dates, named acceptance archetypes, authority boundaries, and criterion identifiers remain unchanged. Do not edit the source specification silently; record the approved cohort-size amendment in Stage 2.1.
+**Contract freeze:** `PP-S2-CF-20261114-01` · **Version:** `1.0.0-rc2` · **Status:** APPROVED documentation design.
+**Authority:** [PRODUCT_SPECIFICATION.md](../PRODUCT_SPECIFICATION.md) v1.1, especially §§4–10, 14–16. Exactly **15** fictional demo patients; the product revision incorporates the cohort-size amendment. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) records the user-authorized reconciliation and serves as the Stage 2.1 freeze manifest. Approval covers the design; implementation, tests and engineering handoffs remain pending.
 
 ## 1. Frozen choices and system constraints
 
@@ -54,29 +54,29 @@
 | List/get trial, protocol, patient, evidence, assessments, cases, logs | `GET` | Read-only scoped session; stable cursor pagination | `200` |
 | Create trial; PDF upload/version registration | `POST` | Validate actor + synthetic upload; hash/atomically move PDF, commit version+audit; orphan file cleanup on failure | `201` |
 | Extract PDF | `POST .../extract` | Atomic creation of `Job(PROTOCOL_EXTRACT)`+audit; job parses and proposes typed unapproved rules, coverage in separate commit | `202` + `job_id` |
-| Replace proposed criteria / approve | `PUT .../criteria`, `POST .../approve` | ETag/revision guards. Approval requires named eligible simulated investigator, per-criterion signoff + full coverage, writes immutable approved hash and audit | `200` |
+| Replace proposed criteria / approve | `PUT .../criteria`, `POST .../approve` | Both require `If-Match` protocol revision; approval also requires `Idempotency-Key`. Approval requires named eligible simulated investigator, per-criterion signoff + full coverage, writes immutable approved hash and audit | `200` |
 | Screen cohort | `POST .../screenings` | Commit `SCREEN_COHORT` job and frozen version/evidence-watermark request; worker commits all 15 immutable assessments and run completion atomically | `202` |
 | Post patient event | `POST .../events` | Transaction A: immutable event+source/ID dedup + job+audit; Transaction B in worker: affected rule calculations, before/after snapshots, finding/case upsert, audit and job result **together** | `202`, duplicate `200` |
 | Investigator participation / disposition; case patch | Versioned POST/PATCH | Actor/role, transition, version checks; append immutable review decision + audit with status update in one transaction | `200`/`201` |
 | Agent investigation / extraction | Background job | Never holds SQLite transaction open during LLM call. Read-only snapshot, bounded external call, validate evidence refs; persist agent outcome, optional verification request; deterministic status remains authoritative | `202` job and eventual status |
 
-**Job states:** `QUEUED|RUNNING|SUCCEEDED|FAILED`; distinct from source specification's screening-run states (`QUEUED|RUNNING|COMPLETE|FAILED`), which represent domain progress. Job result may refer to `screening_run_id`, `agent_execution_id`, affected `assessment_ids`, finding/case IDs. Only `POST .../extract`, `POST .../screenings`, `POST .../events` and `POST /api/v1/agent-investigations` create durable jobs. `POST .../events` returns `200` on byte-identical idempotent replay and the original job ID.
+**Job states:** `QUEUED|RUNNING|SUCCEEDED|FAILED`; distinct from screening-run states (`QUEUED|RUNNING|COMPLETE|FAILED`), which represent domain progress. Job results use `run_id`, `execution_id`, affected `assessment_ids`, finding/case IDs as applicable. Only `POST .../extract`, `POST .../screenings`, `POST .../events` and `POST /api/v1/agent-investigations` create durable jobs. `POST .../events` returns `200` on identical canonical-payload replay and the original job ID. Baseline results are ready only when job `SUCCEEDED` and screening run `COMPLETE`.
 
 **Worker:** one lifespan task polls `jobs` with `JOB_POLL_INTERVAL_MS`, atomically claims a queued row and sets an expiring `lease_until`; claim via SQLite atomic `UPDATE ... WHERE status='QUEUED' RETURNING ...` guarded by single-process ownership. On restart, expired RUNNING leases are requeued, attempts bounded by `JOB_MAX_ATTEMPTS`; retry work is replay-safe via business unique constraints and immutable versions. Worker must not claim success if audit or case persistence fails. Processing failure leaves domain's last valid assessment and a stale/error indicator; `500` is never mapped to clinical `UNKNOWN`. Unavailable LLM does not block deterministic evaluation.
 
 ## 4. Protocol pipeline and approval gate
 
 1. `POST /api/v1/trials/{trial_id}/protocols` accepts `multipart/form-data` (`file` and `version_label`) up to `MAX_PDF_MB`, validates PDF signature, text-extraction eligibility, synthetic-demo allowlist (no unrestricted clinical upload), stores SHA-256 and original immutable file; creates version `DRAFT`.
-2. `POST .../extract` queues a job. Backend PDF parser reads pages and offset spans; agent can choose reinspection and propose `Criterion` objects with `source_quote`, page and stable span anchor, but **cannot approve**. Scanned/encrypted/incomplete PDFs mark `EXTRACTION_FAILED` or coverage blockers, not fabricated anchors; prepared bundled mock text/PDF is a *clearly labeled alternative input*, not a claim that AI extracted a broken PDF.
+2. `POST .../extract` queues a job. Backend PDF parser reads pages and offset spans; agent can choose reinspection and propose `Criterion` objects with `source_quote`, page and stable span anchor, but **cannot approve**. Spans are zero-based `[start,end)` Unicode code-point offsets into the persisted page text (PDF) or complete note text; original file hashes remain byte-based. Scanned/encrypted/incomplete PDFs mark `EXTRACTION_FAILED` or coverage blockers, not fabricated anchors; prepared bundled mock text/PDF is a *clearly labeled alternative input*, not a claim that AI extracted a broken PDF.
 3. Extraction coverage records all protocol eligibility/monitoring sections as `MAPPED|INFORMATIONAL|BLOCKING`. Review UI shows original span, rule operator, units, windows, terminology-map version and unsupported content.
-4. `PUT .../criteria` permits revision of `PROPOSED|NEEDS_CLARIFICATION` only; any approved content change requires a *new* version. `POST .../approve` validates **each** executable rule, qualified actor and signed coverage; adds `CriterionApproval` and `APPROVED -> ACTIVE` activation transaction if no other active version (or marks former active `SUPERSEDED`). In v1 demo, limit automatic activation to first version; future amendment activation remains P2 and separately gated.
+4. `PUT .../criteria` permits revision of `PROPOSED|NEEDS_CLARIFICATION` only; any approved content change requires a *new* version. `POST .../approve` validates **each** executable rule, qualified actor and signed coverage; adds `CriterionApproval` and `APPROVED -> ACTIVE` activation transaction if no other active version. If a version is already active, return `409 VERSION_ALREADY_ACTIVE`; future amendment activation/supersession remains P2 and requires a coordinated contract extension.
 5. Screening job snapshots approved criterion set hash and evidence IDs/versions before evaluating. No draft rule influences operational outcomes. Existing run persists unchanged under subsequent event/correction.
 
 ## 5. Patient record/fixture invariant
 
 The 15 records must each provide **A. deterministic, source-linked structured facts** and **B. concise clinical narrative**. The narrative is not an override. Inconsistent assertions become `OpenItem(CONFLICTING_SOURCES)` and may force `UNKNOWN`; they never silently replace structured values. Clinical facts carry `value`, optional `unit`, `effective_at` or onset, `recorded_at`, `source_id`, evidence-quality and explicit evidence status. Preserve `NOT_RECORDED|EXPLICITLY_NEGATIVE|NOT_ASSESSED|NOT_APPLICABLE|UNCERTAIN|POSITIVE`, and distinguish clinical status from evidence presence. Sections: demographics/screening/site; index disease/diagnosis; conditions/surgeries/hospitalization; family/genetics; dated symptoms; serial functional/pulmonary/labs/ECG/imaging; past/current medication evidence; **separate blinded study-product exposure**; prior trial participation/last dose/half-life/restrictions; procedures; allergies/pregnancy/capacity/study-partner/administration; encounters/source index; and `open_items`. See DATA_MODEL for normalized and typed-extension tables. No direct personal identifiers beyond fictional IDs.
 
-Fixture ID set (exactly): `P-042,P-175,P-124,P-161,P-117,P-118,P-083,P-140,P-151,P-201,P-202,P-203,P-204,P-205,P-206`. First nine retain source specification acceptance archetypes; last six respectively test age-low, age-high, unmapped code, imprecise date, unverified absence, serial declining eGFR. **Computed** cohort status totals may differ from earlier illustrative 250-patient counts; never hardcode counts or percentages. Use test-time expected statuses, not display mocks.
+Fixture ID set (exactly): `P-042,P-175,P-124,P-161,P-117,P-118,P-083,P-140,P-151,P-201,P-202,P-203,P-204,P-205,P-206`. First nine retain product acceptance archetypes; last six respectively test age-low, age-high, unmapped code, imprecise date, unverified absence, serial declining eGFR. Compute cohort status totals from all 15 assessments; never hardcode counts or percentages. Baseline screening evaluates the five eligibility rules; the three monitoring rules run on relevant participation events.
 
 ## 6. Event-driven targeted reevaluation (P0 backbone)
 
@@ -93,12 +93,15 @@ Fixture ID set (exactly): `P-042,P-175,P-124,P-161,P-117,P-118,P-083,P-140,P-151
 
 `backend/app/core/config.py` uses Pydantic Settings to parse the documented `.env.example`. Load root `.env` in backend *only*. All secrets server-side; frontend accesses only `NEXT_PUBLIC_API_BASE_URL` (public API URL). CORS permits only `FRONTEND_ORIGIN`. `LLM_ENABLED=false` keeps local evaluator, job worker and monitoring operational; extraction must return labeled **unavailable** or use prepared non-AI rule fixture requiring approval; AI investigations show `UNAVAILABLE`, not a fabricated `SUCCEEDED`. LLM provider SDK/tool compatibility is verified at implementation time; no hard-coded model vendor behavior in contracts.
 
+Gateway calls use `TOOL_TIMEOUT_SECONDS=5`; model calls (including internal AI procedures) use `LLM_CALL_TIMEOUT_SECONDS=10`. Both are capped by the remaining `AGENT_TIMEOUT_SECONDS=30` execution deadline. `MAX_AGENT_STEPS=8` bounds total gateway invocations per execution, including retries; no timeout resets the execution deadline.
+
 Startup commands from repository root (files are *planned implementation targets*, not delivered code):
 
 ```bash
 cp .env.example .env                     # set paths / keys locally; do not commit .env
 python3.12 -m venv .venv && source .venv/bin/activate
-pip install -e ./backend -e ./ai          # engineer-owned package manifests
+pip install -e ./backend -e ./ai          # IC-owned package manifests
+mkdir -p backend/var/protocols
 python -m alembic -c backend/alembic.ini upgrade head
 python -m backend.app.seed --dataset px104-15 --reset-demo   # explicit, destructive demo-only seed
 python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 1
@@ -126,8 +129,23 @@ Threat boundary: uploaded protocol pages and patient narratives are untrusted *d
 - **API contract:** Pydantic schema, OpenAPI generation, `401/403/409/422`, page cursors, idempotency replay, `202→GET jobs→200` correlation, no hidden endpoints.
 - **Agent eval:** real dynamic tool selection and branch/no evidence, prompt injection, citation verification, bounded steps, `LLM_ENABLED=false` accurate status. Do not require LLM for AC-01–10 deterministic correctness.
 - **End-to-end:** J-01 through J-06 and AC-01–10, AC-12–20 (AC-11 P2) using exactly 15 patients; scripted P-042 approval→screen→participation→day-18 administration→case→investigator acknowledge/close→audit; unrelated event no case; duplicate no duplicate; late effective event and stale job indicator.
-- **Nonfunctional proof:** measured screening time on actual 15-patient dataset (source's 250-record under-10s target is not automatically evidence about this demo); measured event-to-case latency where tested. No unsupported clinical-efficacy or compliance claims.
+- **Nonfunctional proof:** under-10s screening target on the actual 15-patient dataset; under-5s deterministic event-to-finding target. Report measured latency only after testing. No unsupported clinical-efficacy or compliance claims.
 
 ## 10. Contract scope and cross-references
 
-API types, operation IDs and all extra necessary paths: [API_CONTRACTS.md](API_CONTRACTS.md). Persistence and 12-section history mapping: [DATA_MODEL.md](DATA_MODEL.md). Tool specs/LLM OFF truthfulness: [AGENT_DESIGN.md](AGENT_DESIGN.md). Ownership: [TEAM_OWNERSHIP.md](TEAM_OWNERSHIP.md). Time gates: [DEVELOPMENT_PLAN.md](DEVELOPMENT_PLAN.md). `.env.example` is the sole variable-name authority. **No `PROJECT_CONTEXT.md` at this stage**; Stage 2.1 derives it after human contract approval.
+API types, operation IDs and all extra necessary paths: [API_CONTRACTS.md](API_CONTRACTS.md). Persistence and 12-section history mapping: [DATA_MODEL.md](DATA_MODEL.md). Tool specs/LLM OFF truthfulness: [AGENT_DESIGN.md](AGENT_DESIGN.md). Ownership: [TEAM_OWNERSHIP.md](TEAM_OWNERSHIP.md). Time gates: [DEVELOPMENT_PLAN.md](DEVELOPMENT_PLAN.md). [Configuration](../.env.example) is the sole variable-name authority. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) is synchronized to this freeze. API_CONTRACTS, DATA_MODEL and TEAM_OWNERSHIP govern their respective domains; any disagreement requires IC review and a versioned revision.
+
+## 11. Architecture decision register — approved at 1.0.0-rc2
+
+| ID | Decision and rationale |
+|---|---|
+| ADR-01 | User-authorized documentation approval; Stage 2.1 context is the freeze manifest. Runtime, engineer handoff and clinical approvals remain separate. |
+| ADR-02 | Exactly 15 source-linked synthetic patients; approve eight rules, baseline evaluates five eligibility rules, event monitoring uses the other three. Keeps scope coherent. |
+| ADR-03 | Job `SUCCEEDED` and screening run `COMPLETE` are distinct; result readiness requires both. Prevents polling against an impossible job state. |
+| ADR-04 | Zero-based end-exclusive Unicode code-point source spans, page-local for PDF and full-text for notes; file hashes use original bytes. Preserves non-ASCII citations. |
+| ADR-05 | Five-second gateway calls, ten-second model calls, eight gateway steps and thirty-second execution deadline. Separate config keys avoid ambiguous exceptions. |
+| ADR-06 | Backend owns deterministic evaluations and authoritative writes; one AI entrypoint with constrained reads/task proposals. Model drafts use the exact API CriterionDraftInput shape. |
+| ADR-07 | v1 approval activates the first version only and requires reviewed revision via If-Match; amendment replacement requires a future coordinated extension. |
+| ADR-08 | API_CONTRACTS/DATA_MODEL/TEAM_OWNERSHIP govern their respective domains; IC reviews and versions every shared-contract change. Integration branch is master. |
+| ADR-09 | Screening date is local, lab date inclusive through Oct 31, medication window excludes Oct 31, evidence cutoff includes the entire screening day. Preserves distinct clinical/data clocks. |
+| ADR-10 | Malformed codes/invalid payloads are rejected; valid unmapped medication codes remain accepted evidence with UNKNOWN/UNMAPPED_CODE. Reset seeds draft rules for explicit human approval. |

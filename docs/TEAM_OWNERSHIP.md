@@ -1,6 +1,6 @@
 # ProtocolPulse — Three-Engineer Ownership and Integration Handshake
 
-**Freeze candidate:** `PP-S2-CF-20261114-01` / `1.0.0-rc1`. Architecture sign-off comes **before** independent coding. The following is the planned repository tree (not a claim that these source files exist now). The delivered Stage 2 artifacts are exactly the six `docs/*.md` files and `.env.example`; no `PROJECT_CONTEXT.md` is created until Stage 2.1.
+**Approved documentation freeze:** `PP-S2-CF-20261114-01` / `1.0.0-rc2`. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) records the user-authorized reconciliation and serves as the Stage 2.1 freeze manifest. The following is the planned implementation tree; delivered files are the product specification, six `docs/*.md` files, `.env.example` and `PROJECT_CONTEXT.md`. Engineering acknowledgements and runtime handoffs remain pending.
 
 ## 1. Exact future tree and exclusive ownership
 
@@ -8,7 +8,8 @@ Ownership legend: `E1` frontend, `E2` backend, `E3` AI, `IC` designated **integr
 
 ```text
 ProtocolPulse/
-├── PRODUCT_SPECIFICATION.md                  [IC/source-owned, immutable reference]
+├── PRODUCT_SPECIFICATION.md                  [IC; versioned product authority]
+├── PROJECT_CONTEXT.md                       [IC; derived context + freeze manifest]
 ├── .env.example                             [IC — delivered in this stage]
 ├── .gitignore                               [IC]
 ├── README.md                                [IC]
@@ -21,7 +22,7 @@ ProtocolPulse/
 │   ├── DATA_MODEL.md                        [IC]
 │   ├── TEAM_OWNERSHIP.md                    [IC]
 │   └── DEVELOPMENT_PLAN.md                 [IC]
-├── contracts/                               [IC; planned after approval; absent at this stage]
+├── contracts/                               [IC; generated at implementation handoff, absent now]
 │   ├── openapi.snapshot.json                [IC generated from backend; never hand-edited]
 │   └── agent_interface.schema.json          [IC, derived from API/AGENT docs]
 ├── frontend/
@@ -149,17 +150,17 @@ ProtocolPulse/
 
 ## 2. Backend↔AI fixed import boundary
 
-**One protocol**: `ai.entrypoints.run_agent(request: dict, gateway: AsyncToolGateway) -> dict` is async, versioned (`contract_version='1.0.0-rc1'`), and returns `AgentResult` described in AGENT_DESIGN. `AsyncToolGateway.invoke(tool_name: str,payload: dict) -> dict` is implemented by `backend/app/integrations/evidence_gateway.py`. The E2 adapter loads `ai.entrypoints`, validates input/output with *backend's* Pydantic mirror of frozen JSON, applies `LLM_ENABLED` guard and can swap `FakeAgentAdapter`. E3 **must not** import E2 models, session, FastAPI routes, environment loader or use raw network to read patient data; E2 **must not** import E3 internal tool modules. Only call `ai.entrypoints` at this boundary.
+**One protocol**: `ai.entrypoints.run_agent(request: dict, gateway: AsyncToolGateway) -> dict` is async, versioned (`contract_version='1.0.0-rc2'`), and returns `AgentResult` described in AGENT_DESIGN. `AsyncToolGateway.invoke(tool_name: str,payload: dict) -> dict` is implemented by `backend/app/integrations/evidence_gateway.py`. The E2 adapter loads `ai.entrypoints`, validates input/output with *backend's* Pydantic mirror of frozen JSON, applies `LLM_ENABLED` guard and can swap `FakeAgentAdapter`. E3 **must not** import E2 models, session, FastAPI routes, environment loader or use raw network to read patient data; E2 **must not** import E3 internal tool modules. Only call `ai.entrypoints` at this boundary.
 
 Only the backend service performs `reevaluate_affected`, `create_or_update_finding`, `append_audit`, approval and clinician state transitions. AI can ask the gateway for scoped evidence and constrained verification tasks; no credentials or patient database handles passed to model provider. Both sides test matching JSON contract with one saved sample: P-083 order-only, no use confirmation, `UNKNOWN(ORDER_ONLY)`; plus P-042 day-18 monitoring. `AgentResult.status=UNAVAILABLE` when `LLM_ENABLED=false` and the task actually needs AI; **never fake agent success**.
 
 ## 3. Frontend↔backend fixed mock-first contract
 
-E1 writes `frontend/lib/api/types.ts` from API_CONTRACTS (all DTO names and required nullable fields), and `client.ts` with `Envelope<T>`, typed `ErrorEnvelope`, real `GET /jobs/{job_id}` poller, request/correlation display, actor header and `Idempotency-Key` for mutation. `mocks.ts` implements the **same** exact envelopes, status enums and error codes—no alternate shape such as `{success:true}` or simulated fake enrollment. The mock may drive UX work, but merge/release requires actual backend responses for protocol upload/approval, computed selection, event case creation and review. In production-like demo UI, a mock actor switcher must be visibly labeled simulation. UI derives counts from assessments, not hardcoded 250-person marketing numbers.
+E1 writes `frontend/lib/api/types.ts` from API_CONTRACTS (all DTO names and required nullable fields), and `client.ts` with `Envelope<T>`, typed `ErrorEnvelope`, real `GET /jobs/{job_id}` poller, request/correlation display, actor header, mutation idempotency and required revision headers. `mocks.ts` implements the **same** exact envelopes, status enums and error codes—no alternate shape such as `{success:true}` or simulated fake enrollment. The mock may drive UX work, but merge/release requires actual backend responses for protocol upload/approval, computed selection, event case creation and review. In production-like demo UI, a mock actor switcher must be visibly labeled simulation. UI derives counts from the 15 assessments.
 
 ## 4. Worktrees, branch protocol and integration handshake
 
-1. IC protects `main`, publishes the six docs and `.env.example` plus a single signed **freeze manifest** in Stage 2.1 (NOT created now); owns package/CI config. E1/E2/E3 work in three separate worktrees/branches `feat/frontend`, `feat/backend`, `feat/ai` with distinct allowlisted paths.
+1. IC manages the integration branch `master` (current local branch; configure protection before engineering merges). The Stage 2.1 **freeze manifest** is the approval record in `PROJECT_CONTEXT.md`; it records user authorization, not fabricated engineer signatures. IC owns package/CI config. E1/E2/E3 will use separate worktrees/branches `feat/frontend`, `feat/backend`, `feat/ai` with distinct allowlisted paths; their creation and individual acknowledgements remain pending.
 2. H2: each engineer checks out freeze `PP-S2-CF-20261114-01`, acknowledges contracts/actor roles, and produces a **mock vertical path** immediately. No cross-tree source editing.
 3. H4: E2 shares running OpenAPI `app.openapi()` output in a review artifact (not a silently edited shared file); E1 reports TS mismatches; E3 shares one `AgentRequest`/`AgentResult` serialized round trip. IC reviews and, if accepted, updates `/docs` + future `contracts/*` as a **new** revision, then all owners rebase.
 4. H6 **first real smoke**: backend `GET health`, `GET trials`, `GET P-042`, approve seeded criteria, `POST screenings→GET job→GET assessments`; E1 front end renders real backend data. E3 independently demonstrates its mocked dynamic evidence selection via the gateway wire shape.
@@ -176,3 +177,5 @@ E1 writes `frontend/lib/api/types.ts` from API_CONTRACTS (all DTO names and requ
 | IC | E1/E2/E3 checks + `python -m pytest backend/tests ai/tests -q` + documented six-screen walkthrough | cross-module contracts, actual end-to-end DB records, acceptance and release checklist; package/root ownership enforced |
 
 **Escalation**: critical clinical rule mismatch, missing signed approval, seed count not 15, case duplication or contract discrepancy = block merge until IC approves a revision. If time short, cut P2 amendments, FHIR and decorative analytics before any P0 safety/traceability. Mock-only screenshots cannot satisfy definition of done.
+
+**Precedence:** API_CONTRACTS governs API/wire definitions, DATA_MODEL governs persistence, and this file governs path/change ownership. PROJECT_CONTEXT is derived. All disagreements require coordinator review and a versioned contract revision; no owner may reinterpret another domain locally.
