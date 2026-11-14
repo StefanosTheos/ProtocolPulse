@@ -1,7 +1,7 @@
 {
   "mode": "REAL_BACKEND_GATEWAY_AI_ENTRYPOINT_MOCK_MODEL",
   "case_created_before_ai": {
-    "case_id": "CASE-082d94a8a8f242598fadd13908ae5680",
+    "case_id": "CASE-d1ca70b9a062424d99ac4a2515cad9fd",
     "trial_id": "TR-PX104",
     "patient_id": "P-042",
     "protocol_version_id": "PV-PX104-1.0",
@@ -11,18 +11,18 @@
     "priority": "HIGH",
     "assigned_actor_id": null,
     "finding_ids": [
-      "FIND-3805793421e943708905e9c8ef2fbded"
+      "FIND-07eb79657fb843ab9222546e285ae8d0"
     ],
     "current_summary": "Confirmed restricted use during participation",
     "summary_origin": "SYSTEM_DETERMINISTIC",
-    "agent_execution_id": "EXEC-a0396e2a41bc4cc9ad47cd743d61b14e",
+    "agent_execution_id": "EXEC-170c2b62c62a42ca97f37f75e54eaf71",
     "revision": 2,
-    "opened_at": "2026-11-14T22:27:45.035724Z",
-    "updated_at": "2026-11-14T22:27:45.035724Z",
+    "opened_at": "2026-11-14T23:23:29.582494Z",
+    "updated_at": "2026-11-14T23:23:29.582494Z",
     "decisions": []
   },
   "execution": {
-    "execution_id": "EXEC-a0396e2a41bc4cc9ad47cd743d61b14e",
+    "execution_id": "EXEC-170c2b62c62a42ca97f37f75e54eaf71",
     "role": "MONITORING_WORKFLOW",
     "status": "SUCCEEDED",
     "trial_id": "TR-PX104",
@@ -31,11 +31,11 @@
     "criterion_ids": [
       "PX-MON-01"
     ],
-    "event_id": "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
-    "correlation_id": "061e91e2-d72f-467e-af45-a30576db50ce",
+    "event_id": "EVT-1681c5280f604304aa30f1ba7a32a0cb",
+    "correlation_id": "96ca2af6-fac9-46d7-aa6e-08d5d8b7df98",
     "evidence_refs": [
       {
-        "evidence_id": "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
+        "evidence_id": "EVT-1681c5280f604304aa30f1ba7a32a0cb",
         "source_id": "SRC-D18-P042",
         "source_version": 1,
         "evidence_type": "ADMINISTRATION",
@@ -46,7 +46,7 @@
         "span_end": null
       },
       {
-        "evidence_id": "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
+        "evidence_id": "EVT-1681c5280f604304aa30f1ba7a32a0cb",
         "source_id": "SRC-D18-P042",
         "source_version": 1,
         "evidence_type": "ADMINISTRATION",
@@ -57,7 +57,7 @@
         "span_end": null
       },
       {
-        "evidence_id": "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
+        "evidence_id": "EVT-1681c5280f604304aa30f1ba7a32a0cb",
         "source_id": "SRC-D18-P042",
         "source_version": 1,
         "evidence_type": "ADMINISTRATION",
@@ -68,7 +68,7 @@
         "span_end": null
       },
       {
-        "evidence_id": "SPAN-2a629a54fde14681af1ed0e870a75ad2",
+        "evidence_id": "SPAN-bcfd12f18ce44deb926fbd3269762d5f",
         "source_id": "SRC-PROTOCOL-PX104-V1",
         "source_version": 1,
         "evidence_type": "PDF",
@@ -79,7 +79,7 @@
         "span_end": 598
       },
       {
-        "evidence_id": "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
+        "evidence_id": "EVT-1681c5280f604304aa30f1ba7a32a0cb",
         "source_id": "SRC-D18-P042",
         "source_version": 1,
         "evidence_type": "ADMINISTRATION",
@@ -97,15 +97,15 @@
       {
         "tool_name": "classify_event_relevance",
         "input_reference_ids": [
-          "061e91e2-d72f-467e-af45-a30576db50ce",
-          "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
-          "EXEC-a0396e2a41bc4cc9ad47cd743d61b14e",
+          "96ca2af6-fac9-46d7-aa6e-08d5d8b7df98",
+          "EVT-1681c5280f604304aa30f1ba7a32a0cb",
+          "EXEC-170c2b62c62a42ca97f37f75e54eaf71",
           "P-042",
           "PV-PX104-1.0",
           "TR-PX104"
         ],
         "output_reference_ids": [
-          "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
+          "EVT-1681c5280f604304aa30f1ba7a32a0cb",
           "PX-MON-01",
           "SRC-D18-P042"
         ],
@@ -116,37 +116,37 @@
       {
         "tool_name": "get_prior_evaluation",
         "input_reference_ids": [
-          "061e91e2-d72f-467e-af45-a30576db50ce",
-          "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
-          "EXEC-a0396e2a41bc4cc9ad47cd743d61b14e",
+          "96ca2af6-fac9-46d7-aa6e-08d5d8b7df98",
+          "EVT-1681c5280f604304aa30f1ba7a32a0cb",
+          "EXEC-170c2b62c62a42ca97f37f75e54eaf71",
           "P-042",
           "PV-PX104-1.0",
           "PX-MON-01",
           "TR-PX104"
         ],
         "output_reference_ids": [
-          "ASM-7c9e400934894903b29fa9f34f1477fa",
-          "ASM-eaabf5360d3542609a0e4842ca898178",
-          "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
+          "ASM-77ae499c81dc4328931d21c53bf6ef3f",
+          "ASM-c28f12cda89c4982b82268a6328b8a33",
+          "EVT-1681c5280f604304aa30f1ba7a32a0cb",
           "PX-MON-01",
           "SRC-D18-P042"
         ],
         "result_code": "OK",
-        "elapsed_ms": 16,
+        "elapsed_ms": 0,
         "error_code": null
       },
       {
         "tool_name": "get_case_status",
         "input_reference_ids": [
-          "061e91e2-d72f-467e-af45-a30576db50ce",
-          "CASE-082d94a8a8f242598fadd13908ae5680",
-          "EXEC-a0396e2a41bc4cc9ad47cd743d61b14e",
+          "96ca2af6-fac9-46d7-aa6e-08d5d8b7df98",
+          "CASE-d1ca70b9a062424d99ac4a2515cad9fd",
+          "EXEC-170c2b62c62a42ca97f37f75e54eaf71",
           "P-042",
           "PV-PX104-1.0",
           "TR-PX104"
         ],
         "output_reference_ids": [
-          "FIND-3805793421e943708905e9c8ef2fbded"
+          "FIND-07eb79657fb843ab9222546e285ae8d0"
         ],
         "result_code": "OK",
         "elapsed_ms": 0,
@@ -155,37 +155,37 @@
       {
         "tool_name": "retrieve_patient_evidence",
         "input_reference_ids": [
-          "061e91e2-d72f-467e-af45-a30576db50ce",
-          "EXEC-a0396e2a41bc4cc9ad47cd743d61b14e",
+          "96ca2af6-fac9-46d7-aa6e-08d5d8b7df98",
+          "EXEC-170c2b62c62a42ca97f37f75e54eaf71",
           "P-042",
           "PV-PX104-1.0",
           "PX-MON-01",
-          "SNAP-6898dcf511ee4e4bb2a2e6a09305bb7a",
+          "SNAP-7dab15013501465cb6a68d56cb07ca0c",
           "TR-PX104"
         ],
         "output_reference_ids": [
-          "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
-          "SPAN-2a629a54fde14681af1ed0e870a75ad2",
+          "EVT-1681c5280f604304aa30f1ba7a32a0cb",
+          "SPAN-bcfd12f18ce44deb926fbd3269762d5f",
           "SRC-D18-P042",
           "SRC-PROTOCOL-PX104-V1"
         ],
         "result_code": "OK",
-        "elapsed_ms": 15,
+        "elapsed_ms": 32,
         "error_code": null
       },
       {
         "tool_name": "evaluate_approved_rule",
         "input_reference_ids": [
-          "061e91e2-d72f-467e-af45-a30576db50ce",
-          "EXEC-a0396e2a41bc4cc9ad47cd743d61b14e",
+          "96ca2af6-fac9-46d7-aa6e-08d5d8b7df98",
+          "EXEC-170c2b62c62a42ca97f37f75e54eaf71",
           "P-042",
           "PV-PX104-1.0",
           "PX-MON-01",
-          "SNAP-6898dcf511ee4e4bb2a2e6a09305bb7a",
+          "SNAP-7dab15013501465cb6a68d56cb07ca0c",
           "TR-PX104"
         ],
         "output_reference_ids": [
-          "EVT-cb2c79b5c8414095a7eb7d00d3402e57",
+          "EVT-1681c5280f604304aa30f1ba7a32a0cb",
           "SRC-D18-P042"
         ],
         "result_code": "OK",
@@ -195,7 +195,7 @@
     ],
     "error_code": null,
     "model_id": "MOCK-IC-INTEGRATION-NOT-LIVE",
-    "created_at": "2026-11-14T22:27:45.058596Z",
-    "finished_at": "2026-11-14T22:27:45.134630Z"
+    "created_at": "2026-11-14T23:23:29.605744Z",
+    "finished_at": "2026-11-14T23:23:29.704645Z"
   }
 }

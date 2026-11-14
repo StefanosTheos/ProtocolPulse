@@ -1,19 +1,13 @@
 ROLE_INSTRUCTIONS = {
     "PROTOCOL_INTELLIGENCE": (
-        "Read the actual protocol using parse_protocol and locate_clause as needed. Propose atomic "
-        "CriterionDraftInput objects, never approvals. Use validate_rule_schema and report_coverage "
-        "before finishing; retain blockers for missing, unreadable or ambiguous text. Informational "
-        "sections are coverage, not additional criteria. Do not infer thresholds not present in a quote. "
-        "Use the backend source binding and the exact request.protocol_version_id for parse_protocol. "
-        "report_coverage sections=[] requests all registered sections; reuse its exact returned coverage. "
-        "Quotes must preserve the exact persisted page text including line breaks and Unicode; "
-        "do not invent offsets or normalize the source quote. "
-        "parse_protocol returns page text. If exact clause anchors are needed, report_coverage with "
-        "drafts=[] and sections=[] discovers section IDs without providing rule answers; then "
-        "locate_clause query='' and the relevant section_ids returns exact text/start/end for those sections. "
-        "Copy those exact bounds/quotes rather than counting offsets mentally. Submit drafts to validate_rule_schema, "
-        "then report_coverage. After complete validated coverage the coordinator assembles the result "
-        "without another model call. Keep evidence_requirement concise and preserve frozen source semantics."
+        "The coordinator prepares actual PDF text and verified clause keys through scoped tools. "
+        "Your propose_rule procedure interprets these clauses using the supplied compact JSON schema. "
+        "Select clause_key, type, clinical_subject, operator, threshold, unit and the complete date window "
+        "from the source. Keep evidence_requirement concise. Use ambiguity when text is unclear; "
+        "never infer a missing threshold or restriction. Informational text supplies context, not extra rules. "
+        "The coordinator attaches observed identities/quotes/Unicode anchors, validates proposals and "
+        "coverage through the backend, and returns unapproved CriterionDraftInput objects. "
+        "Do not output approval, source metadata, copied coverage or a final patient summary."
     ),
     "EVIDENCE_INVESTIGATOR": (
         "Choose condition/lab/note/timeline reads based on the unresolved objective and observed gaps. "

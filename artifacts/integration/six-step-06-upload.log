@@ -1,0 +1,69 @@
+FF..                                                                     [100%]
+================================== FAILURES ===================================
+_ test_uploaded_model_proposals_persist_unsigned_then_human_approves_and_screens _
+
+env = (<starlette.testclient.TestClient object at 0x000001EF170E5490>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EF15DD0AD0>
+
+    def test_uploaded_model_proposals_persist_unsigned_then_human_approves_and_screens(env, monkeypatch):
+        prefix, initial = upload(env)
+        model = enable(env, monkeypatch)
+        receipt = queue(env, prefix)
+        replay = queue(env, prefix)
+        assert replay == receipt
+        work(env)
+        job = env[0].get(receipt['poll_url'], headers=headers()).json()['data']
+>       assert job['status'] == 'SUCCEEDED', job
+E       AssertionError: {'job_id': 'JOB-d3d3f46666ac452c9ff1a4e8fa80e49d', 'kind': 'PROTOCOL_EXTRACT', 'status': 'FAILED', 'resource_id': 'PV-ccc4a8fa26ea44ba917e0b2368af1e33', ...}
+E       assert 'FAILED' == 'SUCCEEDED'
+E
+E         - SUCCEEDED
+E         + FAILED
+
+backend\tests\test_model_extraction.py:65: AssertionError
+---------------------------- Captured stderr call -----------------------------
+WARNING:backend.app.integrations.agent_adapter:agent_result_rejected execution_id=EXEC-cbd571ab301e4bf795c17490dd8e87e9 stage=trace exception_type=ValueError
+------------------------------ Captured log call ------------------------------
+WARNING  backend.app.integrations.agent_adapter:agent_adapter.py:221 agent_result_rejected execution_id=EXEC-cbd571ab301e4bf795c17490dd8e87e9 stage=trace exception_type=ValueError
+_____ test_enabled_extraction_failure_never_loads_curated_answers[False] ______
+
+env = (<starlette.testclient.TestClient object at 0x000001EF1728D0D0>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001EF16FA5670>
+missing_key = False
+
+    @pytest.mark.parametrize('missing_key', [False, True])
+    def test_enabled_extraction_failure_never_loads_curated_answers(env, monkeypatch, missing_key):
+        prefix, _ = upload(env)
+        model = enable(env, monkeypatch, fail=True)
+        if missing_key:
+            env[3].llm_api_key = SecretStr('')
+            monkeypatch.setenv('LLM_API_KEY', '')
+        receipt = queue(env, prefix)
+        work(env)
+        job = env[0].get(receipt['poll_url'], headers=headers()).json()['data']
+        assert job['status'] == 'FAILED'
+        detail = env[0].get(prefix, headers=headers()).json()['data']
+        assert detail['state'] == 'EXTRACTION_FAILED' and detail['criteria'] == []
+        assert detail['approved_set_hash'] is None
+        with env[2]() as session:
+            execution = session.scalar(select(m.AgentExecution))
+            assert execution.status == ('UNAVAILABLE' if missing_key else 'FAILED')
+>       assert model.calls_observed == (0 if missing_key else 1)
+E       AssertionError: assert 0 == 1
+E        +  where 0 = <class 'test_model_extraction.enable.<locals>.Model'>.calls_observed
+
+backend\tests\test_model_extraction.py:113: AssertionError
+---------------------------- Captured stderr call -----------------------------
+WARNING:backend.app.integrations.agent_adapter:agent_result_rejected execution_id=EXEC-d16f9758cda74ea6a0b7958ea246fc56 stage=trace exception_type=ValueError
+------------------------------ Captured log call ------------------------------
+WARNING  backend.app.integrations.agent_adapter:agent_adapter.py:221 agent_result_rejected execution_id=EXEC-d16f9758cda74ea6a0b7958ea246fc56 stage=trace exception_type=ValueError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\starlette\testclient.py:37
+  C:\Users\steve\OneDrive\Υπολογιστής\Hackathon\.venv\Lib\site-packages\starlette\testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend/tests/test_model_extraction.py::test_uploaded_model_proposals_persist_unsigned_then_human_approves_and_screens
+FAILED backend/tests/test_model_extraction.py::test_enabled_extraction_failure_never_loads_curated_answers[False]
+2 failed, 2 passed, 1 warning in 3.20s

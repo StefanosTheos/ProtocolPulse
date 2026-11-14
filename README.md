@@ -53,7 +53,7 @@ The Python lock captures tested package versions. POSIX commands were not execut
 ## Synthetic walkthrough and reset
 
 1. Load PX-104 and Trial setup. Seed rules are **unapproved**. To demonstrate upload/extraction, use `fixtures/protocols/px104-v1/PX-104-v1.0-fictional.pdf` and a new version label before activating another version.
-2. As coordinator `ACT-COORD-01`, upload and extract. Default extraction loads a **labeled curated fixture**, not model extraction. The synthetic-source allowlist rejects other PDF bytes.
+2. As coordinator `ACT-COORD-01`, upload and extract. With the default `LLM_ENABLED=false`, extraction loads a **labeled curated fixture**. When enabled and configured, it runs Gemini through the scoped gateway and persists validated, unapproved model proposals. An enabled-model failure is explicit and never replaced by curated answers. The synthetic-source allowlist rejects other PDF bytes.
 3. Switch to `ACT-INV-01`, review/edit proposals and all citations, attest twelve coverage sections and approve eight rules. A second active version is intentionally blocked in v1.
 4. Screen for `2026-10-31`. Wait for job `SUCCEEDED` and run `COMPLETE`. Inspect P-042, P-175, P-124, P-117/P-118, P-083 and P-140. Counts come from fifteen actual assessments.
 5. On P-042, record external participation using `SRC-P-042-external` and `EXT-P-042`. This mirrors a registered synthetic external record; screening does not enroll anyone.
@@ -66,6 +66,8 @@ The Python lock captures tested package versions. POSIX commands were not execut
 Default `LLM_ENABLED=false` needs no key. Deterministic screening/events/cases continue; agents show `UNAVAILABLE` without fabricated traces. Explicit investigations return `503 AGENT_UNAVAILABLE` when disabled/unconfigured.
 
 Selected provider/model: `LLM_PROVIDER=gemini`, `LLM_MODEL=gemini-3.8-flash`. An authorized synthetic smoke may set `LLM_ENABLED=true` and server-side `LLM_API_KEY` in root `.env`, then restart the API. Backend loads root `.env` into the server process used by the AI entrypoint. Account access, quota, latency and live inference require an actual configured run; mocked SDK/model tests do not prove them.
+
+Protocol preparation preserves actual PDF text/Unicode anchors. The model interprets clauses in two small bounded batches; code constructs the exact public drafts and the backend validates/persists them. Patient-role final outputs select verified citation registry entries. Monitoring switches to tool-free final drafting when its observed evidence is sufficient; the deterministic worker creates findings/cases independently. All roles retain the frozen eight-tool / 5s tool / 10s model / 30s execution limits. See [six-change verification](docs/AI_REMEDIATION.md) for real and mocked evidence, measured runs and limitations.
 
 Never put secrets in browser configuration, `NEXT_PUBLIC_*`, DTOs, model input, traces or Git. The only frontend variable is `NEXT_PUBLIC_API_BASE_URL`. `.env`, virtual environments and `backend/var/` are ignored. Demo actors simulate roles and provide **no production authentication**.
 

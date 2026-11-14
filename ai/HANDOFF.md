@@ -1,5 +1,7 @@
 # Engineer 3 handoff — ProtocolPulse
 
+**Current coordinator update (2026-11-15):** [six-change remediation](../docs/AI_REMEDIATION.md) supersedes the historical runtime limitations below. It records role-specific private model outputs, verified reference selections, bounded two-batch source interpretation, tool-free monitoring finalization, shared deadlines/telemetry and real uploaded-source integration. Public DTOs/model/budgets remain frozen. The original E3 handoff below retains its original scope and mock-only results.
+
 Contract `PP-S2-CF-20261114-01 / 1.0.0-rc2`; fixture `px104-protocol-v1`. All implementation changes are under `ai/**`. No shared documents, fixture bytes, backend/frontend files or IC-owned `ai/pyproject.toml` were edited.
 
 ## Delivered

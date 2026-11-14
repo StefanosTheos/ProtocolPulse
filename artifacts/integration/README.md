@@ -2,6 +2,8 @@
 
 Authoritative runtime report: [INTEGRATION_REPORT.md](../../INTEGRATION_REPORT.md). Inputs are entirely synthetic. Earlier offline fixtures use mocked models; the enabled follow-up below separately records actual Gemini results.
 
+Latest six-change remediation: [implementation/checkpoints](../../docs/AI_REMEDIATION.md). `six-step-live.json` contains the successful real uploaded-source → synthetic investigator approval → fifteen-patient screening → event/case/agent workflow and uncertainty branches. `six-step-persistence.json` records equality across an actual API restart. `six-step-model-telemetry.log` contains real model phase/timing/token records without content. `six-step-manifest.json` fingerprints the source under test. Numbered `six-step-01` through `six-step-06` command logs preserve the sequential checkpoints, initial failures and corrected outcomes; `six-step-final-all.log` is the final combined regression. The live workflow was resumed after two QA-runner defects; first/second-attempt JSONs remain historical failures. Mocked evaluation output is explicitly labeled in `six-step-evals.log`. Existing main-demo data was preserved; temporary test databases and credentials are ignored.
+
 - `test-manifest.json`: exact code commit, source fingerprints, package/runtime versions and freeze identity.
 - `final-python.log`: combined backend/AI results. `final-auto-enrichment.log` verifies the final test-only assertion cleanup.
 - `final-frontend-tests.log`, `final-lint.log`, `final-typecheck.log`, `final-build.log`: actual frontend quality checks.

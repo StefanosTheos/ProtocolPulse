@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+import logging
 from uuid import UUID, uuid4
 
 from fastapi import FastAPI
@@ -17,6 +18,8 @@ from backend.app.services.jobs import JobRunner
 
 
 def create_app(settings=None, factory=None, start_worker=True):
+    logging.basicConfig(level=logging.WARNING)
+    logging.getLogger('ai').setLevel(logging.INFO)
     settings = settings or get_settings()
     if not settings.synthetic_data_only:
         raise ValueError("ProtocolPulse demo requires SYNTHETIC_DATA_ONLY=true")

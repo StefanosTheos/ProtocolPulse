@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "backend/tests",
+    "ai/tests",
+    "-q",
+    "--basetemp",
+    "backend/var/qa-six-step-final-guard"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 63.562
+}

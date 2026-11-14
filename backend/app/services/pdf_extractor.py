@@ -108,10 +108,7 @@ def verified_fixture():
     return data, pages, proposal
 
 
-def validate_proposal(proposal, pages, version_id, source_id):
-    """Frozen PX-104 semantics are checked independently of the oracle at runtime."""
-    if len(proposal.criteria) != 8 or {c.criterion_id for c in proposal.criteria} != RULE_IDS:
-        raise DomainError("APPROVAL_BLOCKED", "RULESET_MISMATCH")
+def validate_draft(c, pages, version_id, source_id):
     expected = {
         "PX-INC-01": ("INCLUSION", "age", "AGE_RANGE_INCLUSIVE", (40, 70), "years", 0, True),
         "PX-INC-02": ("INCLUSION", "diagnosis", "CODE_CONFIRMED", "SYN-CONDITION-A", None, 0, True),
@@ -131,38 +128,45 @@ def validate_proposal(proposal, pages, version_id, source_id):
         "PX-MON-03": ("MONITORING", "egfr", "EVENT_LAB_LT", 60, "mL/min/1.73m²", None, False),
     }
     # Subjects are frozen bindings, not inferred from arbitrary text.
+    values = expected[c.criterion_id]
+    actual = (
+        c.type,
+        c.clinical_subject,
+        c.operator,
+        c.threshold,
+        c.unit,
+        c.window.start_offset_days if c.window else None,
+        c.window.end_inclusive if c.window else None,
+    )
+    if actual != values or not c.window:
+        raise DomainError("APPROVAL_BLOCKED", "FROZEN_SEMANTICS_MISMATCH")
+    monitoring = c.type == "MONITORING"
+    w = c.window
+    if (
+        c.protocol_version_id != version_id
+        or c.source_id != source_id
+        or c.terminology_map_version != "px104-terminology-v1"
+        or c.applicable_site_ids != ["SITE-SYN-01"]
+        or c.logical_group_id
+        != ("PX104-MONITORING-INDEPENDENT" if monitoring else "PX104-ELIGIBILITY-ALL")
+        or w.anchor != ("PARTICIPATION" if monitoring else "SCREENING_DATE")
+        or w.anchor_granularity != ("INSTANT" if monitoring else "LOCAL_DATE")
+        or w.time_zone != "Europe/Athens"
+        or not w.start_inclusive
+        or w.end_offset_days != (None if monitoring else 0)
+    ):
+        raise DomainError("APPROVAL_BLOCKED", "FROZEN_SEMANTICS_MISMATCH")
+    text = pages.get(str(c.source_page), "")
+    if text[c.source_anchor.start : c.source_anchor.end] != c.source_quote:
+        raise DomainError("APPROVAL_BLOCKED", "SOURCE_QUOTE_MISMATCH")
+
+
+def validate_proposal(proposal, pages, version_id, source_id):
+    """Frozen PX-104 semantics are checked independently of the oracle at runtime."""
+    if len(proposal.criteria) != 8 or {c.criterion_id for c in proposal.criteria} != RULE_IDS:
+        raise DomainError("APPROVAL_BLOCKED", "RULESET_MISMATCH")
     for c in proposal.criteria:
-        values = expected[c.criterion_id]
-        actual = (
-            c.type,
-            c.clinical_subject,
-            c.operator,
-            c.threshold,
-            c.unit,
-            c.window.start_offset_days if c.window else None,
-            c.window.end_inclusive if c.window else None,
-        )
-        if actual != values or not c.window:
-            raise DomainError("APPROVAL_BLOCKED", "FROZEN_SEMANTICS_MISMATCH")
-        monitoring = c.type == "MONITORING"
-        w = c.window
-        if (
-            c.protocol_version_id != version_id
-            or c.source_id != source_id
-            or c.terminology_map_version != "px104-terminology-v1"
-            or c.applicable_site_ids != ["SITE-SYN-01"]
-            or c.logical_group_id
-            != ("PX104-MONITORING-INDEPENDENT" if monitoring else "PX104-ELIGIBILITY-ALL")
-            or w.anchor != ("PARTICIPATION" if monitoring else "SCREENING_DATE")
-            or w.anchor_granularity != ("INSTANT" if monitoring else "LOCAL_DATE")
-            or w.time_zone != "Europe/Athens"
-            or not w.start_inclusive
-            or w.end_offset_days != (None if monitoring else 0)
-        ):
-            raise DomainError("APPROVAL_BLOCKED", "FROZEN_SEMANTICS_MISMATCH")
-        text = pages.get(str(c.source_page), "")
-        if text[c.source_anchor.start : c.source_anchor.end] != c.source_quote:
-            raise DomainError("APPROVAL_BLOCKED", "SOURCE_QUOTE_MISMATCH")
+        validate_draft(c, pages, version_id, source_id)
     expected_sections = {"PX-INFO-IDENTITY", "PX-INFO-CALENDAR", "PX-INFO-EVIDENCE", "PX-INFO-REVIEW"}
     expected_sections |= {"PX-SECTION-" + rule.removeprefix("PX-") for rule in RULE_IDS}
     if len(proposal.coverage) != 12 or {c.section_id for c in proposal.coverage} != expected_sections:
