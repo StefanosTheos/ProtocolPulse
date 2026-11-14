@@ -4,6 +4,8 @@
 
 **Approval basis:** the user authorized the documentation maintainer to choose and reconcile discrepancies. This revision supersedes the prior candidate revision; product specification is v1.1, fictional clinical protocol remains PX-104 v1.0. This records design approval only. Engineer acknowledgements, worktrees, application code, clinical rule approvals and runtime validation remain pending.
 
+**Additive fixture handoff:** `px104-protocol-v1` now supplies the [protocol blueprint](docs/PROTOCOL_BLUEPRINT.md), [five-page source PDF](fixtures/protocols/px104-v1/PX-104-v1.0-fictional.pdf), [expected extraction](fixtures/protocols/px104-v1/expected_extraction.json) and [prompt addenda](docs/PARALLEL_ENGINEER_PROMPT_UPDATES.md). These instantiate the frozen eight rules; wire revision stays `1.0.0-rc2`.
+
 ## 1. Mission, lifecycle and authority
 
 ProtocolPulse turns a fictional protocol into reviewed, source-linked rules, screens synthetic candidates, then monitors participating patients for relevant new evidence. **Recruitment:** upload → propose rules/coverage → investigator approval → deterministic screening → evidence investigation → investigator disposition. **Monitoring:** separately record external participation → ingest dated event → reevaluate affected rules → deduplicated case → human review → audit. Screening never enrolls a patient.
@@ -141,6 +143,8 @@ Backend-only writes: `reevaluate_affected`, `create_or_update_finding`, `append_
 | E3 | `ai/**` except `ai/pyproject.toml`; includes `ai/entrypoints.py`, agents/tools/prompts/evals/tests |
 | IC | Product/context, `docs/**`, `contracts/**`, root configuration/README/Makefile/CI; `frontend/package.json`, `package-lock.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`; `backend/pyproject.toml`, `ai/pyproject.toml` |
 
+IC also owns delivered `fixtures/protocols/**`, `tools/protocol_fixture.py` and `tools/requirements-protocol-fixture.txt`. All engineers consume the shared fixture read-only; no application ownership changes.
+
 `backend/var/**` is uncommitted runtime output. Unlisted paths need IC assignment. Branches planned: `feat/frontend`, `feat/backend`, `feat/ai`; integration branch `master`. Only IC accepts shared-contract changes and merges: proposal with affected types/routes → IC review → source/contract revision bump → owners update/rebase and verify. No cross-owner one-line fixes. Exact tree: [TEAM_OWNERSHIP](docs/TEAM_OWNERSHIP.md).
 
 ## 9. Synthetic seed, dates and replay
@@ -160,6 +164,7 @@ Replay procedure: record P-042 participation; submit [API §4 event JSON](docs/A
 Planned commands, from root after implementation:
 
 ```bash
+python tools/protocol_fixture.py --check
 npm --prefix frontend run typecheck
 npm --prefix frontend run test
 npm --prefix frontend run build
@@ -168,6 +173,8 @@ python -m ai.evals.run_evals
 ```
 
 Required release scenarios: AC-01–10, AC-12–14, AC-16–18, AC-20; AC-15/19 robustness; AC-11 P2. Check H6 real smoke, H10 core event/case, H14 integration, H17 quality, H20 release; all runtime gates remain pending. [Ownership §5](docs/TEAM_OWNERSHIP.md#5-mandatory-owner-tests-and-handoff-proof) assigns verification.
+
+The fixture check is implemented; the application commands below it remain planned. Fixture-tool dependencies are in `tools/requirements-protocol-fixture.txt`. The curated review mock has eight proposed criteria and unsigned coverage, not an approved operational protocol. See the blueprint for reference PDF text/Unicode anchors, hashes and negative-output tests.
 
 Gateway timeout **5s**, model invocation **10s**, execution deadline **30s**, max **8** gateway calls including retries; all operations respect remaining deadline. Keys: `TOOL_TIMEOUT_SECONDS`, `LLM_CALL_TIMEOUT_SECONDS`, `AGENT_TIMEOUT_SECONDS`, `MAX_AGENT_STEPS`. Worker: poll 500ms, lease 60s, max 3 job attempts, retry backoff 2s, batch 1.
 

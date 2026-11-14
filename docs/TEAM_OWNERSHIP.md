@@ -1,6 +1,6 @@
 # ProtocolPulse — Three-Engineer Ownership and Integration Handshake
 
-**Approved documentation freeze:** `PP-S2-CF-20261114-01` / `1.0.0-rc2`. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) records the user-authorized reconciliation and serves as the Stage 2.1 freeze manifest. The following is the planned implementation tree; delivered files are the product specification, six `docs/*.md` files, `.env.example` and `PROJECT_CONTEXT.md`. Engineering acknowledgements and runtime handoffs remain pending.
+**Approved documentation freeze:** `PP-S2-CF-20261114-01` / `1.0.0-rc2`. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) records the user-authorized reconciliation and serves as the Stage 2.1 freeze manifest. The following includes planned implementation paths. Delivered artifacts include the product/core documentation, `.env.example`, context, and the additive `px104-protocol-v1` blueprint/PDF/extraction handoff. Engineering acknowledgements and application runtime handoffs remain pending.
 
 ## 1. Exact future tree and exclusive ownership
 
@@ -21,7 +21,20 @@ ProtocolPulse/
 │   ├── API_CONTRACTS.md                     [IC]
 │   ├── DATA_MODEL.md                        [IC]
 │   ├── TEAM_OWNERSHIP.md                    [IC]
-│   └── DEVELOPMENT_PLAN.md                 [IC]
+│   ├── DEVELOPMENT_PLAN.md                 [IC]
+│   ├── PROTOCOL_BLUEPRINT.md               [IC; eight-rule source/fixture handoff]
+│   └── PARALLEL_ENGINEER_PROMPT_UPDATES.md  [IC; prompt addenda]
+├── fixtures/protocols/px104-v1/             [IC exclusively; delivered shared source/oracles]
+│   ├── source_document.json                [IC; authoring source and curated mapping]
+│   ├── PX-104-v1.0-fictional.pdf            [IC; generated real text PDF]
+│   ├── source_pages.json                   [IC; actual PDF text/section anchors]
+│   ├── expected_extraction.json            [IC; CriteriaReplaceRequest body]
+│   ├── expected_protocol_detail.json       [IC; unsigned review-state mock]
+│   ├── expected_extraction.schema.json     [IC; mirror of existing request DTOs]
+│   ├── extraction_checks.json              [IC; negative-output mutation cases]
+│   └── manifest.json                       [IC; file hashes and fixture identity]
+├── tools/protocol_fixture.py               [IC; build/check/preview fixture tooling]
+├── tools/requirements-protocol-fixture.txt  [IC; authoring-only dependencies]
 ├── contracts/                               [IC; generated at implementation handoff, absent now]
 │   ├── openapi.snapshot.json                [IC generated from backend; never hand-edited]
 │   └── agent_interface.schema.json          [IC, derived from API/AGENT docs]
@@ -147,6 +160,8 @@ ProtocolPulse/
 ```
 
 **Single ownership of additional files:** `frontend/app/**`, `frontend/components/**`, `frontend/lib/api/**`, `frontend/tests/**` exclusively E1; `backend/app/**`, `backend/alembic/**`, `backend/tests/**` exclusively E2; `ai/**` excluding `ai/pyproject.toml` exclusively E3. `docs/**`, `contracts/**`, root config, CI and the three package manifest files exclusively IC. Package dep changes requested as a PR comment/issue and implemented by IC; no separate engineer edits the same manifests. `backend/alembic.ini` belongs E2. Noncommitted `backend/var/**` created by runtime, never an ownership conflict.
+
+**Additive fixture handoff `px104-protocol-v1`:** the user's blueprint/PDF/fixture request assigns `fixtures/protocols/**`, `tools/protocol_fixture.py` and `tools/requirements-protocol-fixture.txt` to IC. E1/E2/E3 read these shared artifacts but edit only their existing implementation paths. This fixture release and path assignment add no wire fields or clinical rules; API/agent schema remains `1.0.0-rc2`. Incorporate [prompt addenda](PARALLEL_ENGINEER_PROMPT_UPDATES.md) before starting the three workstreams.
 
 ## 2. Backend↔AI fixed import boundary
 

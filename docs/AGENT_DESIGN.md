@@ -152,6 +152,8 @@ The backend deterministic process **does not wait** for this loop to classify ne
 
 ## 7. Evaluations and acceptance oracles
 
+Protocol source/expected output: [PROTOCOL_BLUEPRINT](PROTOCOL_BLUEPRINT.md), release `fixtures/protocols/px104-v1/`. Use PDF/page evidence as model input and the curated rule/coverage JSONs only as evaluation or explicitly labeled non-AI fallback data. Never supply the answer oracle through the live model evidence gateway. `extraction_checks.json` tests rejection of invalid output; it does not replace runtime unreadable-PDF/prompt-injection tests. Apply the E3 [prompt addendum](PARALLEL_ENGINEER_PROMPT_UPDATES.md#engineer-3--ai-addition).
+
 | Agent eval | Input and expected tool choices | Pass condition |
 |---|---|---|
 | `EV-PROTOCOL-01` | multi-page mock PDF with ambiguous exclusion; `parse_protocol→locate_clause→report_coverage` and blocker | proposal anchored to real text, cannot approve or activate; AC-12 |

@@ -1,0 +1,357 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "Anchor",
+      "type": "object"
+    },
+    "CoverageItem": {
+      "additionalProperties": false,
+      "properties": {
+        "section_id": {
+          "title": "Section Id",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "span_start": {
+          "minimum": 0,
+          "title": "Span Start",
+          "type": "integer"
+        },
+        "span_end": {
+          "exclusiveMinimum": 0,
+          "title": "Span End",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "MAPPED",
+            "INFORMATIONAL",
+            "BLOCKING"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "criterion_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Criterion Ids",
+          "type": "array"
+        },
+        "review_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Review Note"
+        }
+      },
+      "required": [
+        "section_id",
+        "source_id",
+        "page",
+        "span_start",
+        "span_end",
+        "status",
+        "criterion_ids",
+        "review_note"
+      ],
+      "title": "CoverageItem",
+      "type": "object"
+    },
+    "CriterionDraftInput": {
+      "additionalProperties": false,
+      "properties": {
+        "criterion_id": {
+          "title": "Criterion Id",
+          "type": "string"
+        },
+        "protocol_version_id": {
+          "title": "Protocol Version Id",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "INCLUSION",
+            "EXCLUSION",
+            "MONITORING"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "clinical_subject": {
+          "title": "Clinical Subject",
+          "type": "string"
+        },
+        "operator": {
+          "enum": [
+            "AGE_RANGE_INCLUSIVE",
+            "CODE_CONFIRMED",
+            "LAB_GTE",
+            "ABSENCE_CONFIRMED_ACTIVE",
+            "NO_RESTRICTED_USE",
+            "EVENT_RESTRICTED_USE",
+            "EVENT_ORDER_ONLY",
+            "EVENT_LAB_LT"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Threshold"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Unit"
+        },
+        "window": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WindowSpec"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence_requirement": {
+          "title": "Evidence Requirement",
+          "type": "string"
+        },
+        "missing_data_policy": {
+          "const": "UNKNOWN_UNLESS_RECONCILED",
+          "title": "Missing Data Policy",
+          "type": "string"
+        },
+        "source_quote": {
+          "title": "Source Quote",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_page": {
+          "minimum": 1,
+          "title": "Source Page",
+          "type": "integer"
+        },
+        "source_anchor": {
+          "$ref": "#/$defs/Anchor"
+        },
+        "applicable_site_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Applicable Site Ids",
+          "type": "array"
+        },
+        "terminology_map_version": {
+          "title": "Terminology Map Version",
+          "type": "string"
+        },
+        "logical_group_id": {
+          "title": "Logical Group Id",
+          "type": "string"
+        },
+        "workflow_status": {
+          "enum": [
+            "PROPOSED",
+            "NEEDS_CLARIFICATION"
+          ],
+          "title": "Workflow Status",
+          "type": "string"
+        },
+        "ambiguity": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Ambiguity"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "protocol_version_id",
+        "type",
+        "clinical_subject",
+        "operator",
+        "threshold",
+        "unit",
+        "window",
+        "evidence_requirement",
+        "missing_data_policy",
+        "source_quote",
+        "source_id",
+        "source_page",
+        "source_anchor",
+        "applicable_site_ids",
+        "terminology_map_version",
+        "logical_group_id",
+        "workflow_status",
+        "ambiguity"
+      ],
+      "title": "CriterionDraftInput",
+      "type": "object"
+    },
+    "WindowSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "enum": [
+            "SCREENING_DATE",
+            "EVENT_EFFECTIVE_AT",
+            "PARTICIPATION"
+          ],
+          "title": "Anchor",
+          "type": "string"
+        },
+        "start_offset_days": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Start Offset Days"
+        },
+        "end_offset_days": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Offset Days"
+        },
+        "start_inclusive": {
+          "title": "Start Inclusive",
+          "type": "boolean"
+        },
+        "end_inclusive": {
+          "title": "End Inclusive",
+          "type": "boolean"
+        },
+        "time_zone": {
+          "title": "Time Zone",
+          "type": "string"
+        },
+        "anchor_granularity": {
+          "enum": [
+            "LOCAL_DATE",
+            "INSTANT"
+          ],
+          "title": "Anchor Granularity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "anchor",
+        "start_offset_days",
+        "end_offset_days",
+        "start_inclusive",
+        "end_inclusive",
+        "time_zone",
+        "anchor_granularity"
+      ],
+      "title": "WindowSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "criteria": {
+      "items": {
+        "$ref": "#/$defs/CriterionDraftInput"
+      },
+      "title": "Criteria",
+      "type": "array"
+    },
+    "coverage": {
+      "items": {
+        "$ref": "#/$defs/CoverageItem"
+      },
+      "title": "Coverage",
+      "type": "array"
+    },
+    "change_reason": {
+      "title": "Change Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "criteria",
+    "coverage",
+    "change_reason"
+  ],
+  "title": "CriteriaReplaceRequest",
+  "type": "object"
+}

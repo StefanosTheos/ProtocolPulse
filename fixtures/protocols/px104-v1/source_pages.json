@@ -1,0 +1,114 @@
+{
+  "source_id": "SRC-PROTOCOL-PX104-V1",
+  "source_version": 1,
+  "extractor": "PyMuPDF 1.27.2.3; get_text(text, sort=False)",
+  "offsets": "zero-based end-exclusive Unicode code points; page-local",
+  "pages": [
+    {
+      "page": 1,
+      "text": "ProtocolPulse | PX-104 v1.0\nFICTIONAL / SYNTHETIC ONLY - NOT FOR CLINICAL USE\nStudy identity and calendar\n1. Identity and purpose\nPX-104 v1.0 is a fictional 12-week study for SYN-CONDITION-A. Trial TR-PX104 and site SITE-SYN-01\nexist only in a synthetic software demonstration. This document contains exactly five eligibility rules and\nthree monitoring rules. It does not establish medical suitability, real drug properties or regulatory\ncompliance. All names, codes, restrictions and thresholds are invented for software testing. No real-person\nrecords may be used.\n2. Study calendar and interpretation\nUse the Europe/Athens site calendar. The screening date is 2026-10-31; study day 0 is 2026-11-01; study\nday 18 is 2026-11-19. Baseline evidence cutoff is 2026-11-01T00:00:00+02:00, after the screening day.\nThis cutoff is separate from clinical rule windows. Eligibility is assessed at screening; monitoring applies\nduring separately human-recorded participation. Clinical-effective, source-recorded, ingestion and decision\ntimes are distinct. No visit schedule, dosing regimen, extra tests or additional eligibility restrictions are\ndefined.\nSynthetic PX-104 v1.0 | source version 1 | Page 1 of 5\n"
+    },
+    {
+      "page": 2,
+      "text": "ProtocolPulse | PX-104 v1.0\nFICTIONAL / SYNTHETIC ONLY - NOT FOR CLINICAL USE\nInclusion criteria\n3. PX-INC-01 - Age at screening\nThe patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n4. PX-INC-02 - Confirmed index diagnosis\nThe patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n5. PX-INC-03 - Latest timely eGFR\nThe latest relevant eGFR must be at least 60 mL/min/1.73m². Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\nSynthetic PX-104 v1.0 | source version 1 | Page 2 of 5\n"
+    },
+    {
+      "page": 3,
+      "text": "ProtocolPulse | PX-104 v1.0\nFICTIONAL / SYNTHETIC ONLY - NOT FOR CLINICAL USE\nExclusion criteria\n6. PX-EXC-01 - Excluded active condition\nThe patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n7. PX-EXC-02 - Restricted use before screening\nThe patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\nSynthetic PX-104 v1.0 | source version 1 | Page 3 of 5\n"
+    },
+    {
+      "page": 4,
+      "text": "ProtocolPulse | PX-104 v1.0\nFICTIONAL / SYNTHETIC ONLY - NOT FOR CLINICAL USE\nMonitoring during participation\n8. PX-MON-01 - Confirmed restricted use\nDuring human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n9. PX-MON-02 - Order or dispense without use\nDuring human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n10. PX-MON-03 - New low eGFR\nDuring human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m² requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\nSynthetic PX-104 v1.0 | source version 1 | Page 4 of 5\n"
+    },
+    {
+      "page": 5,
+      "text": "ProtocolPulse | PX-104 v1.0\nFICTIONAL / SYNTHETIC ONLY - NOT FOR CLINICAL USE\nEvidence interpretation and review authority\n11. Evidence and approved terminology\nUse only the reviewed fictional mapping: SYN-MED-R1 and SYN-MED-R2 map to SYN-CLASS-R;\nSYN-MED-N1 maps to SYN-CLASS-N. A valid unmapped code remains UNKNOWN/UNMAPPED_CODE,\nnever safe by omission. Preserve ORDER, DISPENSE, ADMINISTRATION, REPORTED_USE,\nDISCONTINUATION and CANCELLATION separately. Missing, stale, contradictory, imprecisely dated or\nunsupported evidence remains UNKNOWN. Preserve explicit negative reconciliation and its coverage\nseparately from an empty record. These interpretation notes support the eight rules and create no ninth\nrule.\n12. Human approval, outcomes and audit\nExtraction proposes rules; it cannot approve them. A named synthetic investigator reviews every rule and\nfull section coverage before activation. Baseline screening applies the five eligibility rules: any FAIL means\nPROTOCOL_CONFLICT; otherwise any UNKNOWN means NEEDS_REVIEW; otherwise all PASS means\nPOTENTIAL_MATCH. Operational failure is separate and has no authoritative candidate status.\nParticipation is separately human-recorded external evidence. Backend services open and deduplicate\nmonitoring cases; investigators resolve or close them with evidence and rationale. No automatic\nenrollment, outreach, prescription change or withdrawal is permitted. Protocol restriction evaluated;\npharmacological interactions not assessed.\nSynthetic PX-104 v1.0 | source version 1 | Page 5 of 5\n"
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "PX-INFO-IDENTITY",
+      "page": 1,
+      "start": 106,
+      "end": 567,
+      "text_sha256": "fc2f4fcd43d6d0eeaf53a9e1dd8f9624b731b51669ba73ea9ce56a00ba812d03"
+    },
+    {
+      "section_id": "PX-INFO-CALENDAR",
+      "page": 1,
+      "start": 567,
+      "end": 1146,
+      "text_sha256": "c107c3309b215f6ac3ca19bbcbe7dc830bb6ed5155b6acdd772514f4c7538288"
+    },
+    {
+      "section_id": "PX-SECTION-INC-01",
+      "page": 2,
+      "start": 97,
+      "end": 418,
+      "text_sha256": "83ffcc6ca5c6fec63c10a9f970850144b4c0fefb19331354fdebe66a1976fc07"
+    },
+    {
+      "section_id": "PX-SECTION-INC-02",
+      "page": 2,
+      "start": 418,
+      "end": 803,
+      "text_sha256": "5f279daa638a1738ae8c780070897f707bd2014ecb5bee3e77a3af90e5ac6e6d"
+    },
+    {
+      "section_id": "PX-SECTION-INC-03",
+      "page": 2,
+      "start": 803,
+      "end": 1266,
+      "text_sha256": "70d593abf26c18da3deea5b14ddf74590d5e378f7f1b0792913bca93cd6521e5"
+    },
+    {
+      "section_id": "PX-SECTION-EXC-01",
+      "page": 3,
+      "start": 97,
+      "end": 563,
+      "text_sha256": "da171fdfa5f90d7d46056753f0cc4f64219aa7fb1f20ad10f74537c8259c6168"
+    },
+    {
+      "section_id": "PX-SECTION-EXC-02",
+      "page": 3,
+      "start": 563,
+      "end": 1166,
+      "text_sha256": "597e04e688b180049671c281e559153803038603e212acaa36ccea9c18a7bd75"
+    },
+    {
+      "section_id": "PX-SECTION-MON-01",
+      "page": 4,
+      "start": 110,
+      "end": 598,
+      "text_sha256": "4eac714d1dc462c6d92f8271e701485e30812f140a557310bece39f05fb0e1d6"
+    },
+    {
+      "section_id": "PX-SECTION-MON-02",
+      "page": 4,
+      "start": 598,
+      "end": 1076,
+      "text_sha256": "c89da1e5fbf9a4b4dcea2264f0970c2b6e17bfde63b40eb1bcebffe416a3efe1"
+    },
+    {
+      "section_id": "PX-SECTION-MON-03",
+      "page": 4,
+      "start": 1076,
+      "end": 1523,
+      "text_sha256": "b0461fc5a6fd05377d8ce6a52d55ccaa7fd649826296c202d0fd2ccb744d5652"
+    },
+    {
+      "section_id": "PX-INFO-EVIDENCE",
+      "page": 5,
+      "start": 123,
+      "end": 717,
+      "text_sha256": "d303da819bfbe6b6aebce66d91f43a54815bbc0f1a2dccfddeb366bd1ce52f25"
+    },
+    {
+      "section_id": "PX-INFO-REVIEW",
+      "page": 5,
+      "start": 717,
+      "end": 1491,
+      "text_sha256": "330c19a37dd639996134f5aa1ea26ee425bf56de47b56fbc45f40a8cb2e8cf12"
+    }
+  ]
+}

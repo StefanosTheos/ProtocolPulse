@@ -112,10 +112,21 @@ Before independent coding, the assigned human IC records each engineer's acknowl
 
 The reconciliation checks source paths, relative document links, revision markers, all 26 API route pairs, status distinctions, fixture IDs, configuration keys, tool boundaries and the context's source references. These checks inspect design artifacts, not running services. Executable commands in SYSTEM_ARCHITECTURE and TEAM_OWNERSHIP are planned implementation contracts.
 
-Documentation checks for `1.0.0-rc2`: nine synchronized files, 26 unique API route pairs matching the context exactly, 26 configuration keys, matching 15-patient registries, valid relative file/section links, and parseable embedded Python/JSON examples. No stale approval/version markers or unresolved documentation conflicts were found. These checks do not compile TypeScript or execute the planned application tests.
+Core documentation checks for `1.0.0-rc2`: nine synchronized core files, 26 unique API route pairs matching the context exactly, 26 configuration keys, matching 15-patient registries, valid relative file/section links, and parseable embedded Python/JSON examples. The additive protocol package is verified separately below. These checks do not compile TypeScript or execute the planned application tests.
 
 FastAPI OpenAPI generation, Alembic migrations, the complete 15-patient JSON seed, provider SDK/tool compatibility, clinical-rule tests, frontend typecheck/build and browser integration remain **PENDING IMPLEMENTATION**. Historical authoring checks are not evidence that this revised design has run.
 
 **Historical source trace:** the original uploaded `PRODUCT_SPECIFICATION(3).md` was recorded with SHA-256 `6909b4479a5c8ee81e1731d30e37efb957bbf2bd7eb71ef4055259e3c918b93a`. This is historical provenance, not a checksum of revised product v1.1.
 
 **Precedence:** API_CONTRACTS governs API/wire behavior, DATA_MODEL governs persistence and TEAM_OWNERSHIP governs path/change ownership. All disagreements require IC review and a versioned revision. Documentation approval makes no implementation or clinical-validation claim.
+
+## 10. Protocol fixture handoff — apply before engineer kickoff
+
+`px104-protocol-v1` now delivers [PROTOCOL_BLUEPRINT](PROTOCOL_BLUEPRINT.md), the actual five-page text-readable PDF, canonical extracted page text, eight-rule/twelve-section expected extraction, unsigned `ProtocolDetail` mock and negative-output validation cases under `fixtures/protocols/px104-v1/`. Use [PARALLEL_ENGINEER_PROMPT_UPDATES](PARALLEL_ENGINEER_PROMPT_UPDATES.md) as common/role-specific additions to existing prompts; original standalone engineer prompts are not present in this repository.
+
+- **E1 task 3:** consume the unsigned review mock and actual source page/quote references; zero blockers must not bypass approval. Implement real API-backed review by H6.
+- **E2 task 3:** consume the delivered PDF/source bindings and curated proposals; do not author a different mock protocol. Verify hashes and actual parsing, persist Unicode anchors, reset to DRAFT/unapproved and test the negative output cases through real guards.
+- **E3 task 3:** consume the PDF through the gateway and expected outputs only through evals; measure rule/coverage/citation fidelity without oracle leakage or invented AI activity.
+- **IC:** own and distribute shared fixture/tooling paths, append prompt blocks, and run `python tools/protocol_fixture.py --check`. Fixture generation/checking is implemented; the application parser/evaluator/API/model/security tests and patient generation remain pending.
+
+The handoff preserves wire schema `1.0.0-rc2`, all eight frozen rules and existing engineering implementation boundaries. Source-PDF previews have been visually inspected; verification does not imply that clinical criteria have been approved or a live extraction model has run.

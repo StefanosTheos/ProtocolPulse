@@ -1,0 +1,124 @@
+{
+  "fixture_version": "px104-protocol-v1",
+  "base": "expected_extraction.json",
+  "note": "Mutations of the oracle, not source amendments or API error enums.",
+  "cases": [
+    {
+      "id": "missing-rule",
+      "op": "remove",
+      "path": [
+        "criteria",
+        7
+      ],
+      "expected": "RULESET_MISMATCH"
+    },
+    {
+      "id": "invented-ninth-rule",
+      "op": "clone_rule",
+      "path": [
+        "criteria"
+      ],
+      "value": "PX-EXC-99",
+      "expected": "RULESET_MISMATCH"
+    },
+    {
+      "id": "changed-threshold",
+      "op": "replace",
+      "path": [
+        "criteria",
+        2,
+        "threshold"
+      ],
+      "value": 65,
+      "expected": "FROZEN_SEMANTICS_MISMATCH"
+    },
+    {
+      "id": "wrong-washout-end",
+      "op": "replace",
+      "path": [
+        "criteria",
+        4,
+        "window",
+        "end_inclusive"
+      ],
+      "value": true,
+      "expected": "FROZEN_SEMANTICS_MISMATCH"
+    },
+    {
+      "id": "invented-restriction-class",
+      "op": "replace",
+      "path": [
+        "criteria",
+        5,
+        "threshold"
+      ],
+      "value": "REAL-DRUG-CLASS",
+      "expected": "FROZEN_SEMANTICS_MISMATCH"
+    },
+    {
+      "id": "made-up-quote",
+      "op": "replace",
+      "path": [
+        "criteria",
+        0,
+        "source_quote"
+      ],
+      "value": "Everyone is eligible.",
+      "expected": "SOURCE_QUOTE_MISMATCH"
+    },
+    {
+      "id": "invalid-page",
+      "op": "replace",
+      "path": [
+        "criteria",
+        0,
+        "source_page"
+      ],
+      "value": 99,
+      "expected": "SOURCE_QUOTE_MISMATCH"
+    },
+    {
+      "id": "byte-offset-instead-of-codepoints",
+      "op": "replace",
+      "path": [
+        "criteria",
+        2,
+        "source_anchor",
+        "end"
+      ],
+      "value": "UTF8_END",
+      "expected": "SOURCE_QUOTE_MISMATCH"
+    },
+    {
+      "id": "omitted-information-section",
+      "op": "remove",
+      "path": [
+        "coverage",
+        0
+      ],
+      "expected": "COVERAGE_MISMATCH"
+    },
+    {
+      "id": "fake-approval",
+      "op": "replace",
+      "path": [
+        "criteria",
+        0,
+        "workflow_status"
+      ],
+      "value": "APPROVED",
+      "expected": "SCHEMA_ERROR"
+    },
+    {
+      "id": "injected-approval-field",
+      "op": "replace",
+      "path": [
+        "criteria",
+        0,
+        "approved_by"
+      ],
+      "value": "ACT-INV-01",
+      "expected": "SCHEMA_ERROR"
+    }
+  ]
+}

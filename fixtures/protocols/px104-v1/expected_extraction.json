@@ -1,0 +1,418 @@
+{
+  "criteria": [
+    {
+      "criterion_id": "PX-INC-01",
+      "type": "INCLUSION",
+      "clinical_subject": "age",
+      "operator": "AGE_RANGE_INCLUSIVE",
+      "threshold": [
+        40,
+        70
+      ],
+      "unit": "years",
+      "window": {
+        "anchor": "SCREENING_DATE",
+        "start_offset_days": 0,
+        "end_offset_days": 0,
+        "start_inclusive": true,
+        "end_inclusive": true,
+        "time_zone": "Europe/Athens",
+        "anchor_granularity": "LOCAL_DATE"
+      },
+      "evidence_requirement": "Sourced birth date with sufficient precision for age at screening.",
+      "logical_group_id": "PX104-ELIGIBILITY-ALL",
+      "protocol_version_id": "PV-PX104-1.0",
+      "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+      "source_quote": "The patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "source_page": 2,
+      "source_anchor": {
+        "start": 129,
+        "end": 418
+      },
+      "applicable_site_ids": [
+        "SITE-SYN-01"
+      ],
+      "terminology_map_version": "px104-terminology-v1",
+      "workflow_status": "PROPOSED",
+      "ambiguity": null
+    },
+    {
+      "criterion_id": "PX-INC-02",
+      "type": "INCLUSION",
+      "clinical_subject": "diagnosis",
+      "operator": "CODE_CONFIRMED",
+      "threshold": "SYN-CONDITION-A",
+      "unit": null,
+      "window": {
+        "anchor": "SCREENING_DATE",
+        "start_offset_days": 0,
+        "end_offset_days": 0,
+        "start_inclusive": true,
+        "end_inclusive": true,
+        "time_zone": "Europe/Athens",
+        "anchor_granularity": "LOCAL_DATE"
+      },
+      "evidence_requirement": "Verified condition code or synthetic adjudicated diagnosis note as of screening.",
+      "logical_group_id": "PX104-ELIGIBILITY-ALL",
+      "protocol_version_id": "PV-PX104-1.0",
+      "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+      "source_quote": "The patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "source_page": 2,
+      "source_anchor": {
+        "start": 459,
+        "end": 803
+      },
+      "applicable_site_ids": [
+        "SITE-SYN-01"
+      ],
+      "terminology_map_version": "px104-terminology-v1",
+      "workflow_status": "PROPOSED",
+      "ambiguity": null
+    },
+    {
+      "criterion_id": "PX-INC-03",
+      "type": "INCLUSION",
+      "clinical_subject": "egfr",
+      "operator": "LAB_GTE",
+      "threshold": 60,
+      "unit": "mL/min/1.73m²",
+      "window": {
+        "anchor": "SCREENING_DATE",
+        "start_offset_days": -30,
+        "end_offset_days": 0,
+        "start_inclusive": true,
+        "end_inclusive": true,
+        "time_zone": "Europe/Athens",
+        "anchor_granularity": "LOCAL_DATE"
+      },
+      "evidence_requirement": "Latest relevant numeric eGFR with valid specimen date, provenance and reviewed unit.",
+      "logical_group_id": "PX104-ELIGIBILITY-ALL",
+      "protocol_version_id": "PV-PX104-1.0",
+      "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+      "source_quote": "The latest relevant eGFR must be at least 60 mL/min/1.73m². Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "source_page": 2,
+      "source_anchor": {
+        "start": 837,
+        "end": 1266
+      },
+      "applicable_site_ids": [
+        "SITE-SYN-01"
+      ],
+      "terminology_map_version": "px104-terminology-v1",
+      "workflow_status": "PROPOSED",
+      "ambiguity": null
+    },
+    {
+      "criterion_id": "PX-EXC-01",
+      "type": "EXCLUSION",
+      "clinical_subject": "condition",
+      "operator": "ABSENCE_CONFIRMED_ACTIVE",
+      "threshold": "SYN-EXCLUDED-CONDITION",
+      "unit": null,
+      "window": {
+        "anchor": "SCREENING_DATE",
+        "start_offset_days": 0,
+        "end_offset_days": 0,
+        "start_inclusive": true,
+        "end_inclusive": true,
+        "time_zone": "Europe/Athens",
+        "anchor_granularity": "LOCAL_DATE"
+      },
+      "evidence_requirement": "Verified active condition or reviewed record-completeness declaration for its absence.",
+      "logical_group_id": "PX104-ELIGIBILITY-ALL",
+      "protocol_version_id": "PV-PX104-1.0",
+      "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+      "source_quote": "The patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "source_page": 3,
+      "source_anchor": {
+        "start": 138,
+        "end": 563
+      },
+      "applicable_site_ids": [
+        "SITE-SYN-01"
+      ],
+      "terminology_map_version": "px104-terminology-v1",
+      "workflow_status": "PROPOSED",
+      "ambiguity": null
+    },
+    {
+      "criterion_id": "PX-EXC-02",
+      "type": "EXCLUSION",
+      "clinical_subject": "medication",
+      "operator": "NO_RESTRICTED_USE",
+      "threshold": "SYN-CLASS-R",
+      "unit": null,
+      "window": {
+        "anchor": "SCREENING_DATE",
+        "start_offset_days": -30,
+        "end_offset_days": 0,
+        "start_inclusive": true,
+        "end_inclusive": false,
+        "time_zone": "Europe/Athens",
+        "anchor_granularity": "LOCAL_DATE"
+      },
+      "evidence_requirement": "Dated verified administration/reliable reported use, or reviewed no-use reconciliation covering the full window.",
+      "logical_group_id": "PX104-ELIGIBILITY-ALL",
+      "protocol_version_id": "PV-PX104-1.0",
+      "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+      "source_quote": "The patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "source_page": 3,
+      "source_anchor": {
+        "start": 610,
+        "end": 1166
+      },
+      "applicable_site_ids": [
+        "SITE-SYN-01"
+      ],
+      "terminology_map_version": "px104-terminology-v1",
+      "workflow_status": "PROPOSED",
+      "ambiguity": null
+    },
+    {
+      "criterion_id": "PX-MON-01",
+      "type": "MONITORING",
+      "clinical_subject": "medication",
+      "operator": "EVENT_RESTRICTED_USE",
+      "threshold": "SYN-CLASS-R",
+      "unit": null,
+      "window": {
+        "anchor": "PARTICIPATION",
+        "start_offset_days": null,
+        "end_offset_days": null,
+        "start_inclusive": true,
+        "end_inclusive": false,
+        "time_zone": "Europe/Athens",
+        "anchor_granularity": "INSTANT"
+      },
+      "evidence_requirement": "Confirmed dated administration or reliable documented use during participation.",
+      "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+      "protocol_version_id": "PV-PX104-1.0",
+      "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+      "source_quote": "During human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "source_page": 4,
+      "source_anchor": {
+        "start": 150,
+        "end": 598
+      },
+      "applicable_site_ids": [
+        "SITE-SYN-01"
+      ],
+      "terminology_map_version": "px104-terminology-v1",
+      "workflow_status": "PROPOSED",
+      "ambiguity": null
+    },
+    {
+      "criterion_id": "PX-MON-02",
+      "type": "MONITORING",
+      "clinical_subject": "medication",
+      "operator": "EVENT_ORDER_ONLY",
+      "threshold": "SYN-CLASS-R",
+      "unit": null,
+      "window": {
+        "anchor": "PARTICIPATION",
+        "start_offset_days": null,
+        "end_offset_days": null,
+        "start_inclusive": true,
+        "end_inclusive": false,
+        "time_zone": "Europe/Athens",
+        "anchor_granularity": "INSTANT"
+      },
+      "evidence_requirement": "Dated restricted-class order/dispense with no confirmed use, requiring human reconciliation.",
+      "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+      "protocol_version_id": "PV-PX104-1.0",
+      "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+      "source_quote": "During human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "source_page": 4,
+      "source_anchor": {
+        "start": 643,
+        "end": 1076
+      },
+      "applicable_site_ids": [
+        "SITE-SYN-01"
+      ],
+      "terminology_map_version": "px104-terminology-v1",
+      "workflow_status": "PROPOSED",
+      "ambiguity": null
+    },
+    {
+      "criterion_id": "PX-MON-03",
+      "type": "MONITORING",
+      "clinical_subject": "egfr",
+      "operator": "EVENT_LAB_LT",
+      "threshold": 60,
+      "unit": "mL/min/1.73m²",
+      "window": {
+        "anchor": "PARTICIPATION",
+        "start_offset_days": null,
+        "end_offset_days": null,
+        "start_inclusive": true,
+        "end_inclusive": false,
+        "time_zone": "Europe/Athens",
+        "anchor_granularity": "INSTANT"
+      },
+      "evidence_requirement": "New synthetic numeric eGFR below the fictional threshold during participation, with valid units and specimen/effective time.",
+      "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+      "protocol_version_id": "PV-PX104-1.0",
+      "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+      "source_quote": "During human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m² requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "source_page": 4,
+      "source_anchor": {
+        "start": 1105,
+        "end": 1523
+      },
+      "applicable_site_ids": [
+        "SITE-SYN-01"
+      ],
+      "terminology_map_version": "px104-terminology-v1",
+      "workflow_status": "PROPOSED",
+      "ambiguity": null
+    }
+  ],
+  "coverage": [
+    {
+      "section_id": "PX-INFO-IDENTITY",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 1,
+      "span_start": 106,
+      "span_end": 567,
+      "status": "INFORMATIONAL",
+      "criterion_ids": [],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-INFO-CALENDAR",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 1,
+      "span_start": 567,
+      "span_end": 1146,
+      "status": "INFORMATIONAL",
+      "criterion_ids": [],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-SECTION-INC-01",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 2,
+      "span_start": 97,
+      "span_end": 418,
+      "status": "MAPPED",
+      "criterion_ids": [
+        "PX-INC-01"
+      ],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-SECTION-INC-02",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 2,
+      "span_start": 418,
+      "span_end": 803,
+      "status": "MAPPED",
+      "criterion_ids": [
+        "PX-INC-02"
+      ],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-SECTION-INC-03",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 2,
+      "span_start": 803,
+      "span_end": 1266,
+      "status": "MAPPED",
+      "criterion_ids": [
+        "PX-INC-03"
+      ],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-SECTION-EXC-01",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 3,
+      "span_start": 97,
+      "span_end": 563,
+      "status": "MAPPED",
+      "criterion_ids": [
+        "PX-EXC-01"
+      ],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-SECTION-EXC-02",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 3,
+      "span_start": 563,
+      "span_end": 1166,
+      "status": "MAPPED",
+      "criterion_ids": [
+        "PX-EXC-02"
+      ],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-SECTION-MON-01",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 4,
+      "span_start": 110,
+      "span_end": 598,
+      "status": "MAPPED",
+      "criterion_ids": [
+        "PX-MON-01"
+      ],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-SECTION-MON-02",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 4,
+      "span_start": 598,
+      "span_end": 1076,
+      "status": "MAPPED",
+      "criterion_ids": [
+        "PX-MON-02"
+      ],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-SECTION-MON-03",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 4,
+      "span_start": 1076,
+      "span_end": 1523,
+      "status": "MAPPED",
+      "criterion_ids": [
+        "PX-MON-03"
+      ],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-INFO-EVIDENCE",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 5,
+      "span_start": 123,
+      "span_end": 717,
+      "status": "INFORMATIONAL",
+      "criterion_ids": [],
+      "review_note": null
+    },
+    {
+      "section_id": "PX-INFO-REVIEW",
+      "source_id": "SRC-PROTOCOL-PX104-V1",
+      "page": 5,
+      "span_start": 717,
+      "span_end": 1491,
+      "status": "INFORMATIONAL",
+      "criterion_ids": [],
+      "review_note": null
+    }
+  ],
+  "change_reason": "Curated PX-104 fixture proposal; not an AI execution or human approval."
+}

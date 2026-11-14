@@ -1,0 +1,21 @@
+{
+  "fixture_version": "px104-protocol-v1",
+  "contract_version": "1.0.0-rc2",
+  "protocol_version_id": "PV-PX104-1.0",
+  "source_id": "SRC-PROTOCOL-PX104-V1",
+  "synthetic_only": true,
+  "curated_expected_output": true,
+  "human_approved": false,
+  "page_count": 5,
+  "criterion_count": 8,
+  "coverage_count": 12,
+  "sha256": {
+    "source_document.json": "8142b4ed6698f8baf86e8f860ddb643b25a283403fb2956ed9bbfaa33d6a8927",
+    "PX-104-v1.0-fictional.pdf": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+    "source_pages.json": "fab08250a1822c9993d52287522e161642ff85830ab0901cb4dcfa88c114d804",
+    "expected_extraction.json": "0fee993a471285f4e77c848279985900957903946e3b24f9d2a43852d7c0c97d",
+    "expected_protocol_detail.json": "43347a1a24332baf46e97ea567a76e860e1a897f2b0d83fc74b5e4ac995c9cd3",
+    "extraction_checks.json": "b9234f78cc13ee573b2627a76e730750be2a015f6a7ec55eff540bb9c183f668",
+    "expected_extraction.schema.json": "a0fadd976848c746ef22867ff5cba0a1c74ec4f0f29a1257367cf56dcc005e89"
+  }
+}

@@ -66,6 +66,8 @@
 
 ## 4. Protocol pipeline and approval gate
 
+Prepared source: [PROTOCOL_BLUEPRINT](PROTOCOL_BLUEPRINT.md) and `fixtures/protocols/px104-v1/PX-104-v1.0-fictional.pdf`. The adjacent manifest, actual extracted pages and expected request/review JSONs are IC-owned fixture release `px104-protocol-v1`; engineers consume them under [prompt addenda](PARALLEL_ENGINEER_PROMPT_UPDATES.md). Reference extraction tools are separate from backend runtime dependencies. Baseline/approval semantics and wire schema remain unchanged.
+
 1. `POST /api/v1/trials/{trial_id}/protocols` accepts `multipart/form-data` (`file` and `version_label`) up to `MAX_PDF_MB`, validates PDF signature, text-extraction eligibility, synthetic-demo allowlist (no unrestricted clinical upload), stores SHA-256 and original immutable file; creates version `DRAFT`.
 2. `POST .../extract` queues a job. Backend PDF parser reads pages and offset spans; agent can choose reinspection and propose `Criterion` objects with `source_quote`, page and stable span anchor, but **cannot approve**. Spans are zero-based `[start,end)` Unicode code-point offsets into the persisted page text (PDF) or complete note text; original file hashes remain byte-based. Scanned/encrypted/incomplete PDFs mark `EXTRACTION_FAILED` or coverage blockers, not fabricated anchors; prepared bundled mock text/PDF is a *clearly labeled alternative input*, not a claim that AI extracted a broken PDF.
 3. Extraction coverage records all protocol eligibility/monitoring sections as `MAPPED|INFORMATIONAL|BLOCKING`. Review UI shows original span, rule operator, units, windows, terminology-map version and unsupported content.

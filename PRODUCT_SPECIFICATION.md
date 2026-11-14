@@ -261,6 +261,8 @@ ProtocolPulse checks **known, reviewer-approved protocol restrictions**, not spe
 
 ### 8.2 Demonstration protocol v1.0 (fictional)
 
+The scoped document blueprint and actual text-readable source are now delivered as [PROTOCOL_BLUEPRINT](docs/PROTOCOL_BLUEPRINT.md) and [PX-104 v1.0 PDF](fixtures/protocols/px104-v1/PX-104-v1.0-fictional.pdf). Shared extraction oracles are in `fixtures/protocols/px104-v1/`, fixture release `px104-protocol-v1`. They instantiate the following eight rules without adding clinical restrictions; proposals still require investigator approval.
+
 **Study calendar:** `screening_as_of = 2026-10-31` (site-local midnight boundary); **study day 0 = 2026-11-01**; **day 18 = 2026-11-19**; planned duration 12 weeks. Calendar boundaries are demonstration conventions and do not imply a real trial design.
 
 | Rule ID | Fictional clause / approved demonstration definition | Evidence and evaluation |

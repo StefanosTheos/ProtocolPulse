@@ -1,0 +1,191 @@
+{
+  "fixture_version": "px104-protocol-v1",
+  "contract_version": "1.0.0-rc2",
+  "trial_id": "TR-PX104",
+  "protocol_version_id": "PV-PX104-1.0",
+  "version_label": "1.0",
+  "source_id": "SRC-PROTOCOL-PX104-V1",
+  "source_version": 1,
+  "site_id": "SITE-SYN-01",
+  "terminology_map_version": "px104-terminology-v1",
+  "synthetic_only": true,
+  "pages": [
+    {
+      "title": "Study identity and calendar",
+      "sections": [
+        {
+          "section_id": "PX-INFO-IDENTITY",
+          "heading": "1. Identity and purpose",
+          "text": "PX-104 v1.0 is a fictional 12-week study for SYN-CONDITION-A. Trial TR-PX104 and site SITE-SYN-01 exist only in a synthetic software demonstration. This document contains exactly five eligibility rules and three monitoring rules. It does not establish medical suitability, real drug properties or regulatory compliance. All names, codes, restrictions and thresholds are invented for software testing. No real-person records may be used.",
+          "rule": null
+        },
+        {
+          "section_id": "PX-INFO-CALENDAR",
+          "heading": "2. Study calendar and interpretation",
+          "text": "Use the Europe/Athens site calendar. The screening date is 2026-10-31; study day 0 is 2026-11-01; study day 18 is 2026-11-19. Baseline evidence cutoff is 2026-11-01T00:00:00+02:00, after the screening day. This cutoff is separate from clinical rule windows. Eligibility is assessed at screening; monitoring applies during separately human-recorded participation. Clinical-effective, source-recorded, ingestion and decision times are distinct. No visit schedule, dosing regimen, extra tests or additional eligibility restrictions are defined.",
+          "rule": null
+        }
+      ]
+    },
+    {
+      "title": "Inclusion criteria",
+      "sections": [
+        {
+          "section_id": "PX-SECTION-INC-01",
+          "heading": "3. PX-INC-01 - Age at screening",
+          "text": "The patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date using the site-local screening date. If birth-date precision cannot establish the age conclusively, return UNKNOWN. A confirmed age outside this inclusive range fails this criterion.",
+          "rule": {
+            "criterion_id": "PX-INC-01",
+            "type": "INCLUSION",
+            "clinical_subject": "age",
+            "operator": "AGE_RANGE_INCLUSIVE",
+            "threshold": [40, 70],
+            "unit": "years",
+            "window": {"anchor": "SCREENING_DATE", "start_offset_days": 0, "end_offset_days": 0, "start_inclusive": true, "end_inclusive": true, "time_zone": "Europe/Athens", "anchor_granularity": "LOCAL_DATE"},
+            "evidence_requirement": "Sourced birth date with sufficient precision for age at screening.",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL"
+          }
+        },
+        {
+          "section_id": "PX-SECTION-INC-02",
+          "heading": "4. PX-INC-02 - Confirmed index diagnosis",
+          "text": "The patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified condition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed label does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity, symptom-duration or genotype restriction.",
+          "rule": {
+            "criterion_id": "PX-INC-02",
+            "type": "INCLUSION",
+            "clinical_subject": "diagnosis",
+            "operator": "CODE_CONFIRMED",
+            "threshold": "SYN-CONDITION-A",
+            "unit": null,
+            "window": {"anchor": "SCREENING_DATE", "start_offset_days": 0, "end_offset_days": 0, "start_inclusive": true, "end_inclusive": true, "time_zone": "Europe/Athens", "anchor_granularity": "LOCAL_DATE"},
+            "evidence_requirement": "Verified condition code or synthetic adjudicated diagnosis note as of screening.",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL"
+          }
+        },
+        {
+          "section_id": "PX-SECTION-INC-03",
+          "heading": "5. PX-INC-03 - Latest timely eGFR",
+          "text": "The latest relevant eGFR must be at least 60 mL/min/1.73m². Its specimen local calendar date must be in [2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion time. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed conversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical recommendation.",
+          "rule": {
+            "criterion_id": "PX-INC-03",
+            "type": "INCLUSION",
+            "clinical_subject": "egfr",
+            "operator": "LAB_GTE",
+            "threshold": 60,
+            "unit": "mL/min/1.73m²",
+            "window": {"anchor": "SCREENING_DATE", "start_offset_days": -30, "end_offset_days": 0, "start_inclusive": true, "end_inclusive": true, "time_zone": "Europe/Athens", "anchor_granularity": "LOCAL_DATE"},
+            "evidence_requirement": "Latest relevant numeric eGFR with valid specimen date, provenance and reviewed unit.",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Exclusion criteria",
+      "sections": [
+        {
+          "section_id": "PX-SECTION-EXC-01",
+          "heading": "6. PX-EXC-01 - Excluded active condition",
+          "text": "The patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active condition fails this criterion. Passing requires a reviewed record-completeness declaration supporting absence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory evidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from evidence verification.",
+          "rule": {
+            "criterion_id": "PX-EXC-01",
+            "type": "EXCLUSION",
+            "clinical_subject": "condition",
+            "operator": "ABSENCE_CONFIRMED_ACTIVE",
+            "threshold": "SYN-EXCLUDED-CONDITION",
+            "unit": null,
+            "window": {"anchor": "SCREENING_DATE", "start_offset_days": 0, "end_offset_days": 0, "start_inclusive": true, "end_inclusive": true, "time_zone": "Europe/Athens", "anchor_granularity": "LOCAL_DATE"},
+            "evidence_requirement": "Verified active condition or reviewed record-completeness declaration for its absence.",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL"
+          }
+        },
+        {
+          "section_id": "PX-SECTION-EXC-02",
+          "heading": "7. PX-EXC-02 - Restricted use before screening",
+          "text": "The patient must have no documented administration or reported use of SYN-CLASS-R during the 30 preceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included; the end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use reconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources or an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate prescription or supply with ingestion.",
+          "rule": {
+            "criterion_id": "PX-EXC-02",
+            "type": "EXCLUSION",
+            "clinical_subject": "medication",
+            "operator": "NO_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {"anchor": "SCREENING_DATE", "start_offset_days": -30, "end_offset_days": 0, "start_inclusive": true, "end_inclusive": false, "time_zone": "Europe/Athens", "anchor_granularity": "LOCAL_DATE"},
+            "evidence_requirement": "Dated verified administration/reliable reported use, or reviewed no-use reconciliation covering the full window.",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Monitoring during participation",
+      "sections": [
+        {
+          "section_id": "PX-SECTION-MON-01",
+          "heading": "8. PX-MON-01 - Confirmed restricted use",
+          "text": "During human-recorded participation, a new confirmed administration or documented use of SYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence triggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate clinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination of harm. It authorizes no automatic treatment change or withdrawal.",
+          "rule": {
+            "criterion_id": "PX-MON-01",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {"anchor": "PARTICIPATION", "start_offset_days": null, "end_offset_days": null, "start_inclusive": true, "end_inclusive": false, "time_zone": "Europe/Athens", "anchor_granularity": "INSTANT"},
+            "evidence_requirement": "Confirmed dated administration or reliable documented use during participation.",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT"
+          }
+        },
+        {
+          "section_id": "PX-SECTION-MON-02",
+          "heading": "9. PX-MON-02 - Order or dispense without use",
+          "text": "During human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use requires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains unknown. Retrieve administration and reported-use evidence where available. An order or dispense is not proof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any reconciliation evidence.",
+          "rule": {
+            "criterion_id": "PX-MON-02",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_ORDER_ONLY",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {"anchor": "PARTICIPATION", "start_offset_days": null, "end_offset_days": null, "start_inclusive": true, "end_inclusive": false, "time_zone": "Europe/Athens", "anchor_granularity": "INSTANT"},
+            "evidence_requirement": "Dated restricted-class order/dispense with no confirmed use, requiring human reconciliation.",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT"
+          }
+        },
+        {
+          "section_id": "PX-SECTION-MON-03",
+          "heading": "10. PX-MON-03 - New low eGFR",
+          "text": "During human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m² requires clinical review. Use the clinical specimen/effective time, valid units and provenance. The result opens a rule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or autonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening criterion.",
+          "rule": {
+            "criterion_id": "PX-MON-03",
+            "type": "MONITORING",
+            "clinical_subject": "egfr",
+            "operator": "EVENT_LAB_LT",
+            "threshold": 60,
+            "unit": "mL/min/1.73m²",
+            "window": {"anchor": "PARTICIPATION", "start_offset_days": null, "end_offset_days": null, "start_inclusive": true, "end_inclusive": false, "time_zone": "Europe/Athens", "anchor_granularity": "INSTANT"},
+            "evidence_requirement": "New synthetic numeric eGFR below the fictional threshold during participation, with valid units and specimen/effective time.",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Evidence interpretation and review authority",
+      "sections": [
+        {
+          "section_id": "PX-INFO-EVIDENCE",
+          "heading": "11. Evidence and approved terminology",
+          "text": "Use only the reviewed fictional mapping: SYN-MED-R1 and SYN-MED-R2 map to SYN-CLASS-R; SYN-MED-N1 maps to SYN-CLASS-N. A valid unmapped code remains UNKNOWN/UNMAPPED_CODE, never safe by omission. Preserve ORDER, DISPENSE, ADMINISTRATION, REPORTED_USE, DISCONTINUATION and CANCELLATION separately. Missing, stale, contradictory, imprecisely dated or unsupported evidence remains UNKNOWN. Preserve explicit negative reconciliation and its coverage separately from an empty record. These interpretation notes support the eight rules and create no ninth rule.",
+          "rule": null
+        },
+        {
+          "section_id": "PX-INFO-REVIEW",
+          "heading": "12. Human approval, outcomes and audit",
+          "text": "Extraction proposes rules; it cannot approve them. A named synthetic investigator reviews every rule and full section coverage before activation. Baseline screening applies the five eligibility rules: any FAIL means PROTOCOL_CONFLICT; otherwise any UNKNOWN means NEEDS_REVIEW; otherwise all PASS means POTENTIAL_MATCH. Operational failure is separate and has no authoritative candidate status. Participation is separately human-recorded external evidence. Backend services open and deduplicate monitoring cases; investigators resolve or close them with evidence and rationale. No automatic enrollment, outreach, prescription change or withdrawal is permitted. Protocol restriction evaluated; pharmacological interactions not assessed.",
+          "rule": null
+        }
+      ]
+    }
+  ]
+}
