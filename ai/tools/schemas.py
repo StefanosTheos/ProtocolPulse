@@ -27,7 +27,7 @@ class AgentRequest(StrictModel):
     contract_version: Literal["1.0.0-rc2"]
     execution_id: str = Field(min_length=1, max_length=64)
     role: AgentRole
-    objective: str = Field(min_length=1, max_length=4000)
+    objective: str = Field(min_length=1, max_length=20000)
     trial_id: str = Field(min_length=1, max_length=64)
     protocol_version_id: str = Field(min_length=1, max_length=64)
     criterion_ids: list[str] = Field(default_factory=list, max_length=8)

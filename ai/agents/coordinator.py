@@ -4,6 +4,7 @@ import asyncio
 from datetime import date, datetime
 import hashlib
 import json
+import logging
 import re
 import time
 
@@ -65,8 +66,18 @@ class Coordinator:
         ))
 
     def verify_refs(self, refs):
-        if any(ref_key(ref) not in self.refs for ref in refs):
-            raise GuardError("UNVERIFIED_EVIDENCE_REF")
+        for ref in refs:
+            if ref_key(ref) not in self.refs:
+                candidates = [r for r in self.refs.values() if
+                    (r.source_id, r.source_version, r.evidence_id) ==
+                    (ref.source_id, ref.source_version, ref.evidence_id)]
+                fields = sorted(k for k in wire(ref) if candidates and
+                    all(wire(r)[k] != wire(ref)[k] for r in candidates))
+                logging.getLogger(__name__).warning(
+                    "unverified_ref execution_id=%s evidence_id=%s mismatched_fields=%s",
+                    self.request.execution_id, ref.evidence_id, fields if candidates else ["identity"],
+                )
+                raise GuardError("UNVERIFIED_EVIDENCE_REF")
 
     def arguments(self, call):
         if call.name not in self.tools:
@@ -115,7 +126,8 @@ class Coordinator:
             safe_text(p.question)
         if call.name == "request_med_reconciliation":
             safe_text(args.question)
-            if not args.source_event_ids or not set(args.source_event_ids) <= self.ids:
+            # Fact IDs are observable references, but are not event identities.
+            if not args.source_event_ids or not set(args.source_event_ids) <= {request.event_id}:
                 raise GuardError("UNVERIFIED_EVIDENCE_REF")
         if call.name in TASK_TOOLS:
             if not self.observations or not self.refs:
@@ -254,16 +266,48 @@ class Coordinator:
                 raise GuardError(code)
         raise GuardError(code)
 
+    async def next_action(self):
+        for attempt in range(self.settings.max_attempts):
+            try:
+                return await asyncio.wait_for(self.provider.next(wire(self.request), self.tools), self.settings.model_timeout)
+            except ProviderFailure as error:
+                # Retry only explicit transient transport statuses, never malformed
+                # evidence/output, authority failures, quota or unmapped terminology.
+                if str(error) not in {"PROVIDER_HTTP_502", "PROVIDER_HTTP_503", "PROVIDER_HTTP_504"}:
+                    raise
+                if attempt + 1 == self.settings.max_attempts:
+                    raise
+                logging.getLogger(__name__).warning("model_retry execution_id=%s result_code=%s attempt=%d",
+                    self.request.execution_id, str(error), attempt + 1)
+                await asyncio.sleep(.1 * (attempt + 1))
+            except TimeoutError:
+                raise GuardError("LLM_CALL_TIMEOUT") from None
+
     async def loop(self):
         self.no_secret(wire(self.request))
         for _ in range(min(self.request.max_steps, self.settings.max_steps) + 1):
-            action = await asyncio.wait_for(self.provider.next(wire(self.request), self.tools), self.settings.model_timeout)
+            action = await self.next_action()
             if isinstance(action, FinalProposal):
                 return self.finish(action)
             if not isinstance(action, ToolCall):
                 raise GuardError("INVALID_MODEL_OUTPUT")
             response = await self.invoke(action)
             await self.provider.observe(action, response)
+            if (action.name == "report_coverage" and self.certified_drafts is not None
+                    and self.certified_coverage is not None):
+                from ai.tools.schemas import CoverageItem, CriterionDraftInput
+                drafts = [CriterionDraftInput.model_validate(c) for c in self.certified_drafts]
+                coverage = [CoverageItem.model_validate(c) for c in self.certified_coverage]
+                try:
+                    validate_coverage(coverage, drafts, self.pages, True)
+                except GuardError:
+                    pass  # Incomplete/ambiguous coverage still needs the model's bounded handoff.
+                else:
+                    # Reuse the actual validated model proposals and backend coverage;
+                    # do not spend another model call reproducing the same large JSON.
+                    return self.finish(FinalProposal(summary=None, evidence_refs=list(self.refs.values()),
+                        unknown_reasons=[], conflict_refs=[], proposed_criteria=drafts, coverage=coverage,
+                        verification_questions=[], incomplete=False))
             if action.name == "classify_event_relevance" and no_action(response["data"]):
                 # The categorized gateway observation is sufficient. No cited clinical
                 # summary is generated for an irrelevant event with no retrieved evidence.
@@ -279,7 +323,7 @@ class Coordinator:
         try:
             return await asyncio.wait_for(self.loop(), self.settings.agent_timeout)
         except GuardError as error:
-            partial = error.code in {"STEP_BUDGET_EXHAUSTED", "TIMEOUT", "SOURCE_UNAVAILABLE", "INCOMPLETE_EXTRACTION"}
+            partial = error.code in {"STEP_BUDGET_EXHAUSTED", "TIMEOUT", "LLM_CALL_TIMEOUT", "SOURCE_UNAVAILABLE", "INCOMPLETE_EXTRACTION"}
             return self.result("PARTIAL" if partial else "FAILED", error=error.code)
         except TimeoutError:
             return self.result("PARTIAL", error="AGENT_TIMEOUT")

@@ -1,7 +1,7 @@
 {
   "mode": "REAL_BACKEND_GATEWAY_AI_ENTRYPOINT_MOCK_MODEL",
   "execution": {
-    "execution_id": "EXEC-3cd284ace06a4605a8f9d5dfb9aa4af8",
+    "execution_id": "EXEC-9bb8713311f145d9bd754679a60a6bb6",
     "role": "MEDICATION_SAFETY_INVESTIGATOR",
     "status": "PARTIAL",
     "trial_id": "TR-PX104",
@@ -11,7 +11,7 @@
       "PX-EXC-02"
     ],
     "event_id": null,
-    "correlation_id": "706f5e8e-58b2-42f7-aa61-550d554ae3bf",
+    "correlation_id": "4a4cc2dd-e756-4eed-850d-1766a25a79a8",
     "evidence_refs": [
       {
         "evidence_id": "MED-P-083-1",
@@ -23,6 +23,17 @@
         "page": null,
         "span_start": 0,
         "span_end": 41
+      },
+      {
+        "evidence_id": "SPAN-73ea3bd3398a4cecab02bfb95460559f",
+        "source_id": "SRC-PROTOCOL-PX104-V1",
+        "source_version": 1,
+        "evidence_type": "PDF",
+        "effective_at": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": 3,
+        "span_start": 610,
+        "span_end": 1166
       }
     ],
     "summary": "Synthetic source evidence reviewed; unresolved items require human verification.",
@@ -34,27 +45,29 @@
       {
         "tool_name": "retrieve_patient_evidence",
         "input_reference_ids": [
-          "706f5e8e-58b2-42f7-aa61-550d554ae3bf",
-          "EXEC-3cd284ace06a4605a8f9d5dfb9aa4af8",
+          "4a4cc2dd-e756-4eed-850d-1766a25a79a8",
+          "EXEC-9bb8713311f145d9bd754679a60a6bb6",
           "P-083",
           "PV-PX104-1.0",
           "PX-EXC-02",
-          "SNAP-1ddb589b1a17422f99c183c1562f66d6",
+          "SNAP-36a31ac17e94498d924dfdaecda57867",
           "TR-PX104"
         ],
         "output_reference_ids": [
           "MED-P-083-1",
-          "SRC-P-083-med"
+          "SPAN-73ea3bd3398a4cecab02bfb95460559f",
+          "SRC-P-083-med",
+          "SRC-PROTOCOL-PX104-V1"
         ],
         "result_code": "OK",
-        "elapsed_ms": 16,
+        "elapsed_ms": 31,
         "error_code": null
       },
       {
         "tool_name": "resolve_approved_terminology",
         "input_reference_ids": [
-          "706f5e8e-58b2-42f7-aa61-550d554ae3bf",
-          "EXEC-3cd284ace06a4605a8f9d5dfb9aa4af8",
+          "4a4cc2dd-e756-4eed-850d-1766a25a79a8",
+          "EXEC-9bb8713311f145d9bd754679a60a6bb6",
           "P-083",
           "PV-PX104-1.0",
           "TR-PX104"
@@ -69,11 +82,11 @@
       {
         "tool_name": "get_medication_timeline",
         "input_reference_ids": [
-          "706f5e8e-58b2-42f7-aa61-550d554ae3bf",
-          "EXEC-3cd284ace06a4605a8f9d5dfb9aa4af8",
+          "4a4cc2dd-e756-4eed-850d-1766a25a79a8",
+          "EXEC-9bb8713311f145d9bd754679a60a6bb6",
           "P-083",
           "PV-PX104-1.0",
-          "SNAP-1ddb589b1a17422f99c183c1562f66d6",
+          "SNAP-36a31ac17e94498d924dfdaecda57867",
           "TR-PX104"
         ],
         "output_reference_ids": [
@@ -87,17 +100,19 @@
       {
         "tool_name": "request_verification_task",
         "input_reference_ids": [
-          "706f5e8e-58b2-42f7-aa61-550d554ae3bf",
-          "EXEC-3cd284ace06a4605a8f9d5dfb9aa4af8",
+          "4a4cc2dd-e756-4eed-850d-1766a25a79a8",
+          "EXEC-9bb8713311f145d9bd754679a60a6bb6",
           "MED-P-083-1",
           "P-083",
           "PV-PX104-1.0",
           "PX-EXC-02",
+          "SPAN-73ea3bd3398a4cecab02bfb95460559f",
           "SRC-P-083-med",
+          "SRC-PROTOCOL-PX104-V1",
           "TR-PX104"
         ],
         "output_reference_ids": [
-          "TASK-dd183300c92d4897abd49e75f4917330"
+          "TASK-653468cd40104095be42d68b2ccf8cd3"
         ],
         "result_code": "OK",
         "elapsed_ms": 16,
@@ -106,7 +121,7 @@
     ],
     "error_code": null,
     "model_id": "MOCK-IC-INTEGRATION-NOT-LIVE",
-    "created_at": "2026-11-14T21:40:46.114304Z",
-    "finished_at": "2026-11-14T21:40:46.209833Z"
+    "created_at": "2026-11-14T22:27:43.133833Z",
+    "finished_at": "2026-11-14T22:27:43.225673Z"
   }
 }

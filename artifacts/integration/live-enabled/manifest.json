@@ -1,0 +1,28 @@
+{
+  "head_commit": "8bbbe03e4ce80e461e158688d1a5240e715e4bc6",
+  "worktree_changes_under_test": true,
+  "captured_at": "2026-11-14T22:32:00.938020+00:00",
+  "contract_version": "1.0.0-rc2",
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "llm_enabled": true,
+  "key_present": true,
+  "env_ignored": true,
+  "credential_scan_nonignored_hits": [],
+  "backend_pid": 11596,
+  "source_sha256": {
+    "ai/agents/coordinator.py": "505f63e4cc50f95e81c0f04addc73c13a4d346c6e9f0520957bc6b9a8a86b1a7",
+    "ai/prompts/roles.py": "dc361421ec5a0907deb2f4cf176833dce4637eae2cd75111ba54e5739ca1c0b9",
+    "ai/prompts/system.py": "6e872725857863ac6407ac10247e298f6f2d988bdb74fffc3a92d0087ec94278",
+    "ai/providers/gemini.py": "2538591ceb2a159b4764a6017cd102e051688d250addffd1d858c8dbb9876115",
+    "ai/tests/test_branching.py": "36768a0b2df6e101fa31ff1bce48e88d6feb9ba02ac24c5438bb693f70d6fcc9",
+    "ai/tests/test_failures.py": "3f5ef4ed1d1f42aa0c1ded79dd851fce8094134c7dfafc1f1f16eb398f44bd58",
+    "ai/tests/test_gemini_provider.py": "2767b3fa688e6aee23ad822ae49a32bae17e3f99d46a0b7d323a4afe757a3456",
+    "ai/tools/schemas.py": "61a67a1f7d246be8c64827c195e2c7d33fd12f5b9f71f09a5fdf6bc0df81224b",
+    "backend/app/integrations/agent_adapter.py": "88802caadfb15d3fd0be35c9b3ea08aced28a67ad69900cebef0060959c22aff",
+    "backend/app/integrations/evidence_gateway.py": "9ec5ab1cfb3605c53a68b60992a50dfb9c951a9a4f50df494c93402b3c0175fd",
+    "backend/tests/test_agent_boundary.py": "bb284da56fb43f95cd59aceef7fbb7de6f70d513b2fe358beb8912649d056214",
+    "backend/tests/test_ai_integration.py": "8e55f445fec5a1ea9d3d06d68ae39064f01f890b077a9d61adc1eaab8037f111",
+    "tools/integration/live_backend_ai.py": "d456aca8d8bde4b7d8f9ef644bae4d525f007baf2b27120afc06dee06b4ba826"
+  }
+}

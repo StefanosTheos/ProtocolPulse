@@ -1,10 +1,41 @@
 # ProtocolPulse integration report
 
-**Verdict: PARTIALLY INTEGRATED.** The frozen synthetic workflow runs through the real browser, API, worker and persistent SQLite. No observed P0 remains after the citation fix. A subsequent authorized live Gemini smoke reached the selected model and executed eight tools, but FAILED with BAD_INPUT; live end-to-end investigation and model-generated upload extraction are not delivered as verified capabilities. This is a local demo candidate, not a production or clinically validated release.
+**Verdict: PARTIALLY INTEGRATED.** The synthetic workflow runs through the real browser, API, worker and persistent SQLite. Real Gemini patient investigations now complete with cited uncertainty and persisted verification tasks, and irrelevant-event handling succeeds. Live protocol extraction and automatic monitoring enrichment still fail within the frozen guards/budgets. This is a local demo candidate, not a production or clinically validated release.
 
-## Authorized live-provider addendum
+## Enabled live-backend follow-up — 2026-11-15 local date
 
-After the offline integration checks, the user supplied a server-side key and authorized live tests. The credential was never printed, added to a DTO/model input, or staged. Root `.env` remains ignored and `LLM_ENABLED=false`; only the test process enabled inference.
+The user explicitly requested `LLM_ENABLED=true` in the ignored root `.env`. It is now enabled; `.env.example` retains its credential-free OFF default. The running backend uses **gemini / gemini-3.8-flash**, the explicit server-side key and the actual E2 gateway/SQLite. No model substitution, extra clinical rules, approval bypass or deadline increase was used. The key is excluded from requests, traces and evidence files. Earlier OFF and synthetic-gateway results remain historical evidence below.
+
+Code under test: HEAD **`8bbbe03e4ce80e461e158688d1a5240e715e4bc6` plus the uncommitted source changes** fingerprinted in [enabled-run manifest](artifacts/integration/live-enabled/manifest.json). These results are not tests of pristine HEAD. The enabled backend was restarted after fixes; final process PID **11596**, port **8000**, one worker. Test-only processes override `LLM_ENABLED=false` to keep reproducible unit/evaluation tests separate from the live service.
+
+| Real Gemini scenario | Observed outcome | Evidence |
+|---|---|---|
+| P-083 order-only medication | **PARTIAL**, no error, ORDER_ONLY retained; four meaningfully selected tools, cited summary and actual verification task; 14.188s | [Execution](artifacts/integration/live-enabled/medication-EXEC-a0dc76c75efa4086972c9cae23b1bf8b.json) |
+| P-124 missing/stale eGFR | **PARTIAL**, no error; lab retrieval, scoped evidence/note/source lookup and verification task; 17.934s | [Execution](artifacts/integration/live-enabled/lab-EXEC-f60027fb64d6456ebc7360cee0a787bc.json) |
+| P-140 conflicting notes | **PARTIAL**, no error, CONFLICTING_SOURCES; distinct note/evidence path, task and approved-rule read; 20.059s | [Execution](artifacts/integration/live-enabled/conflict-EXEC-89fc74dad8b9435caeebf5d6bced97ba.json) |
+| New irrelevant SYN-MED-N1 event, P-151 | **SUCCEEDED**, one `classify_event_relevance` call, no extra case or clinical summary; 3.548s | [Execution and core job](artifacts/integration/live-enabled/irrelevant-EXEC-c7f27a7d5d8b46d98f39ee2cd8bb8ce7.json) |
+| Protocol Intelligence on supplied canonical PDF | **FAILED / AGENT_TIMEOUT**, 30.444s including HTTP polling; parse → coverage discovery → exact clause lookup; no completed certified eight-rule extraction | [Command/result](artifacts/integration/live-protocol-resilience.log) |
+| New restricted administration, P-042, automatic enrichment | Core event job **SUCCEEDED**; event, assessment/finding and existing ACKNOWLEDGED case persist; no additional case. Latest AI attempt **FAILED / TOOL_FORBIDDEN** at 25.501s after seven permitted tools. Earlier attempts failed citation validation/HTTP504; no failed AI text replaced the case summary | [Latest command/result](artifacts/integration/live-monitoring-reference-check.log), [full execution/core job/case](artifacts/integration/live-enabled/monitoring-EXEC-e97e141eaf38425bb8fac306cb8f6a1d.json) |
+
+`PARTIAL` is the correct result for unresolved synthetic evidence; it does not mean patient eligibility was decided by a model. Patient runs above used the verified context-loaded process; the similarly named `live-backend-context.log` ran against an old process after a denied restart and must not be used as proof of the fixes. Live runs vary: these individual observations do not establish a success rate, sustained quota, latency guarantee or live injection robustness. Repeated tests appended synthetic events and verification tasks to the local demo database; it was not reset over existing human approvals/dispositions.
+
+Fixes made from observed failures: supply only scoped approved criteria/hash/date and source bindings through the existing objective field (no extraction oracle); distinguish medication fact IDs from event IDs; preserve conflicting open items; provide exact Unicode clause anchors; return event citations with relevance/delta reads; read the independently persisted monitoring evaluation instead of passing an EVENT operator to the baseline evaluator; conform gateway error codes; retry only explicit transient 502/503/504 responses within the original deadlines. Complete certified protocol proposals can be assembled from the actual validated tool outputs without another duplicate model output. Sanitized rejection diagnostics contain reference IDs/field names or validation stage/type, never raw provider exceptions or source text.
+
+Executed validation:
+
+- **154 backend + AI tests passed**, one existing Starlette/AnyIO deprecation warning: [full regression](artifacts/integration/ai-final-full-regression-elevated.log). A sandboxed attempt failed temporary-directory access; the elevated retry above passed.
+- Following the final monitoring-result fix, **21 backend boundary/integration tests passed**: [targeted regression](artifacts/integration/monitoring-result-fix.log). The final diagnostic-only AI change then passed **72 AI tests**: [AI unit output](artifacts/integration/ai-final-diagnostics-unit.log).
+- **12 mocked/disabled scenario evaluations passed**, explicitly separate from live Gemini: [evaluation output](artifacts/integration/ai-enabled-evals.log).
+- Fixture checker passed five pages/eight proposals/twelve sections/eleven negative mutations. API/AI contract audit reports **26 routes, zero issues**; TypeScript comparison reports **73 declarations, zero mismatches**: [contract output](artifacts/integration/ai-live-contract-check.log).
+- Optional combined AI/backend-file Ruff check still exits **1 with 34 findings**, including import ordering, unused imports and defensive broad catches; it is not a green quality gate: [lint output](artifacts/integration/ai-followup-lint.log). No frontend code changed or new frontend test run is claimed in this follow-up.
+
+Issue updates: **IC-11 is partially resolved** by real patient/gateway/task execution; monitoring remains **P1 OPEN** (guard-rejected completion; E3 owns output fidelity and IC/E2 the validated handoff). **IC-12 remains P1 OPEN**: canonical live extraction exceeds the bound, and upload extraction still uses the curated backend path rather than integrated model proposals. No curated result counts as model extraction. The monitoring baseline-evaluator compatibility defect is fixed and covered by an actual-gateway mocked-model regression, but that alone is not a passing live monitoring outcome. No new observed unsafe write or P0 was found. Prompt E remains pending; this follow-up is coordinator testing, not independent judging.
+
+The sections below retain the earlier integration phase and initial smoke observations. The enabled follow-up above supersedes their statements about current configuration and live capability; earlier commands were not rerun merely because documentation changed.
+
+## Initial live-provider addendum — historical
+
+After the offline integration checks, the user supplied a server-side key and authorized live tests. The credential was never printed, added to a DTO/model input, or staged. At that point root `.env` was ignored and `LLM_ENABLED=false`; only that test process enabled inference.
 
 Command: `.venv/Scripts/python.exe tools/integration/record.py live-provider .venv/Scripts/python.exe tools/integration/live_provider.py` (exit **1**). The selected `gemini-3.8-flash` model was **AVAILABLE** through the SDK metadata probe. The actual agent invocation took **18.804 seconds** and made eight observed tool calls:
 

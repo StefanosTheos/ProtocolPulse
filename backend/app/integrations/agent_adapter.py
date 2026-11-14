@@ -1,5 +1,7 @@
 import asyncio
 import importlib
+import json
+import logging
 from datetime import timedelta
 from typing import Literal
 
@@ -118,11 +120,31 @@ async def execute_job(factory, job_id, settings):
                 snap = snapshot(
                     session, execution.trial_id, [execution.patient_id], cutoff, stamp.date(), event
                 )
+        version = session.get(m.ProtocolVersion, execution.protocol_version_id)
+        source = session.get(m.EvidenceSource, version.source_pk)
+        context = dict(source_id=source.source_id, source_version=source.source_version,
+                       protocol_version_id=version.protocol_version_id)
+        if execution.role != "PROTOCOL_INTELLIGENCE":
+            from backend.app.services.serializers import protocol_dto
+
+            # Only signed, scoped interpretations may reach a patient investigator.
+            context["approved_set_hash"] = version.approved_set_hash
+            context["approved_criteria"] = [c.model_dump(mode="json") for c in protocol_dto(session, version).criteria
+                if c.criterion_id in execution.criterion_ids_json and c.workflow_status == "APPROVED"]
+            baseline = session.scalar(select(m.ScreeningRun).where(
+                m.ScreeningRun.trial_id == execution.trial_id,
+                m.ScreeningRun.protocol_version_id == version.protocol_version_id,
+                m.ScreeningRun.status == "COMPLETE").order_by(m.ScreeningRun.created_at.desc()))
+            context["screening_date"] = baseline.screening_date.isoformat() if baseline else None
+            context["case_ids"] = list(session.scalars(select(m.ReviewCase.case_id).where(
+                m.ReviewCase.agent_execution_id == execution.execution_id)))
+        objective = json.dumps({"task": job.request_json["objective"],
+                                "authorized_backend_context": context}, ensure_ascii=False)
         req = AgentRequest(
             contract_version="1.0.0-rc2",
             execution_id=execution.execution_id,
             role=execution.role,
-            objective=job.request_json["objective"],
+            objective=objective,
             trial_id=execution.trial_id,
             protocol_version_id=execution.protocol_version_id,
             criterion_ids=execution.criterion_ids_json,
@@ -137,6 +159,7 @@ async def execute_job(factory, job_id, settings):
     gateway = EvidenceGateway(factory, req, actor_id, settings)
     result = None
     error = None
+    stage = "entrypoint"
     try:
         if not settings.llm_enabled or not settings.llm_api_key.get_secret_value():
             raw = await FakeAgentAdapter().run(req.model_dump(mode="json"), gateway)
@@ -146,7 +169,9 @@ async def execute_job(factory, job_id, settings):
                 entrypoint.run_agent(req.model_dump(mode="json"), gateway),
                 timeout=settings.agent_timeout_seconds,
             )
+        stage = "result_schema"
         result = AgentResult.model_validate(raw)
+        stage = "scope"
         if result.execution_id != req.execution_id or result.role != req.role:
             raise ValueError("Mismatched execution scope")
         if result.summary and not result.evidence_refs:
@@ -157,12 +182,15 @@ async def execute_job(factory, job_id, settings):
             return [(t.tool_name, sorted(t.input_reference_ids), sorted(t.output_reference_ids),
                      t.error_code or t.result_code) for t in trace]
 
+        stage = "trace"
         if observed(result.trace) != observed(gateway.trace):
             raise ValueError("Trace does not match observed gateway activity")
         with factory() as session:
+            stage = "evidence"
             for ref in result.evidence_refs:
                 gateway.validate_reference(session, ref.model_dump())
             if result.proposed_criteria or result.coverage:
+                stage = "protocol_proposal"
                 if req.role != "PROTOCOL_INTELLIGENCE":
                     raise ValueError("Role cannot propose protocol changes")
                 from backend.app.schemas.dto import CriteriaReplaceRequest
@@ -184,7 +212,11 @@ async def execute_job(factory, job_id, settings):
         error = "AGENT_UNAVAILABLE"
     except TimeoutError:
         error = "AGENT_TIMEOUT"
-    except Exception:
+    except Exception as exc:
+        logging.getLogger(__name__).warning(
+            "agent_result_rejected execution_id=%s stage=%s exception_type=%s",
+            req.execution_id, stage, type(exc).__name__,
+        )
         error = "UNVERIFIED_EVIDENCE_REF"
     with factory.begin() as session:
         job = session.get(m.Job, job_id)

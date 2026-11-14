@@ -32,6 +32,22 @@ def test_medication_branches_on_actual_returned_evidence():
                           "elapsed_ms", "error_code"} for t in unknown["trace"])
 
 
+def test_medication_fact_id_cannot_be_used_as_a_source_event_id():
+    class InvalidEventModel(ScenarioModel):
+        async def next(self, raw, tools):
+            if not self.observed:
+                return ToolCall('retrieve_patient_evidence', {'patient_id': raw['patient_id'],
+                    'criterion_ids': raw['criterion_ids'], 'snapshot_id': raw['evidence_snapshot_id'],
+                    'evidence_types': ['ORDER']})
+            return ToolCall('request_med_reconciliation', {'patient_id': raw['patient_id'],
+                'criterion_id': 'PX-EXC-02', 'source_event_ids': ['EV-MED-P-083-1'],
+                'question': 'Please verify the recorded medication order.', 'semantic_key': 'untrusted'})
+    gw = gateway()
+    result = run(request(), gw, InvalidEventModel())
+    assert result['status'] == 'FAILED' and result['error_code'] == 'UNVERIFIED_EVIDENCE_REF'
+    assert [name for name, _ in gw.calls] == ['retrieve_patient_evidence']
+
+
 @pytest.mark.parametrize("stale,reason", [(False, "MISSING_LAB"), (True, "OUTDATED_LAB")])
 def test_lab_branch_preserves_missing_and_stale_evidence(stale, reason):
     gw = gateway("P-124", stale_lab=stale, missing_lab=not stale)
@@ -53,6 +69,18 @@ def test_no_action_stops_after_backend_relevance_without_note_scans():
     result = run(request("MONITORING_WORKFLOW", "P-151", "PX-MON-01"), gw, ScenarioModel("monitor"))
     assert result["status"] == "SUCCEEDED"
     assert [name for name, _ in gw.calls] == ["classify_event_relevance"]
+
+
+def test_complete_protocol_does_not_repeat_large_validated_json_through_model():
+    gw, oracle = protocol_gateway()
+    class NoRedundantCall(ScenarioModel):
+        async def next(self, raw, tools):
+            assert len(self.observed) < 3, 'Validated extraction must not need a fourth inference call'
+            return await super().next(raw, tools)
+    result = run(request('PROTOCOL_INTELLIGENCE'), gw, NoRedundantCall('protocol', oracle))
+    assert result['status'] == 'SUCCEEDED'
+    assert len(result['proposed_criteria']) == 8 and len(result['coverage']) == 12
+    assert all(c['workflow_status'] == 'PROPOSED' for c in result['proposed_criteria'])
 
 
 def test_monitor_reads_existing_case_and_never_writes_it():

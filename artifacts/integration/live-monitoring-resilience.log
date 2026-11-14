@@ -1,0 +1,1 @@
+{"case": "monitoring", "status": "FAILED", "error_code": "UNVERIFIED_EVIDENCE_REF", "model_id": null, "elapsed_seconds": 21.147, "tools": ["get_case_status", "classify_event_relevance", "get_prior_evaluation", "retrieve_patient_evidence", "get_evidence_link", "resolve_approved_terminology", "evaluate_approved_rule"]}

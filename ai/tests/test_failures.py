@@ -90,6 +90,31 @@ def test_provider_failure_preserves_observed_trace_without_fake_success():
     assert result["summary"] is None
 
 
+def test_transient_provider_retry_does_not_consume_gateway_steps(caplog):
+    class Recovering(ScenarioModel):
+        failures = 0
+        async def next(self, request, tools):
+            if self.failures == 0:
+                self.failures += 1
+                raise ProviderFailure('PROVIDER_HTTP_504')
+            return await super().next(request, tools)
+    gw = gateway()
+    result = run(Recovering(), gw)
+    assert result['status'] == 'PARTIAL' and result['error_code'] is None
+    assert len(result['trace']) == len(gw.calls) == 5
+    assert 'model_retry' in caplog.text and 'PROVIDER_HTTP_504' in caplog.text
+
+
+def test_provider_transport_retries_remain_inside_execution_deadline():
+    class AlwaysUnavailable(ScenarioModel):
+        async def next(self, request, tools):
+            raise ProviderFailure('PROVIDER_HTTP_504')
+    gw = gateway()
+    result = run(AlwaysUnavailable(), gw, agent_timeout=.01)
+    assert result['status'] == 'PARTIAL' and result['error_code'] == 'AGENT_TIMEOUT'
+    assert not gw.calls
+
+
 def test_unexpected_gateway_exception_does_not_leak_payload_or_exception_text():
     def bad(payload):
         raise RuntimeError("SECRET-AND-CLINICAL-NARRATIVE")

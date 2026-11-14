@@ -1,0 +1,60 @@
+{
+  "mode": "LIVE_GEMINI_REAL_HTTP_BACKEND_GATEWAY_SQLITE",
+  "request": {
+    "role": "MEDICATION_SAFETY_INVESTIGATOR",
+    "trial_id": "TR-PX104",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "patient_id": "P-083",
+    "criterion_ids": [
+      "PX-EXC-02"
+    ],
+    "event_id": null,
+    "objective": "Investigate the recorded medication evidence for the approved criterion. Retain uncertainties and propose a sourced verification question if necessary."
+  },
+  "job": {
+    "job_id": "JOB-25f234c0706240808fa55686e9c5ba81",
+    "kind": "AGENT_INVESTIGATION",
+    "status": "FAILED",
+    "resource_id": "EXEC-2e234018f68545b6a55bd88526d24ed2",
+    "correlation_id": "4ebc5c0b-41d8-4fe5-975c-f1fcfc01f2ec",
+    "poll_url": "/api/v1/jobs/JOB-25f234c0706240808fa55686e9c5ba81",
+    "created_at": "2026-11-14T22:02:39.988937Z",
+    "attempts": 1,
+    "max_attempts": 3,
+    "started_at": "2026-11-14T22:02:40.106887Z",
+    "finished_at": "2026-11-14T22:02:42.558404Z",
+    "progress_percent": 100.0,
+    "result": {
+      "execution_id": "EXEC-2e234018f68545b6a55bd88526d24ed2",
+      "agent_status": "FAILED"
+    },
+    "error": {
+      "code": "PROVIDER_ERROR",
+      "message": "Background work failed",
+      "retryable": true
+    }
+  },
+  "execution": {
+    "execution_id": "EXEC-2e234018f68545b6a55bd88526d24ed2",
+    "role": "MEDICATION_SAFETY_INVESTIGATOR",
+    "status": "FAILED",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-083",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "criterion_ids": [
+      "PX-EXC-02"
+    ],
+    "event_id": null,
+    "correlation_id": "4ebc5c0b-41d8-4fe5-975c-f1fcfc01f2ec",
+    "evidence_refs": [],
+    "summary": null,
+    "unknown_reasons": [],
+    "verification_questions": [],
+    "trace": [],
+    "error_code": "PROVIDER_ERROR",
+    "model_id": "gemini-3.8-flash",
+    "created_at": "2026-11-14T22:02:39.988937Z",
+    "finished_at": "2026-11-14T22:02:42.558404Z"
+  },
+  "elapsed_seconds": 2.608
+}

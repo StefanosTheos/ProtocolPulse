@@ -111,6 +111,14 @@ def test_typed_tool_payload_no_extra_instructions(env):
     assert asyncio.run(gate.invoke("retrieve_patient_evidence", payload))["error_code"] == "BAD_INPUT"
 
 
+def test_reconciliation_rejects_a_medication_fact_as_event_identity(env):
+    gate = gateway(env, role='MEDICATION_SAFETY_INVESTIGATOR')
+    result = asyncio.run(gate.invoke('request_med_reconciliation', scope(gate,
+        patient_id='P-083', criterion_id='PX-EXC-02', source_event_ids=['MED-P-083-1'],
+        question='Please verify the recorded order.', semantic_key='invalid-fact-as-event')))
+    assert result['error_code'] == 'BAD_INPUT'
+
+
 def test_unknown_citation_rejected(env):
     gate = gateway(env)
     with env[2]() as session:
@@ -192,3 +200,16 @@ def test_protocol_gateway_does_not_leak_oracle(env):
         for page in result["data"]["pages"]
     )
     assert "threshold" not in result["data"]
+
+
+def test_locate_clause_returns_exact_persisted_unicode_section_bounds(env):
+    gate = gateway(env, role='PROTOCOL_INTELLIGENCE')
+    result = asyncio.run(gate.invoke('locate_clause', scope(gate, source_id='SRC-PROTOCOL-PX104-V1',
+        query='', section_ids=['PX-SECTION-INC-03'], max_matches=1)))
+    assert result['result_code'] == 'OK'
+    span = result['data']['spans'][0]
+    assert span['start'] > 0 and 'mL/min/1.73m²' in span['text']
+    pages = asyncio.run(gate.invoke('parse_protocol', scope(gate,
+        source_id='SRC-PROTOCOL-PX104-V1', version_id='PV-PX104-1.0')))['data']['pages']
+    page = next(p for p in pages if p['page'] == span['page'])
+    assert page['text'][span['start']:span['end']] == span['text']
