@@ -1,0 +1,253 @@
+{
+  "mode": "OBSERVED_MOCK_MODEL_AND_MOCK_GATEWAY",
+  "contract_version": "1.0.0-rc2",
+  "notice": "No live Gemini request or backend case persistence is represented.",
+  "examples": [
+    {
+      "scenario": "P-083 order-only",
+      "request": {
+        "contract_version": "1.0.0-rc2",
+        "execution_id": "EX-P-083-MEDICATION_SAFETY_INVESTIGATOR",
+        "role": "MEDICATION_SAFETY_INVESTIGATOR",
+        "objective": "Investigate the source-linked uncertainty.",
+        "trial_id": "TR-PX104",
+        "protocol_version_id": "PV-PX104-1.0",
+        "criterion_ids": [
+          "PX-EXC-02"
+        ],
+        "patient_id": "P-083",
+        "event_id": null,
+        "evidence_snapshot_id": "SNAP-BASELINE",
+        "correlation_id": "a29dd6bd-2f67-59ac-b97c-d6a32f2a3f67",
+        "max_steps": 8
+      },
+      "result": {
+        "contract_version": "1.0.0-rc2",
+        "execution_id": "EX-P-083-MEDICATION_SAFETY_INVESTIGATOR",
+        "status": "PARTIAL",
+        "role": "MEDICATION_SAFETY_INVESTIGATOR",
+        "summary": "Source documents an order; use is unverified.",
+        "evidence_refs": [
+          {
+            "source_id": "SRC-MED-P-083-1",
+            "source_version": 1,
+            "evidence_id": "EV-MED-P-083-1",
+            "page": null,
+            "span_start": null,
+            "span_end": null,
+            "effective_at": null
+          }
+        ],
+        "unknown_reasons": [
+          "ORDER_ONLY"
+        ],
+        "conflict_refs": [],
+        "proposed_criteria": [],
+        "coverage": [],
+        "verification_questions": [],
+        "trace": [
+          {
+            "tool_name": "retrieve_patient_evidence",
+            "input_reference_ids": [
+              "EX-P-083-MEDICATION_SAFETY_INVESTIGATOR",
+              "P-083",
+              "PV-PX104-1.0",
+              "PX-EXC-02",
+              "SNAP-BASELINE",
+              "TR-PX104",
+              "a29dd6bd-2f67-59ac-b97c-d6a32f2a3f67"
+            ],
+            "output_reference_ids": [
+              "EV-MED-P-083-1",
+              "SRC-MED-P-083-1"
+            ],
+            "result_code": "OK",
+            "elapsed_ms": 0,
+            "error_code": null
+          },
+          {
+            "tool_name": "resolve_approved_terminology",
+            "input_reference_ids": [
+              "EX-P-083-MEDICATION_SAFETY_INVESTIGATOR",
+              "P-083",
+              "PV-PX104-1.0",
+              "TR-PX104",
+              "a29dd6bd-2f67-59ac-b97c-d6a32f2a3f67"
+            ],
+            "output_reference_ids": [
+              "SRC-MAP-V1"
+            ],
+            "result_code": "OK",
+            "elapsed_ms": 0,
+            "error_code": null
+          },
+          {
+            "tool_name": "get_medication_timeline",
+            "input_reference_ids": [
+              "EX-P-083-MEDICATION_SAFETY_INVESTIGATOR",
+              "P-083",
+              "PV-PX104-1.0",
+              "SNAP-BASELINE",
+              "TR-PX104",
+              "a29dd6bd-2f67-59ac-b97c-d6a32f2a3f67"
+            ],
+            "output_reference_ids": [
+              "EV-MED-P-083-1",
+              "SRC-MED-P-083-1"
+            ],
+            "result_code": "OK",
+            "elapsed_ms": 0,
+            "error_code": null
+          },
+          {
+            "tool_name": "get_evidence_link",
+            "input_reference_ids": [
+              "EV-MED-P-083-1",
+              "EX-P-083-MEDICATION_SAFETY_INVESTIGATOR",
+              "P-083",
+              "PV-PX104-1.0",
+              "SRC-MED-P-083-1",
+              "TR-PX104",
+              "a29dd6bd-2f67-59ac-b97c-d6a32f2a3f67"
+            ],
+            "output_reference_ids": [
+              "EV-MED-P-083-1",
+              "SRC-MED-P-083-1"
+            ],
+            "result_code": "OK",
+            "elapsed_ms": 0,
+            "error_code": null
+          },
+          {
+            "tool_name": "request_verification_task",
+            "input_reference_ids": [
+              "EV-MED-P-083-1",
+              "EX-P-083-MEDICATION_SAFETY_INVESTIGATOR",
+              "P-083",
+              "PV-PX104-1.0",
+              "PX-EXC-02",
+              "SRC-MED-P-083-1",
+              "TR-PX104",
+              "a29dd6bd-2f67-59ac-b97c-d6a32f2a3f67"
+            ],
+            "output_reference_ids": [
+              "TASK-P-083"
+            ],
+            "result_code": "OK",
+            "elapsed_ms": 0,
+            "error_code": null
+          }
+        ],
+        "error_code": null,
+        "model_id": "MOCK-GEMINI-FOR-EVALUATION"
+      }
+    },
+    {
+      "scenario": "P-042 day-18 existing case",
+      "request": {
+        "contract_version": "1.0.0-rc2",
+        "execution_id": "EX-P-042-MONITORING_WORKFLOW",
+        "role": "MONITORING_WORKFLOW",
+        "objective": "Investigate the source-linked uncertainty. Monitoring case CASE-P042 already exists.",
+        "trial_id": "TR-PX104",
+        "protocol_version_id": "PV-PX104-1.0",
+        "criterion_ids": [
+          "PX-MON-01"
+        ],
+        "patient_id": "P-042",
+        "event_id": "EVT-P042-D18-01",
+        "evidence_snapshot_id": "SNAP-MONITOR-P-042",
+        "correlation_id": "40ac1b2e-22bf-569a-8fae-7ca8f35bee88",
+        "max_steps": 8
+      },
+      "result": {
+        "contract_version": "1.0.0-rc2",
+        "execution_id": "EX-P-042-MONITORING_WORKFLOW",
+        "status": "SUCCEEDED",
+        "role": "MONITORING_WORKFLOW",
+        "summary": "The backend case is OPEN; source-linked investigator review remains required.",
+        "evidence_refs": [
+          {
+            "source_id": "SRC-MED-P-042-1",
+            "source_version": 1,
+            "evidence_id": "EV-MED-P-042-1",
+            "page": null,
+            "span_start": null,
+            "span_end": null,
+            "effective_at": "2026-11-19T09:30:00+02:00"
+          }
+        ],
+        "unknown_reasons": [],
+        "conflict_refs": [],
+        "proposed_criteria": [],
+        "coverage": [],
+        "verification_questions": [],
+        "trace": [
+          {
+            "tool_name": "classify_event_relevance",
+            "input_reference_ids": [
+              "40ac1b2e-22bf-569a-8fae-7ca8f35bee88",
+              "EVT-P042-D18-01",
+              "EX-P-042-MONITORING_WORKFLOW",
+              "P-042",
+              "PV-PX104-1.0",
+              "TR-PX104"
+            ],
+            "output_reference_ids": [
+              "EV-MED-P-042-1",
+              "PX-MON-01",
+              "SRC-MED-P-042-1"
+            ],
+            "result_code": "OK",
+            "elapsed_ms": 0,
+            "error_code": null
+          },
+          {
+            "tool_name": "get_prior_evaluation",
+            "input_reference_ids": [
+              "40ac1b2e-22bf-569a-8fae-7ca8f35bee88",
+              "EVT-P042-D18-01",
+              "EX-P-042-MONITORING_WORKFLOW",
+              "P-042",
+              "PV-PX104-1.0",
+              "PX-MON-01",
+              "TR-PX104"
+            ],
+            "output_reference_ids": [
+              "ASSESS-AFTER",
+              "ASSESS-BEFORE",
+              "EV-MED-P-042-1",
+              "EVT-P042-D18-01",
+              "PX-MON-01",
+              "SRC-MED-P-042-1"
+            ],
+            "result_code": "OK",
+            "elapsed_ms": 0,
+            "error_code": null
+          },
+          {
+            "tool_name": "get_case_status",
+            "input_reference_ids": [
+              "40ac1b2e-22bf-569a-8fae-7ca8f35bee88",
+              "CASE-P042",
+              "EX-P-042-MONITORING_WORKFLOW",
+              "P-042",
+              "PV-PX104-1.0",
+              "TR-PX104"
+            ],
+            "output_reference_ids": [
+              "EV-MED-P-042-1",
+              "FIND-P042",
+              "SRC-MED-P-042-1"
+            ],
+            "result_code": "OK",
+            "elapsed_ms": 0,
+            "error_code": null
+          }
+        ],
+        "error_code": null,
+        "model_id": "MOCK-GEMINI-FOR-EVALUATION"
+      }
+    }
+  ]
+}
