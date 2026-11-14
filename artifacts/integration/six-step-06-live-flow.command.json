@@ -1,0 +1,8 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "tools/integration/live_remediation.py"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 7.856
+}

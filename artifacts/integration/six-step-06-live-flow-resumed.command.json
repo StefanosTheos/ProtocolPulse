@@ -1,0 +1,11 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "tools/integration/live_remediation.py",
+    "--base-url",
+    "http://127.0.0.1:8002/api/v1",
+    "--resume"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 78.313
+}

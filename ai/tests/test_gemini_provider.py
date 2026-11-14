@@ -12,6 +12,12 @@ from ai.tools.selection import allowed_tools
 from ai.tools.schemas import wire
 
 
+def investigation_text():
+    return json.dumps(proposal(summary=None, incomplete=True).model_dump(
+        exclude={'proposed_criteria', 'coverage', 'evidence_refs', 'conflict_refs'}) |
+        {'evidence_keys': [], 'conflict_keys': []})
+
+
 def test_sdk_types_manual_tool_loop_and_thought_signature_replay(monkeypatch):
     genai = pytest.importorskip("google.genai")
     from google.genai import types
@@ -24,7 +30,7 @@ def test_sdk_types_manual_tool_loop_and_thought_signature_replay(monkeypatch):
         thought_signature=signature)])
     responses = [types.GenerateContentResponse(candidates=[types.Candidate(content=content)]),
         types.GenerateContentResponse(candidates=[types.Candidate(content=types.Content(role="model", parts=[
-            types.Part(text=proposal(summary=None, incomplete=True).model_dump_json())]))])]
+            types.Part(text=investigation_text())]))])]
     class FakeAsyncClient:
         models = None
         closed = False
@@ -61,6 +67,8 @@ def test_sdk_types_manual_tool_loop_and_thought_signature_replay(monkeypatch):
     assert config.automatic_function_calling.disable is True
     assert config.response_mime_type == "application/json"
     assert config.response_json_schema["additionalProperties"] is False
+    assert 'proposed_criteria' not in config.response_json_schema['properties']
+    assert 'coverage' not in config.response_json_schema['properties']
     assert received[0]["model"] == "gemini-3.8-flash"
     assert "SDK-TEST-KEY" not in config.model_dump_json() and "SDK-TEST-KEY" not in str(received)
 
@@ -119,7 +127,7 @@ def test_real_sdk_serializes_manual_calls_using_mock_http_transport(monkeypatch)
         bodies.append(json.loads(http_request.content))
         part = {"functionCall": {"name": "get_lab_history", "args": args, "id": "native-call-1"},
                 "thoughtSignature": base64.b64encode(b"test-native-signature").decode()} if len(bodies) == 1 else {
-                "text": proposal(summary=None, incomplete=True).model_dump_json()}
+                "text": investigation_text()}
         return httpx.Response(200, json={"candidates": [{"content": {"role": "model", "parts": [part]},
                                                         "finishReason": "STOP"}]}, request=http_request)
     def construct(**kwargs):

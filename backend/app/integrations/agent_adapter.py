@@ -2,6 +2,7 @@ import asyncio
 import importlib
 import json
 import logging
+import time
 from datetime import timedelta
 from typing import Literal
 
@@ -79,7 +80,7 @@ class FakeAgentAdapter:
         ).model_dump(mode="json")
 
 
-async def execute_job(factory, job_id, settings):
+async def execute_job(factory, job_id, settings, *, persist_proposal=False):
     from backend.app.integrations.evidence_gateway import EvidenceGateway
 
     with factory.begin() as session:
@@ -157,7 +158,10 @@ async def execute_job(factory, job_id, settings):
         actor_id = job.actor_id
         execution.status = "RUNNING"
     gateway = EvidenceGateway(factory, req, actor_id, settings)
+    context['execution_deadline_monotonic'] = gateway.deadline
+    req.objective = json.dumps({'task': job.request_json['objective'], 'authorized_backend_context': context}, ensure_ascii=False)
     result = None
+    proposal = None
     error = None
     stage = "entrypoint"
     try:
@@ -167,7 +171,7 @@ async def execute_job(factory, job_id, settings):
             entrypoint = importlib.import_module("ai.entrypoints")
             raw = await asyncio.wait_for(
                 entrypoint.run_agent(req.model_dump(mode="json"), gateway),
-                timeout=settings.agent_timeout_seconds,
+                timeout=max(.001, gateway.deadline - time.monotonic()),
             )
         stage = "result_schema"
         result = AgentResult.model_validate(raw)
@@ -198,12 +202,13 @@ async def execute_job(factory, job_id, settings):
 
                 version = session.get(m.ProtocolVersion, req.protocol_version_id)
                 src = session.get(m.EvidenceSource, version.source_pk)
-                validate_proposal(
-                    CriteriaReplaceRequest(
+                proposal = CriteriaReplaceRequest(
                         criteria=result.proposed_criteria,
                         coverage=result.coverage,
                         change_reason="AI proposal for human review",
-                    ),
+                    )
+                validate_proposal(
+                    proposal,
                     src.pages,
                     req.protocol_version_id,
                     src.source_id,
@@ -235,6 +240,17 @@ async def execute_job(factory, job_id, settings):
             ]
             execution.unknown_reasons_json = result.unknown_reasons
             execution.verification_questions_json = result.verification_questions
+            if persist_proposal and proposal and result.status == 'SUCCEEDED':
+                from backend.app.services.approval import replace_proposal
+
+                version = session.get(m.ProtocolVersion, req.protocol_version_id)
+                if version.revision != job.request_json['expected_protocol_revision'] or version.approved_set_hash:
+                    execution.status, execution.error_code = 'FAILED', 'REVISION_CONFLICT'
+                else:
+                    replace_proposal(session, version, proposal, session.get(m.ClinicalActor, actor_id), req.correlation_id)
+                    append_audit(session, session.get(m.ClinicalActor, actor_id), req.trial_id,
+                        'MODEL_PROPOSAL_LOADED', 'ProtocolVersion', version.protocol_version_id,
+                        req.correlation_id, output_ids=[req.execution_id], result='UNAPPROVED')
             if result.summary and result.status in ("SUCCEEDED", "PARTIAL"):
                 cases = session.scalars(
                     select(m.ReviewCase).where(m.ReviewCase.agent_execution_id == req.execution_id)

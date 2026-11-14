@@ -1,0 +1,21 @@
+{
+  "equal": true,
+  "paths_compared": [
+    "/trials/TR-PX104/protocols/PV-3698c369782b4918bf27d77953205df1",
+    "/screenings/RUN-c15a80adb1ae4db98a520792caeee2be",
+    "/screenings/RUN-c15a80adb1ae4db98a520792caeee2be/assessments?limit=100",
+    "/cases/CASE-7e6ba5080532424ea9e65884b9b0182e",
+    "/agent-executions/EXEC-ca364c12a14d4f9b86efffdae186df55",
+    "/trials/TR-PX104/audit?limit=100"
+  ],
+  "health": {
+    "status": "ok",
+    "database": "ok",
+    "migrations": "current",
+    "worker": "running",
+    "llm": "enabled",
+    "synthetic_only": true,
+    "api_version": "v1",
+    "contract_version": "1.0.0-rc2"
+  }
+}

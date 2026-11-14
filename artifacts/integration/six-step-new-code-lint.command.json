@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "ruff",
+    "check",
+    "ai/agents/protocol_preparation.py",
+    "ai/tools/references.py",
+    "ai/tests/test_compact_protocol.py",
+    "ai/tests/test_diagnostics.py",
+    "ai/tests/test_monitoring_finalization.py",
+    "ai/tests/test_reference_registry.py",
+    "ai/tests/test_role_outputs.py",
+    "backend/app/services/protocol_extraction.py",
+    "backend/tests/test_model_extraction.py",
+    "--select",
+    "F,E9",
+    "--output-format",
+    "concise"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.146
+}

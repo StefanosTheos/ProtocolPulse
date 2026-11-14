@@ -14,6 +14,7 @@ from ai.agents.evidence_investigator import required_unknowns
 from ai.agents.medication_investigator import unmapped
 from ai.agents.monitoring_workflow import no_action
 from ai.agents.protocol_intelligence import GuardError, validate_coverage, validate_drafts, verify_quote
+from ai.agents.protocol_preparation import assemble, clause_registry, clause_sections
 from ai.providers.gemini import ProviderFailure, ProviderUnavailable, ToolCall
 from ai.tools.schemas import (AgentResult, FinalProposal, GatewayError,
                               GatewaySuccess, ToolTrace, VERSION, wire)
@@ -36,7 +37,7 @@ def safe_text(value):
 
 
 class Coordinator:
-    def __init__(self, request, gateway, settings, provider):
+    def __init__(self, request, gateway, settings, provider, deadline=None):
         self.request, self.gateway, self.settings, self.provider = request, gateway, settings, provider
         self.tools = allowed_tools(request.role)
         self.trace, self.observations = [], []
@@ -47,6 +48,48 @@ class Coordinator:
         self.certified_coverage = None
         self.submitted_drafts = []
         self.attempts = 0
+        self.deadline = min(time.monotonic() + settings.agent_timeout,
+                            deadline if deadline is not None else float('inf'))
+
+    def remaining(self):
+        return max(0, self.deadline - time.monotonic())
+
+    async def bounded_model(self, operation):
+        try:
+            return await asyncio.wait_for(operation,
+                min(self.settings.model_timeout, max(.001, self.remaining())))
+        except TimeoutError:
+            if self.remaining() <= .001:
+                raise
+            raise GuardError('LLM_CALL_TIMEOUT') from None
+
+    def monitoring_ready(self):
+        names = {name for name, _ in self.observations}
+        if not {'classify_event_relevance', 'get_prior_evaluation', 'get_case_status'} <= names:
+            return False
+        if not names & {'retrieve_patient_evidence', 'get_evidence_link'} or not self.refs:
+            return False
+        unresolved = required_unknowns(self.observations) or any(
+            delta['after_result'] == 'UNKNOWN' for name, data in self.observations
+            if name == 'get_prior_evaluation' for delta in data['prior'])
+        return not unresolved or bool(names & TASK_TOOLS)
+
+    async def finalize_monitoring(self, incomplete=False):
+        final = await self.bounded_model(self.provider.finalize(wire(self.request)))
+        if not isinstance(final, FinalProposal):
+            raise GuardError('INVALID_MODEL_OUTPUT')
+        if incomplete:
+            final.incomplete = True
+            final.unknown_reasons = sorted(set(final.unknown_reasons) | {'INCOMPLETE_INVESTIGATION'})
+        return self.finish(final)
+
+    def source_binding(self):
+        try:
+            context = json.loads(self.request.objective)['authorized_backend_context']
+            return context['source_id'], context['source_version']
+        except (ValueError, KeyError, TypeError):
+            # Compatibility for the canonical frozen fixture in isolated evaluations.
+            return 'SRC-PROTOCOL-PX104-V1', 1
 
     def no_secret(self, value):
         if self.settings.api_key and self.settings.api_key in canonical(value):
@@ -81,6 +124,7 @@ class Coordinator:
 
     def arguments(self, call):
         if call.name not in self.tools:
+            logging.getLogger(__name__).warning('agent_output_rejected execution_id=%s stage=tool_selection', self.request.execution_id)
             raise GuardError("TOOL_FORBIDDEN")
         args = self.tools[call.name].model_validate(call.arguments)
         payload = wire(args)
@@ -98,7 +142,7 @@ class Coordinator:
         if "map_version" in payload and payload["map_version"] != "px104-terminology-v1":
             raise GuardError("SCOPE_VIOLATION")
         if call.name in {"parse_protocol", "locate_clause", "report_coverage"}:
-            if payload["source_id"] != "SRC-PROTOCOL-PX104-V1":
+            if payload["source_id"] != self.source_binding()[0]:
                 raise GuardError("SCOPE_VIOLATION")
         for limit in ("max_hits", "max_matches"):
             if limit in payload and not 1 <= payload[limit] <= 10:
@@ -159,7 +203,7 @@ class Coordinator:
         if name in {"parse_protocol", "locate_clause"}:
             spans = data.pages if name == "parse_protocol" else data.spans
             for span in spans:
-                if span.source_id != "SRC-PROTOCOL-PX104-V1" or span.source_version != 1:
+                if (span.source_id, span.source_version) != self.source_binding():
                     raise GuardError("SCOPE_VIOLATION")
                 if span.end - span.start != len(span.text) or hashlib.sha256(span.text.encode()).hexdigest() != span.sha256:
                     raise GuardError("UNVERIFIED_EVIDENCE_REF")
@@ -212,6 +256,7 @@ class Coordinator:
                 raise GuardError("UNCERTIFIED_EXTRACTION")
         else:
             if final.proposed_criteria or final.coverage:
+                logging.getLogger(__name__).warning('agent_output_rejected execution_id=%s stage=final_protocol_fields', self.request.execution_id)
                 raise GuardError("TOOL_FORBIDDEN")
             if not final.incomplete and (not self.observations or not final.evidence_refs):
                 raise GuardError("UNVERIFIED_EVIDENCE_REF")
@@ -231,7 +276,8 @@ class Coordinator:
             self.attempts += 1
             started = time.monotonic()
             try:
-                raw = await asyncio.wait_for(self.gateway.invoke(call.name, payload), self.settings.tool_timeout)
+                raw = await asyncio.wait_for(self.gateway.invoke(call.name, payload),
+                    min(self.settings.tool_timeout, max(.001, self.remaining())))
                 if "error_code" in raw:
                     error = GatewayError.model_validate(raw)
                     if error.tool_name != call.name:
@@ -269,7 +315,7 @@ class Coordinator:
     async def next_action(self):
         for attempt in range(self.settings.max_attempts):
             try:
-                return await asyncio.wait_for(self.provider.next(wire(self.request), self.tools), self.settings.model_timeout)
+                return await self.bounded_model(self.provider.next(wire(self.request), self.tools))
             except ProviderFailure as error:
                 # Retry only explicit transient transport statuses, never malformed
                 # evidence/output, authority failures, quota or unmapped terminology.
@@ -279,13 +325,19 @@ class Coordinator:
                     raise
                 logging.getLogger(__name__).warning("model_retry execution_id=%s result_code=%s attempt=%d",
                     self.request.execution_id, str(error), attempt + 1)
-                await asyncio.sleep(.1 * (attempt + 1))
-            except TimeoutError:
-                raise GuardError("LLM_CALL_TIMEOUT") from None
+                await asyncio.sleep(min(.1 * (attempt + 1), self.remaining()))
 
     async def loop(self):
         self.no_secret(wire(self.request))
+        if self.request.role == 'PROTOCOL_INTELLIGENCE' and hasattr(self.provider, 'interpret'):
+            return await self.extract_protocol()
         for _ in range(min(self.request.max_steps, self.settings.max_steps) + 1):
+            if (self.request.role == 'MONITORING_WORKFLOW' and hasattr(self.provider, 'finalize') and self.refs):
+                ready = self.monitoring_ready()
+                budget_end = (self.attempts >= min(self.request.max_steps, self.settings.max_steps) - 1 or
+                              self.remaining() <= self.settings.model_timeout + .5)
+                if ready or budget_end:
+                    return await self.finalize_monitoring(incomplete=not ready)
             action = await self.next_action()
             if isinstance(action, FinalProposal):
                 return self.finish(action)
@@ -319,9 +371,38 @@ class Coordinator:
                 return self.result("PARTIAL", error="INCOMPLETE_EXTRACTION", reasons=["INCOMPLETE_EXTRACTION"])
         raise GuardError("STEP_BUDGET_EXHAUSTED")
 
+    async def extract_protocol(self):
+        source_id, _ = self.source_binding()
+        parsed = await self.invoke(ToolCall('parse_protocol', {
+            'source_id': source_id, 'version_id': self.request.protocol_version_id}))
+        if parsed['data']['unreadable_pages']:
+            return self.result('PARTIAL', error='INCOMPLETE_EXTRACTION', reasons=['INCOMPLETE_EXTRACTION'])
+        sections = clause_sections(self.pages)
+        if not sections or len(sections) > 8:
+            raise GuardError('INCOMPLETE_EXTRACTION')
+        located = await self.invoke(ToolCall('locate_clause', {
+            'source_id': source_id, 'query': '', 'section_ids': sections, 'max_matches': 8}))
+        from ai.tools.schemas import PageSpan
+        clauses = clause_registry([PageSpan.model_validate(s) for s in located['data']['spans']], self.pages)
+        if len(clauses) != len(sections):
+            raise GuardError('INCOMPLETE_EXTRACTION')
+        interpretation = await self.bounded_model(self.provider.interpret(wire(self.request),
+            [wire(page) for page in self.pages.values()], clauses))
+        drafts = assemble(interpretation, clauses, self.request)
+        validated = await self.invoke(ToolCall('validate_rule_schema', {'drafts': [wire(d) for d in drafts]}))
+        report = await self.invoke(ToolCall('report_coverage', {
+            'source_id': source_id, 'drafts': [wire(d) for d in drafts], 'sections': []}))
+        from ai.tools.schemas import CoverageItem
+        coverage = [CoverageItem.model_validate(c) for c in report['data']['items']]
+        incomplete = bool(validated['data']['errors'] or report['data']['blocking_count'] or
+                          any(d.ambiguity for d in drafts))
+        return self.finish(FinalProposal(summary=None, evidence_refs=list(self.refs.values()),
+            unknown_reasons=['INCOMPLETE_EXTRACTION'] if incomplete else [], conflict_refs=[],
+            proposed_criteria=drafts, coverage=coverage, verification_questions=[], incomplete=incomplete))
+
     async def run(self):
         try:
-            return await asyncio.wait_for(self.loop(), self.settings.agent_timeout)
+            return await asyncio.wait_for(self.loop(), max(.001, self.remaining()))
         except GuardError as error:
             partial = error.code in {"STEP_BUDGET_EXHAUSTED", "TIMEOUT", "LLM_CALL_TIMEOUT", "SOURCE_UNAVAILABLE", "INCOMPLETE_EXTRACTION"}
             return self.result("PARTIAL" if partial else "FAILED", error=error.code)

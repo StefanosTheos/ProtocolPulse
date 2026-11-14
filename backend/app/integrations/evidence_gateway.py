@@ -334,17 +334,13 @@ class EvidenceGateway:
                     ):
                         raise ValueError("Unverified draft quote")
                 if name == "validate_rule_schema":
+                    from backend.app.services.pdf_extractor import validate_draft
+
                     valid, errors = [], []
                     for draft in drafts:
-                        stored = next((r for r in rules if r.criterion_id == draft.criterion_id), None)
-                        if (
-                            not stored
-                            or stored.operator != draft.operator
-                            or stored.type != draft.type
-                            or stored.threshold_json != draft.model_dump(mode="json")["threshold"]
-                            or stored.unit != draft.unit
-                            or stored.window_json != draft.window.model_dump()
-                        ):
+                        try:
+                            validate_draft(draft, source.pages, req.protocol_version_id, source.source_id)
+                        except (DomainError, KeyError, ValueError):
                             errors.append(dict(criterion_id=draft.criterion_id, code="UNSUPPORTED_OPERATION"))
                         else:
                             valid.append(draft.model_dump(mode="json"))

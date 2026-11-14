@@ -1,6 +1,7 @@
 """Source-grounded guards for the frozen demo rule set, not an extractor/oracle reader."""
 
 import re
+import logging
 
 from ai.tools.schemas import CriterionDraftInput, CoverageItem
 
@@ -61,9 +62,18 @@ def validate_drafts(drafts: list[CriterionDraftInput], request, pages):
                 draft.applicable_site_ids != ["SITE-SYN-01"] or
                 draft.terminology_map_version != "px104-terminology-v1" or
                 draft.logical_group_id != expected_group):
+            expected = dict(type=kind, operator=operator, unit=unit, clinical_subject={
+                "PX-INC-01": "age", "PX-INC-02": "diagnosis", "PX-INC-03": "egfr",
+                "PX-EXC-01": "condition", "PX-EXC-02": "medication", "PX-MON-01": "medication",
+                "PX-MON-02": "medication", "PX-MON-03": "egfr"}[draft.criterion_id],
+                applicable_site_ids=["SITE-SYN-01"], terminology_map_version="px104-terminology-v1",
+                logical_group_id=expected_group)
+            logging.getLogger(__name__).warning("frozen_rule_mismatch criterion_id=%s fields=%s",
+                draft.criterion_id, [k for k, v in expected.items() if getattr(draft, k) != v])
             raise GuardError("FROZEN_RULE_MISMATCH")
         uncertain = draft.workflow_status == "NEEDS_CLARIFICATION" and bool(draft.ambiguity)
         if draft.threshold != threshold and not (uncertain and draft.threshold is None):
+            logging.getLogger(__name__).warning("frozen_rule_mismatch criterion_id=%s fields=threshold", draft.criterion_id)
             raise GuardError("FROZEN_RULE_MISMATCH")
         if window is None or (window.time_zone, window.anchor, window.start_offset_days,
                               window.end_offset_days, window.start_inclusive, window.end_inclusive,
@@ -71,6 +81,7 @@ def validate_drafts(drafts: list[CriterionDraftInput], request, pages):
                 "Europe/Athens", "PARTICIPATION" if kind == "MONITORING" else "SCREENING_DATE",
                 offset, None if kind == "MONITORING" else 0, True, end_inclusive,
                 "INSTANT" if kind == "MONITORING" else "LOCAL_DATE"):
+            logging.getLogger(__name__).warning("frozen_rule_mismatch criterion_id=%s fields=window", draft.criterion_id)
             raise GuardError("FROZEN_RULE_MISMATCH")
         # Numeric/code thresholds must actually occur in the source, not only in a typed proposal.
         terms = threshold if isinstance(threshold, list) else [threshold]

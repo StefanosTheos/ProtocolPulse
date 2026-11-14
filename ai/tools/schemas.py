@@ -164,6 +164,49 @@ class FinalProposal(StrictModel):
     incomplete: bool
 
 
+class InvestigationProposal(StrictModel):
+    """Internal patient-role output. Protocol proposals are unrepresentable here."""
+
+    summary: str | None
+    evidence_keys: list[str]
+    unknown_reasons: list[str]
+    conflict_keys: list[str]
+    verification_questions: list[str]
+    incomplete: bool
+
+    def as_final(self, registry):
+        return FinalProposal(summary=self.summary, evidence_refs=registry.resolve(self.evidence_keys),
+            unknown_reasons=self.unknown_reasons,
+            conflict_refs=[ref.evidence_id for ref in registry.resolve(self.conflict_keys)],
+            proposed_criteria=[], coverage=[], verification_questions=self.verification_questions,
+            incomplete=self.incomplete)
+
+
+class InterpretationWindow(StrictModel):
+    anchor: Literal["SCREENING_DATE", "PARTICIPATION"]
+    days_before: int | None = Field(ge=0)
+    include_anchor: bool
+
+
+class RuleInterpretation(StrictModel):
+    """Private semantic interpretation; source identity/anchors come from observed clauses."""
+
+    clause_key: str
+    type: Literal["INCLUSION", "EXCLUSION", "MONITORING"]
+    clinical_subject: Literal["age", "diagnosis", "egfr", "condition", "medication"]
+    operator: Literal["AGE_RANGE_INCLUSIVE", "CODE_CONFIRMED", "LAB_GTE", "ABSENCE_CONFIRMED_ACTIVE",
+                      "NO_RESTRICTED_USE", "EVENT_RESTRICTED_USE", "EVENT_ORDER_ONLY", "EVENT_LAB_LT"]
+    threshold: int | float | str | list[int | float] | None
+    unit: Literal["years", "mL/min/1.73m²"] | None
+    window: InterpretationWindow
+    evidence_requirement: str
+    ambiguity: str | None
+
+
+class ProtocolInterpretation(StrictModel):
+    rules: list[RuleInterpretation]
+
+
 class PageSpan(StrictModel):
     source_id: str
     source_version: int = Field(ge=1)

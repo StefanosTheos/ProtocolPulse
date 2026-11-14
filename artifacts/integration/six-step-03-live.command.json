@@ -1,0 +1,10 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "tools/integration/live_backend_ai.py",
+    "--case",
+    "protocol"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 9.771
+}

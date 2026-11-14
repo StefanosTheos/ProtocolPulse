@@ -157,6 +157,14 @@ class JobRunner:
                 from backend.app.integrations.agent_adapter import execute_job
 
                 await execute_job(self.factory, job_id, self.settings)
+            elif kind == 'PROTOCOL_EXTRACT' and self.settings.llm_enabled:
+                from backend.app.services.protocol_extraction import process_model_extract
+
+                result = await process_model_extract(self.factory, job_id, self.settings)
+                with self.factory.begin() as session:
+                    job = session.get(m.Job, job_id)
+                    job.result_json, job.status, job.finished_at = result, 'SUCCEEDED', now()
+                    job.progress_percent, job.lease_until, job.error_code = 100, None, None
             else:
                 # T2 domain writes, audit and successful job completion share one transaction.
                 with self.factory.begin() as session:
@@ -194,7 +202,8 @@ class JobRunner:
                 job.finished_at = None if retry else now()
                 if job.kind == "PROTOCOL_EXTRACT":
                     version = session.get(m.ProtocolVersion, job.resource_id)
-                    version.state = "EXTRACTING" if retry else "EXTRACTION_FAILED"
+                    if not version.approved_set_hash:
+                        version.state = "EXTRACTING" if retry else "EXTRACTION_FAILED"
                 if job.kind == "SCREEN_COHORT":
                     run = session.get(m.ScreeningRun, job.resource_id)
                     run.error_code = code

@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "backend/tests/test_approval.py",
+    "backend/tests/test_agent_boundary.py",
+    "backend/tests/test_ai_integration.py",
+    "-q",
+    "--basetemp",
+    "backend/var/qa-six-step-06-existing"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 30.562
+}
