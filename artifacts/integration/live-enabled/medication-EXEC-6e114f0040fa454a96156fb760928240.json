@@ -1,0 +1,193 @@
+{
+  "mode": "LIVE_GEMINI_REAL_HTTP_BACKEND_GATEWAY_SQLITE",
+  "request": {
+    "role": "MEDICATION_SAFETY_INVESTIGATOR",
+    "trial_id": "TR-PX104",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "patient_id": "P-083",
+    "criterion_ids": [
+      "PX-EXC-02"
+    ],
+    "event_id": null,
+    "objective": "Investigate the recorded medication evidence for the approved criterion. Retain uncertainties and propose a sourced verification question if necessary."
+  },
+  "job": {
+    "job_id": "JOB-cd284a0a62324dc88f7fa3e73567f04a",
+    "kind": "AGENT_INVESTIGATION",
+    "status": "SUCCEEDED",
+    "resource_id": "EXEC-6e114f0040fa454a96156fb760928240",
+    "correlation_id": "c6da509e-fa5f-45d5-a5a2-ecf499a2f7e1",
+    "poll_url": "/api/v1/jobs/JOB-cd284a0a62324dc88f7fa3e73567f04a",
+    "created_at": "2026-11-14T22:09:17.616533Z",
+    "attempts": 1,
+    "max_attempts": 3,
+    "started_at": "2026-11-14T22:09:18.029156Z",
+    "finished_at": "2026-11-14T22:09:35.336474Z",
+    "progress_percent": 100.0,
+    "result": {
+      "execution_id": "EXEC-6e114f0040fa454a96156fb760928240",
+      "agent_status": "PARTIAL"
+    },
+    "error": null
+  },
+  "execution": {
+    "execution_id": "EXEC-6e114f0040fa454a96156fb760928240",
+    "role": "MEDICATION_SAFETY_INVESTIGATOR",
+    "status": "PARTIAL",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-083",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "criterion_ids": [
+      "PX-EXC-02"
+    ],
+    "event_id": null,
+    "correlation_id": "c6da509e-fa5f-45d5-a5a2-ecf499a2f7e1",
+    "evidence_refs": [
+      {
+        "evidence_id": "MED-P-083-1",
+        "source_id": "SRC-P-083-med",
+        "source_version": 1,
+        "evidence_type": "ORDER",
+        "effective_at": "2026-10-14T21:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 41
+      },
+      {
+        "evidence_id": "NOTE-P-083",
+        "source_id": "SRC-P-083-narrative",
+        "source_version": 1,
+        "evidence_type": "NOTE",
+        "effective_at": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": null,
+        "span_end": null
+      }
+    ],
+    "summary": "Patient P-083 has a recorded medication event MED-P-083-1 for code SYN-MED-R1 (mapped to SYN-CLASS-R) of kind ORDER, effective 2026-10-14T21:00:00Z. No administration, dispense, or reported use was found. Per instructions, ORDER and DISPENSE are never ADMINISTRATION or REPORTED_USE; medication reconciliation was requested.",
+    "unknown_reasons": [
+      "ORDER_ONLY",
+      "Order-only record MED-P-083-1 for SYN-MED-R1 without confirmed administration or reported use."
+    ],
+    "verification_questions": [
+      "Medication SYN-MED-R1 has an order record (MED-P-083-1) but no documented administration or reported use. Was SYN-MED-R1 actually administered or taken by patient P-083?"
+    ],
+    "trace": [
+      {
+        "tool_name": "retrieve_patient_evidence",
+        "input_reference_ids": [
+          "EXEC-6e114f0040fa454a96156fb760928240",
+          "P-083",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-EXC-02",
+          "SNAP-2a4c32ffdb7346be9830cea698435628",
+          "TR-PX104",
+          "c6da509e-fa5f-45d5-a5a2-ecf499a2f7e1"
+        ],
+        "output_reference_ids": [
+          "MED-P-083-1",
+          "SRC-P-083-med"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "resolve_approved_terminology",
+        "input_reference_ids": [
+          "EXEC-6e114f0040fa454a96156fb760928240",
+          "P-083",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "TR-PX104",
+          "c6da509e-fa5f-45d5-a5a2-ecf499a2f7e1"
+        ],
+        "output_reference_ids": [
+          "SRC-PROTOCOL-PX104-V1"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_medication_timeline",
+        "input_reference_ids": [
+          "EXEC-6e114f0040fa454a96156fb760928240",
+          "P-083",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SNAP-2a4c32ffdb7346be9830cea698435628",
+          "TR-PX104",
+          "c6da509e-fa5f-45d5-a5a2-ecf499a2f7e1"
+        ],
+        "output_reference_ids": [
+          "MED-P-083-1",
+          "SRC-P-083-med"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "search_notes",
+        "input_reference_ids": [
+          "EXEC-6e114f0040fa454a96156fb760928240",
+          "P-083",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SNAP-2a4c32ffdb7346be9830cea698435628",
+          "TR-PX104",
+          "c6da509e-fa5f-45d5-a5a2-ecf499a2f7e1"
+        ],
+        "output_reference_ids": [
+          "NOTE-P-083",
+          "SRC-P-083-narrative"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "request_med_reconciliation",
+        "input_reference_ids": [
+          "EXEC-6e114f0040fa454a96156fb760928240",
+          "MED-P-083-1",
+          "P-083",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-EXC-02",
+          "TR-PX104",
+          "c6da509e-fa5f-45d5-a5a2-ecf499a2f7e1"
+        ],
+        "output_reference_ids": [
+          "TASK-2fbbf241f1254eac9c716f4b4dd41dba"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "request_verification_task",
+        "input_reference_ids": [
+          "EXEC-6e114f0040fa454a96156fb760928240",
+          "MED-P-083-1",
+          "P-083",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-EXC-02",
+          "SRC-P-083-med",
+          "TR-PX104",
+          "c6da509e-fa5f-45d5-a5a2-ecf499a2f7e1"
+        ],
+        "output_reference_ids": [
+          "TASK-91083e166ab5424eaae5038d675561b7"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 14,
+        "error_code": null
+      }
+    ],
+    "error_code": null,
+    "model_id": "gemini-3.8-flash",
+    "created_at": "2026-11-14T22:09:17.616533Z",
+    "finished_at": "2026-11-14T22:09:35.336474Z"
+  },
+  "elapsed_seconds": 17.79
+}

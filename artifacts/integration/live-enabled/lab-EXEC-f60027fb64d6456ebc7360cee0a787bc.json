@@ -1,0 +1,177 @@
+{
+  "mode": "LIVE_GEMINI_REAL_HTTP_BACKEND_GATEWAY_SQLITE",
+  "request": {
+    "role": "EVIDENCE_INVESTIGATOR",
+    "trial_id": "TR-PX104",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "patient_id": "P-124",
+    "criterion_ids": [
+      "PX-INC-03"
+    ],
+    "event_id": null,
+    "objective": "Investigate the missing or stale laboratory evidence for the approved criterion and prepare a cited verification question."
+  },
+  "job": {
+    "job_id": "JOB-fbbdaa1e472247a0988c774c40613ce7",
+    "kind": "AGENT_INVESTIGATION",
+    "status": "SUCCEEDED",
+    "resource_id": "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+    "correlation_id": "e7907546-f552-425a-864c-e9f19b320f41",
+    "poll_url": "/api/v1/jobs/JOB-fbbdaa1e472247a0988c774c40613ce7",
+    "created_at": "2026-11-14T22:11:00.660316Z",
+    "attempts": 1,
+    "max_attempts": 3,
+    "started_at": "2026-11-14T22:11:01.153875Z",
+    "finished_at": "2026-11-14T22:11:18.453947Z",
+    "progress_percent": 100.0,
+    "result": {
+      "execution_id": "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+      "agent_status": "PARTIAL"
+    },
+    "error": null
+  },
+  "execution": {
+    "execution_id": "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+    "role": "EVIDENCE_INVESTIGATOR",
+    "status": "PARTIAL",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-124",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "criterion_ids": [
+      "PX-INC-03"
+    ],
+    "event_id": null,
+    "correlation_id": "e7907546-f552-425a-864c-e9f19b320f41",
+    "evidence_refs": [
+      {
+        "evidence_id": "SPAN-36318799534c433b810e365940233794",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_version": 1,
+        "evidence_type": "PDF",
+        "effective_at": null,
+        "recorded_at": "2026-11-14T21:34:12.349079Z",
+        "page": 2,
+        "span_start": 837,
+        "span_end": 1266
+      },
+      {
+        "evidence_id": "NOTE-P-124",
+        "source_id": "SRC-P-124-narrative",
+        "source_version": 1,
+        "evidence_type": "NOTE",
+        "effective_at": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": null,
+        "span_end": null
+      }
+    ],
+    "summary": "Investigated laboratory and clinical evidence for patient P-124 regarding criterion PX-INC-03 (eGFR >= 60 mL/min/1.73m\u00b2 with specimen date within [2026-10-01, 2026-10-31]). Structured lab history returned no records for eGFR. A search of clinical notes identified NOTE-P-124 stating that the only available eGFR specimen is stale. Because valid timely lab evidence is missing or stale, a verification task has been proposed for coordinator review.",
+    "unknown_reasons": [
+      "MISSING_LAB",
+      "No structured eGFR lab results found in the screening window [2026-10-01, 2026-10-31]; narrative note NOTE-P-124 reports the only available eGFR specimen is stale."
+    ],
+    "verification_questions": [
+      "Criterion PX-INC-03 requires a valid numeric eGFR >= 60 mL/min/1.73m\u00b2 with specimen date within [2026-10-01, 2026-10-31]. No qualifying structured lab result was found, and clinical note NOTE-P-124 indicates that the only available eGFR specimen is stale. Can an in-window eGFR lab result be verified or obtained for patient P-124?"
+    ],
+    "trace": [
+      {
+        "tool_name": "get_lab_history",
+        "input_reference_ids": [
+          "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SNAP-8044777e940f4e0d8de28abd4af19ec0",
+          "TR-PX104",
+          "e7907546-f552-425a-864c-e9f19b320f41"
+        ],
+        "output_reference_ids": [],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "retrieve_patient_evidence",
+        "input_reference_ids": [
+          "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-INC-03",
+          "SNAP-8044777e940f4e0d8de28abd4af19ec0",
+          "TR-PX104",
+          "e7907546-f552-425a-864c-e9f19b320f41"
+        ],
+        "output_reference_ids": [
+          "SPAN-36318799534c433b810e365940233794",
+          "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "search_notes",
+        "input_reference_ids": [
+          "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SNAP-8044777e940f4e0d8de28abd4af19ec0",
+          "TR-PX104",
+          "e7907546-f552-425a-864c-e9f19b320f41"
+        ],
+        "output_reference_ids": [
+          "NOTE-P-124",
+          "SRC-P-124-narrative"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_evidence_link",
+        "input_reference_ids": [
+          "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+          "NOTE-P-124",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SRC-P-124-narrative",
+          "TR-PX104",
+          "e7907546-f552-425a-864c-e9f19b320f41"
+        ],
+        "output_reference_ids": [
+          "NOTE-P-124",
+          "SRC-P-124-narrative"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 15,
+        "error_code": null
+      },
+      {
+        "tool_name": "request_verification_task",
+        "input_reference_ids": [
+          "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+          "NOTE-P-124",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-INC-03",
+          "SPAN-36318799534c433b810e365940233794",
+          "SRC-P-124-narrative",
+          "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+          "TR-PX104",
+          "e7907546-f552-425a-864c-e9f19b320f41"
+        ],
+        "output_reference_ids": [
+          "TASK-cc75928334e04c378df1901ca2e66789"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 15,
+        "error_code": null
+      }
+    ],
+    "error_code": null,
+    "model_id": "gemini-3.8-flash",
+    "created_at": "2026-11-14T22:11:00.660316Z",
+    "finished_at": "2026-11-14T22:11:18.453947Z"
+  },
+  "elapsed_seconds": 17.934
+}

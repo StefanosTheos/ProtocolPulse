@@ -1,0 +1,56 @@
+{
+  "mode": "LIVE_GEMINI_REAL_HTTP_BACKEND_GATEWAY_SQLITE",
+  "request": {
+    "role": "PROTOCOL_INTELLIGENCE",
+    "trial_id": "TR-PX104",
+    "protocol_version_id": "PV-PX104-1.0",
+    "patient_id": null,
+    "criterion_ids": [],
+    "event_id": null,
+    "objective": "Inspect the registered fictional PDF source SRC-PROTOCOL-PX104-V1 version 1. Propose source-linked rules and coverage for human review. No rule is approved by this investigation."
+  },
+  "job": {
+    "job_id": "JOB-975356167a5a40918ff78207683d695f",
+    "kind": "AGENT_INVESTIGATION",
+    "status": "FAILED",
+    "resource_id": "EXEC-f221ca2986b54027b8d2a474b6c27aad",
+    "correlation_id": "a481f76c-db9f-4aa0-aea4-0fe966ef55cf",
+    "poll_url": "/api/v1/jobs/JOB-975356167a5a40918ff78207683d695f",
+    "created_at": "2026-11-14T22:05:29.564262Z",
+    "attempts": 1,
+    "max_attempts": 3,
+    "started_at": "2026-11-14T22:05:29.864863Z",
+    "finished_at": "2026-11-14T22:05:32.622905Z",
+    "progress_percent": 100.0,
+    "result": {
+      "execution_id": "EXEC-f221ca2986b54027b8d2a474b6c27aad",
+      "agent_status": "FAILED"
+    },
+    "error": {
+      "code": "SCOPE_VIOLATION",
+      "message": "Background work failed",
+      "retryable": true
+    }
+  },
+  "execution": {
+    "execution_id": "EXEC-f221ca2986b54027b8d2a474b6c27aad",
+    "role": "PROTOCOL_INTELLIGENCE",
+    "status": "FAILED",
+    "trial_id": "TR-PX104",
+    "patient_id": null,
+    "protocol_version_id": "PV-PX104-1.0",
+    "criterion_ids": [],
+    "event_id": null,
+    "correlation_id": "a481f76c-db9f-4aa0-aea4-0fe966ef55cf",
+    "evidence_refs": [],
+    "summary": null,
+    "unknown_reasons": [],
+    "verification_questions": [],
+    "trace": [],
+    "error_code": "SCOPE_VIOLATION",
+    "model_id": "gemini-3.8-flash",
+    "created_at": "2026-11-14T22:05:29.564262Z",
+    "finished_at": "2026-11-14T22:05:32.622905Z"
+  },
+  "elapsed_seconds": 3.102
+}

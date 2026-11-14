@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "ruff",
+    "check",
+    "ai",
+    "backend/app/integrations/agent_adapter.py",
+    "backend/app/integrations/evidence_gateway.py",
+    "backend/tests/test_ai_integration.py",
+    "backend/tests/test_agent_boundary.py",
+    "--output-format",
+    "concise"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 0.177
+}

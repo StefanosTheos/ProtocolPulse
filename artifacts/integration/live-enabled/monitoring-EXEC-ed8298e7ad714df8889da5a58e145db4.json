@@ -1,0 +1,237 @@
+{
+  "mode": "LIVE_GEMINI_REAL_HTTP_BACKEND_GATEWAY_SQLITE",
+  "core_job": {
+    "job_id": "JOB-433071ec24514f1f8d4428099ba6efc6",
+    "kind": "INGEST_EVENT",
+    "status": "SUCCEEDED",
+    "resource_id": "EVT-9a9cb74e47e045328cf1af279acab86d",
+    "correlation_id": "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+    "poll_url": "/api/v1/jobs/JOB-433071ec24514f1f8d4428099ba6efc6",
+    "created_at": "2026-11-14T22:24:20.242710Z",
+    "attempts": 1,
+    "max_attempts": 3,
+    "started_at": "2026-11-14T22:24:20.455238Z",
+    "finished_at": "2026-11-14T22:24:20.577372Z",
+    "progress_percent": 100.0,
+    "result": {
+      "relevance": "RELEVANT",
+      "assessment_ids": [
+        "ASM-a8ad3a52af024ed3b5ca6cc8dd7c7584"
+      ],
+      "finding_ids": [
+        "FIND-51421488eaea400e80fb2756861f1a7c"
+      ],
+      "case_ids": [
+        "CASE-b7587421540e40019a2ace18b63f905d"
+      ]
+    },
+    "error": null
+  },
+  "receipt": {
+    "event_id": "EVT-9a9cb74e47e045328cf1af279acab86d",
+    "patient_id": "P-042",
+    "trial_id": "TR-PX104",
+    "ingested_at": "2026-11-14T22:24:20.243710Z",
+    "deduplicated": false,
+    "job": {
+      "job_id": "JOB-433071ec24514f1f8d4428099ba6efc6",
+      "kind": "INGEST_EVENT",
+      "status": "QUEUED",
+      "resource_id": "EVT-9a9cb74e47e045328cf1af279acab86d",
+      "correlation_id": "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+      "poll_url": "/api/v1/jobs/JOB-433071ec24514f1f8d4428099ba6efc6",
+      "created_at": "2026-11-14T22:24:20.242710Z"
+    }
+  },
+  "case": {
+    "case_id": "CASE-b7587421540e40019a2ace18b63f905d",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-042",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "criterion_id": "PX-MON-01",
+    "issue_key": "medication:SYN-CLASS-R",
+    "status": "ACKNOWLEDGED",
+    "priority": "HIGH",
+    "assigned_actor_id": "ACT-INV-01",
+    "finding_ids": [
+      "FIND-38276ae03cfe4c26a9914a23ba31b8c3",
+      "FIND-41d785d3a4c44451820d84ab8779d2e1",
+      "FIND-51421488eaea400e80fb2756861f1a7c"
+    ],
+    "current_summary": "Confirmed restricted use during participation",
+    "summary_origin": "SYSTEM_DETERMINISTIC",
+    "agent_execution_id": "EXEC-ed8298e7ad714df8889da5a58e145db4",
+    "revision": 7,
+    "opened_at": "2026-11-14T21:34:24.824834Z",
+    "updated_at": "2026-11-14T22:24:20.494544Z",
+    "decisions": [
+      {
+        "decision_id": "DEC-4128ba6b8d8345a0a61c4b5ee95b77f6",
+        "actor_id": "ACT-MON-01",
+        "actor_role": "MONITOR",
+        "from_status": "OPEN",
+        "to_status": "ACKNOWLEDGED",
+        "disposition": "REVIEW_REQUIRED",
+        "rationale": "Actual source administration requires investigator review under the approved fictional rule.",
+        "cited_evidence_ids": [
+          "EVT-05d9aa1e4a524624abbf4f24b6276921"
+        ],
+        "decided_at": "2026-11-14T21:34:26.299747Z"
+      }
+    ]
+  },
+  "execution": {
+    "execution_id": "EXEC-ed8298e7ad714df8889da5a58e145db4",
+    "role": "MONITORING_WORKFLOW",
+    "status": "FAILED",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-042",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "criterion_ids": [
+      "PX-MON-01"
+    ],
+    "event_id": "EVT-9a9cb74e47e045328cf1af279acab86d",
+    "correlation_id": "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+    "evidence_refs": [],
+    "summary": null,
+    "unknown_reasons": [],
+    "verification_questions": [],
+    "trace": [
+      {
+        "tool_name": "get_case_status",
+        "input_reference_ids": [
+          "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+          "CASE-b7587421540e40019a2ace18b63f905d",
+          "EXEC-ed8298e7ad714df8889da5a58e145db4",
+          "P-042",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "FIND-38276ae03cfe4c26a9914a23ba31b8c3",
+          "FIND-41d785d3a4c44451820d84ab8779d2e1",
+          "FIND-51421488eaea400e80fb2756861f1a7c"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 31,
+        "error_code": null
+      },
+      {
+        "tool_name": "classify_event_relevance",
+        "input_reference_ids": [
+          "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+          "EVT-9a9cb74e47e045328cf1af279acab86d",
+          "EXEC-ed8298e7ad714df8889da5a58e145db4",
+          "P-042",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "EVT-9a9cb74e47e045328cf1af279acab86d",
+          "PX-MON-01",
+          "SRC-AI-LIVE-354869acd2244739b52473aa2594c700"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_prior_evaluation",
+        "input_reference_ids": [
+          "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+          "EVT-9a9cb74e47e045328cf1af279acab86d",
+          "EXEC-ed8298e7ad714df8889da5a58e145db4",
+          "P-042",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-MON-01",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "ASM-a8ad3a52af024ed3b5ca6cc8dd7c7584",
+          "ASM-e8b7b33e02cf43738343c3b22443ec58",
+          "EVT-9a9cb74e47e045328cf1af279acab86d",
+          "PX-MON-01",
+          "SRC-AI-LIVE-354869acd2244739b52473aa2594c700"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "retrieve_patient_evidence",
+        "input_reference_ids": [
+          "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+          "EXEC-ed8298e7ad714df8889da5a58e145db4",
+          "P-042",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-MON-01",
+          "SNAP-92fdf417e7204605af313762fbf01c29",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "SPAN-31739b0e416f411788d21d6b53d1fbbf",
+          "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 32,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_evidence_link",
+        "input_reference_ids": [
+          "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+          "EVT-9a9cb74e47e045328cf1af279acab86d",
+          "EXEC-ed8298e7ad714df8889da5a58e145db4",
+          "P-042",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SRC-AI-LIVE-354869acd2244739b52473aa2594c700",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "EVT-9a9cb74e47e045328cf1af279acab86d",
+          "SRC-AI-LIVE-354869acd2244739b52473aa2594c700"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 46,
+        "error_code": null
+      },
+      {
+        "tool_name": "resolve_approved_terminology",
+        "input_reference_ids": [
+          "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+          "EXEC-ed8298e7ad714df8889da5a58e145db4",
+          "P-042",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "SRC-PROTOCOL-PX104-V1"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "evaluate_approved_rule",
+        "input_reference_ids": [
+          "7a49cb5e-5997-4d5c-b0c2-16c3a32a5d41",
+          "EXEC-ed8298e7ad714df8889da5a58e145db4",
+          "P-042",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-MON-01",
+          "SNAP-92fdf417e7204605af313762fbf01c29",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [],
+        "result_code": "UNSUPPORTED_OPERATION",
+        "elapsed_ms": 31,
+        "error_code": "UNSUPPORTED_OPERATION"
+      }
+    ],
+    "error_code": "UNVERIFIED_EVIDENCE_REF",
+    "model_id": null,
+    "created_at": "2026-11-14T22:24:20.585397Z",
+    "finished_at": "2026-11-14T22:24:41.210296Z"
+  },
+  "elapsed_seconds": 21.147
+}

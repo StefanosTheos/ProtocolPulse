@@ -212,6 +212,8 @@ class EvidenceGateway:
                 if isinstance(exc, TimeoutError)
                 else "BAD_INPUT"
             )
+            if error not in {"TIMEOUT", "SOURCE_UNAVAILABLE", "UNMAPPED_CODE", "UNAUTHORIZED", "BAD_INPUT"}:
+                error = "BAD_INPUT"
             code = error
             result = dict(tool_name=name, error_code=error, retryable=error == "TIMEOUT")
         self.trace.append(
@@ -264,6 +266,22 @@ class EvidenceGateway:
                 if sha256(data) != source.sha256:
                     raise ValueError("Source checksum changed")
                 pages = parse_pdf(data)
+                if name == "locate_clause":
+                    from backend.app.services.pdf_extractor import section_spans
+
+                    sections = section_spans(pages)
+                    if not set(p["section_ids"]) <= set(sections):
+                        raise ValueError("Unknown source section")
+                    spans = []
+                    for section_id, (page, start, end) in sections.items():
+                        if p["section_ids"] and section_id not in p["section_ids"]:
+                            continue
+                        text = pages[str(page)][start:end]
+                        if p["query"].casefold() not in text.casefold():
+                            continue
+                        spans.append(dict(source_id=source.source_id, source_version=source.source_version,
+                            page=page, text=text, start=start, end=end, sha256=sha256(text.encode()), quality="OK"))
+                    return dict(spans=spans[:p["max_matches"]]), []
                 output, refs = [], []
                 for page, value in pages.items():
                     if name == "locate_clause" and p.get("query", "").casefold() not in value.casefold():
@@ -398,6 +416,15 @@ class EvidenceGateway:
                 ):
                     raise ValueError("Task outside assigned scope")
                 rule = next(r for r in rules if r.criterion_id == proposal["criterion_id"])
+                if name == "request_med_reconciliation":
+                    if not p["source_event_ids"]:
+                        raise ValueError("Reconciliation requires persisted medication events")
+                    for event_id in p["source_event_ids"]:
+                        event = session.get(m.PatientEvent, event_id)
+                        if (not event or event.event_id != req.event_id or event.patient_id != req.patient_id
+                                or event.trial_id != req.trial_id or event.event_kind != "MEDICATION"):
+                            raise ValueError("Reconciliation event outside assigned scope")
+                        self.validate_reference(session, wire_reference(evidence_ref(session, event)))
                 if proposal.get("requested_for_role", "INVESTIGATOR") not in ("COORDINATOR", "INVESTIGATOR"):
                     raise ValueError("Invalid task recipient")
                 for ref in proposal.get("evidence_refs", []):
@@ -440,11 +467,12 @@ class EvidenceGateway:
                 from backend.app.services.event_processor import relevance
 
                 affected, _, reason = relevance(session, session.get(m.PatientEvent, req.event_id))
+                refs = [wire_reference(evidence_ref(session, session.get(m.PatientEvent, req.event_id)))] if affected else []
                 return dict(
                     affected_criterion_ids=[r.criterion_id for r in affected],
                     category="RELEVANT" if affected else "NO_ACTION",
                     reason=reason,
-                ), []
+                ), refs
             if name == "get_case_status":
                 case = session.get(m.ReviewCase, p["case_id"])
                 if not case or case.trial_id != req.trial_id or case.patient_id != req.patient_id:
@@ -479,6 +507,7 @@ class EvidenceGateway:
                     else None
                 )
                 old = assessment_dto(session, previous) if previous else None
+                event_refs = [wire_reference(evidence_ref(session, session.get(m.PatientEvent, req.event_id)))]
                 return dict(
                     prior=[
                         dict(
@@ -495,7 +524,7 @@ class EvidenceGateway:
                         )
                         for r in assessment_dto(session, assessment).criteria
                     ]
-                ), []
+                ), event_refs
             if not req.patient_id or p.get("patient_id") != req.patient_id:
                 raise ValueError("Explicit patient scope required")
             models = {
@@ -584,11 +613,31 @@ class EvidenceGateway:
                 rule = next(
                     r for r in protocol_dto(session, version).criteria if r.criterion_id == p["criterion_id"]
                 )
+                if rule.type == "MONITORING":
+                    # The worker has already evaluated this event. Read that exact
+                    # snapshot's result; never run a baseline evaluator or write here.
+                    assessment = session.scalar(select(m.PatientTrialAssessment).where(
+                        m.PatientTrialAssessment.caused_by_event_id == req.event_id,
+                        m.PatientTrialAssessment.patient_id == req.patient_id,
+                        m.PatientTrialAssessment.protocol_version_id == req.protocol_version_id,
+                        m.PatientTrialAssessment.snapshot_id == req.evidence_snapshot_id,
+                    )) if req.event_id else None
+                    physical = next(r for r in rules if r.criterion_id == rule.criterion_id)
+                    stored = session.scalar(select(m.CriterionResult).where(
+                        m.CriterionResult.assessment_id == assessment.assessment_id,
+                        m.CriterionResult.criterion_row_id == physical.criterion_row_id,
+                    )) if assessment else None
+                    if not stored:
+                        raise ValueError("No independently evaluated event result in this snapshot")
+                    refs = [wire_reference(d.EvidenceRef.model_validate(r)) for r in stored.evidence_refs_json]
+                    return dict(result=stored.status, reason_codes=stored.reason_codes_json, evidence_refs=refs), refs
                 args = [
                     frozen_rows(session, req.evidence_snapshot_id, model, req.patient_id)
                     for model in (m.PatientFact, m.ConditionRecord, m.LabObservation, m.MedicationExposure)
                 ]
-                result = evaluate(rule, date.fromisoformat(p["evaluation_date"]), *args)
+                open_items = list(session.scalars(select(m.OpenItem).where(
+                    m.OpenItem.patient_id == req.patient_id, m.OpenItem.status == "OPEN")))
+                result = evaluate(rule, date.fromisoformat(p["evaluation_date"]), *args, open_items=open_items)
                 refs = [wire_reference(evidence_ref(session, row)) for row in result.evidence]
                 return dict(result=result.status, reason_codes=result.reasons, evidence_refs=refs), refs
             facts = []
@@ -640,4 +689,17 @@ class EvidenceGateway:
                 return dict(facts=facts, completeness_ref=completeness), refs
             if name == "get_lab_history":
                 return dict(facts=facts), refs
-            return dict(facts=facts, open_items=[]), refs
+            scoped_rules = [r for r in rules if r.criterion_id in req.criterion_ids]
+            for rule in scoped_rules:
+                span = session.scalar(select(m.SourceSpan).where(
+                    m.SourceSpan.source_pk == rule.source_pk, m.SourceSpan.page == rule.source_page,
+                    m.SourceSpan.start_offset == rule.source_span_start,
+                    m.SourceSpan.end_offset == rule.source_span_end))
+                if span:
+                    src = session.get(m.EvidenceSource, span.source_pk)
+                    refs.append(dict(source_id=src.source_id, source_version=src.source_version,
+                        evidence_id=span.span_id, page=span.page, span_start=span.start_offset,
+                        span_end=span.end_offset, effective_at=None))
+            open_items = list(session.scalars(select(m.OpenItem.reason_code).where(
+                m.OpenItem.patient_id == req.patient_id, m.OpenItem.status == "OPEN", m.OpenItem.blocking.is_(True))))
+            return dict(facts=facts, open_items=sorted(set(open_items))), refs

@@ -1,0 +1,1 @@
+{"case": "monitoring", "status": "FAILED", "error_code": "UNVERIFIED_EVIDENCE_REF", "model_id": "gemini-3.8-flash", "elapsed_seconds": 21.441, "tools": ["get_case_status", "classify_event_relevance", "get_prior_evaluation", "retrieve_patient_evidence", "evaluate_approved_rule", "get_evidence_link"]}

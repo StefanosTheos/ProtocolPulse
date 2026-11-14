@@ -63,9 +63,11 @@ class GeminiProvider:
                     thinking_config=t.ThinkingConfig(thinking_level="low", include_thoughts=False),
                 ),
             )
-        except Exception:
+        except Exception as exc:
             # Provider exception messages may contain request content or credentials.
-            raise ProviderFailure("PROVIDER_ERROR") from None
+            code = getattr(exc, "code", None)
+            category = f"PROVIDER_HTTP_{code}" if isinstance(code, int) else "PROVIDER_ERROR"
+            raise ProviderFailure(category) from None
         if len(response.candidates or []) != 1 or response.candidates[0].content is None:
             raise ProviderFailure("EMPTY_MODEL_RESPONSE")
         content = response.candidates[0].content

@@ -1,0 +1,36 @@
+ai\agents\coordinator.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+ai\agents\coordinator.py:16:93: F401 [*] `ai.agents.protocol_intelligence.verify_quote` imported but unused
+ai\agents\coordinator.py:34:111: FURB167 [*] Use of regular expression alias `re.I`
+ai\agents\coordinator.py:100:9: SIM102 Use a single `if` statement instead of nested `if` statements
+ai\agents\coordinator.py:107:44: FURB162 Unnecessary timezone replacement with zero offset
+ai\agents\coordinator.py:115:9: SIM102 Use a single `if` statement instead of nested `if` statements
+ai\agents\coordinator.py:190:9: SIM102 Use a single `if` statement instead of nested `if` statements
+ai\agents\coordinator.py:260:20: BLE001 Do not catch blind exception: `Exception`
+ai\agents\coordinator.py:336:16: BLE001 Do not catch blind exception: `Exception`
+ai\agents\protocol_intelligence.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+ai\config.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+ai\entrypoints.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+ai\entrypoints.py:32:12: BLE001 Do not catch blind exception: `Exception`
+ai\entrypoints.py:41:9: S110 `try`-`except`-`pass` detected, consider logging the exception
+ai\entrypoints.py:41:16: BLE001 Do not catch blind exception: `Exception`
+ai\providers\gemini.py:66:16: BLE001 Do not catch blind exception: `Exception`
+ai\tests\test_branching.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ai\tests\test_branching.py:2:8: F401 [*] `copy` imported but unused
+ai\tests\test_branching.py:3:8: F401 [*] `json` imported but unused
+ai\tests\test_branching.py:9:55: F401 [*] `ai.evals.fixtures.proposal` imported but unused
+ai\tests\test_failures.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ai\tests\test_failures.py:8:55: F401 [*] `ai.evals.fixtures.proposal` imported but unused
+ai\tests\test_failures.py:9:50: F401 [*] `ai.providers.gemini.ToolCall` imported but unused
+ai\tests\test_failures.py:11:35: F401 [*] `ai.tools.fake_gateway.FakeGateway` imported but unused
+ai\tests\test_gemini_provider.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ai\tests\test_gemini_provider.py:10:66: F401 [*] `ai.providers.gemini.ToolCall` imported but unused
+ai\tests\test_gemini_provider.py:12:30: F401 [*] `ai.tools.schemas.wire` imported but unused
+ai\tests\test_prompt_injection.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ai\tests\test_prompt_injection.py:10:97: F401 [*] `ai.evals.fixtures.success` imported but unused
+ai\tests\test_protocol_contract.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+ai\tests\test_protocol_contract.py:32:52: FURB167 [*] Use of regular expression alias `re.S`
+ai\tools\schemas.py:6:1: I001 [*] Import block is un-sorted or un-formatted
+ai\tools\schemas.py:53:57: FURB162 Unnecessary timezone replacement with zero offset
+ai\tools\selection.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+Found 34 errors.
+[*] 23 fixable with `--fix` (2 unsafe fixes available with `--fix --unsafe-fixes`).

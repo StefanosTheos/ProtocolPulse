@@ -1,0 +1,229 @@
+{
+  "mode": "LIVE_GEMINI_REAL_HTTP_BACKEND_GATEWAY_SQLITE",
+  "request": {
+    "role": "MEDICATION_SAFETY_INVESTIGATOR",
+    "trial_id": "TR-PX104",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "patient_id": "P-140",
+    "criterion_ids": [
+      "PX-EXC-02"
+    ],
+    "event_id": null,
+    "objective": "Investigate contradictory medication evidence for the approved criterion. Preserve conflicting sources and request human verification."
+  },
+  "job": {
+    "job_id": "JOB-f1358579de994e40ad28dab14bdd6b18",
+    "kind": "AGENT_INVESTIGATION",
+    "status": "SUCCEEDED",
+    "resource_id": "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+    "correlation_id": "7b1e2468-4a6d-412d-8e61-f48dd7771ff0",
+    "poll_url": "/api/v1/jobs/JOB-f1358579de994e40ad28dab14bdd6b18",
+    "created_at": "2026-11-14T22:11:18.596742Z",
+    "attempts": 1,
+    "max_attempts": 3,
+    "started_at": "2026-11-14T22:11:18.979228Z",
+    "finished_at": "2026-11-14T22:11:38.637656Z",
+    "progress_percent": 100.0,
+    "result": {
+      "execution_id": "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+      "agent_status": "PARTIAL"
+    },
+    "error": null
+  },
+  "execution": {
+    "execution_id": "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+    "role": "MEDICATION_SAFETY_INVESTIGATOR",
+    "status": "PARTIAL",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-140",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "criterion_ids": [
+      "PX-EXC-02"
+    ],
+    "event_id": null,
+    "correlation_id": "7b1e2468-4a6d-412d-8e61-f48dd7771ff0",
+    "evidence_refs": [
+      {
+        "evidence_id": "MED-P-140-1",
+        "source_id": "SRC-P-140-med",
+        "source_version": 1,
+        "evidence_type": "REPORTED_USE",
+        "effective_at": "2026-10-14T21:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 48
+      },
+      {
+        "evidence_id": "NOTE-P-140-0",
+        "source_id": "SRC-P-140-conflict-0",
+        "source_version": 1,
+        "evidence_type": "NOTE",
+        "effective_at": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": null,
+        "span_end": null
+      },
+      {
+        "evidence_id": "NOTE-P-140-1",
+        "source_id": "SRC-P-140-conflict-1",
+        "source_version": 1,
+        "evidence_type": "NOTE",
+        "effective_at": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": null,
+        "span_end": null
+      },
+      {
+        "evidence_id": "SPAN-d40e7a76a5344fbbbf5a95e6a52aa738",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_version": 1,
+        "evidence_type": "PDF",
+        "effective_at": null,
+        "recorded_at": "2026-11-14T21:34:12.349079Z",
+        "page": 3,
+        "span_start": 610,
+        "span_end": 1166
+      }
+    ],
+    "summary": "Evaluation of criterion PX-EXC-02 for patient P-140 yields UNKNOWN due to conflicting medication documentation regarding SYN-MED-R1 during the 30-day window [2026-10-01 00:00, 2026-10-31 00:00) Europe/Athens. Clinical notes contain contradictory claims: NOTE-P-140-0 indicates continuing SYN-MED-R1 use, while NOTE-P-140-1 indicates discontinuation prior to October. A human verification task (TASK-8691dc1ded154e77ba38ea7f322b972f) has been submitted for investigator review.",
+    "unknown_reasons": [
+      "CONFLICTING_SOURCES"
+    ],
+    "verification_questions": [
+      "Please verify whether patient P-140 had active administration or reported use of SYN-MED-R1 during the restricted window [2026-10-01 00:00, 2026-10-31 00:00) Europe/Athens, given conflicting documentation regarding whether the medication was discontinued prior to October or actively continued."
+    ],
+    "trace": [
+      {
+        "tool_name": "retrieve_patient_evidence",
+        "input_reference_ids": [
+          "7b1e2468-4a6d-412d-8e61-f48dd7771ff0",
+          "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+          "P-140",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-EXC-02",
+          "SNAP-04a9aa3d7e4a4676824b0c8141fc9f76",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "MED-P-140-1",
+          "SPAN-d40e7a76a5344fbbbf5a95e6a52aa738",
+          "SRC-P-140-med",
+          "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "search_notes",
+        "input_reference_ids": [
+          "7b1e2468-4a6d-412d-8e61-f48dd7771ff0",
+          "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+          "P-140",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SNAP-04a9aa3d7e4a4676824b0c8141fc9f76",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "NOTE-P-140",
+          "NOTE-P-140-0",
+          "NOTE-P-140-1",
+          "SRC-P-140-conflict-0",
+          "SRC-P-140-conflict-1",
+          "SRC-P-140-narrative"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 14,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_evidence_link",
+        "input_reference_ids": [
+          "7b1e2468-4a6d-412d-8e61-f48dd7771ff0",
+          "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+          "NOTE-P-140-0",
+          "P-140",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SRC-P-140-conflict-0",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "NOTE-P-140-0",
+          "SRC-P-140-conflict-0"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_evidence_link",
+        "input_reference_ids": [
+          "7b1e2468-4a6d-412d-8e61-f48dd7771ff0",
+          "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+          "NOTE-P-140-1",
+          "P-140",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SRC-P-140-conflict-1",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "NOTE-P-140-1",
+          "SRC-P-140-conflict-1"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "request_verification_task",
+        "input_reference_ids": [
+          "7b1e2468-4a6d-412d-8e61-f48dd7771ff0",
+          "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+          "MED-P-140-1",
+          "NOTE-P-140-0",
+          "NOTE-P-140-1",
+          "P-140",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-EXC-02",
+          "SRC-P-140-conflict-0",
+          "SRC-P-140-conflict-1",
+          "SRC-P-140-med",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "TASK-8691dc1ded154e77ba38ea7f322b972f"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "evaluate_approved_rule",
+        "input_reference_ids": [
+          "7b1e2468-4a6d-412d-8e61-f48dd7771ff0",
+          "EXEC-89fc74dad8b9435caeebf5d6bced97ba",
+          "P-140",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-EXC-02",
+          "SNAP-04a9aa3d7e4a4676824b0c8141fc9f76",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "MED-P-140-1",
+          "SRC-P-140-med"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      }
+    ],
+    "error_code": null,
+    "model_id": "gemini-3.8-flash",
+    "created_at": "2026-11-14T22:11:18.596742Z",
+    "finished_at": "2026-11-14T22:11:38.637656Z"
+  },
+  "elapsed_seconds": 20.059
+}

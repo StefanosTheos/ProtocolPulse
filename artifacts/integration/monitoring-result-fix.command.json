@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "backend/tests/test_ai_integration.py",
+    "backend/tests/test_agent_boundary.py",
+    "-q",
+    "--basetemp",
+    "backend/var/qa-monitoring-result"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 18.185
+}

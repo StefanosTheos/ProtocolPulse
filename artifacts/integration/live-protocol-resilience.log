@@ -1,0 +1,1 @@
+{"case": "protocol", "status": "FAILED", "error_code": "AGENT_TIMEOUT", "model_id": null, "elapsed_seconds": 30.444, "tools": ["parse_protocol", "report_coverage", "locate_clause"]}

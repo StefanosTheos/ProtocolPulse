@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "backend/tests",
+    "ai/tests",
+    "-q",
+    "--basetemp",
+    "backend/var/qa-ai-final-elevated"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 68.275
+}

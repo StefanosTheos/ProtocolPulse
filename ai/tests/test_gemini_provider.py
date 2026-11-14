@@ -85,6 +85,28 @@ def test_sdk_provider_errors_are_sanitized(monkeypatch):
         asyncio.run(scenario())
 
 
+def test_sdk_http_failure_category_never_exposes_provider_message(monkeypatch):
+    genai = pytest.importorskip('google.genai')
+    class QuotaFailure(Exception):
+        code = 429
+    class Client:
+        async def generate_content(self, **kwargs):
+            raise QuotaFailure('private key and request details must not be logged')
+        async def aclose(self):
+            pass
+    client = Client()
+    client.models = client
+    monkeypatch.setattr(genai, 'Client', lambda **kwargs: SimpleNamespace(aio=client))
+    async def scenario():
+        provider = GeminiProvider(Settings(api_key='SYNTHETIC'))
+        try:
+            await provider.next(request(), allowed_tools('MEDICATION_SAFETY_INVESTIGATOR'))
+        finally:
+            await provider.close()
+    with pytest.raises(ProviderFailure, match='^PROVIDER_HTTP_429$'):
+        asyncio.run(scenario())
+
+
 def test_real_sdk_serializes_manual_calls_using_mock_http_transport(monkeypatch):
     """Exercise the installed SDK converter/async HTTP path without network or a real key."""
     genai = pytest.importorskip("google.genai")

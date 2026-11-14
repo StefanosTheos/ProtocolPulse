@@ -1,0 +1,215 @@
+{
+  "contract": "1.0.0-rc2",
+  "route_count": 26,
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "operation_id": "getHealth",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials",
+      "operation_id": "listTrials",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/trials",
+      "operation_id": "createTrial",
+      "success_statuses": [
+        "201"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials/{trial_id}",
+      "operation_id": "getTrial",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials/{trial_id}/protocols",
+      "operation_id": "listProtocols",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/trials/{trial_id}/protocols",
+      "operation_id": "uploadProtocol",
+      "success_statuses": [
+        "201"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials/{trial_id}/protocols/{version_id}",
+      "operation_id": "getProtocol",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/trials/{trial_id}/protocols/{version_id}/extract",
+      "operation_id": "extractProtocol",
+      "success_statuses": [
+        "202"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/trials/{trial_id}/protocols/{version_id}/criteria",
+      "operation_id": "replaceProposedCriteria",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/trials/{trial_id}/protocols/{version_id}/approve",
+      "operation_id": "approveProtocol",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/trials/{trial_id}/screenings",
+      "operation_id": "createScreening",
+      "success_statuses": [
+        "202"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/screenings/{run_id}",
+      "operation_id": "getScreeningRun",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/screenings/{run_id}/assessments",
+      "operation_id": "listAssessments",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials/{trial_id}/patients/{patient_id}",
+      "operation_id": "getPatient360",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/patients/{patient_id}/events",
+      "operation_id": "createPatientEvent",
+      "success_statuses": [
+        "202"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials/{trial_id}/findings",
+      "operation_id": "listFindings",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials/{trial_id}/cases",
+      "operation_id": "listCases",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/cases/{case_id}",
+      "operation_id": "getCase",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/cases/{case_id}",
+      "operation_id": "transitionCase",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/agent-executions/{execution_id}",
+      "operation_id": "getAgentExecution",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials/{trial_id}/audit",
+      "operation_id": "listAudit",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/jobs/{job_id}",
+      "operation_id": "getJob",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/trials/{trial_id}/evidence/{source_id}",
+      "operation_id": "getEvidenceSource",
+      "success_statuses": [
+        "200"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/trials/{trial_id}/patients/{patient_id}/dispositions",
+      "operation_id": "recordScreeningDisposition",
+      "success_statuses": [
+        "201"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/trials/{trial_id}/patients/{patient_id}/participation",
+      "operation_id": "recordParticipation",
+      "success_statuses": [
+        "201"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/agent-investigations",
+      "operation_id": "createAgentInvestigation",
+      "success_statuses": [
+        "202"
+      ]
+    }
+  ],
+  "issues": []
+}

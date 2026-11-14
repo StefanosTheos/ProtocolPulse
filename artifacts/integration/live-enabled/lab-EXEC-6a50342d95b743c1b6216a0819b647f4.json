@@ -1,0 +1,162 @@
+{
+  "mode": "LIVE_GEMINI_REAL_HTTP_BACKEND_GATEWAY_SQLITE",
+  "request": {
+    "role": "EVIDENCE_INVESTIGATOR",
+    "trial_id": "TR-PX104",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "patient_id": "P-124",
+    "criterion_ids": [
+      "PX-INC-03"
+    ],
+    "event_id": null,
+    "objective": "Investigate the missing or stale laboratory evidence for the approved criterion and prepare a cited verification question."
+  },
+  "job": {
+    "job_id": "JOB-94c306d171e94141af0f1746d8ed10a7",
+    "kind": "AGENT_INVESTIGATION",
+    "status": "SUCCEEDED",
+    "resource_id": "EXEC-6a50342d95b743c1b6216a0819b647f4",
+    "correlation_id": "90ceb6e2-3b5f-4c0a-80c6-f7dc065dab2a",
+    "poll_url": "/api/v1/jobs/JOB-94c306d171e94141af0f1746d8ed10a7",
+    "created_at": "2026-11-14T22:09:35.409890Z",
+    "attempts": 1,
+    "max_attempts": 3,
+    "started_at": "2026-11-14T22:09:35.826016Z",
+    "finished_at": "2026-11-14T22:09:50.530646Z",
+    "progress_percent": 100.0,
+    "result": {
+      "execution_id": "EXEC-6a50342d95b743c1b6216a0819b647f4",
+      "agent_status": "PARTIAL"
+    },
+    "error": null
+  },
+  "execution": {
+    "execution_id": "EXEC-6a50342d95b743c1b6216a0819b647f4",
+    "role": "EVIDENCE_INVESTIGATOR",
+    "status": "PARTIAL",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-124",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "criterion_ids": [
+      "PX-INC-03"
+    ],
+    "event_id": null,
+    "correlation_id": "90ceb6e2-3b5f-4c0a-80c6-f7dc065dab2a",
+    "evidence_refs": [
+      {
+        "evidence_id": "NOTE-P-124",
+        "source_id": "SRC-P-124-narrative",
+        "source_version": 1,
+        "evidence_type": "NOTE",
+        "effective_at": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": null,
+        "span_end": null
+      }
+    ],
+    "summary": "Investigation of criterion PX-INC-03 for patient P-124 identified no structured lab results for eGFR. Clinical note NOTE-P-124 indicates that the only available eGFR specimen is stale. A verification task has been requested for the study coordinator to evaluate or obtain current laboratory evidence.",
+    "unknown_reasons": [
+      "Clinical note specifies that the only available eGFR specimen is stale",
+      "MISSING_LAB",
+      "No structured lab results available for analyte eGFR within the screening window"
+    ],
+    "verification_questions": [
+      "Clinical narrative indicates that the only available eGFR specimen is stale. Can a current laboratory result for eGFR/creatinine be obtained or confirmed for criterion PX-INC-03?"
+    ],
+    "trace": [
+      {
+        "tool_name": "retrieve_patient_evidence",
+        "input_reference_ids": [
+          "90ceb6e2-3b5f-4c0a-80c6-f7dc065dab2a",
+          "EXEC-6a50342d95b743c1b6216a0819b647f4",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-INC-03",
+          "SNAP-9f77174ecf3d47dd96298e6f5e977d83",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "search_notes",
+        "input_reference_ids": [
+          "90ceb6e2-3b5f-4c0a-80c6-f7dc065dab2a",
+          "EXEC-6a50342d95b743c1b6216a0819b647f4",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SNAP-9f77174ecf3d47dd96298e6f5e977d83",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "NOTE-P-124",
+          "SRC-P-124-narrative"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_evidence_link",
+        "input_reference_ids": [
+          "90ceb6e2-3b5f-4c0a-80c6-f7dc065dab2a",
+          "EXEC-6a50342d95b743c1b6216a0819b647f4",
+          "NOTE-P-124",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SRC-P-124-narrative",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "NOTE-P-124",
+          "SRC-P-124-narrative"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_lab_history",
+        "input_reference_ids": [
+          "90ceb6e2-3b5f-4c0a-80c6-f7dc065dab2a",
+          "EXEC-6a50342d95b743c1b6216a0819b647f4",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "SNAP-9f77174ecf3d47dd96298e6f5e977d83",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "request_verification_task",
+        "input_reference_ids": [
+          "90ceb6e2-3b5f-4c0a-80c6-f7dc065dab2a",
+          "EXEC-6a50342d95b743c1b6216a0819b647f4",
+          "NOTE-P-124",
+          "P-124",
+          "PV-49f53ecfbfb749e7859418d2d7c61048",
+          "PX-INC-03",
+          "SRC-P-124-narrative",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "TASK-25b3982babd540d396301881c0453afa"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      }
+    ],
+    "error_code": null,
+    "model_id": "gemini-3.8-flash",
+    "created_at": "2026-11-14T22:09:35.409890Z",
+    "finished_at": "2026-11-14T22:09:50.530646Z"
+  },
+  "elapsed_seconds": 15.295
+}

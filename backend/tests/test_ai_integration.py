@@ -26,6 +26,11 @@ class EvidenceDrivenModel:
         pass
 
     async def next(self, req, tools):
+        context = json.loads(req['objective'])['authorized_backend_context']
+        assert context['approved_set_hash']
+        assert {c['criterion_id'] for c in context['approved_criteria']} == set(req['criterion_ids'])
+        assert all(c['workflow_status'] == 'APPROVED' and c['source_quote'] for c in context['approved_criteria'])
+        assert context['screening_date'] == '2026-10-31'
         patient = req['patient_id']
         scope = {'patient_id': patient, 'snapshot_id': req['evidence_snapshot_id']}
         names = [name for name, _ in self.seen]
@@ -115,6 +120,12 @@ def test_actual_gateway_monitoring_case_already_exists(env, monkeypatch):
                 return ToolCall('retrieve_patient_evidence', {'patient_id': req['patient_id'],
                     'snapshot_id': req['evidence_snapshot_id'], 'criterion_ids': req['criterion_ids'],
                     'evidence_types': ['ADMINISTRATION']})
+            if 'evaluate_approved_rule' not in names:
+                context = json.loads(req['objective'])['authorized_backend_context']
+                return ToolCall('evaluate_approved_rule', {'patient_id': req['patient_id'],
+                    'snapshot_id': req['evidence_snapshot_id'], 'criterion_id': req['criterion_ids'][0],
+                    'criterion_set_hash': context['approved_set_hash'], 'evaluation_date': context['screening_date']})
+            assert self.seen[-1][1]['data']['result'] == 'FAIL'
             return FinalProposal(summary='Backend case already exists for documented synthetic administration; investigator review remains required.',
                 evidence_refs=[EvidenceReference.model_validate(r) for r in self.refs], unknown_reasons=[],
                 conflict_refs=[], proposed_criteria=[], coverage=[], verification_questions=[], incomplete=False)
@@ -126,7 +137,7 @@ def test_actual_gateway_monitoring_case_already_exists(env, monkeypatch):
     work(env)
     execution = env[0].get('/api/v1/agent-executions/' + case['agent_execution_id'], headers=headers()).json()['data']
     assert execution['status'] == 'SUCCEEDED', json.dumps(execution, indent=2)
-    assert [t['tool_name'] for t in execution['trace']] == ['classify_event_relevance', 'get_prior_evaluation', 'get_case_status', 'retrieve_patient_evidence']
+    assert [t['tool_name'] for t in execution['trace']] == ['classify_event_relevance', 'get_prior_evaluation', 'get_case_status', 'retrieve_patient_evidence', 'evaluate_approved_rule']
     assert len(env[0].get('/api/v1/trials/TR-PX104/cases', headers=headers()).json()['data']['items']) == 1
     enriched = env[0].get('/api/v1/cases/' + case['case_id'], headers=headers()).json()['data']
     assert enriched['status'] == 'OPEN' and enriched['summary_origin'] == 'AI_DRAFT'
