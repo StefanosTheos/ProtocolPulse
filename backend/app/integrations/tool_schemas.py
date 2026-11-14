@@ -2,11 +2,10 @@
 
 from typing import Annotated, Literal
 
-from pydantic import AwareDatetime, Field, create_model
-
 from backend.app.integrations.agent_adapter import EvidenceReference
 from backend.app.schemas.common import ID, ContractBase
 from backend.app.schemas.dto import CriterionDraftInput, IsoDate
+from pydantic import AwareDatetime, Field, create_model
 
 
 class ToolScope(ContractBase):
@@ -15,6 +14,7 @@ class ToolScope(ContractBase):
     trial_id: ID
     protocol_version_id: ID
     correlation_id: ID
+    patient_id: ID | None = None
 
 
 class VerificationProposal(ContractBase):

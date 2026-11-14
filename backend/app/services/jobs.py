@@ -2,8 +2,6 @@ import asyncio
 from datetime import timedelta
 from pathlib import Path
 
-from sqlalchemy import or_, select, update
-
 from backend.app import models as m
 from backend.app.core.errors import DomainError
 from backend.app.db.base import new_id, now
@@ -12,6 +10,7 @@ from backend.app.services.audit import append_audit
 from backend.app.services.event_processor import process_event
 from backend.app.services.pdf_extractor import parse_pdf, sha256, verified_fixture
 from backend.app.services.screening import process_screen
+from sqlalchemy import or_, select, update
 
 
 def enqueue(session, kind, trial_id, resource_id, request, actor, correlation, settings):
@@ -91,7 +90,7 @@ class JobRunner:
                 session.scalars(
                     select(m.Job).where(
                         m.Job.status == "RUNNING",
-                        m.Job.lease_until < stamp,
+                        m.Job.lease_until <= stamp,
                         m.Job.attempts >= m.Job.max_attempts,
                     )
                 )
@@ -108,16 +107,16 @@ class JobRunner:
             session.execute(
                 update(m.Job)
                 .where(
-                    m.Job.status == "RUNNING", m.Job.lease_until < stamp, m.Job.attempts >= m.Job.max_attempts
+                    m.Job.status == "RUNNING", m.Job.lease_until <= stamp, m.Job.attempts >= m.Job.max_attempts
                 )
                 .values(status="FAILED", error_code="LEASE_EXHAUSTED", finished_at=stamp)
             )
             job_id = session.scalar(
                 select(m.Job.job_id)
                 .where(
-                    or_(m.Job.status == "QUEUED", (m.Job.status == "RUNNING") & (m.Job.lease_until < stamp)),
+                    or_(m.Job.status == "QUEUED", (m.Job.status == "RUNNING") & (m.Job.lease_until <= stamp)),
                     m.Job.attempts < m.Job.max_attempts,
-                    or_(m.Job.lease_until.is_(None), m.Job.lease_until < stamp),
+                    or_(m.Job.lease_until.is_(None), m.Job.lease_until <= stamp),
                 )
                 .order_by(m.Job.created_at, m.Job.job_id)
                 .limit(1)
@@ -128,7 +127,7 @@ class JobRunner:
                 update(m.Job)
                 .where(
                     m.Job.job_id == job_id,
-                    or_(m.Job.status == "QUEUED", (m.Job.status == "RUNNING") & (m.Job.lease_until < stamp)),
+                    or_(m.Job.status == "QUEUED", (m.Job.status == "RUNNING") & (m.Job.lease_until <= stamp)),
                 )
                 .values(
                     status="RUNNING",

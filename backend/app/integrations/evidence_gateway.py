@@ -1,9 +1,6 @@
 import asyncio
 import time
 
-from pydantic import TypeAdapter
-from sqlalchemy import select
-
 from backend.app import models as m
 from backend.app.core.actors import scoped_trial
 from backend.app.core.errors import DomainError
@@ -12,6 +9,8 @@ from backend.app.schemas import dto as d
 from backend.app.services.approval import criteria_for
 from backend.app.services.audit import append_audit
 from backend.app.services.evidence import EVIDENCE_MODELS, evidence_ref, frozen_rows
+from pydantic import TypeAdapter
+from sqlalchemy import select
 
 ALLOWLIST = {
     "PROTOCOL_INTELLIGENCE": {"parse_protocol", "locate_clause", "validate_rule_schema", "report_coverage"},
@@ -57,6 +56,25 @@ def wire_reference(ref):
     }
 
 
+def reference_ids(value):
+    """Reference-only trace projection; clinical text/value is never a trace registry."""
+    found = set()
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if key in {"value", "body", "text", "quote", "summary", "question"}:
+                continue
+            if key.endswith("_id") and isinstance(item, str):
+                found.add(item)
+            elif key.endswith("_ids") and isinstance(item, list):
+                found.update(v for v in item if isinstance(v, str))
+            if isinstance(item, (dict, list)):
+                found.update(reference_ids(item))
+    elif isinstance(value, list):
+        for item in value:
+            found.update(reference_ids(item))
+    return sorted(found)
+
+
 class EvidenceGateway:
     def __init__(self, factory, request, actor_id, settings):
         self.factory, self.request, self.actor_id, self.settings = factory, request, actor_id, settings
@@ -80,6 +98,11 @@ class EvidenceGateway:
             if row:
                 if row.source_pk != src.source_pk:
                     raise ValueError("Evidence/source mismatch")
+                if not isinstance(row, m.ClinicalNote):
+                    persisted = evidence_ref(session, row)
+                    for field in ("page", "span_start", "span_end"):
+                        if ref.get(field) is not None and ref[field] != getattr(persisted, field):
+                            raise ValueError("Citation does not match the fact's persisted source span")
                 if self.request.evidence_snapshot_id:
                     member = session.scalar(
                         select(m.SnapshotEvidenceRef).where(
@@ -152,6 +175,8 @@ class EvidenceGateway:
 
             validated = TOOL_INPUTS[name].model_validate(payload)
             payload = validated.model_dump(mode="json")
+            if payload.get("patient_id") is None:
+                payload.pop("patient_id", None)
             req = self.request
             for field in (
                 "contract_version",
@@ -192,8 +217,8 @@ class EvidenceGateway:
         self.trace.append(
             d.ToolTrace(
                 tool_name=name,
-                input_reference_ids=[str(v) for k, v in payload.items() if k.endswith("_id")],
-                output_reference_ids=[r["evidence_id"] for r in refs],
+                input_reference_ids=reference_ids(payload),
+                output_reference_ids=reference_ids(result),
                 result_code=code,
                 elapsed_ms=int((time.monotonic() - started) * 1000),
                 error_code=error,
@@ -613,4 +638,6 @@ class EvidenceGateway:
                     None,
                 )
                 return dict(facts=facts, completeness_ref=completeness), refs
+            if name == "get_lab_history":
+                return dict(facts=facts), refs
             return dict(facts=facts, open_items=[]), refs

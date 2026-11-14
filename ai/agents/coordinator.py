@@ -265,7 +265,9 @@ class Coordinator:
             response = await self.invoke(action)
             await self.provider.observe(action, response)
             if action.name == "classify_event_relevance" and no_action(response["data"]):
-                return self.result("SUCCEEDED", summary="Backend relevance check returned NO_ACTION; no further investigation.")
+                # The categorized gateway observation is sufficient. No cited clinical
+                # summary is generated for an irrelevant event with no retrieved evidence.
+                return self.result("SUCCEEDED")
             if action.name == "resolve_approved_terminology" and unmapped(response["data"]):
                 return self.result("PARTIAL", summary="Approved terminology mapping unavailable; human verification required.",
                                    reasons=["UNMAPPED_CODE"])

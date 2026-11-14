@@ -4,12 +4,11 @@ from types import SimpleNamespace
 from uuid import uuid4
 
 import pytest
-from conftest import approve, headers, screen, work
-from sqlalchemy import text
-
 from backend.app.integrations.agent_adapter import AgentRequest, AgentResult, FakeAgentAdapter
 from backend.app.integrations.evidence_gateway import EvidenceGateway
 from backend.app.services.evidence import snapshot
+from conftest import approve, headers, screen, work
+from sqlalchemy import text
 
 
 def gateway(env, role="EVIDENCE_INVESTIGATOR", patient="P-083"):
@@ -119,6 +118,18 @@ def test_unknown_citation_rejected(env):
             gate.validate_reference(
                 session, dict(evidence_id="invented", source_id="SRC-P-083-med", source_version=1)
             )
+
+
+def test_known_fact_cannot_claim_an_unrelated_source_span(env):
+    gate = gateway(env)
+    response = asyncio.run(gate.invoke('retrieve_patient_evidence', scope(gate,
+        patient_id='P-083', snapshot_id=gate.request.evidence_snapshot_id,
+        criterion_ids=['PX-EXC-02'], evidence_types=['ORDER'])))
+    ref = response['evidence_refs'][0]
+    forged = {**ref, 'page': 1, 'span_start': 0, 'span_end': 1}
+    with env[2]() as session:
+        with pytest.raises(ValueError):
+            gate.validate_reference(session, forged)
 
 
 def test_ai_entrypoint_outside_transaction_and_failure_isolated(env, monkeypatch):

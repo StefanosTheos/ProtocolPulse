@@ -3,14 +3,13 @@ import importlib
 from datetime import timedelta
 from typing import Literal
 
-from sqlalchemy import select
-
 from backend.app import models as m
 from backend.app.db.base import now
 from backend.app.schemas.common import ID, AgentRole, AgentStatus, ContractBase, Field
 from backend.app.schemas.dto import CoverageItem, CriterionDraftInput, ToolTrace
 from backend.app.services.audit import append_audit
 from backend.app.services.evidence import snapshot
+from sqlalchemy import select
 
 
 class AgentRequest(ContractBase):
@@ -152,7 +151,13 @@ async def execute_job(factory, job_id, settings):
             raise ValueError("Mismatched execution scope")
         if result.summary and not result.evidence_refs:
             raise ValueError("Summary lacks verified evidence references")
-        if result.trace != gateway.trace:
+        # Two layers measure different intervals. Compare observed actions/references,
+        # not equal millisecond clocks; persist the gateway's authoritative timings.
+        def observed(trace):
+            return [(t.tool_name, sorted(t.input_reference_ids), sorted(t.output_reference_ids),
+                     t.error_code or t.result_code) for t in trace]
+
+        if observed(result.trace) != observed(gateway.trace):
             raise ValueError("Trace does not match observed gateway activity")
         with factory() as session:
             for ref in result.evidence_refs:

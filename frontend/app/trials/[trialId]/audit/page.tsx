@@ -66,7 +66,7 @@ export default function AuditPage() {
           {audit.error ? <ErrorPanel error={audit.error} context="Audit (auditor, investigator, monitor or sponsor-ops role required)" onRetry={audit.reload} /> : null}
           {audit.data && audit.data.items.length === 0 && <EmptyState title="No audit entries">Nothing has been recorded for these filters.</EmptyState>}
           {audit.data && audit.data.items.length > 0 && (
-            <div className="card overflow-x-auto">
+            <div className="card overflow-x-auto" tabIndex={0} role="region" aria-label="Audit entries">
               <table className="data-table">
                 <thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Target</th><th>Result</th><th>Outputs</th><th>Correlation / request</th></tr></thead>
                 <tbody>
