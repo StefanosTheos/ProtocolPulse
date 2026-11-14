@@ -4,6 +4,8 @@
 
 ## 1. Why a bounded agent exists
 
+**Selected provider/model:** Gemini / **Gemini 3.8 Flash**, configured as `LLM_PROVIDER=gemini`, `LLM_MODEL=gemini-3.8-flash` for all four logical roles. [Official model documentation](https://aistudio.google.com/docs/models/gemini-3.8-flash) confirms the ID and function calling/structured output support. E3 implements the Gemini adapter inside its owned AI package; IC owns SDK dependencies. Use server-side `LLM_API_KEY` explicitly for the SDK client, never in model input, traces or wire DTOs. Keep `LLM_ENABLED=false` as the credential-free default; missing keys/configuration yield `UNAVAILABLE`. This selection does not change `run_agent`, tools, schema version or deadlines. Account/model availability and live behavior still require implementation-time checks.
+
 Use an LLM only where a reviewer benefits from bounded, dynamic evidence selection: checking which protocol spans were omitted; deciding whether to inspect a lab series or contradictory note; locating relevant medication **administration** evidence after seeing an **order**; and preparing a reference-verified human summary. Pure temporal interval math, code/class mappings, candidate aggregation, event relevance, job dispatch, review state transitions and case deduplication remain deterministic Python. A model is not needed to evaluate a typed `eGFR >= 60` rule and must not decide clinical fitness, medication changes, drug safety or trial enrollment.
 
 Four logical roles:
@@ -128,7 +130,7 @@ Schema shapes used below:
 
 ```text
 receive AgentRequest + backend-injected authorized scope
-if LLM_ENABLED=false or missing configured provider: persist UNAVAILABLE and stop
+if LLM_ENABLED=false or missing configured provider/model/key: persist UNAVAILABLE and stop
 verify approved protocol version (except extraction of DRAFT), patient/site/snapshot
 for step 1..min(max_steps,MAX_AGENT_STEPS):
     pick ONE permitted tool based on current unresolved question and prior response

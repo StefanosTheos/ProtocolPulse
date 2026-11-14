@@ -22,7 +22,9 @@ Priority slice: reset 15 patients → investigator `ACT-INV-01` reviews eight an
 
 ## 3. Stack, paths and local launch
 
-Frozen: `frontend/` Next.js App Router, React, TypeScript, Tailwind; `backend/` Python **3.12**, FastAPI, Pydantic **v2**, SQLAlchemy **2.0**, Alembic, SQLite WAL, pytest; `ai/` Python 3.12, Pydantic, optional tool-capable provider. Other exact package versions/model are unchosen; IC owns manifests/lockfile. No Redis/Celery/vector database. One Uvicorn process, one durable SQLite job runner; no horizontal scaling.
+Frozen: `frontend/` Next.js App Router, React, TypeScript, Tailwind; `backend/` Python **3.12**, FastAPI, Pydantic **v2**, SQLAlchemy **2.0**, Alembic, SQLite WAL, pytest; `ai/` Python 3.12, Pydantic and selected **Gemini 3.8 Flash** (`LLM_PROVIDER=gemini`, `LLM_MODEL=gemini-3.8-flash`). Other exact package versions remain unchosen; IC owns manifests/lockfile. No Redis/Celery/vector database. One Uvicorn process, one durable SQLite job runner; no horizontal scaling.
+
+Provider/model selection is user-authorized and applies to all four logical roles in the one coordinator. Google lists the exact ID, function calling and structured output support in its [model documentation](https://aistudio.google.com/docs/models/gemini-3.8-flash). E3 implements the Gemini integration; IC owns SDK dependency selection. `LLM_ENABLED=false` remains the credential-free default. Supply `LLM_API_KEY` server-side and explicitly to the SDK client; no key belongs in browser code, model inputs or the agent wire DTOs. Account access, quotas, latency and live SDK behavior remain unverified. Wire revision `1.0.0-rc2` and protocol fixtures are unchanged.
 
 Commands below are **planned implementation contracts**, run from repository root after those packages/files exist; no application exists in this documentation handoff. POSIX-shell setup from [architecture §7](docs/SYSTEM_ARCHITECTURE.md#7-configuration-files-migrations-and-runtime):
 
@@ -183,6 +185,8 @@ LLM off: deterministic screening/events/cases continue; curated rule fixture mus
 ## 11. Decision register and fixed constraints
 
 [Architecture §11](docs/SYSTEM_ARCHITECTURE.md#11-architecture-decision-register--approved-at-100-rc2) is the decision register: **ADR-01** design approval; **02** 15 patients/five eligibility/eight approved rules; **03** job/run status distinction; **04** Unicode spans; **05** split timeouts; **06** backend authority/exact agent draft schema; **07** revision-gated first activation; **08** domain precedence/IC ownership; **09** date windows/watermark; **10** valid unmapped evidence/draft seed.
+
+**ADR-11:** selected provider Gemini, model `gemini-3.8-flash`, common to all logical roles; credential-free OFF default and existing tool/approval boundaries remain in force.
 
 Do not independently change route/type/enum names, nullability, clinical rule semantics/IDs, dates/windows, 15-patient registry, terminology, immutable provenance, approval gates, timeout budgets, import boundary, ownership, manifests or worker topology. Text spans are zero-based end-exclusive Unicode code points into persisted page/note text; byte hashes and JS UTF-16 indices are distinct.
 

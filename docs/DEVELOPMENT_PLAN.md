@@ -67,7 +67,7 @@
 | 2 H3–5 | `ai/agents/coordinator.py`, `ai/tools/selection.py`, `ai/prompts/system.py`, `roles.py`, `ai/tests/test_branching.py` | step/time limits, model-selected one-of allowed tools, no approval/enrollment tools, reference-only trace |
 | 3 H4–6 | `ai/agents/protocol_intelligence.py`, `evidence_investigator.py`, `ai/evals/fixtures.py` | source span verification, missing eGFR branch (P-124), ambiguous PDF blocker and verification tasks |
 | 4 H5–8 | `ai/agents/medication_investigator.py`, `monitoring_workflow.py`, `ai/evals/run_evals.py` | P-083 order-only vs P-042 administration branch, P-140 contradictory notes, `SYN-MED-N1` ignore; deterministic status is passed in, never model-assigned |
-| 5 H7–10 | `ai/tests/test_prompt_injection.py`, `test_branching.py`, `ai/tools/*` | injection in PDF/note ignored, unsupported source ID rejected, bounded calls, fallback `PARTIAL`/`FAILED`; provider adapter configurable; verify SDK tool-calling interface when actually integrating |
+| 5 H7–10 | `ai/tests/test_prompt_injection.py`, `test_branching.py`, `ai/tools/*` | injection in PDF/note ignored, unsupported source ID rejected, bounded calls, fallback `PARTIAL`/`FAILED`; implement selected Gemini adapter/model `gemini-3.8-flash`; verify SDK tool/structured-output interface, account access and live deadlines when integrating |
 | 6 H10–14 | `ai/entrypoints.py`, `ai/agents/*`, `ai/evals/*` | integrate through backend's actual gateway; record real dynamic tool traces and verified citations; no import of backend models or DB |
 | 7 H14–17 | existing E3 files only | `python -m pytest ai/tests -q && python -m ai.evals.run_evals`; compare tool selection when data differs; AI-off path passes |
 

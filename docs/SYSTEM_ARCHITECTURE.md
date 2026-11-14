@@ -7,7 +7,7 @@
 
 - `frontend/`: Next.js App Router, React, TypeScript, Tailwind; browser calls one versioned REST API, polls jobs; no direct model/database access.
 - `backend/`: Python **3.12**, FastAPI, Pydantic **v2**, SQLAlchemy **2**, Alembic, SQLite (WAL), pytest; **single Uvicorn process and one durable SQLite-backed job runner** in the demo. No Celery, Redis, broker, vector DB, or production authentication claim.
-- `ai/`: Python 3.12, provider-configurable tool-capable LLM, Pydantic validation; one bounded coordinator with four logical roles, in-process through `backend/app/integrations/agent_adapter.py` ⇄ `ai/entrypoints.py`; never an independent write-authority service.
+- `ai/`: Python 3.12, selected Gemini 3.8 Flash (`LLM_PROVIDER=gemini`, `LLM_MODEL=gemini-3.8-flash`), Pydantic validation; one bounded coordinator with four logical roles, in-process through `backend/app/integrations/agent_adapter.py` ⇄ `ai/entrypoints.py`; never an independent write-authority service.
 - **One source of truth:** backend relational storage + immutable uploaded protocol bytes on local `backend/var/protocols/` (absolute storage path configured). Database contains checksums, paths, version IDs and indexed text/page spans. Do not store blobs in browser.
 - **Safety:** 15 wholly synthetic patients with provenance-bearing structured facts AND concise narratives; approve rules via attributed human action; deterministic `PASS|FAIL|UNKNOWN`, and `POTENTIAL_MATCH|NEEDS_REVIEW|PROTOCOL_CONFLICT`. These are pre-screen results, not enrollment, clinical safety, or pharmacology.
 - **Demo dates/site:** `Europe/Athens`; screening local date `2026-10-31`, study day 0 `2026-11-01`, day 18 `2026-11-19`. Medication lookback `[2026-10-01 00:00, 2026-10-31 00:00)` in Athens; eGFR specimen **local calendar date** in `[2026-10-01, 2026-10-31]`. The screening record's evidence-cutoff watermark is separately set after the screening local day (seed `2026-11-01T00:00:00+02:00`) so the Oct 31 inclusive lab rule is implementable. Never compare clinical dates to job ingestion timestamps.
@@ -41,7 +41,7 @@
                         ai/entrypoints.py (single coordinator)
                         4 logical roles + read-only tools
                                       |
-                                LLM provider (optional)
+                           Gemini 3.8 Flash (when enabled)
                         NO tools to approve/enroll/treat
 ```
 
@@ -93,7 +93,7 @@ Fixture ID set (exactly): `P-042,P-175,P-124,P-161,P-117,P-118,P-083,P-140,P-151
 
 ## 7. Configuration, files, migrations and runtime
 
-`backend/app/core/config.py` uses Pydantic Settings to parse the documented `.env.example`. Load root `.env` in backend *only*. All secrets server-side; frontend accesses only `NEXT_PUBLIC_API_BASE_URL` (public API URL). CORS permits only `FRONTEND_ORIGIN`. `LLM_ENABLED=false` keeps local evaluator, job worker and monitoring operational; extraction must return labeled **unavailable** or use prepared non-AI rule fixture requiring approval; AI investigations show `UNAVAILABLE`, not a fabricated `SUCCEEDED`. LLM provider SDK/tool compatibility is verified at implementation time; no hard-coded model vendor behavior in contracts.
+`backend/app/core/config.py` uses Pydantic Settings to parse the documented `.env.example`. Load root `.env` in backend *only*. All secrets server-side; frontend accesses only `NEXT_PUBLIC_API_BASE_URL` (public API URL). CORS permits only `FRONTEND_ORIGIN`. Gemini 3.8 Flash is the selected model for all logical roles; preserve configurable values `LLM_PROVIDER=gemini` and `LLM_MODEL=gemini-3.8-flash`. Pass server-side `LLM_API_KEY` explicitly to the SDK client without adding credential fields to agent DTOs/model inputs. `LLM_ENABLED=false` remains the credential-free default and keeps local evaluator, job worker and monitoring operational; extraction must return labeled **unavailable** or use prepared non-AI rule fixture requiring approval; AI investigations show `UNAVAILABLE`, not a fabricated `SUCCEEDED`. SDK/tool compatibility, account access and live latency are verified at implementation time; provider implementation details stay outside shared wire contracts.
 
 Gateway calls use `TOOL_TIMEOUT_SECONDS=5`; model calls (including internal AI procedures) use `LLM_CALL_TIMEOUT_SECONDS=10`. Both are capped by the remaining `AGENT_TIMEOUT_SECONDS=30` execution deadline. `MAX_AGENT_STEPS=8` bounds total gateway invocations per execution, including retries; no timeout resets the execution deadline.
 
@@ -151,3 +151,4 @@ API types, operation IDs and all extra necessary paths: [API_CONTRACTS.md](API_C
 | ADR-08 | API_CONTRACTS/DATA_MODEL/TEAM_OWNERSHIP govern their respective domains; IC reviews and versions every shared-contract change. Integration branch is master. |
 | ADR-09 | Screening date is local, lab date inclusive through Oct 31, medication window excludes Oct 31, evidence cutoff includes the entire screening day. Preserves distinct clinical/data clocks. |
 | ADR-10 | Malformed codes/invalid payloads are rejected; valid unmapped medication codes remain accepted evidence with UNKNOWN/UNMAPPED_CODE. Reset seeds draft rules for explicit human approval. |
+| ADR-11 | User selected Gemini 3.8 Flash, API model ID `gemini-3.8-flash`, for the one coordinator's four logical roles. Configure server-side credentials via LLM_API_KEY; default OFF behavior, deadlines and human/tool boundaries are unchanged. SDK dependency/version remains IC-owned; live provider access is not yet tested. |
