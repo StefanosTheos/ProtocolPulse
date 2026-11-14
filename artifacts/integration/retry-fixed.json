@@ -1,0 +1,17 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "backend/tests/test_ai_integration.py::test_zero_backoff_retry_due_at_same_clock_tick",
+    "backend/tests/test_transactions.py",
+    "backend/tests/test_remaining_api.py",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "backend/var/qa-retry-fixed"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 13.146
+}

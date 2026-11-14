@@ -1,0 +1,12 @@
+
+> protocolpulse-frontend@0.1.0 test:e2e
+> playwright test
+
+
+Running 1 test using 1 worker
+
+  ✓  1 tests\e2e\integration.spec.ts:12:1 › real protocol → screening → evidence → dated event → human case → audit (22.2s)
+
+  1 passed (24.2s)
+(node:23056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)

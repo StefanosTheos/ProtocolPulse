@@ -1,0 +1,11 @@
+{
+  "command": [
+    "npm.cmd",
+    "--prefix",
+    "frontend",
+    "audit",
+    "--json"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 4.021
+}

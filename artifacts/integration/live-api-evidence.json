@@ -1,0 +1,1070 @@
+{
+  "mode": "REAL_HTTP_AND_PERSISTED_SQLITE_LLM_OFF",
+  "checks": [
+    {
+      "name": "health",
+      "observed": {
+        "status": "ok",
+        "database": "ok",
+        "migrations": "current",
+        "worker": "running",
+        "llm": "disabled",
+        "synthetic_only": true,
+        "api_version": "v1",
+        "contract_version": "1.0.0-rc2"
+      }
+    },
+    {
+      "name": "cors",
+      "observed": {
+        "allowed": 200,
+        "disallowed_origin_has_no_grant": true,
+        "preflight": 200
+      }
+    },
+    {
+      "name": "pagination",
+      "observed": {
+        "assessment_count": 15,
+        "page_size": 4
+      }
+    },
+    {
+      "name": "P-083",
+      "observed": {
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-02",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "ORDER_ONLY"
+            ],
+            "evidence_refs": [
+              {
+                "evidence_id": "MED-P-083-1",
+                "source_id": "SRC-P-083-med",
+                "source_version": 1,
+                "evidence_type": "ORDER",
+                "effective_at": "2026-10-14T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            }
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-083-0",
+                "source_id": "SRC-P-083-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "P-140",
+      "observed": {
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-02",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "CONFLICTING_SOURCES"
+            ],
+            "evidence_refs": [
+              {
+                "evidence_id": "MED-P-140-1",
+                "source_id": "SRC-P-140-med",
+                "source_version": 1,
+                "evidence_type": "REPORTED_USE",
+                "effective_at": "2026-10-14T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 48
+              }
+            ],
+            "considered_interval": null
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-140-0",
+                "source_id": "SRC-P-140-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "P-124",
+      "observed": {
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-02",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-124-no_restricted_use",
+                "source_id": "SRC-P-124-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            }
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "OUTDATED_LAB"
+            ],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-124-0",
+                "source_id": "SRC-P-124-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-08-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "P-117",
+      "observed": {
+        "candidate_status": "PROTOCOL_CONFLICT",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-02",
+            "status": "FAIL",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "MED-P-117-1",
+                "source_id": "SRC-P-117-med",
+                "source_version": 1,
+                "evidence_type": "ADMINISTRATION",
+                "effective_at": "2026-10-14T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 50
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            }
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-117-0",
+                "source_id": "SRC-P-117-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "P-118",
+      "observed": {
+        "candidate_status": "POTENTIAL_MATCH",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-02",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-118-no_restricted_use",
+                "source_id": "SRC-P-118-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            }
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-118-0",
+                "source_id": "SRC-P-118-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing-ai-key",
+      "observed": "503 AGENT_UNAVAILABLE; no model calls"
+    },
+    {
+      "name": "invalid-unit",
+      "observed": "422; no clinical assertion created"
+    },
+    {
+      "name": "event-P-083",
+      "observed": {
+        "job": {
+          "job_id": "JOB-07bae38e933641ea90b24932d7896768",
+          "kind": "INGEST_EVENT",
+          "status": "SUCCEEDED",
+          "resource_id": "EVT-304214b22abd4d53b4cc5be7770ffe0e",
+          "correlation_id": "c99fbf51-7cc4-4bdf-851b-7eb8095580b7",
+          "poll_url": "/api/v1/jobs/JOB-07bae38e933641ea90b24932d7896768",
+          "created_at": "2026-11-14T21:36:15.998398Z",
+          "attempts": 1,
+          "max_attempts": 3,
+          "started_at": "2026-11-14T21:36:23.924155Z",
+          "finished_at": "2026-11-14T21:36:23.950012Z",
+          "progress_percent": 100.0,
+          "result": {
+            "relevance": "RELEVANT",
+            "assessment_ids": [
+              "ASM-e776254da2874a5a920f3d8a4b707e39"
+            ],
+            "finding_ids": [
+              "FIND-a67fc9cc0e244cea934dd33066a570f7"
+            ],
+            "case_ids": [
+              "CASE-d024a48b55df4026bf6c72af6f067a22"
+            ]
+          },
+          "error": null
+        },
+        "findings": [
+          {
+            "finding_id": "FIND-a67fc9cc0e244cea934dd33066a570f7",
+            "trial_id": "TR-PX104",
+            "patient_id": "P-083",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "criterion_id": "PX-MON-02",
+            "triggering_event_id": "EVT-304214b22abd4d53b4cc5be7770ffe0e",
+            "before_assessment_id": "ASM-4fc84b4cd7b5461a960f1a362ed32acb",
+            "after_assessment_id": "ASM-e776254da2874a5a920f3d8a4b707e39",
+            "category": "POTENTIAL_SAFETY_REVIEW",
+            "priority": "MEDIUM",
+            "case_id": "CASE-d024a48b55df4026bf6c72af6f067a22",
+            "evidence_refs": [
+              {
+                "evidence_id": "EVT-304214b22abd4d53b4cc5be7770ffe0e",
+                "source_id": "SRC-IC-deba88fd9c3d4450bf69031f49d141e6",
+                "source_version": 1,
+                "evidence_type": "MEDICATION",
+                "effective_at": "2026-11-19T07:30:00Z",
+                "recorded_at": "2026-11-20T09:00:00Z",
+                "page": null,
+                "span_start": null,
+                "span_end": null
+              }
+            ],
+            "issue_key": "medication:SYN-CLASS-R",
+            "created_at": "2026-11-14T21:36:23.924155Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "event-P-203",
+      "observed": {
+        "job": {
+          "job_id": "JOB-26de5a5743794e0c944edabe29761dc2",
+          "kind": "INGEST_EVENT",
+          "status": "SUCCEEDED",
+          "resource_id": "EVT-5be916fddd684910b66fdc9e0295f040",
+          "correlation_id": "dd2d3836-01f7-4aba-a85f-9706e1859aab",
+          "poll_url": "/api/v1/jobs/JOB-26de5a5743794e0c944edabe29761dc2",
+          "created_at": "2026-11-14T21:36:24.008502Z",
+          "attempts": 1,
+          "max_attempts": 3,
+          "started_at": "2026-11-14T21:36:24.466837Z",
+          "finished_at": "2026-11-14T21:36:24.499038Z",
+          "progress_percent": 100.0,
+          "result": {
+            "relevance": "RELEVANT",
+            "assessment_ids": [
+              "ASM-7b9a75d08db046f7866d013899b3be9c"
+            ],
+            "finding_ids": [
+              "FIND-dff96b141d664a4ab4ffe3d4c958077e"
+            ],
+            "case_ids": [
+              "CASE-a57a7681fdca43ef9c949666189a30fd"
+            ]
+          },
+          "error": null
+        },
+        "findings": [
+          {
+            "finding_id": "FIND-dff96b141d664a4ab4ffe3d4c958077e",
+            "trial_id": "TR-PX104",
+            "patient_id": "P-203",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "criterion_id": "PX-MON-01",
+            "triggering_event_id": "EVT-5be916fddd684910b66fdc9e0295f040",
+            "before_assessment_id": "ASM-a7c0726023ea496ca8b650bd6e4c7ab8",
+            "after_assessment_id": "ASM-7b9a75d08db046f7866d013899b3be9c",
+            "category": "DATA_QUALITY_DISCREPANCY",
+            "priority": "MEDIUM",
+            "case_id": "CASE-a57a7681fdca43ef9c949666189a30fd",
+            "evidence_refs": [
+              {
+                "evidence_id": "EVT-5be916fddd684910b66fdc9e0295f040",
+                "source_id": "SRC-IC-fbac91ae0d9a410b91f9d4c2bf755d9f",
+                "source_version": 1,
+                "evidence_type": "MEDICATION",
+                "effective_at": "2026-11-19T07:30:00Z",
+                "recorded_at": "2026-11-20T09:00:00Z",
+                "page": null,
+                "span_start": null,
+                "span_end": null
+              }
+            ],
+            "issue_key": "medication:SYN-CLASS-R",
+            "created_at": "2026-11-14T21:36:24.482992Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "event-P-151",
+      "observed": {
+        "job": {
+          "job_id": "JOB-d7f77ddb8fcf41438f5df6b42f841c19",
+          "kind": "INGEST_EVENT",
+          "status": "SUCCEEDED",
+          "resource_id": "EVT-c9fa549295a94fd99cd57911a2446fd8",
+          "correlation_id": "5cf1cebc-aca2-4ae4-bb6e-7dc525b85102",
+          "poll_url": "/api/v1/jobs/JOB-d7f77ddb8fcf41438f5df6b42f841c19",
+          "created_at": "2026-11-14T21:36:24.566496Z",
+          "attempts": 1,
+          "max_attempts": 3,
+          "started_at": "2026-11-14T21:36:25.002511Z",
+          "finished_at": "2026-11-14T21:36:25.018542Z",
+          "progress_percent": 100.0,
+          "result": {
+            "relevance": "NO_ACTION",
+            "assessment_ids": [],
+            "finding_ids": [],
+            "case_ids": []
+          },
+          "error": null
+        },
+        "findings": []
+      }
+    },
+    {
+      "name": "malformed-extraction",
+      "observed": [
+        {
+          "mutation": "missing-rule",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "invented-ninth-rule",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "changed-threshold",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "wrong-washout-end",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "invented-restriction-class",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "made-up-quote",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "invalid-page",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "byte-offset-instead-of-codepoints",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "omitted-information-section",
+          "status": 409,
+          "error": "APPROVAL_BLOCKED"
+        },
+        {
+          "mutation": "fake-approval",
+          "status": 422,
+          "error": "VALIDATION_ERROR"
+        },
+        {
+          "mutation": "injected-approval-field",
+          "status": 422,
+          "error": "VALIDATION_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "upload-failures",
+      "observed": "415 signature; 403 non-allowlisted PDF; 413 oversize; no model/parser success claimed"
+    },
+    {
+      "name": "monitoring-off-trace",
+      "observed": {
+        "execution_id": "EXEC-5aa54f5f46534570b0bcce819ff7fbc9",
+        "role": "MONITORING_WORKFLOW",
+        "status": "UNAVAILABLE",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-042",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "criterion_ids": [
+          "PX-MON-01"
+        ],
+        "event_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+        "correlation_id": "bb5c6d96-4f9a-47dd-8085-ef080391c4e5",
+        "evidence_refs": [],
+        "summary": null,
+        "unknown_reasons": [],
+        "verification_questions": [],
+        "trace": [],
+        "error_code": "AGENT_UNAVAILABLE",
+        "model_id": null,
+        "created_at": "2026-11-14T21:34:24.832454Z",
+        "finished_at": "2026-11-14T21:34:24.832454Z"
+      }
+    },
+    {
+      "name": "sqlite",
+      "observed": {
+        "counts": {
+          "patient": 15,
+          "patient_event": 4,
+          "review_case": 3,
+          "monitoring_finding": 3,
+          "review_decision": 1,
+          "audit_entry": 30,
+          "screening_run": 1
+        },
+        "integrity_check": "ok",
+        "foreign_key_check": []
+      }
+    }
+  ],
+  "calls": [
+    {
+      "method": "GET",
+      "path": "/health",
+      "status": 200,
+      "request_id": "3f7f7c3b-abe4-45d2-8515-b43e931041f7",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/screenings/RUN-4d35eb9ab34a47f099e3a3c6898c91d0/assessments?limit=4",
+      "status": 200,
+      "request_id": "8e384590-8f9d-457b-bea6-a2e745579b72",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/screenings/RUN-4d35eb9ab34a47f099e3a3c6898c91d0/assessments?limit=4&cursor=eyJvZmZzZXQiOiA0LCAiZmlsdGVyIjogImNhZDRhMTU3ZDE2MjEwM2JkOTEyYWNjM2M0MDQzNjhhMGQyZmQ3NjdhZmYxM2RlZWExOTRmZjIwM2RkM2I2OTkiLCAicGF0aCI6ICIvYXBpL3YxL3NjcmVlbmluZ3MvUlVOLTRkMzVlYjlhYjM0YTQ3ZjA5OWUzYTNjNjg5OGM5MWQwL2Fzc2Vzc21lbnRzIn0=",
+      "status": 200,
+      "request_id": "c3d84e89-bb24-4d2d-817c-6190011d0dfd",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/screenings/RUN-4d35eb9ab34a47f099e3a3c6898c91d0/assessments?limit=4&cursor=eyJvZmZzZXQiOiA4LCAiZmlsdGVyIjogImNhZDRhMTU3ZDE2MjEwM2JkOTEyYWNjM2M0MDQzNjhhMGQyZmQ3NjdhZmYxM2RlZWExOTRmZjIwM2RkM2I2OTkiLCAicGF0aCI6ICIvYXBpL3YxL3NjcmVlbmluZ3MvUlVOLTRkMzVlYjlhYjM0YTQ3ZjA5OWUzYTNjNjg5OGM5MWQwL2Fzc2Vzc21lbnRzIn0=",
+      "status": 200,
+      "request_id": "e5699488-1035-41f9-93a9-66b2c01a63c7",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/screenings/RUN-4d35eb9ab34a47f099e3a3c6898c91d0/assessments?limit=4&cursor=eyJvZmZzZXQiOiAxMiwgImZpbHRlciI6ICJjYWQ0YTE1N2QxNjIxMDNiZDkxMmFjYzNjNDA0MzY4YTBkMmZkNzY3YWZmMTNkZWVhMTk0ZmYyMDNkZDNiNjk5IiwgInBhdGgiOiAiL2FwaS92MS9zY3JlZW5pbmdzL1JVTi00ZDM1ZWI5YWIzNGE0N2YwOTllM2EzYzY4OThjOTFkMC9hc3Nlc3NtZW50cyJ9",
+      "status": 200,
+      "request_id": "85047879-6000-4530-a9d8-a25a4e223a8a",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/agent-investigations",
+      "status": 503,
+      "request_id": "3b50273f-163d-4f74-8422-fd06d0369f17",
+      "error": {
+        "code": "AGENT_UNAVAILABLE",
+        "message": "Optional model integration is disabled or unconfigured",
+        "details": [],
+        "retryable": false
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/patients/P-083/events",
+      "status": 422,
+      "request_id": "96968cfa-44de-4dfb-9603-f29970a08a1d",
+      "error": {
+        "code": "UNSUPPORTED_UNIT",
+        "message": "Unit is not allowlisted",
+        "details": [],
+        "retryable": false
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/trials/TR-PX104/patients/P-083/participation",
+      "status": 201,
+      "request_id": "142d8708-4459-4284-a7b3-a07d01821bc5",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/patients/P-083/events",
+      "status": 202,
+      "request_id": "c99fbf51-7cc4-4bdf-851b-7eb8095580b7",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "dbeecccc-9041-4a91-bd2f-b29288f528cc",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "7f5bae7d-3178-444e-866c-47e0dff69866",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "1a6e64a1-8f2c-453e-af3a-8a07cf0e5059",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "f44197c4-7eeb-44d4-9e5a-63a48e6d2c96",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "a11b2fb0-ec76-4fd7-9876-010b92e0b282",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "20fd6508-2361-4dc9-8fa5-a8f78eb37347",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "709e5a94-fe12-4161-810e-96215f9820f6",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "2290d3cb-3a9a-4562-9f6b-fe51a148921d",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "68a01813-1acd-4a3e-8cfa-92f3176446ee",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "dece9d1a-3000-4385-ba1b-e5764bd564bc",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "398f332e-12f8-456f-bc52-d11c39f3092a",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "d73d6d89-9373-4292-8249-1f5f896f245d",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "f4df40ab-6307-4604-b818-6bea0af9a2b4",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "15021d6a-fa0a-4c25-84a3-7b446cf04e74",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "ee40e75c-0ac3-4f3f-90e9-afc916e40cb0",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "f2ea3174-34ec-4aaa-b4b6-b05ee5c80b7b",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "be0031c6-78eb-41f6-8709-d5b540d2317a",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "0ae2b224-e48e-41d6-8254-934babd74372",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "699f2e20-b3f4-4853-8765-842172b71c10",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "50002991-86b8-4f06-8685-632b38d9bd22",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "d7725e10-3efd-419c-8c62-2cedd017aa70",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "c9448464-0ce2-4133-b6e5-1dd83c081254",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "34b10984-0d48-4caa-a7ef-022c3bff86a1",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "94e26821-507e-4b85-9f00-87e59aa0d4d3",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-07bae38e933641ea90b24932d7896768",
+      "status": 200,
+      "request_id": "fe9fcf5a-b151-4a08-9736-a62b61137023",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/trials/TR-PX104/findings?patient_id=P-083",
+      "status": 200,
+      "request_id": "37a62284-a1ba-4a5e-87cf-a78599234715",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/trials/TR-PX104/patients/P-203/participation",
+      "status": 201,
+      "request_id": "4e986246-1529-46cb-87ad-09c280fa2dfa",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/patients/P-203/events",
+      "status": 202,
+      "request_id": "dd2d3836-01f7-4aba-a85f-9706e1859aab",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-26de5a5743794e0c944edabe29761dc2",
+      "status": 200,
+      "request_id": "b26d40c5-d60d-4aa7-9d64-a73b4e03fe07",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-26de5a5743794e0c944edabe29761dc2",
+      "status": 200,
+      "request_id": "fc8c3c18-7489-4069-9f3d-40c96cd2a6f6",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-26de5a5743794e0c944edabe29761dc2",
+      "status": 200,
+      "request_id": "1d8ece78-c40f-4a8e-918d-3812831ec39a",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-26de5a5743794e0c944edabe29761dc2",
+      "status": 200,
+      "request_id": "4b8a03c1-cb6e-4b22-b3f0-0cae275bba47",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-26de5a5743794e0c944edabe29761dc2",
+      "status": 200,
+      "request_id": "4dfedd79-fd6e-4d4c-9c12-1a479185b20b",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-26de5a5743794e0c944edabe29761dc2",
+      "status": 200,
+      "request_id": "173eb7c8-9973-4c7f-b2fd-7df9cce5dbc8",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/trials/TR-PX104/findings?patient_id=P-203",
+      "status": 200,
+      "request_id": "794781f4-d8fb-4da2-be09-6478f807627e",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/trials/TR-PX104/patients/P-151/participation",
+      "status": 201,
+      "request_id": "44451ed8-ee90-49fb-a20a-97df968c7273",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/patients/P-151/events",
+      "status": 202,
+      "request_id": "5cf1cebc-aca2-4ae4-bb6e-7dc525b85102",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-d7f77ddb8fcf41438f5df6b42f841c19",
+      "status": 200,
+      "request_id": "c81ab085-85c7-4203-aee9-db926e9c99ad",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-d7f77ddb8fcf41438f5df6b42f841c19",
+      "status": 200,
+      "request_id": "20f8e8b1-3077-4acf-9049-8d40ff940ecf",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-d7f77ddb8fcf41438f5df6b42f841c19",
+      "status": 200,
+      "request_id": "0208a9e4-33ce-455b-b2a8-eba97f71144e",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-d7f77ddb8fcf41438f5df6b42f841c19",
+      "status": 200,
+      "request_id": "aa600988-334b-4260-b750-79989ba341d2",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-d7f77ddb8fcf41438f5df6b42f841c19",
+      "status": 200,
+      "request_id": "df32b604-1062-4c77-8840-449a9eb9b72e",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/trials/TR-PX104/findings?patient_id=P-151",
+      "status": 200,
+      "request_id": "c79cc5d5-2d82-4783-989b-f35fc8887797",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/trials",
+      "status": 201,
+      "request_id": "5c553cde-fe0e-4035-88ae-5a71471ece95",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/trials/TR-404f7c6da97541519645efd543c1d267/protocols",
+      "status": 201,
+      "request_id": "fe9e724d-f453-497e-a37f-e71763acea10",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/trials/TR-404f7c6da97541519645efd543c1d267/protocols/PV-ab5938009a1c4e8ab50fd38f7bdadbbc/extract",
+      "status": 202,
+      "request_id": "dc0c59dc-d0ce-4a4d-a2b2-985fc98b17e3",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-4a275d423bde47d3a815225a28a576c6",
+      "status": 200,
+      "request_id": "c4e7e1f2-fb90-437a-b403-7ffc99ad1761",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-4a275d423bde47d3a815225a28a576c6",
+      "status": 200,
+      "request_id": "2dacf3be-9b7c-4114-94c3-8132c03c1a8d",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-4a275d423bde47d3a815225a28a576c6",
+      "status": 200,
+      "request_id": "1dad5ba0-d5eb-4286-9555-2f2ded73ccdc",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-4a275d423bde47d3a815225a28a576c6",
+      "status": 200,
+      "request_id": "78830fe0-2b21-4dc5-bf2c-c90926ef7786",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-4a275d423bde47d3a815225a28a576c6",
+      "status": 200,
+      "request_id": "31c12a4f-c20f-4988-8544-73c5dfd2e969",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/jobs/JOB-4a275d423bde47d3a815225a28a576c6",
+      "status": 200,
+      "request_id": "50f4b46d-300d-4719-a77f-a8d19ed2444f",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/trials/TR-404f7c6da97541519645efd543c1d267/protocols/PV-ab5938009a1c4e8ab50fd38f7bdadbbc",
+      "status": 200,
+      "request_id": "2510481c-3064-4dce-b0ff-966d121ca886",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/trials/TR-404f7c6da97541519645efd543c1d267/evidence/SRC-PDF-056088feead64b928e7dedda22e12b75?page=2",
+      "status": 200,
+      "request_id": "b486a31e-919c-40be-9a4f-2438e13aa216",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/trials/TR-404f7c6da97541519645efd543c1d267/protocols/PV-ab5938009a1c4e8ab50fd38f7bdadbbc",
+      "status": 200,
+      "request_id": "5883ffe5-b72f-4eef-b61e-fc456349be84",
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/trials/TR-404f7c6da97541519645efd543c1d267/protocols",
+      "status": 415,
+      "request_id": "eeaa7a65-25d2-4216-8160-5d0241584912",
+      "error": {
+        "code": "UNSUPPORTED_MEDIA_TYPE",
+        "message": "PDF signature required",
+        "details": [],
+        "retryable": false
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/trials/TR-404f7c6da97541519645efd543c1d267/protocols",
+      "status": 403,
+      "request_id": "4892b4cd-9979-4d06-a263-7c1d2d74492b",
+      "error": {
+        "code": "SYNTHETIC_ONLY",
+        "message": "This demo accepts only the bundled, verified fictional protocol",
+        "details": [],
+        "retryable": false
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/trials/TR-404f7c6da97541519645efd543c1d267/protocols",
+      "status": 413,
+      "request_id": "eae3c0a9-3293-440a-9da5-d3adb86e00ed",
+      "error": {
+        "code": "PDF_TOO_LARGE",
+        "message": "PDF exceeds configured limit",
+        "details": [],
+        "retryable": false
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/cases/CASE-b7587421540e40019a2ace18b63f905d",
+      "status": 200,
+      "request_id": "d5f93c98-d37a-447e-8dbe-90973cbaa0b4",
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/agent-executions/EXEC-5aa54f5f46534570b0bcce819ff7fbc9",
+      "status": 200,
+      "request_id": "bb423e85-b0b8-44d0-854d-26569c33c0f6",
+      "error": null
+    }
+  ]
+}

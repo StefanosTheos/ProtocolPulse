@@ -1,0 +1,8 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "tools/integration/live_checks.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 10.3
+}

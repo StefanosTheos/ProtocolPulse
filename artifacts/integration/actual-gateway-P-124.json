@@ -1,0 +1,93 @@
+{
+  "mode": "REAL_BACKEND_GATEWAY_AI_ENTRYPOINT_MOCK_MODEL",
+  "execution": {
+    "execution_id": "EXEC-83328eb52e6e4989ac9cd5a4fe7e999f",
+    "role": "EVIDENCE_INVESTIGATOR",
+    "status": "PARTIAL",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-124",
+    "protocol_version_id": "PV-PX104-1.0",
+    "criterion_ids": [
+      "PX-INC-03"
+    ],
+    "event_id": null,
+    "correlation_id": "81106f7d-c3fe-40e2-b9da-48e386cb4162",
+    "evidence_refs": [
+      {
+        "evidence_id": "LAB-P-124-0",
+        "source_id": "SRC-P-124-lab-0",
+        "source_version": 1,
+        "evidence_type": "LAB",
+        "effective_at": "2026-08-31T21:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 52
+      }
+    ],
+    "summary": "Synthetic source evidence reviewed; unresolved items require human verification.",
+    "unknown_reasons": [
+      "MISSING_LAB"
+    ],
+    "verification_questions": [],
+    "trace": [
+      {
+        "tool_name": "retrieve_patient_evidence",
+        "input_reference_ids": [
+          "81106f7d-c3fe-40e2-b9da-48e386cb4162",
+          "EXEC-83328eb52e6e4989ac9cd5a4fe7e999f",
+          "P-124",
+          "PV-PX104-1.0",
+          "PX-INC-03",
+          "SNAP-348e66302ec54208a91c013a4a7b41ba",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "LAB-P-124-0",
+          "SRC-P-124-lab-0"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_lab_history",
+        "input_reference_ids": [
+          "81106f7d-c3fe-40e2-b9da-48e386cb4162",
+          "EXEC-83328eb52e6e4989ac9cd5a4fe7e999f",
+          "P-124",
+          "PV-PX104-1.0",
+          "SNAP-348e66302ec54208a91c013a4a7b41ba",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [],
+        "result_code": "OK",
+        "elapsed_ms": 0,
+        "error_code": null
+      },
+      {
+        "tool_name": "request_verification_task",
+        "input_reference_ids": [
+          "81106f7d-c3fe-40e2-b9da-48e386cb4162",
+          "EXEC-83328eb52e6e4989ac9cd5a4fe7e999f",
+          "LAB-P-124-0",
+          "P-124",
+          "PV-PX104-1.0",
+          "PX-INC-03",
+          "SRC-P-124-lab-0",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "TASK-2bbc8a2a4c734f298a237c7cc630eece"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 15,
+        "error_code": null
+      }
+    ],
+    "error_code": null,
+    "model_id": "MOCK-IC-INTEGRATION-NOT-LIVE",
+    "created_at": "2026-11-14T21:40:47.246191Z",
+    "finished_at": "2026-11-14T21:40:47.316831Z"
+  }
+}

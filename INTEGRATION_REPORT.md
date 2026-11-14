@@ -1,0 +1,187 @@
+# ProtocolPulse integration report
+
+**Verdict: PARTIALLY INTEGRATED.** The frozen synthetic workflow runs through the real browser, API, worker and persistent SQLite. No observed P0 remains after the citation fix. A subsequent authorized live Gemini smoke reached the selected model and executed eight tools, but FAILED with BAD_INPUT; live end-to-end investigation and model-generated upload extraction are not delivered as verified capabilities. This is a local demo candidate, not a production or clinically validated release.
+
+## Authorized live-provider addendum
+
+After the offline integration checks, the user supplied a server-side key and authorized live tests. The credential was never printed, added to a DTO/model input, or staged. Root `.env` remains ignored and `LLM_ENABLED=false`; only the test process enabled inference.
+
+Command: `.venv/Scripts/python.exe tools/integration/record.py live-provider .venv/Scripts/python.exe tools/integration/live_provider.py` (exit **1**). The selected `gemini-3.8-flash` model was **AVAILABLE** through the SDK metadata probe. The actual agent invocation took **18.804 seconds** and made eight observed tool calls:
+
+`retrieve_patient_evidence ? resolve_approved_terminology ? get_medication_timeline ? request_med_reconciliation ? get_evidence_link ? search_notes ? request_verification_task ? evaluate_approved_rule`
+
+Final result: **FAILED / BAD_INPUT**, with ORDER_ONLY retained and no completed summary. This test used the actual Gemini service and an explicitly **synthetic test gateway**, not E2's persistent gateway. The final `evaluate_approved_rule` tool has no handler in that test double, so its invocation returned BAD_INPUT. This is a failing live smoke, not proof that a real backend investigation completed. Task receipts in this particular run are test-double receipts, not persisted cases/tasks. Real-backend live inference, sustained quota, other logical roles and live extraction were not subsequently tested before the commit/push request.
+
+Evidence: [live command output](artifacts/integration/live-provider.log), [complete sanitized result and trace](artifacts/integration/live-provider-smoke.json), [runner](tools/integration/live_provider.py). No model substitution occurred. Historical OFF/mocked results below retain their original scope; their statements about no live inference apply to the earlier offline phase only.
+
+Prompt E has now been supplied by the user. It has **not** been executed: because the coordinator implemented the fixes, a fresh independent reviewer requires an explicit delegation decision; the alternative is a clearly labeled non-independent assessment. No independent judging score or HACKATHON_EVALUATION.md is claimed.
+
+## Identity, authority and scope
+
+- Integrated code commit: **`da640a54db0d0fc7a5228732af9d512e1296dcc1`** (integration code on `master`; report/evidence and live runner are recorded in the subsequent handoff commit). The evidence/report commit adds no application behavior.
+- Starting commit: `ea9748b77431f57d0f7d7722cf00f2a8028efb7e` (E1), already containing E2 `1228d217fd8b9cf9818fae5d4658dd1c784f69bc` and E3 `6437ab218361ac8f75e4cb427f56a01958fa8da6`. History is linear; no merge conflict or missing workstream branch required a fabricated merge.
+- Freeze: **`PP-S2-CF-20261114-01 / 1.0.0-rc2`**, fixture **`px104-protocol-v1`**. No route, wire field, clinical threshold, fixture byte or patient ID was changed. [Test manifest](artifacts/integration/test-manifest.json) records file fingerprints and exact runtime/package versions.
+- Runtime: Windows, Python **3.12.14**, Node **24.16.0**, npm **11.13.0**; FastAPI 0.115.14, Pydantic 2.14.3, SQLAlchemy 2.0.57, Alembic 1.20.1, Google GenAI 3.3.0; Next 15.5.29 / React 19.1.10. Final frontend unit runner: Vitest 4.1.12. Full pins are in [requirements-dev.lock](requirements-dev.lock) and [frontend/package-lock.json](frontend/package-lock.json).
+- Read the requested context, ownership, architecture, agent, API, data-model, development-plan and product documents, all three source trees and history. Root `FRONTEND_HANDOFF.md`, `BACKEND_HANDOFF.md`, `AI_HANDOFF.md` are absent; [ai/HANDOFF.md](ai/HANDOFF.md) exists and was read.
+- **Scope discrepancy:** the QA prompt requests 200–300 records, whereas the approved product/data/ownership freeze explicitly mandates exactly **15**. Coordinator decision: preserve the frozen fifteen-patient registry; the larger-cohort test was **not run** and is not claimed. A larger cohort needs an approved product/fixture revision.
+- This user's IC assignment authorizes the narrowly listed integration fixes below. E1/E2/E3 retain their source ownership; IC owns the added manifests, root setup, QA scripts and evidence. No shared domain contract was reinterpreted or revised. Approved API/DATA_MODEL/OWNERSHIP still govern their domains; disputed domain changes require coordinator review.
+
+## Fresh setup and process reproduction
+
+Created a new root Python 3.12 virtual environment, installed backend+AI test extras, installed frontend from its lock, copied `.env.example` to an ignored root `.env` with **LLM disabled and blank key**, configured only the public API URL in `frontend/.env.local`, migrated and explicitly seeded. Initial Windows sandbox denials on pip temporary directories, npm downloads and spawned test/build processes were retried with approved escalation; these were environment failures, not passing tests.
+
+Commands below ran from repository root. Each recorded command log has actual output and exit metadata (`*.command.json` for the corrected recorder; older records use `*.json`). [README](README.md) now contains self-contained PowerShell/POSIX setup, reset, server, live-test and browser-test instructions. POSIX setup was not executed on this Windows host.
+
+| Command | Observed result / exit | Evidence |
+|---|---|---|
+| `python3.12 -m venv .venv` | Created successfully after sandbox retry / 0 | Installed runtime in manifest |
+| `.venv/Scripts/python.exe -m pip install -e "./backend[test]" -e "./ai[test]"` | Both editable packages and dependencies installed / 0 | Installed versions and lock; `pip check` below |
+| `npm ci --prefix frontend --no-audit --no-fund` | Initially installed 241 packages / 0; reviewed QA/security additions subsequently locked | Final manifest/lock; final build/tests |
+| `.venv/Scripts/python.exe -m alembic -c backend/alembic.ini upgrade head` | Clean database migrated / 0 | [migration log](artifacts/integration/migrate.log), metadata |
+| `.venv/Scripts/python.exe -m backend.app.seed --dataset px104-15 --reset-demo` | `Seeded 15 synthetic patients; protocol DRAFT; 8 unapproved proposals; no screening or enrollment.` / 0 | [final browser seed](artifacts/integration/final-browser-seed.log) |
+| `.venv/Scripts/python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 1` | `Application startup complete`; listening on port 8000; process intentionally remains running, no successful exit code asserted | Health and restart evidence; final restart PID 4648 |
+| `npm --prefix frontend run build` | Compiled/static page generation/type+lint checks completed / 0 | [final build](artifacts/integration/final-build.log) |
+| `npm --prefix frontend run start -- --hostname localhost --port 3000` | Next 15.5.29 reported `Ready in 828ms`; process remains running, no exit code asserted | Actual Chromium requests/screenshots |
+| `GET http://127.0.0.1:8000/api/v1/health` | HTTP 200; `ok`, DB `ok`, migrations `current`, worker `running`, LLM `disabled`, `synthetic_only:true`, contract `1.0.0-rc2` | [health](artifacts/integration/health.log), [restart result](artifacts/integration/persistence-result.json) |
+
+An incremental Next build encountered OneDrive `EINVAL readlink` in generated `.next`. Cleared only the verified `frontend/.next` cache and rebuilt successfully. Runtime DB/PDFs, local configuration, virtual environments and browser caches are ignored. [Secret checks](artifacts/integration/secrets-check.json) found no configured credential patterns in the scanned files and confirmed local config/runtime exclusions. This heuristic scan is not proof against every possible secret format.
+
+Final non-mutating install checks also passed: `npm ci --prefix frontend --dry-run --ignore-scripts --no-audit --no-fund` and `.venv/Scripts/python.exe -m pip install --dry-run -r requirements-dev.lock`, both exit 0 ([npm check](artifacts/integration/lock-install-check.log), [Python check](artifacts/integration/python-lock-check.log)). These validate lock/manifest agreement in the installed environment, not an additional clean-room install on another OS.
+
+## Quality gates and honest failing checks
+
+| Gate / exact command | Observed final outcome | Evidence |
+|---|---|---|
+| `.venv/Scripts/python.exe -m pytest backend/tests ai/tests -q --basetemp backend/var/qa-final` | **147 passed**, exit 0; one Starlette/anyio deprecation warning. A later test-only unused-variable cleanup was verified by the automatic-enrichment test again. | [full Python log](artifacts/integration/final-python.log), [final targeted test](artifacts/integration/final-auto-enrichment.log) |
+| `.venv/Scripts/python.exe -m ai.evals.run_evals --live` | **12 passed** mocked/disabled scenarios, exit 0; **SKIP LIVE**, no enabled key/configuration | [evaluation log](artifacts/integration/final-ai-evals.log) |
+| `npm --prefix frontend test` | **42 passed, 10 opt-in live tests skipped**, exit 0, Vitest 4.1.12 | [unit/component log](artifacts/integration/final-frontend-tests.log) |
+| `PP_LIVE_API_BASE_URL=http://127.0.0.1:8000/api/v1` then `npm --prefix frontend test -- tests/live.test.ts` | **10 passed** against real HTTP/SQLite on the separately reset baseline; exit 0. This run preceded the test-runner upgrade; client source remained unchanged. | [live client log](artifacts/integration/baseline-live-client.log) |
+| `npm --prefix frontend run lint` / `run typecheck` / `run build` | All exit 0 | [lint](artifacts/integration/final-lint.log), [typecheck](artifacts/integration/final-typecheck.log), [build](artifacts/integration/final-build.log) |
+| `npm --prefix frontend run test:e2e` | **1 complete live Chromium journey passed**, exit 0, 22.2s test execution. A separate read-only refresh test then passed after API restart. | [journey](artifacts/integration/final-browser.log), [refresh](artifacts/integration/browser-refresh.log) |
+| `.venv/Scripts/python.exe tools/integration/live_checks.py` | **17 additional live checks passed**, exit 0 | [log](artifacts/integration/final-live-api.log), [observations](artifacts/integration/live-api-evidence.json) |
+| `node tools/integration/contracts.cjs`; `.venv/Scripts/python.exe tools/integration/contracts.py` | **73 exact TS declarations**, **26 method/path/operation IDs**; checked backend field presence/nullability/enums, both AI wire fields and per-role tool arguments/allowlists; no reported mismatch | [TS audit](artifacts/integration/typescript-contract.json), [route/schema audit](artifacts/integration/contract-audit.json), [OpenAPI](artifacts/integration/openapi.json) |
+| `.venv/Scripts/python.exe tools/protocol_fixture.py --check` | Five real PDF pages, eight rules, twelve sections, exact spans/hashes, eleven negative mutations / exit 0 | [fixture check](artifacts/integration/final-fixture.log) |
+| `.venv/Scripts/python.exe -m pip check` | `No broken requirements found.` / exit 0 | [log](artifacts/integration/pip-check.log) |
+| `npm --prefix frontend audit --omit=dev --json` | Online production-dependency advisory check: **0 reported vulnerabilities**, exit 0 | [online production audit](artifacts/integration/production-audit.log) |
+| `npm --prefix frontend audit --json` | **6 moderate development dependency advisories**, **0 high/critical**, exit **1**; unresolved | [final online full audit](artifacts/integration/npm-audit-final.log) |
+| `.venv/Scripts/python.exe -m ruff check backend --output-format concise` | **25 I001 import-order findings**, exit **1**, deferred. Modified integration files pass their focused Ruff check. | [remaining backend lint](artifacts/integration/backend-lint-final.log) |
+
+The existing baseline had 140 passing Python tests and green isolated frontend tests, yet all three new actual adapter/gateway/entrypoint scenarios initially failed. [Baseline boundary failures](artifacts/integration/baseline-ai-boundary.log) are retained. A combined run also exposed three retry-related failures; the frozen-clock regression explains and verifies their repair. [Forged-span test failed before the fix](artifacts/integration/citation-span-before.log) and [passed afterward](artifacts/integration/citation-span-after.log). Earlier browser failures included test-harness quote/locator/citation-selection corrections and the actual accessibility defects below; they are not silently presented as product passes. A first restart probe was invalid because recorder metadata overwrote its snapshot filename; the recorder and probe filenames were fixed, then a fresh before/restart/after comparison passed.
+
+## Observable end-to-end proof
+
+All browser observations below use Chromium → production Next → the real typed client → HTTP FastAPI → worker/SQLite. No API interception or mocked backend was used. LLM was OFF.
+
+| Scenario | Observed result / authority | Evidence |
+|---|---|---|
+| Load PX-104; upload actual PDF; run extraction | Real HTTP 201 upload, 202 extraction and persisted source hash/pages; eight unapproved proposals, twelve sections/four informational. Job explicitly reports **CURATED_FIXTURE**, not model extraction. | [browser evidence](artifacts/integration/browser-evidence.json), [approved protocol screenshot](artifacts/integration/01-protocol-approved.png) |
+| Unapproved screen; reviewer edit/approval | Browser Run screening initially disabled; real API preapproval guard tested. Investigator annotated a proposal, saved with revision, reviewed source page, attested coverage and activated the uploaded version. | Browser requests, live-client guard tests, backend approval tests |
+| Screen frozen cohort | Run `RUN-4d35eb9ab34a47f099e3a3c6898c91d0`: **15** assessments, **3 POTENTIAL_MATCH / 6 NEEDS_REVIEW / 6 PROTOCOL_CONFLICT / 0 EVALUATION_ERROR**, derived from actual results; five eligibility rules each, no automatic participation. | [selector screenshot](artifacts/integration/02-selector-real-results.png), browser run/assessment JSON |
+| PASS / FAIL / UNKNOWN and historical medication | P-042 potential match; P-175 excluded condition; P-124 stale eGFR unknown; P-117 Oct 15 confirmed administration fails the washout; P-118 Sep 20 use plus reconciliation passes. P-083 order-only and P-140 conflicts remain unknown. | Browser assessments; additional live checks with statuses, reasons, intervals and references |
+| Patient evidence/chronology | Real Patient 360 and source/page retrieval; exact Unicode source quote highlighted. Twelve-section/narrative coverage exercised for all seed patients in backend tests. Orders never promoted to ingestion. | [patient screenshot](artifacts/integration/03-patient-evidence.png), seed/evaluator tests |
+| External participation and new day-18 event | Human recorded registered `SRC-P-042-external` / `EXT-P-042`. UI posted a new administration effective Nov 19, recorded Nov 20. Worker persisted one PX-MON-01 conflict and one case. | [monitor screenshot](artifacts/integration/04-monitor-case.png), event/finding JSON |
+| Before → after | Historical screening remains `POTENTIAL_MATCH`; separate monitoring assessment links before `ASM-09d4e048147d487c93111e8cdc03f8d5` to after `ASM-98e33785fc3446cda6df3304f8d0db23`. PX-MON-01 had no prior baseline rule result (`null`), then `FAIL`; this is **not** an invented monitoring `PASS→FAIL`. | Finding/evaluation references; gateway delta test |
+| Human assignment/acknowledgement | Actual monitor `ACT-MON-01` assigned investigator and acknowledged case `CASE-b7587421540e40019a2ace18b63f905d`, citing evidence with rationale. API persisted attributed decision/audit. No enrollment/treatment transition occurred. Full investigator-only resolve/close/reopen exercised in backend and baseline live-client tests. | [case screenshot](artifacts/integration/05-human-case-review.png), browser review case, backend lifecycle tests |
+| Same idempotency key replay | UI replay returned HTTP 200, same event/job, `deduplicated:true`; still one P-042 case/finding. Changed same-version payload conflicts are covered by real client/backend tests. | Browser duplicate receipt; no duplicate DB identity |
+| Irrelevant event during participation | Additional live check first records P-151 participation, then posts SYN-MED-N1. Worker returns `NO_ACTION`, empty assessment/finding/case IDs. This checks class filtering, not merely “patient not participating.” | [live API evidence](artifacts/integration/live-api-evidence.json) |
+| Order-only monitoring / unmapped code | P-083 new order → PX-MON-02 potential review; P-203 valid unmapped medication → DATA_QUALITY_DISCREPANCY/unknown, no invented class or confirmed conflict. | Additional live event receipts/findings |
+| Missing/stale lab, contradiction, invalid units | Stale/missing and conflicting sources retain UNKNOWN with references; invalid new lab unit rejected HTTP 422 without adding an event. Existing unsupported-unit/partial-date/boundary and operational-error branches exercised in backend tests. | Actual assessments; live errors; evaluator/transaction tests |
+| Missing key / unavailable AI | Explicit investigation HTTP 503; monitoring case persists with actual AgentExecution `UNAVAILABLE`, null model ID and empty trace. No fake observed tools in browser. | Additional live OFF execution; [audit screenshot](artifacts/integration/06-audit.png) |
+| Malformed extraction/source | All eleven mutated proposals rejected 409/422 through HTTP; protocol revision remains unchanged/unapproved. Invalid signature 415, non-allowlisted truncated PDF 403, oversize upload 413. Allowlist rejection is **not** claimed as successful model/parser extraction; actual parser failure tests run separately. | Live negative-output results; backend PDF tests; E3 ambiguity/injection mocked evaluations |
+| Refresh / API restart / reload | Browser refresh retained run and ACKNOWLEDGED case. Actual API process stopped/restarted without reseeding; eight selected API data payloads and DB counts matched exactly, integrity `ok`, no FK errors. | [restart equality](artifacts/integration/persistence-result.json), [after-restart screenshot](artifacts/integration/07-after-api-restart.png) |
+
+Browser-measured span from opening/submitting the event dialog through successful job polling was **500ms** in this run; it is a single local UI measurement, not a service SLA. Baseline live-client screening test took **8,078ms including its assertions/polling**, not an isolated evaluator benchmark. Fixed source/event dates are fictional Nov 19/20 while the actual host/test date is Nov 14; no real patient clock or clinical event is implied.
+
+Final durable counts after additional branches: **15 patients, 3 protocol versions, 8 criterion approvals, 4 events, 3 cases, 1 human decision, 30 audit entries, 1 screening run, 18 assessments**. One case is for each distinct P-042/P-083/P-203 scenario, not duplicate P-042 alerts. The before/after durable snapshot SHA-256 is `f850cc0f0ca43cc3002869b8dc2854cf68e3d1d571aa237f8f5c3804764fcf7d`.
+
+## Agent execution evidence: real gateway, mocked model
+
+The following are actual persisted executions through E2's adapter/gateway and E3's public entrypoint in migrated temporary SQLite under FastAPI TestClient. **Only the model is mocked.** They verify transport, branching, scoped tools, citations, task/case integration and trace recording; they do not establish that live Gemini chooses correct tools or meets latency/quota limits.
+
+| Patient / scenario | Observed permitted tool sequence | Outcome / artifact |
+|---|---|---|
+| P-083 order-only | `retrieve_patient_evidence → resolve_approved_terminology → get_medication_timeline → request_verification_task` | `PARTIAL`, ORDER_ONLY retained, one real persisted task; [execution JSON](artifacts/integration/actual-gateway-P-083.json) |
+| P-124 missing current lab | `retrieve_patient_evidence → get_lab_history → request_verification_task` | `PARTIAL`, MISSING_LAB retained, cited stale/missing-context source, real task; [execution JSON](artifacts/integration/actual-gateway-P-124.json) |
+| P-042 already-created case | `classify_event_relevance → get_prior_evaluation → get_case_status → retrieve_patient_evidence` | Actual independently enqueued enrichment job: `SUCCEEDED`, cited `AI_DRAFT`, case remains OPEN and singular. [Execution + pre-AI case](artifacts/integration/actual-gateway-P-042.json) |
+| P-151 irrelevant | `classify_event_relevance` only | `SUCCEEDED`, no uncited summary, no evidence scans or case. Verified in `test_actual_gateway_irrelevant_event_has_no_uncited_summary`. |
+
+Trace JSON contains real reference IDs, result/error codes and measured elapsed milliseconds. Gateway timings are authoritative; the adapter verifies action/reference sequences rather than demanding equal measurements from two different timers. No chain-of-thought is recorded. All twelve standalone evaluations explicitly identify mock/disabled mode; SDK function/structured-output serialization uses mock HTTP transport. **No live provider request or live timing ran in these offline suites. The later actual provider attempt is documented separately above; it failed.**
+
+## Route matrix
+
+All rows match running FastAPI OpenAPI and [API_CONTRACTS §3](docs/API_CONTRACTS.md). Status below is the documented primary success. Conditional event replay 200 and operational errors are separately exercised. “Matched” is schema inventory evidence; executed scenarios/tests above supply runtime proof, not a claim of every possible branch on every endpoint.
+
+| Method | Exact route | Primary status | Audit |
+|---|---|---|---|
+| GET | `/api/v1/health` | 200 / degraded 503 | Matched |
+| GET | `/api/v1/trials` | 200 | Matched |
+| POST | `/api/v1/trials` | 201 | Matched |
+| GET | `/api/v1/trials/{trial_id}` | 200 | Matched |
+| GET | `/api/v1/trials/{trial_id}/protocols` | 200 | Matched |
+| POST | `/api/v1/trials/{trial_id}/protocols` | 201 | Matched |
+| GET | `/api/v1/trials/{trial_id}/protocols/{version_id}` | 200 | Matched |
+| POST | `/api/v1/trials/{trial_id}/protocols/{version_id}/extract` | 202 | Matched |
+| PUT | `/api/v1/trials/{trial_id}/protocols/{version_id}/criteria` | 200 | Matched |
+| POST | `/api/v1/trials/{trial_id}/protocols/{version_id}/approve` | 200 | Matched |
+| POST | `/api/v1/trials/{trial_id}/screenings` | 202 | Matched |
+| GET | `/api/v1/screenings/{run_id}` | 200 | Matched |
+| GET | `/api/v1/screenings/{run_id}/assessments` | 200 | Matched |
+| GET | `/api/v1/trials/{trial_id}/patients/{patient_id}` | 200 | Matched |
+| POST | `/api/v1/patients/{patient_id}/events` | 202 / replay 200 | Matched |
+| GET | `/api/v1/trials/{trial_id}/findings` | 200 | Matched |
+| GET | `/api/v1/trials/{trial_id}/cases` | 200 | Matched |
+| GET | `/api/v1/cases/{case_id}` | 200 | Matched |
+| PATCH | `/api/v1/cases/{case_id}` | 200 | Matched |
+| GET | `/api/v1/agent-executions/{execution_id}` | 200 | Matched |
+| GET | `/api/v1/trials/{trial_id}/audit` | 200 | Matched |
+| GET | `/api/v1/jobs/{job_id}` | 200 | Matched |
+| GET | `/api/v1/trials/{trial_id}/evidence/{source_id}` | 200 | Matched |
+| POST | `/api/v1/trials/{trial_id}/patients/{patient_id}/dispositions` | 201 | Matched |
+| POST | `/api/v1/trials/{trial_id}/patients/{patient_id}/participation` | 201 | Matched |
+| POST | `/api/v1/agent-investigations` | 202 / OFF 503 | Matched |
+
+Required nullable fields, UTC timestamps, pagination/filter validation, actor/site restrictions, structured errors/request IDs, approval revisions and 202 polling are checked across contract tests and live scenarios. The static checker does not prove all nested semantic constraints; negative/runtime tests remain necessary. Frontend computes display filters/readiness/date watermarks, not clinical eligibility. AI imports no backend models/sessions and writes no raw DB records; only E2's authorized task proposal tools can persist review tasks.
+
+## Severity board, fixes and assignments
+
+| ID / severity / state | Exact repro and actual → expected | Owner; file/line | Resolution / verification |
+|---|---|---|---|
+| IC-01 **P0 FIXED** | Submit existing order fact reference with invented page 1 span `[0,1)`: backend accepted an unrelated fact citation → must reject mismatched persisted fact span | E2; `backend/app/integrations/evidence_gateway.py:102` | Compare supplied fact anchors against persisted reference. Before test DID NOT RAISE; afterward 19 boundary/integration checks and full suite pass. E3's independent ledger remains an additional guard. |
+| IC-02 **P1 FIXED** | E3 medication/monitoring invokes a tool carrying authorized common `patient_id`; E2 `extra=forbid` rejected it as BAD_INPUT → accept and verify scope | E2; `backend/app/integrations/tool_schemas.py:17`, gateway `invoke` | Optional common patient scope added; mandatory patient fields remain mandatory on patient tools. Actual E2/E3 paths pass; cross-patient denial tests remain green. |
+| IC-03 **P1 FIXED** | Same tool execution measured at two layers failed exact `ToolTrace` equality (timings and ID projections differ) → verify observed actions/references and retain backend timings | E2; `backend/app/integrations/agent_adapter.py:156`, gateway `reference_ids` | Independent reference-only projection and action comparison; persisted mocked-model executions now complete. |
+| IC-04 **P1 FIXED** | Real `get_lab_history` returned extra `open_items`, rejected by E3 exact output schema → `{facts}` only | E2; `backend/app/integrations/evidence_gateway.py:641` | Exact output repaired; real missing-lab branch reaches task persistence. |
+| IC-05 **P1 FIXED** | Backend read root `.env` via Settings while E3 read process environment, so enabled local config could reach E3 as OFF → server process must receive root config | E2/IC; `backend/app/core/config.py:39`, backend manifest | Backend loads root `.env` server-side, preserving process overrides; explicit dotenv dependency. Isolated test proves E3 sees enabled config without putting a key in a DTO. Actual live provider remains unverified. |
+| IC-06 **P1 FIXED** | Irrelevant event returned an uncited explanatory summary, which E2 correctly rejected → stop without creating a clinical summary | E3; `ai/agents/coordinator.py` NO_ACTION branch | Return successful categorized trace with null summary/no refs. Actual gateway one-call/no-case test passes. |
+| IC-07 **P1 FIXED** | Documented `pip install -e ./ai` failed because manifest absent; README was only a Git smoke note → reproducible combined setup | IC; `ai/pyproject.toml:1`, root README/lock/ignore/pytest config | Fresh Python 3.12 install, migrated/seeded real servers, complete launch/reset instructions and locked tested dependencies. |
+| IC-08 **P2 FIXED** | Zero-delay retry in same wall-clock tick was not claimable with strict `<` expiry; three failure tests intermittently failed → due-at-now lease is claimable | E2; `backend/app/services/jobs.py:93`–claim guards | Inclusive due-time comparison; frozen-clock regression plus actual failure/recovery suite pass. Default bounded retry semantics remain unchanged. |
+| IC-09 **P2 FIXED** | Axe found secondary text contrast 3.97/4.3 rather than required 4.5 and audit horizontal scroll lacked keyboard focus → readable/focusable | E1; `frontend/tailwind.config.ts:10`, audit page `:69` | Darkened secondary text and labeled/focusable audit region. Six actual views now have zero axe violations for tested tags. |
+| IC-10 **P2 FIXED / residual below** | Online dependency audit initially reported 2 critical, 1 high, 8 moderate → repair compatible tooling/runtime dependencies | IC; frontend manifests/ESLint config | Patched Vitest 4.1.12, aligned TS ESLint 8.72.2 and existing PostCSS 8.5.33 override; final build/lint/unit/browser checks pass. Production audit is clean; six moderate dev advisories remain. No forced Next major upgrade. |
+| IC-11 **P1 OPEN / LIVE SMOKE FAILED** | User supplied a key; selected model is available and eight live-selected calls executed, but the synthetic test gateway returned BAD_INPUT for evaluate_approved_rule ? a complete live investigation remains required | E3 + IC; `ai/evals/fixtures.py`, `ai/evals/run_evals.py`, live runner | Preserve the failed result. Add a faithful approved-rule test handler or run through the actual E2 gateway with valid approved context; do not invent a passing verdict or claim persistent task receipts from the fake gateway. |
+| IC-12 **P1 OPEN** | Upload extraction always uses `process_extract` curated fixture, even with model enabled. E3 protocol guards bind canonical seeded source; newly uploaded source IDs differ. Gateway rule-schema check also compares against already-stored rules → model extraction on a fresh uploaded version is not integrated | E2/E3; `backend/app/services/jobs.py:35`, `backend/app/integrations/evidence_gateway.py:321`, `ai/agents/coordinator.py:90,150` | Curated OFF path is verified/labeled and acceptable for the offline slice. Owners must propose a compatible source-context/validation handoff and actual gateway extraction tests before claiming live extraction. Do not pass expected-output oracle to the model. |
+| IC-13 **P2 OPEN** | Full online audit exits 1 for minimatch-related TypeScript ESLint dev dependencies → patched compatible tooling required | IC; frontend lock/manifest | Six moderate dev advisories retained, zero prod/high/critical reported. Review replacement/override compatibility; do not force a framework redesign to hide the result. |
+| IC-14 **P2 OPEN / STATIC** | Modal sets initial focus and handles Escape, but no Tab focus-cycle trap is implemented → manual keyboard/modal review still required | E1; `frontend/components/ConfirmReviewDialog.tsx` key handler | Automated six-view axe checks do not certify dialog keyboard behavior. Add a focused keyboard regression before accessibility signoff. |
+| IC-15 **P3 OPEN** | Optional full backend Ruff reports 25 import-order findings → clean import ordering | E2; exact locations in `backend-lint-final.log` | Deferred broad cosmetic churn; modified integration files pass focused lint. No failing functional test is hidden as lint. |
+| IC-16 **P1 HANDOFF PENDING** | Prompt E was supplied after the initial report; independent judging still requires a reviewer who did not implement the fixes | IC / next reviewer | Requested explicit fresh-reviewer delegation or permission for a labeled coordinator assessment. Prompt E has not run; no independent score is claimed. |
+
+## Security, clinical and operational limits
+
+- CORS allowed localhost origin and denied another origin; preflight mutation headers worked. Actor, role/site, If-Match/idempotency and malformed input checks are real tests, but the actor switcher is openly **not authentication**. No public deployment is approved.
+- Synthetic-only source PDF hash allowlist and note fixture restriction remain; no hospital connector or arbitrary patient import was introduced. Wholly synthetic evidence only was used externally in SDK mock tests; **no live model request sent any record during the offline phase**. The later live smoke sent only the explicitly synthetic test evidence described in the addendum.
+- Input/output schema validation, exact source versions/Unicode spans, forbidden tools, prompt-injection attempts, step/model/tool deadlines, missing data, invalid units and provider failures are covered by tests at the stated mock/real boundaries. Mock injection tests do not prove live-model resistance or unrestricted PDF ingestion safety.
+- Backend remains authority for PASS/FAIL/UNKNOWN, aggregation, relevance, snapshots, findings, cases, review transitions and audit. Agents cannot approve criteria, enroll/withdraw, change medication, invent mappings or write authoritative findings. Displayed AI text remains a human-review draft; citation identity alone is not full semantic/clinical validation.
+- SQLite single process/worker only; no horizontal scaling, production identity/security/clinical-regulatory certification or exhaustive penetration/load testing. A clinical source review and real-provider evaluation remain necessary beyond this synthetic demonstration.
+
+## Readiness and Prompt E handoff
+
+- [x] All three real code trees present; baseline/history and tested code commit recorded.
+- [x] Python 3.12 fresh environment, manifests/locks, migration/seed, API readiness and production frontend.
+- [x] Frozen fifteen-patient protocol→review→screen→evidence→event→deduplicated case→human action→audit workflow.
+- [x] Real HTTP/client/browser proof, persisted references, OFF behavior, degraded branches and restart equality.
+- [x] Functional suites/build/lint/types/contract checks as individually reported; no observed P0 remains.
+- [ ] Full backend style gate and moderate dev advisory backlog cleared.
+- [ ] Complete manual accessibility/modal keyboard signoff.
+- [ ] Complete live agent investigation and sustained quota/reliability verified. One real model attempt and its 18.804s timing are recorded; that attempt failed.
+- [ ] Model-backed extraction integrated with newly uploaded source IDs; no oracle leakage.
+- [ ] Prompt E executed against **code commit `da640a54db0d0fc7a5228732af9d512e1296dcc1` plus this report/evidence**. Its instructions are now supplied; establish independent review or explicitly label a coordinator assessment before running it.
+
+**Final verdict remains PARTIALLY INTEGRATED.** The real synthetic offline clinical-review workflow is demonstrated; the missing AI/live-validation and next-evaluator gates prevent claiming the full product complete. If follow-up review finds a remaining P0, the verdict must become BLOCKED until its verified repair.

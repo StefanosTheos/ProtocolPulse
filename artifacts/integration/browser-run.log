@@ -1,0 +1,303 @@
+
+> protocolpulse-frontend@0.1.0 test:e2e
+> playwright test
+
+
+Running 1 test using 1 worker
+
+  ✘  1 tests\e2e\integration.spec.ts:12:1 › real protocol → screening → evidence → dated event → human case → audit (15.0s)
+
+
+  1) tests\e2e\integration.spec.ts:12:1 › real protocol → screening → evidence → dated event → human case → audit 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 269
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    +     "help": "Elements must meet minimum color contrast ratio thresholds",
+    +     "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+    +     "id": "color-contrast",
+    +     "impact": "serious",
+    +     "nodes": Array [
+    +       Object {
+    +         "all": Array [],
+    +         "any": Array [
+    +           Object {
+    +             "data": Object {
+    +               "bgColor": "#e6eef6",
+    +               "contrastRatio": 3.97,
+    +               "expectedContrastRatio": "4.5:1",
+    +               "fgColor": "#6b7585",
+    +               "fontSize": "8.3pt (11px)",
+    +               "fontWeight": "normal",
+    +               "messageKey": null,
+    +             },
+    +             "id": "color-contrast",
+    +             "impact": "serious",
+    +             "message": "Element has insufficient color contrast of 3.97 (foreground color: #6b7585, background color: #e6eef6, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +             "relatedNodes": Array [
+    +               Object {
+    +                 "html": "<tr aria-selected=\"true\" class=\"bg-brand-soft\">",
+    +                 "target": Array [
+    +                   ".bg-brand-soft",
+    +                 ],
+    +               },
+    +             ],
+    +           },
+    +         ],
+    +         "failureSummary": "Fix any of the following:
+    +   Element has insufficient color contrast of 3.97 (foreground color: #6b7585, background color: #e6eef6, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "html": "<div class=\"text-2xs text-ink-faint\">EXCLUSION · condition</div>",
+    +         "impact": "serious",
+    +         "none": Array [],
+    +         "target": Array [
+    +           ".bg-brand-soft > td:nth-child(1) > div:nth-child(2)",
+    +         ],
+    +       },
+    +       Object {
+    +         "all": Array [],
+    +         "any": Array [
+    +           Object {
+    +             "data": Object {
+    +               "bgColor": "#e6eef6",
+    +               "contrastRatio": 3.97,
+    +               "expectedContrastRatio": "4.5:1",
+    +               "fgColor": "#6b7585",
+    +               "fontSize": "9.0pt (12px)",
+    +               "fontWeight": "normal",
+    +               "messageKey": null,
+    +             },
+    +             "id": "color-contrast",
+    +             "impact": "serious",
+    +             "message": "Element has insufficient color contrast of 3.97 (foreground color: #6b7585, background color: #e6eef6, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +             "relatedNodes": Array [
+    +               Object {
+    +                 "html": "<tr aria-selected=\"true\" class=\"bg-brand-soft\">",
+    +                 "target": Array [
+    +                   ".bg-brand-soft",
+    +                 ],
+    +               },
+    +             ],
+    +           },
+    +         ],
+    +         "failureSummary": "Fix any of the following:
+    +   Element has insufficient color contrast of 3.97 (foreground color: #6b7585, background color: #e6eef6, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "html": "<span class=\"text-ink-faint\">Point-in-time</span>",
+    +         "impact": "serious",
+    +         "none": Array [],
+    +         "target": Array [
+    +           ".bg-brand-soft > .text-xs > .text-ink-faint",
+    +         ],
+    +       },
+    +       Object {
+    +         "all": Array [],
+    +         "any": Array [
+    +           Object {
+    +             "data": Object {
+    +               "bgColor": "#f5f6f8",
+    +               "contrastRatio": 4.3,
+    +               "expectedContrastRatio": "4.5:1",
+    +               "fgColor": "#6b7585",
+    +               "fontSize": "9.0pt (12px)",
+    +               "fontWeight": "normal",
+    +               "messageKey": null,
+    +             },
+    +             "id": "color-contrast",
+    +             "impact": "serious",
+    +             "message": "Element has insufficient color contrast of 4.3 (foreground color: #6b7585, background color: #f5f6f8, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +             "relatedNodes": Array [
+    +               Object {
+    +                 "html": "<div class=\"rounded bg-canvas p-2 text-xs\">",
+    +                 "target": Array [
+    +                   ".bg-canvas",
+    +                 ],
+    +               },
+    +             ],
+    +           },
+    +         ],
+    +         "failureSummary": "Fix any of the following:
+    +   Element has insufficient color contrast of 4.3 (foreground color: #6b7585, background color: #f5f6f8, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "html": "<span class=\"text-ink-faint\">recorded 30 Oct 2026, 12:00 EET</span>",
+    +         "impact": "serious",
+    +         "none": Array [],
+    +         "target": Array [
+    +           ".mb-1 > .text-ink-faint",
+    +         ],
+    +       },
+    +       Object {
+    +         "all": Array [],
+    +         "any": Array [
+    +           Object {
+    +             "data": Object {
+    +               "bgColor": "#f5f6f8",
+    +               "contrastRatio": 4.3,
+    +               "expectedContrastRatio": "4.5:1",
+    +               "fgColor": "#6b7585",
+    +               "fontSize": "8.3pt (11px)",
+    +               "fontWeight": "normal",
+    +               "messageKey": null,
+    +             },
+    +             "id": "color-contrast",
+    +             "impact": "serious",
+    +             "message": "Element has insufficient color contrast of 4.3 (foreground color: #6b7585, background color: #f5f6f8, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +             "relatedNodes": Array [
+    +               Object {
+    +                 "html": "<div class=\"rounded bg-canvas p-2 text-xs\">",
+    +                 "target": Array [
+    +                   ".bg-canvas",
+    +                 ],
+    +               },
+    +             ],
+    +           },
+    +         ],
+    +         "failureSummary": "Fix any of the following:
+    +   Element has insufficient color contrast of 4.3 (foreground color: #6b7585, background color: #f5f6f8, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "html": "<p class=\"mt-1 text-2xs text-ink-faint\">Narrative is a sourced claim; it does not override structured data.</p>",
+    +         "impact": "serious",
+    +         "none": Array [],
+    +         "target": Array [
+    +           ".bg-canvas > .mt-1",
+    +         ],
+    +       },
+    +     ],
+    +     "tags": Array [
+    +       "cat.color",
+    +       "wcag2aa",
+    +       "wcag143",
+    +       "TTv5",
+    +       "TT13.c",
+    +       "EN-301-549",
+    +       "EN-9.1.4.3",
+    +       "ACT",
+    +       "RGAAv4",
+    +       "RGAA-3.2.1",
+    +     ],
+    +   },
+    +   Object {
+    +     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    +     "help": "Elements must meet minimum color contrast ratio thresholds",
+    +     "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+    +     "id": "color-contrast",
+    +     "impact": "serious",
+    +     "nodes": Array [
+    +       Object {
+    +         "all": Array [],
+    +         "any": Array [
+    +           Object {
+    +             "data": Object {
+    +               "bgColor": "#f5f6f8",
+    +               "contrastRatio": 4.3,
+    +               "expectedContrastRatio": "4.5:1",
+    +               "fgColor": "#6b7585",
+    +               "fontSize": "8.3pt (11px)",
+    +               "fontWeight": "normal",
+    +               "messageKey": null,
+    +             },
+    +             "id": "color-contrast",
+    +             "impact": "serious",
+    +             "message": "Element has insufficient color contrast of 4.3 (foreground color: #6b7585, background color: #f5f6f8, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +             "relatedNodes": Array [
+    +               Object {
+    +                 "html": "<body>",
+    +                 "target": Array [
+    +                   "body",
+    +                 ],
+    +               },
+    +             ],
+    +           },
+    +         ],
+    +         "failureSummary": "Fix any of the following:
+    +   Element has insufficient color contrast of 4.3 (foreground color: #6b7585, background color: #f5f6f8, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "html": "<p class=\"text-2xs text-ink-faint\">Last loaded 14 Nov 2026, 23:22 EET</p>",
+    +         "impact": "serious",
+    +         "none": Array [],
+    +         "target": Array [
+    +           "section[aria-labelledby=\"findings-heading\"] > .text-ink-faint",
+    +         ],
+    +       },
+    +     ],
+    +     "tags": Array [
+    +       "cat.color",
+    +       "wcag2aa",
+    +       "wcag143",
+    +       "TTv5",
+    +       "TT13.c",
+    +       "EN-301-549",
+    +       "EN-9.1.4.3",
+    +       "ACT",
+    +       "RGAAv4",
+    +       "RGAA-3.2.1",
+    +     ],
+    +   },
+    +   Object {
+    +     "description": "Ensure elements that have scrollable content are accessible by keyboard in Safari",
+    +     "help": "Scrollable region must have keyboard access",
+    +     "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/scrollable-region-focusable?application=playwright",
+    +     "id": "scrollable-region-focusable",
+    +     "impact": "serious",
+    +     "nodes": Array [
+    +       Object {
+    +         "all": Array [],
+    +         "any": Array [
+    +           Object {
+    +             "data": null,
+    +             "id": "focusable-content",
+    +             "impact": "serious",
+    +             "message": "Element should have focusable content",
+    +             "relatedNodes": Array [],
+    +           },
+    +           Object {
+    +             "data": null,
+    +             "id": "focusable-element",
+    +             "impact": "serious",
+    +             "message": "Element should be focusable",
+    +             "relatedNodes": Array [],
+    +           },
+    +         ],
+    +         "failureSummary": "Fix any of the following:
+    +   Element should have focusable content
+    +   Element should be focusable",
+    +         "html": "<div class=\"card overflow-x-auto\">",
+    +         "impact": "serious",
+    +         "none": Array [],
+    +         "target": Array [
+    +           ".card.overflow-x-auto",
+    +         ],
+    +       },
+    +     ],
+    +     "tags": Array [
+    +       "cat.keyboard",
+    +       "wcag2a",
+    +       "wcag211",
+    +       "wcag213",
+    +       "TTv5",
+    +       "TT4.a",
+    +       "EN-301-549",
+    +       "EN-9.2.1.1",
+    +       "EN-9.2.1.3",
+    +       "RGAAv4",
+    +       "RGAA-7.3.2",
+    +     ],
+    +   },
+    + ]
+
+      158 |     evidence.accessibility = accessibility;
+      159 |     writeFileSync(resolve(out, 'accessibility-audit.json'), JSON.stringify(accessibility, null, 2));
+    > 160 |     expect(accessibility.flatMap(r => r.violations)).toEqual([]);
+          |                                                      ^
+      161 |   } finally {
+      162 |     evidence.browser_errors = errors;
+      163 |     writeFileSync(resolve(out, 'browser-evidence.json'), JSON.stringify(evidence, null, 2));
+        at C:\Users\steve\OneDrive\Υπολογιστής\Hackathon\frontend\tests\e2e\integration.spec.ts:160:54
+
+    Error Context: ..\artifacts\integration\runtime\playwright\integration-real-protocol--85b55--event-→-human-case-→-audit\error-context.md
+
+  1 failed
+    tests\e2e\integration.spec.ts:12:1 › real protocol → screening → evidence → dated event → human case → audit 
+(node:8384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
