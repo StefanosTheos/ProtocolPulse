@@ -1,0 +1,28 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+____________ test_known_fact_cannot_claim_an_unrelated_source_span ____________
+
+env = (<starlette.testclient.TestClient object at 0x0000023A16525010>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+
+    def test_known_fact_cannot_claim_an_unrelated_source_span(env):
+        gate = gateway(env)
+        response = asyncio.run(gate.invoke('retrieve_patient_evidence', scope(gate,
+            patient_id='P-083', snapshot_id=gate.request.evidence_snapshot_id,
+            criterion_ids=['PX-EXC-02'], evidence_types=['ORDER'])))
+        ref = response['evidence_refs'][0]
+        forged = {**ref, 'page': 1, 'span_start': 0, 'span_end': 1}
+        with env[2]() as session:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+backend\tests\test_agent_boundary.py:132: Failed
+============================== warnings summary ===============================
+.venv\Lib\site-packages\starlette\testclient.py:37
+  C:\Users\steve\OneDrive\Υπολογιστής\Hackathon\.venv\Lib\site-packages\starlette\testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend/tests/test_agent_boundary.py::test_known_fact_cannot_claim_an_unrelated_source_span
+1 failed, 1 warning in 0.93s

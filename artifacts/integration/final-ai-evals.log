@@ -1,0 +1,14 @@
+{"eval": "EV-MED-01", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "PARTIAL", "tools": ["retrieve_patient_evidence", "resolve_approved_terminology", "get_medication_timeline", "get_evidence_link", "request_verification_task"]}
+{"eval": "EV-MED-ADMIN", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "SUCCEEDED", "tools": ["retrieve_patient_evidence", "resolve_approved_terminology", "get_medication_timeline", "get_evidence_link"]}
+{"eval": "EV-EVIDENCE-MISSING", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "PARTIAL", "tools": ["get_lab_history", "request_verification_task"]}
+{"eval": "EV-EVIDENCE-01", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "PARTIAL", "tools": ["get_lab_history", "request_verification_task"]}
+{"eval": "EV-MED-02", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "PARTIAL", "tools": ["search_notes", "get_medication_timeline", "request_verification_task"]}
+{"eval": "EV-MON-01", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "SUCCEEDED", "tools": ["classify_event_relevance", "get_prior_evaluation", "get_case_status"]}
+{"eval": "EV-MON-02", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "SUCCEEDED", "tools": ["classify_event_relevance"]}
+{"eval": "EV-PROTOCOL-COMPLETE", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "SUCCEEDED", "tools": ["parse_protocol", "validate_rule_schema", "report_coverage"]}
+{"eval": "EV-PROTOCOL-01", "mode": "MOCK_MODEL_AND_GATEWAY", "status": "PARTIAL", "tools": ["parse_protocol", "locate_clause", "validate_rule_schema", "report_coverage"]}
+{"eval": "EV-SEC-01", "mode": "ADVERSARIAL_MOCK_MODEL", "status": "FAILED", "error_code": "TOOL_FORBIDDEN", "tools": ["search_notes"]}
+{"eval": "EV-FAIL-01", "mode": "MOCK_GATEWAY_TIMEOUT", "status": "PARTIAL", "error_code": "TIMEOUT", "tools": ["retrieve_patient_evidence", "retrieve_patient_evidence", "retrieve_patient_evidence"]}
+{"eval": "EV-OFF-01", "mode": "REAL_ENTRYPOINT_MODEL_DISABLED", "status": "UNAVAILABLE", "tools": []}
+PASS: 12 mocked scenario evaluations; no live model or backend persistence claimed.
+SKIP LIVE: LLM_ENABLED=true, selected Gemini model and LLM_API_KEY are not configured.

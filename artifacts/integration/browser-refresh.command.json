@@ -1,0 +1,14 @@
+{
+  "command": [
+    "npm.cmd",
+    "--prefix",
+    "frontend",
+    "run",
+    "test:e2e",
+    "--",
+    "--grep",
+    "durable browser refresh"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 3.605
+}

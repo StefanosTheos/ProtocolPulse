@@ -1,0 +1,427 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+________ test_real_adapter_gateway_and_ai_entrypoint[P-083-PX-EXC-02] _________
+
+env = (<starlette.testclient.TestClient object at 0x000001B22A3137D0>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001B229059A30>
+patient = 'P-083', criterion = 'PX-EXC-02'
+
+    @pytest.mark.parametrize('patient,criterion', [('P-083', 'PX-EXC-02'), ('P-124', 'PX-INC-03')])
+    def test_real_adapter_gateway_and_ai_entrypoint(env, monkeypatch, patient, criterion):
+        screen(env)
+        env[3].llm_enabled, env[3].llm_api_key = True, SecretStr('synthetic-ic-test-key')
+        monkeypatch.setenv('LLM_ENABLED', 'true')
+        monkeypatch.setenv('LLM_API_KEY', 'synthetic-ic-test-key')
+        from ai import entrypoints
+        monkeypatch.setattr(entrypoints, 'GeminiProvider', EvidenceDrivenModel)
+        response = env[0].post('/api/v1/agent-investigations', headers=headers(), json={
+            'role': 'EVIDENCE_INVESTIGATOR' if patient == 'P-124' else 'MEDICATION_SAFETY_INVESTIGATOR',
+            'trial_id': 'TR-PX104', 'protocol_version_id': 'PV-PX104-1.0', 'patient_id': patient,
+            'criterion_ids': [criterion], 'event_id': None, 'objective': 'Investigate actual scoped synthetic evidence.'})
+        assert response.status_code == 202, response.text
+        work(env)
+        execution = env[0].get('/api/v1/agent-executions/' + response.json()['data']['resource_id'], headers=headers()).json()['data']
+>       assert execution['status'] == 'PARTIAL', json.dumps(execution, indent=2)
+E       AssertionError: {
+E           "execution_id": "EXEC-296ab9cbf50840709451d9981ee81894",
+E           "role": "MEDICATION_SAFETY_INVESTIGATOR",
+E           "status": "FAILED",
+E           "trial_id": "TR-PX104",
+E           "patient_id": "P-083",
+E           "protocol_version_id": "PV-PX104-1.0",
+E           "criterion_ids": [
+E             "PX-EXC-02"
+E           ],
+E           "event_id": null,
+E           "correlation_id": "29a60dba-e707-4d01-9278-266fe7f3d9ac",
+E           "evidence_refs": [
+E             {
+E               "evidence_id": "MED-P-083-1",
+E               "source_id": "SRC-P-083-med",
+E               "source_version": 1,
+E               "evidence_type": "ORDER",
+E               "effective_at": "2026-10-14T21:00:00Z",
+E               "recorded_at": "2026-10-30T10:00:00Z",
+E               "page": null,
+E               "span_start": 0,
+E               "span_end": 41
+E             }
+E           ],
+E           "summary": null,
+E           "unknown_reasons": [
+E             "ORDER_ONLY"
+E           ],
+E           "verification_questions": [],
+E           "trace": [
+E             {
+E               "tool_name": "retrieve_patient_evidence",
+E               "input_reference_ids": [
+E                 "29a60dba-e707-4d01-9278-266fe7f3d9ac",
+E                 "EXEC-296ab9cbf50840709451d9981ee81894",
+E                 "P-083",
+E                 "PV-PX104-1.0",
+E                 "PX-EXC-02",
+E                 "SNAP-250af81358e44ad3961f776e4df26dae",
+E                 "TR-PX104"
+E               ],
+E               "output_reference_ids": [
+E                 "MED-P-083-1",
+E                 "SRC-P-083-med"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 16,
+E               "error_code": null
+E             },
+E             {
+E               "tool_name": "resolve_approved_terminology",
+E               "input_reference_ids": [
+E                 "29a60dba-e707-4d01-9278-266fe7f3d9ac",
+E                 "EXEC-296ab9cbf50840709451d9981ee81894",
+E                 "P-083",
+E                 "PV-PX104-1.0",
+E                 "TR-PX104"
+E               ],
+E               "output_reference_ids": [
+E                 "SRC-PROTOCOL-PX104-V1"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 0,
+E               "error_code": null
+E             },
+E             {
+E               "tool_name": "get_medication_timeline",
+E               "input_reference_ids": [
+E                 "29a60dba-e707-4d01-9278-266fe7f3d9ac",
+E                 "EXEC-296ab9cbf50840709451d9981ee81894",
+E                 "P-083",
+E                 "PV-PX104-1.0",
+E                 "SNAP-250af81358e44ad3961f776e4df26dae",
+E                 "TR-PX104"
+E               ],
+E               "output_reference_ids": [
+E                 "MED-P-083-1",
+E                 "SRC-P-083-med"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 0,
+E               "error_code": null
+E             },
+E             {
+E               "tool_name": "request_verification_task",
+E               "input_reference_ids": [
+E                 "29a60dba-e707-4d01-9278-266fe7f3d9ac",
+E                 "EXEC-296ab9cbf50840709451d9981ee81894",
+E                 "MED-P-083-1",
+E                 "P-083",
+E                 "PV-PX104-1.0",
+E                 "PX-EXC-02",
+E                 "SRC-P-083-med",
+E                 "TR-PX104"
+E               ],
+E               "output_reference_ids": [
+E                 "TASK-5a7f955644734049b5928ce8f00c943f"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 15,
+E               "error_code": null
+E             }
+E           ],
+E           "error_code": "INVALID_MODEL_OUTPUT",
+E           "model_id": "MOCK-IC-INTEGRATION-NOT-LIVE",
+E           "created_at": "2026-11-14T21:12:57.157236Z",
+E           "finished_at": "2026-11-14T21:12:57.233634Z"
+E         }
+E       assert 'FAILED' == 'PARTIAL'
+E         
+E         - PARTIAL
+E         + FAILED
+
+backend\tests\test_ai_integration.py:81: AssertionError
+________ test_real_adapter_gateway_and_ai_entrypoint[P-124-PX-INC-03] _________
+
+env = (<starlette.testclient.TestClient object at 0x000001B22A867080>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001B22A3CEED0>
+patient = 'P-124', criterion = 'PX-INC-03'
+
+    @pytest.mark.parametrize('patient,criterion', [('P-083', 'PX-EXC-02'), ('P-124', 'PX-INC-03')])
+    def test_real_adapter_gateway_and_ai_entrypoint(env, monkeypatch, patient, criterion):
+        screen(env)
+        env[3].llm_enabled, env[3].llm_api_key = True, SecretStr('synthetic-ic-test-key')
+        monkeypatch.setenv('LLM_ENABLED', 'true')
+        monkeypatch.setenv('LLM_API_KEY', 'synthetic-ic-test-key')
+        from ai import entrypoints
+        monkeypatch.setattr(entrypoints, 'GeminiProvider', EvidenceDrivenModel)
+        response = env[0].post('/api/v1/agent-investigations', headers=headers(), json={
+            'role': 'EVIDENCE_INVESTIGATOR' if patient == 'P-124' else 'MEDICATION_SAFETY_INVESTIGATOR',
+            'trial_id': 'TR-PX104', 'protocol_version_id': 'PV-PX104-1.0', 'patient_id': patient,
+            'criterion_ids': [criterion], 'event_id': None, 'objective': 'Investigate actual scoped synthetic evidence.'})
+        assert response.status_code == 202, response.text
+        work(env)
+        execution = env[0].get('/api/v1/agent-executions/' + response.json()['data']['resource_id'], headers=headers()).json()['data']
+>       assert execution['status'] == 'PARTIAL', json.dumps(execution, indent=2)
+E       AssertionError: {
+E           "execution_id": "EXEC-12e373cb5f1f467383ae442f51d588db",
+E           "role": "EVIDENCE_INVESTIGATOR",
+E           "status": "FAILED",
+E           "trial_id": "TR-PX104",
+E           "patient_id": "P-124",
+E           "protocol_version_id": "PV-PX104-1.0",
+E           "criterion_ids": [
+E             "PX-INC-03"
+E           ],
+E           "event_id": null,
+E           "correlation_id": "ce56d2d9-5cbe-4f66-8b2a-90642b11f6eb",
+E           "evidence_refs": [
+E             {
+E               "evidence_id": "LAB-P-124-0",
+E               "source_id": "SRC-P-124-lab-0",
+E               "source_version": 1,
+E               "evidence_type": "LAB",
+E               "effective_at": "2026-08-31T21:00:00Z",
+E               "recorded_at": "2026-10-30T10:00:00Z",
+E               "page": null,
+E               "span_start": 0,
+E               "span_end": 52
+E             }
+E           ],
+E           "summary": null,
+E           "unknown_reasons": [
+E             "MISSING_LAB"
+E           ],
+E           "verification_questions": [],
+E           "trace": [
+E             {
+E               "tool_name": "retrieve_patient_evidence",
+E               "input_reference_ids": [
+E                 "EXEC-12e373cb5f1f467383ae442f51d588db",
+E                 "P-124",
+E                 "PV-PX104-1.0",
+E                 "PX-INC-03",
+E                 "SNAP-84be262c4751429e9f3f64e695cb4ee8",
+E                 "TR-PX104",
+E                 "ce56d2d9-5cbe-4f66-8b2a-90642b11f6eb"
+E               ],
+E               "output_reference_ids": [
+E                 "LAB-P-124-0",
+E                 "SRC-P-124-lab-0"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 16,
+E               "error_code": null
+E             },
+E             {
+E               "tool_name": "get_lab_history",
+E               "input_reference_ids": [
+E                 "EXEC-12e373cb5f1f467383ae442f51d588db",
+E                 "P-124",
+E                 "PV-PX104-1.0",
+E                 "SNAP-84be262c4751429e9f3f64e695cb4ee8",
+E                 "TR-PX104",
+E                 "ce56d2d9-5cbe-4f66-8b2a-90642b11f6eb"
+E               ],
+E               "output_reference_ids": [],
+E               "result_code": "OK",
+E               "elapsed_ms": 0,
+E               "error_code": null
+E             },
+E             {
+E               "tool_name": "request_verification_task",
+E               "input_reference_ids": [
+E                 "EXEC-12e373cb5f1f467383ae442f51d588db",
+E                 "LAB-P-124-0",
+E                 "P-124",
+E                 "PV-PX104-1.0",
+E                 "PX-INC-03",
+E                 "SRC-P-124-lab-0",
+E                 "TR-PX104",
+E                 "ce56d2d9-5cbe-4f66-8b2a-90642b11f6eb"
+E               ],
+E               "output_reference_ids": [
+E                 "TASK-54a8ceb62382426b823b9c45b7510f27"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 0,
+E               "error_code": null
+E             }
+E           ],
+E           "error_code": "INVALID_MODEL_OUTPUT",
+E           "model_id": "MOCK-IC-INTEGRATION-NOT-LIVE",
+E           "created_at": "2026-11-14T21:12:58.253686Z",
+E           "finished_at": "2026-11-14T21:12:58.320087Z"
+E         }
+E       assert 'FAILED' == 'PARTIAL'
+E         
+E         - PARTIAL
+E         + FAILED
+
+backend\tests\test_ai_integration.py:81: AssertionError
+_____________ test_actual_gateway_monitoring_case_already_exists ______________
+
+env = (<starlette.testclient.TestClient object at 0x000001B22A657620>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001B22A816360>
+
+    def test_actual_gateway_monitoring_case_already_exists(env, monkeypatch):
+        screen(env)
+        participate(env)
+        receipt = post_event(env).json()['data']
+        work(env)
+        case = env[0].get('/api/v1/trials/TR-PX104/cases', headers=headers()).json()['data']['items'][0]
+        assert case['status'] == 'OPEN'
+        env[3].llm_enabled, env[3].llm_api_key = True, SecretStr('synthetic-ic-test-key')
+        monkeypatch.setenv('LLM_ENABLED', 'true')
+        monkeypatch.setenv('LLM_API_KEY', 'synthetic-ic-test-key')
+    
+        class MonitoringModel(EvidenceDrivenModel):
+            async def next(self, req, tools):
+                names = [n for n, _ in self.seen]
+                if not names:
+                    return ToolCall('classify_event_relevance', {'event_id': req['event_id'], 'protocol_version_id': req['protocol_version_id']})
+                if 'get_prior_evaluation' not in names:
+                    assert self.seen[-1][1]['data']['category'] == 'RELEVANT'
+                    return ToolCall('get_prior_evaluation', {'patient_id': req['patient_id'],
+                        'criterion_ids': req['criterion_ids'], 'before_event_id': req['event_id']})
+                if 'get_case_status' not in names:
+                    return ToolCall('get_case_status', {'case_id': case['case_id']})
+                if 'retrieve_patient_evidence' not in names:
+                    return ToolCall('retrieve_patient_evidence', {'patient_id': req['patient_id'],
+                        'snapshot_id': req['evidence_snapshot_id'], 'criterion_ids': req['criterion_ids'],
+                        'evidence_types': ['ADMINISTRATION']})
+                return FinalProposal(summary='Backend case already exists for documented synthetic administration; investigator review remains required.',
+                    evidence_refs=[EvidenceReference.model_validate(r) for r in self.refs])
+    
+        from ai import entrypoints
+        monkeypatch.setattr(entrypoints, 'GeminiProvider', MonitoringModel)
+        response = env[0].post('/api/v1/agent-investigations', headers=headers(), json={
+            'role': 'MONITORING_WORKFLOW', 'trial_id': 'TR-PX104', 'protocol_version_id': 'PV-PX104-1.0',
+            'patient_id': 'P-042', 'criterion_ids': ['PX-MON-01'], 'event_id': receipt['event_id'],
+            'objective': 'Summarize the existing backend monitoring case.'})
+        assert response.status_code == 202, response.text
+        work(env)
+        execution = env[0].get('/api/v1/agent-executions/' + response.json()['data']['resource_id'], headers=headers()).json()['data']
+>       assert execution['status'] == 'SUCCEEDED', json.dumps(execution, indent=2)
+E       AssertionError: {
+E           "execution_id": "EXEC-4a798e5088144d5d8312d936bd86f502",
+E           "role": "MONITORING_WORKFLOW",
+E           "status": "FAILED",
+E           "trial_id": "TR-PX104",
+E           "patient_id": "P-042",
+E           "protocol_version_id": "PV-PX104-1.0",
+E           "criterion_ids": [
+E             "PX-MON-01"
+E           ],
+E           "event_id": "EVT-3708c621a9354d53ab29eba79aefbcb2",
+E           "correlation_id": "6c455dd2-4ac3-4926-bc13-ab808f012242",
+E           "evidence_refs": [
+E             {
+E               "evidence_id": "EVT-3708c621a9354d53ab29eba79aefbcb2",
+E               "source_id": "SRC-D18-P042",
+E               "source_version": 1,
+E               "evidence_type": "ADMINISTRATION",
+E               "effective_at": "2026-11-19T07:30:00Z",
+E               "recorded_at": "2026-11-20T09:00:00Z",
+E               "page": null,
+E               "span_start": null,
+E               "span_end": null
+E             }
+E           ],
+E           "summary": null,
+E           "unknown_reasons": [],
+E           "verification_questions": [],
+E           "trace": [
+E             {
+E               "tool_name": "classify_event_relevance",
+E               "input_reference_ids": [
+E                 "6c455dd2-4ac3-4926-bc13-ab808f012242",
+E                 "EVT-3708c621a9354d53ab29eba79aefbcb2",
+E                 "EXEC-4a798e5088144d5d8312d936bd86f502",
+E                 "P-042",
+E                 "PV-PX104-1.0",
+E                 "TR-PX104"
+E               ],
+E               "output_reference_ids": [
+E                 "PX-MON-01"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 0,
+E               "error_code": null
+E             },
+E             {
+E               "tool_name": "get_prior_evaluation",
+E               "input_reference_ids": [
+E                 "6c455dd2-4ac3-4926-bc13-ab808f012242",
+E                 "EVT-3708c621a9354d53ab29eba79aefbcb2",
+E                 "EXEC-4a798e5088144d5d8312d936bd86f502",
+E                 "P-042",
+E                 "PV-PX104-1.0",
+E                 "PX-MON-01",
+E                 "TR-PX104"
+E               ],
+E               "output_reference_ids": [
+E                 "ASM-6cfc623642cb4730985aec8dd43b05b4",
+E                 "ASM-c027dc182ba7474e8ae89b375b8a9049",
+E                 "EVT-3708c621a9354d53ab29eba79aefbcb2",
+E                 "PX-MON-01"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 0,
+E               "error_code": null
+E             },
+E             {
+E               "tool_name": "get_case_status",
+E               "input_reference_ids": [
+E                 "6c455dd2-4ac3-4926-bc13-ab808f012242",
+E                 "CASE-169e792201864c4fa6e9c25ca2973ec1",
+E                 "EXEC-4a798e5088144d5d8312d936bd86f502",
+E                 "P-042",
+E                 "PV-PX104-1.0",
+E                 "TR-PX104"
+E               ],
+E               "output_reference_ids": [
+E                 "FIND-a7d35d4feebe41c79a717a480c83f791"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 0,
+E               "error_code": null
+E             },
+E             {
+E               "tool_name": "retrieve_patient_evidence",
+E               "input_reference_ids": [
+E                 "6c455dd2-4ac3-4926-bc13-ab808f012242",
+E                 "EXEC-4a798e5088144d5d8312d936bd86f502",
+E                 "P-042",
+E                 "PV-PX104-1.0",
+E                 "PX-MON-01",
+E                 "SNAP-a5d0a9fdaeb34b58af0f29e5f3f01ef2",
+E                 "TR-PX104"
+E               ],
+E               "output_reference_ids": [
+E                 "EVT-3708c621a9354d53ab29eba79aefbcb2",
+E                 "SRC-D18-P042"
+E               ],
+E               "result_code": "OK",
+E               "elapsed_ms": 16,
+E               "error_code": null
+E             }
+E           ],
+E           "error_code": "INVALID_MODEL_OUTPUT",
+E           "model_id": "MOCK-IC-INTEGRATION-NOT-LIVE",
+E           "created_at": "2026-11-14T21:12:59.301091Z",
+E           "finished_at": "2026-11-14T21:12:59.359501Z"
+E         }
+E       assert 'FAILED' == 'SUCCEEDED'
+E         
+E         - SUCCEEDED
+E         + FAILED
+
+backend\tests\test_ai_integration.py:131: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\starlette\testclient.py:37
+  C:\Users\steve\OneDrive\Υπολογιστής\Hackathon\.venv\Lib\site-packages\starlette\testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend\tests\test_ai_integration.py::test_real_adapter_gateway_and_ai_entrypoint[P-083-PX-EXC-02]
+FAILED backend\tests\test_ai_integration.py::test_real_adapter_gateway_and_ai_entrypoint[P-124-PX-INC-03]
+FAILED backend\tests\test_ai_integration.py::test_actual_gateway_monitoring_case_already_exists
+3 failed, 1 warning in 3.23s

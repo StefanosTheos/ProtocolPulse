@@ -1,0 +1,14 @@
+{
+  "command": [
+    "npm.cmd",
+    "ci",
+    "--prefix",
+    "frontend",
+    "--dry-run",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.747
+}

@@ -1,0 +1,9 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-c",
+    "import httpx,json; r=httpx.get('http://127.0.0.1:8000/api/v1/health'); print(r.status_code); print(json.dumps(r.json())); assert r.status_code==200"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.398
+}

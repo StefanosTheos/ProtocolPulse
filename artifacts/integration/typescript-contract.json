@@ -1,0 +1,2422 @@
+{
+  "count": 73,
+  "mismatches": [],
+  "declarations": {
+    "ID": {
+      "signature": "export type ID = string ;",
+      "fields": null
+    },
+    "IsoInstant": {
+      "signature": "export type IsoInstant = string ;",
+      "fields": null
+    },
+    "IsoDate": {
+      "signature": "export type IsoDate = string ;",
+      "fields": null
+    },
+    "ActorRole": {
+      "signature": "export type ActorRole = 'SPONSOR_OPS' | 'INVESTIGATOR' | 'COORDINATOR' | 'MONITOR' | 'AUDITOR' | 'RESEARCH_IT' ;",
+      "fields": null
+    },
+    "CriterionStatus": {
+      "signature": "export type CriterionStatus = 'PASS' | 'FAIL' | 'UNKNOWN' ;",
+      "fields": null
+    },
+    "CandidateStatus": {
+      "signature": "export type CandidateStatus = 'POTENTIAL_MATCH' | 'NEEDS_REVIEW' | 'PROTOCOL_CONFLICT' ;",
+      "fields": null
+    },
+    "EvaluationState": {
+      "signature": "export type EvaluationState = 'COMPLETE' | 'EVALUATION_ERROR' ;",
+      "fields": null
+    },
+    "UnknownReason": {
+      "signature": "export type UnknownReason = 'MISSING_LAB' | 'OUTDATED_LAB' | 'DATE_AMBIGUOUS' | 'ORDER_ONLY' | 'CONFLICTING_SOURCES' | 'UNMAPPED_CODE' | 'UNAPPROVED_RULE' | 'INCOMPLETE_EXTRACTION' | 'INSUFFICIENT_ABSENCE_EVIDENCE' | 'UNIT_UNSUPPORTED' | 'SOURCE_UNAVAILABLE' ;",
+      "fields": null
+    },
+    "EvidenceState": {
+      "signature": "export type EvidenceState = 'NOT_RECORDED' | 'EXPLICITLY_NEGATIVE' | 'NOT_ASSESSED' | 'NOT_APPLICABLE' | 'UNCERTAIN' | 'POSITIVE' ;",
+      "fields": null
+    },
+    "EvidenceQuality": {
+      "signature": "export type EvidenceQuality = 'HIGH' | 'MODERATE' | 'LOW' | 'UNVERIFIED' ;",
+      "fields": null
+    },
+    "DatePrecision": {
+      "signature": "export type DatePrecision = 'INSTANT' | 'DAY' | 'MONTH' | 'YEAR' | 'UNKNOWN' ;",
+      "fields": null
+    },
+    "MedicationEvidenceType": {
+      "signature": "export type MedicationEvidenceType = 'ORDER' | 'DISPENSE' | 'ADMINISTRATION' | 'REPORTED_USE' | 'DISCONTINUATION' | 'CANCELLATION' ;",
+      "fields": null
+    },
+    "ProtocolState": {
+      "signature": "export type ProtocolState = 'DRAFT' | 'EXTRACTING' | 'EXTRACTION_REVIEW' | 'EXTRACTION_FAILED' | 'APPROVED' | 'ACTIVE' | 'SUPERSEDED' ;",
+      "fields": null
+    },
+    "CriterionWorkflow": {
+      "signature": "export type CriterionWorkflow = 'PROPOSED' | 'NEEDS_CLARIFICATION' | 'APPROVED' | 'REJECTED' ;",
+      "fields": null
+    },
+    "CriterionType": {
+      "signature": "export type CriterionType = 'INCLUSION' | 'EXCLUSION' | 'MONITORING' ;",
+      "fields": null
+    },
+    "JobStatus": {
+      "signature": "export type JobStatus = 'QUEUED' | 'RUNNING' | 'SUCCEEDED' | 'FAILED' ;",
+      "fields": null
+    },
+    "ScreeningRunStatus": {
+      "signature": "export type ScreeningRunStatus = 'QUEUED' | 'RUNNING' | 'COMPLETE' | 'FAILED' ;",
+      "fields": null
+    },
+    "ParticipationStatus": {
+      "signature": "export type ParticipationStatus = 'NOT_ENROLLED' | 'PARTICIPATING' | 'ENDED' ;",
+      "fields": null
+    },
+    "CandidateWorkflow": {
+      "signature": "export type CandidateWorkflow = 'NOT_REVIEWED' | 'REVIEW_PENDING' | 'INVESTIGATOR_DISPOSITIONED' ;",
+      "fields": null
+    },
+    "FindingCategory": {
+      "signature": "export type FindingCategory = 'CONFIRMED_PROTOCOL_CONFLICT' | 'POTENTIAL_SAFETY_REVIEW' | 'DATA_QUALITY_DISCREPANCY' | 'POSSIBLE_PROTOCOL_DEVIATION' ;",
+      "fields": null
+    },
+    "RelevanceResult": {
+      "signature": "export type RelevanceResult = 'RELEVANT' | 'NO_ACTION' ;",
+      "fields": null
+    },
+    "FindingPriority": {
+      "signature": "export type FindingPriority = 'HIGH' | 'MEDIUM' | 'LOW' ;",
+      "fields": null
+    },
+    "CaseStatus": {
+      "signature": "export type CaseStatus = 'OPEN' | 'ACKNOWLEDGED' | 'INVESTIGATING' | 'RESOLVED' | 'CLOSED' | 'REOPENED' ;",
+      "fields": null
+    },
+    "AgentRole": {
+      "signature": "export type AgentRole = 'PROTOCOL_INTELLIGENCE' | 'EVIDENCE_INVESTIGATOR' | 'MEDICATION_SAFETY_INVESTIGATOR' | 'MONITORING_WORKFLOW' ;",
+      "fields": null
+    },
+    "AgentStatus": {
+      "signature": "export type AgentStatus = 'QUEUED' | 'RUNNING' | 'SUCCEEDED' | 'FAILED' | 'UNAVAILABLE' | 'PARTIAL' ;",
+      "fields": null
+    },
+    "WindowOperator": {
+      "signature": "export type WindowOperator = 'AGE_RANGE_INCLUSIVE' | 'CODE_CONFIRMED' | 'LAB_GTE' | 'ABSENCE_CONFIRMED_ACTIVE' | 'NO_RESTRICTED_USE' | 'EVENT_RESTRICTED_USE' | 'EVENT_ORDER_ONLY' | 'EVENT_LAB_LT' ;",
+      "fields": null
+    },
+    "ObservationKind": {
+      "signature": "export type ObservationKind = 'LAB' | 'FUNCTIONAL' | 'PULMONARY' | 'ECG' | 'IMAGING' | 'VITAL' ;",
+      "fields": null
+    },
+    "EventKind": {
+      "signature": "export type EventKind = 'MEDICATION' | 'LAB' | 'CONDITION' | 'NOTE' | 'OBSERVATION' ;",
+      "fields": null
+    },
+    "Detail": {
+      "signature": "export type Detail = { field : string ; reason : string } ;",
+      "fields": null
+    },
+    "ErrorEnvelope": {
+      "signature": "export interface ErrorEnvelope { error : { code : string ; message : string ; details : Detail [ ] ; retryable : boolean } ; request_id : string ; }",
+      "fields": [
+        {
+          "name": "error",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "request_id",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "Envelope": {
+      "signature": "export interface Envelope < T > { data : T ; request_id : string }",
+      "fields": [
+        {
+          "name": "data",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "request_id",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "Page": {
+      "signature": "export interface Page < T > { items : T [ ] ; page : { next_cursor : string | null ; limit : number ; total_count : number | null } }",
+      "fields": [
+        {
+          "name": "items",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "page",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "EvidenceRef": {
+      "signature": "export interface EvidenceRef { evidence_id : ID ; source_id : ID ; source_version : number ; evidence_type : string ; effective_at : IsoInstant | null ; recorded_at : IsoInstant | null ; page : number | null ; span_start : number | null ; span_end : number | null ; }",
+      "fields": [
+        {
+          "name": "evidence_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_type",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "effective_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "recorded_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "page",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "span_start",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "span_end",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "TimeUncertainty": {
+      "signature": "export interface TimeUncertainty { raw_date : string ; precision : DatePrecision ; possible_interval : { earliest : IsoInstant ; latest_exclusive : IsoInstant } | null }",
+      "fields": [
+        {
+          "name": "raw_date",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "precision",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "possible_interval",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "ProvenancedFact": {
+      "signature": "export interface ProvenancedFact < T > { fact_id : ID ; value : T | null ; unit : string | null ; effective_at : IsoInstant | null ; onset_date : IsoDate | null ; recorded_at : IsoInstant ; ingested_at : IsoInstant ; source : EvidenceRef ; evidence_quality : EvidenceQuality ; evidence_state : EvidenceState ; time_uncertainty : TimeUncertainty | null ; verification_status : 'VERIFIED' | 'UNVERIFIED' | 'CONFLICTED' ; }",
+      "fields": [
+        {
+          "name": "fact_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "value",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "unit",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "effective_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "onset_date",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "recorded_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "ingested_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_quality",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_state",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "time_uncertainty",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "verification_status",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "Trial": {
+      "signature": "export interface Trial { trial_id : ID ; title : string ; fictional_product_code : string ; site_id : ID ; site_timezone : string ; planned_start_date : IsoDate ; planned_end_date : IsoDate ; synthetic_only : true ; active_protocol_version_id : ID | null ; created_at : IsoInstant ; revision : number ; }",
+      "fields": [
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "fictional_product_code",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "site_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "site_timezone",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "planned_start_date",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "planned_end_date",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "synthetic_only",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "active_protocol_version_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "revision",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "TrialCreate": {
+      "signature": "export interface TrialCreate { title : string ; fictional_product_code : string ; site_id : ID ; site_timezone : string ; planned_start_date : IsoDate ; planned_end_date : IsoDate ; synthetic_only : true }",
+      "fields": [
+        {
+          "name": "title",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "fictional_product_code",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "site_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "site_timezone",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "planned_start_date",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "planned_end_date",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "synthetic_only",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "TrialDetail": {
+      "signature": "export interface TrialDetail extends Trial { protocol_version_ids : ID [ ] ; patient_count : number ; finding_count : number ; trial_notice : string }",
+      "fields": [
+        {
+          "name": "protocol_version_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_count",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "finding_count",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_notice",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "SourceRef": {
+      "signature": "export interface SourceRef { source_id : ID ; source_version : number ; sha256 : string ; filename : string ; mime_type : string ; created_at : IsoInstant ; synthetic_only : true }",
+      "fields": [
+        {
+          "name": "source_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "sha256",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "filename",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "mime_type",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "synthetic_only",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "WindowSpec": {
+      "signature": "export interface WindowSpec { anchor : 'SCREENING_DATE' | 'EVENT_EFFECTIVE_AT' | 'PARTICIPATION' ; start_offset_days : number | null ; end_offset_days : number | null ; start_inclusive : boolean ; end_inclusive : boolean ; time_zone : string ; anchor_granularity : 'LOCAL_DATE' | 'INSTANT' }",
+      "fields": [
+        {
+          "name": "anchor",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "start_offset_days",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "end_offset_days",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "start_inclusive",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "end_inclusive",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "time_zone",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "anchor_granularity",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "Criterion": {
+      "signature": "export interface Criterion { criterion_id : ID ; protocol_version_id : ID ; revision : number ; type : CriterionType ; clinical_subject : string ; operator : WindowOperator ; threshold : number | string | [ number , number ] | null ; unit : string | null ; window : WindowSpec | null ; evidence_requirement : string ; missing_data_policy : 'UNKNOWN_UNLESS_RECONCILED' ; source_quote : string ; source_id : ID ; source_page : number ; source_anchor : { start : number ; end : number } ; applicable_site_ids : ID [ ] ; terminology_map_version : string ; logical_group_id : ID ; workflow_status : CriterionWorkflow ; ambiguity : string | null ; approved_by : ID | null ; approved_at : IsoInstant | null ; }",
+      "fields": [
+        {
+          "name": "criterion_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "revision",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "type",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "clinical_subject",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "operator",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "threshold",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "unit",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "window",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "evidence_requirement",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "missing_data_policy",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_quote",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_page",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_anchor",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "applicable_site_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "terminology_map_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "logical_group_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "workflow_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "ambiguity",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "approved_by",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "approved_at",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "CoverageItem": {
+      "signature": "export interface CoverageItem { section_id : string ; source_id : ID ; page : number ; span_start : number ; span_end : number ; status : 'MAPPED' | 'INFORMATIONAL' | 'BLOCKING' ; criterion_ids : ID [ ] ; review_note : string | null }",
+      "fields": [
+        {
+          "name": "section_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "page",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "span_start",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "span_end",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "criterion_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "review_note",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "ProtocolDetail": {
+      "signature": "export interface ProtocolDetail { protocol_version_id : ID ; trial_id : ID ; label : string ; state : ProtocolState ; revision : number ; source : SourceRef ; file_sha256 : string ; criteria : Criterion [ ] ; coverage : CoverageItem [ ] ; coverage_signed_by : ID | null ; coverage_signed_at : IsoInstant | null ; approved_set_hash : string | null ; approved_at : IsoInstant | null ; extraction_job_id : ID | null ; blocking_count : number ; }",
+      "fields": [
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "label",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "revision",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "file_sha256",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "criteria",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "coverage",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "coverage_signed_by",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "coverage_signed_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "approved_set_hash",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "approved_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "extraction_job_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "blocking_count",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "CriterionDraftInput": {
+      "signature": "export interface CriterionDraftInput { criterion_id : ID ; protocol_version_id : ID ; type : CriterionType ; clinical_subject : string ; operator : WindowOperator ; threshold : number | string | [ number , number ] | null ; unit : string | null ; window : WindowSpec | null ; evidence_requirement : string ; missing_data_policy : 'UNKNOWN_UNLESS_RECONCILED' ; source_quote : string ; source_id : ID ; source_page : number ; source_anchor : { start : number ; end : number } ; applicable_site_ids : ID [ ] ; terminology_map_version : string ; logical_group_id : ID ; workflow_status : 'PROPOSED' | 'NEEDS_CLARIFICATION' ; ambiguity : string | null ; }",
+      "fields": [
+        {
+          "name": "criterion_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "type",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "clinical_subject",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "operator",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "threshold",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "unit",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "window",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "evidence_requirement",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "missing_data_policy",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_quote",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_page",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_anchor",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "applicable_site_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "terminology_map_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "logical_group_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "workflow_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "ambiguity",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "CriteriaReplaceRequest": {
+      "signature": "export interface CriteriaReplaceRequest { criteria : CriterionDraftInput [ ] ; coverage : CoverageItem [ ] ; change_reason : string }",
+      "fields": [
+        {
+          "name": "criteria",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "coverage",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "change_reason",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ApprovalRequest": {
+      "signature": "export interface ApprovalRequest { criterion_ids : ID [ ] ; coverage_attestation : true ; activate : true ; decision_reason : string }",
+      "fields": [
+        {
+          "name": "criterion_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "coverage_attestation",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "activate",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "decision_reason",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ApprovalReceipt": {
+      "signature": "export interface ApprovalReceipt { protocol_version_id : ID ; approved_set_hash : string ; signed_criterion_ids : ID [ ] ; approved_by : ID ; approved_at : IsoInstant ; state : 'ACTIVE' ; superseded_version_id : ID | null }",
+      "fields": [
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "approved_set_hash",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "signed_criterion_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "approved_by",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "approved_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "state",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "superseded_version_id",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "JobReceipt": {
+      "signature": "export interface JobReceipt { job_id : ID ; kind : 'PROTOCOL_EXTRACT' | 'SCREEN_COHORT' | 'INGEST_EVENT' | 'AGENT_INVESTIGATION' ; status : JobStatus ; resource_id : ID | null ; correlation_id : ID ; poll_url : string ; created_at : IsoInstant ; }",
+      "fields": [
+        {
+          "name": "job_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "kind",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "resource_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "correlation_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "poll_url",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "JobDetail": {
+      "signature": "export interface JobDetail extends JobReceipt { attempts : number ; max_attempts : number ; started_at : IsoInstant | null ; finished_at : IsoInstant | null ; progress_percent : number | null ; result : Record < string , unknown > | null ; error : { code : string ; message : string ; retryable : boolean } | null ; }",
+      "fields": [
+        {
+          "name": "attempts",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "max_attempts",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "started_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "finished_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "progress_percent",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "result",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "error",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "ScreeningCreate": {
+      "signature": "export interface ScreeningCreate { protocol_version_id : ID ; screening_date : IsoDate ; evidence_cutoff_at : IsoInstant ; patient_ids : ID [ ] | null ; purpose : 'BASELINE' }",
+      "fields": [
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "screening_date",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_cutoff_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_ids",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "purpose",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ScreeningRun": {
+      "signature": "export interface ScreeningRun { run_id : ID ; trial_id : ID ; protocol_version_id : ID ; approved_set_hash : string ; screening_date : IsoDate ; evidence_cutoff_at : IsoInstant ; evidence_snapshot_id : ID ; engine_version : string ; terminology_map_version : string ; status : ScreeningRunStatus ; job_id : ID ; patient_count : number ; counts : { POTENTIAL_MATCH : number ; NEEDS_REVIEW : number ; PROTOCOL_CONFLICT : number ; EVALUATION_ERROR : number } ; created_at : IsoInstant ; completed_at : IsoInstant | null ; stale : boolean ; error_code : string | null }",
+      "fields": [
+        {
+          "name": "run_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "approved_set_hash",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "screening_date",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_cutoff_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_snapshot_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "engine_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "terminology_map_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "job_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_count",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "counts",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "completed_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "stale",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "error_code",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "CriterionResult": {
+      "signature": "export interface CriterionResult { criterion_result_id : ID ; criterion_id : ID ; protocol_version_id : ID ; status : CriterionStatus ; reason_codes : UnknownReason [ ] ; evidence_refs : EvidenceRef [ ] ; considered_interval : { start : IsoInstant ; end : IsoInstant } | null ; explanation : string ; evaluated_at : IsoInstant ; }",
+      "fields": [
+        {
+          "name": "criterion_result_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "criterion_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "reason_codes",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "considered_interval",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "explanation",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evaluated_at",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "PatientAssessment": {
+      "signature": "export interface PatientAssessment { assessment_id : ID ; run_id : ID | null ; trial_id : ID ; patient_id : ID ; protocol_version_id : ID ; approved_set_hash : string ; evidence_snapshot_id : ID ; assessment_type : 'SCREENING' | 'MONITORING' ; screening_date : IsoDate | null ; evaluation_at : IsoInstant ; evaluation_state : EvaluationState ; candidate_status : CandidateStatus | null ; criteria : CriterionResult [ ] ; before_assessment_id : ID | null ; caused_by_event_id : ID | null ; related_finding_ids : ID [ ] ; evidence_completeness_percent : number | null ; participation_status : ParticipationStatus ; stale : boolean ; }",
+      "fields": [
+        {
+          "name": "assessment_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "run_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "approved_set_hash",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_snapshot_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "assessment_type",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "screening_date",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "evaluation_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evaluation_state",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "candidate_status",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "criteria",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "before_assessment_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "caused_by_event_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "related_finding_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_completeness_percent",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "participation_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "stale",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "MedicationEvidence": {
+      "signature": "export interface MedicationEvidence { exposure_id : ID ; medication_code : string ; mapped_class : string | null ; evidence_type : MedicationEvidenceType ; asserted_start_at : IsoInstant | null ; asserted_end_exclusive_at : IsoInstant | null ; dose : ProvenancedFact < number > | null ; route : ProvenancedFact < string > | null ; last_changed_at : IsoInstant | null ; stop_reason : string | null ; adverse_reactions : string [ ] ; evidence : ProvenancedFact < string > ; source : EvidenceRef ; }",
+      "fields": [
+        {
+          "name": "exposure_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "medication_code",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "mapped_class",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "evidence_type",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "asserted_start_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "asserted_end_exclusive_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "dose",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "route",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "last_changed_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "stop_reason",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "adverse_reactions",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ClinicalNarrative": {
+      "signature": "export interface ClinicalNarrative { note_id : ID ; recorded_at : IsoInstant ; source : EvidenceRef ; text : string ; extraction_status : 'NOT_ASSESSED' | 'REVIEWED' | 'CONFLICTED' }",
+      "fields": [
+        {
+          "name": "note_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "recorded_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "text",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "extraction_status",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "OpenItem": {
+      "signature": "export interface OpenItem { open_item_id : ID ; reason_code : string ; description : string ; blocking : boolean ; status : 'OPEN' | 'RESOLVED' ; conflicting_evidence_ids : ID [ ] ; requested_for_role : ActorRole | null }",
+      "fields": [
+        {
+          "name": "open_item_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "reason_code",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "blocking",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "conflicting_evidence_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "requested_for_role",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "PriorResearch": {
+      "signature": "export interface PriorResearch { research_id : ID ; kind : 'OBSERVATIONAL' | 'INTERVENTIONAL' ; exposure : ProvenancedFact < string > | null ; last_dose_at : IsoInstant | null ; half_life_hours : ProvenancedFact < number > | null ; completion_status : EvidenceState ; ongoing_restrictions : ProvenancedFact < string > [ ] ; source : EvidenceRef }",
+      "fields": [
+        {
+          "name": "research_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "kind",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "exposure",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "last_dose_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "half_life_hours",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "completion_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "ongoing_restrictions",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "Patient360": {
+      "signature": "export interface Patient360 { patient_id : ID ; trial_id : ID ; synthetic_only : true ; site_id : ID ; screening_snapshot_date : IsoDate ; demographics : { birth_date : ProvenancedFact < IsoDate > ; sex_at_birth : ProvenancedFact < string > ; location_jurisdiction : ProvenancedFact < string > } ; index_disease : { code : string ; diagnosis_criteria : ProvenancedFact < string > [ ] ; severity : ProvenancedFact < string > ; first_onset : ProvenancedFact < IsoDate > ; diagnostic_evidence : EvidenceRef [ ] } ; medical_conditions : ProvenancedFact < string > [ ] ; surgeries_hospitalizations : ProvenancedFact < string > [ ] ; family_history : ProvenancedFact < string > [ ] ; genetics : ProvenancedFact < string > [ ] ; symptom_history : ProvenancedFact < string > [ ] ; observations : { kind : ObservationKind ; analyte_code : string | null ; observation : ProvenancedFact < number | string > ; interpretation : ProvenancedFact < string > | null } [ ] ; medications : MedicationEvidence [ ] ; study_product_exposure : { blinded : true ; assignment_masked : ProvenancedFact < string > | null ; exposures : MedicationEvidence [ ] } ; prior_clinical_research : PriorResearch [ ] ; procedures_and_imaging : ProvenancedFact < string > [ ] ; allergies : ProvenancedFact < string > [ ] ; pregnancy_contraception : ProvenancedFact < string > [ ] ; decision_capacity : ProvenancedFact < string > ; study_partner : ProvenancedFact < string > ; administration_ability : ProvenancedFact < string > ; encounters : { encounter_id : ID ; occurred_at : IsoInstant ; source_ids : ID [ ] ; summary : string } [ ] ; source_document_index : SourceRef [ ] ; clinical_narratives : ClinicalNarrative [ ] ; open_items : OpenItem [ ] ; participation_status : ParticipationStatus ; current_assessment_id : ID | null ; data_watermark : IsoInstant ; }",
+      "fields": [
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "synthetic_only",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "site_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "screening_snapshot_date",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "demographics",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "index_disease",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "medical_conditions",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "surgeries_hospitalizations",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "family_history",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "genetics",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "symptom_history",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "observations",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "medications",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "study_product_exposure",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "prior_clinical_research",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "procedures_and_imaging",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "allergies",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "pregnancy_contraception",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "decision_capacity",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "study_partner",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "administration_ability",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "encounters",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_document_index",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "clinical_narratives",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "open_items",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "participation_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "current_assessment_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "data_watermark",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "EventCreate": {
+      "signature": "export interface EventCreate { trial_id : ID ; event_kind : EventKind ; source_event_id : string ; source_version : number ; source_id : ID ; source_document_version : number ; effective_at : IsoInstant | null ; recorded_at : IsoInstant ; time_uncertainty : TimeUncertainty | null ; evidence_state : EvidenceState ; evidence_quality : EvidenceQuality ; medication : { code : string ; evidence_type : MedicationEvidenceType ; dose_value : number | null ; dose_unit : string | null ; route : string | null ; interval_end_exclusive_at : IsoInstant | null } | null ; lab : { analyte_code : string ; value : number ; unit : string } | null ; condition : { code : string ; clinical_status : 'ACTIVE' | 'RESOLVED' | 'SUSPECTED' } | null ; note : { text : string ; span_start : number | null ; span_end : number | null } | null ; observation : { kind : ObservationKind ; value : number | string ; unit : string | null } | null ; supersedes_event_id : ID | null ; }",
+      "fields": [
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "event_kind",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_event_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_document_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "effective_at",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "recorded_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "time_uncertainty",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "evidence_state",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_quality",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "medication",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "lab",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "condition",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "note",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "observation",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "supersedes_event_id",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "EventReceipt": {
+      "signature": "export interface EventReceipt { event_id : ID ; patient_id : ID ; trial_id : ID ; ingested_at : IsoInstant ; deduplicated : boolean ; job : JobReceipt ; }",
+      "fields": [
+        {
+          "name": "event_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "ingested_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "deduplicated",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "job",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "MonitoringFinding": {
+      "signature": "export interface MonitoringFinding { finding_id : ID ; trial_id : ID ; patient_id : ID ; protocol_version_id : ID ; criterion_id : ID ; triggering_event_id : ID ; before_assessment_id : ID | null ; after_assessment_id : ID ; category : FindingCategory ; priority : FindingPriority ; case_id : ID ; evidence_refs : EvidenceRef [ ] ; issue_key : string ; created_at : IsoInstant ; }",
+      "fields": [
+        {
+          "name": "finding_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "criterion_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "triggering_event_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "before_assessment_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "after_assessment_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "category",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "case_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "issue_key",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ReviewDecision": {
+      "signature": "export interface ReviewDecision { decision_id : ID ; actor_id : ID ; actor_role : ActorRole ; from_status : CaseStatus | null ; to_status : CaseStatus | null ; disposition : string ; rationale : string ; cited_evidence_ids : ID [ ] ; decided_at : IsoInstant ; }",
+      "fields": [
+        {
+          "name": "decision_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "actor_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "actor_role",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "from_status",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "to_status",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "disposition",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "cited_evidence_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "decided_at",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ReviewCase": {
+      "signature": "export interface ReviewCase { case_id : ID ; trial_id : ID ; patient_id : ID ; protocol_version_id : ID ; criterion_id : ID ; issue_key : string ; status : CaseStatus ; priority : FindingPriority ; assigned_actor_id : ID | null ; finding_ids : ID [ ] ; current_summary : string | null ; summary_origin : 'SYSTEM_DETERMINISTIC' | 'AI_DRAFT' | null ; agent_execution_id : ID | null ; revision : number ; opened_at : IsoInstant ; updated_at : IsoInstant ; decisions : ReviewDecision [ ] ; }",
+      "fields": [
+        {
+          "name": "case_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "criterion_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "issue_key",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "priority",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "assigned_actor_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "finding_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "current_summary",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "summary_origin",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "agent_execution_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "revision",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "opened_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "decisions",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "CasePatch": {
+      "signature": "export interface CasePatch { expected_revision : number ; next_status : CaseStatus ; assigned_actor_id : ID | null ; disposition : string ; rationale : string ; cited_evidence_ids : ID [ ] ; }",
+      "fields": [
+        {
+          "name": "expected_revision",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "next_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "assigned_actor_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "disposition",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "cited_evidence_ids",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "AgentInvestigationCreate": {
+      "signature": "export interface AgentInvestigationCreate { role : AgentRole ; trial_id : ID ; protocol_version_id : ID ; patient_id : ID | null ; criterion_ids : ID [ ] ; event_id : ID | null ; objective : string }",
+      "fields": [
+        {
+          "name": "role",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "criterion_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "event_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "objective",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "AgentExecution": {
+      "signature": "export interface AgentExecution { execution_id : ID ; role : AgentRole ; status : AgentStatus ; trial_id : ID ; patient_id : ID | null ; protocol_version_id : ID ; criterion_ids : ID [ ] ; event_id : ID | null ; correlation_id : ID ; evidence_refs : EvidenceRef [ ] ; summary : string | null ; unknown_reasons : string [ ] ; verification_questions : string [ ] ; trace : { tool_name : string ; input_reference_ids : ID [ ] ; output_reference_ids : ID [ ] ; result_code : string ; elapsed_ms : number ; error_code : string | null } [ ] ; error_code : string | null ; model_id : string | null ; created_at : IsoInstant ; finished_at : IsoInstant | null ; }",
+      "fields": [
+        {
+          "name": "execution_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "role",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "protocol_version_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "criterion_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "event_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "correlation_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "evidence_refs",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "summary",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "unknown_reasons",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "verification_questions",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trace",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "error_code",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "model_id",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "finished_at",
+          "optional": false,
+          "nullable": true
+        }
+      ]
+    },
+    "AuditEntry": {
+      "signature": "export interface AuditEntry { audit_id : ID ; trial_id : ID ; actor_id : ID ; actor_role : ActorRole ; action : string ; target_type : string ; target_id : ID ; target_version : string | null ; correlation_id : ID ; request_id : ID ; input_hash : string | null ; output_ref_ids : ID [ ] ; result_code : string ; occurred_at : IsoInstant ; }",
+      "fields": [
+        {
+          "name": "audit_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "actor_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "actor_role",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "action",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "target_type",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "target_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "target_version",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "correlation_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "request_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "input_hash",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "output_ref_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "result_code",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "occurred_at",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "EvidenceSourceDetail": {
+      "signature": "export interface EvidenceSourceDetail extends SourceRef { kind : 'PDF' | 'NOTE' | 'LAB' | 'MEDICATION' | 'ENCOUNTER' | 'OTHER' ; page_count : number | null ; spans : { page : number | null ; start : number ; end : number ; text : string } [ ] ; }",
+      "fields": [
+        {
+          "name": "kind",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "page_count",
+          "optional": false,
+          "nullable": true
+        },
+        {
+          "name": "spans",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ScreeningDispositionCreate": {
+      "signature": "export interface ScreeningDispositionCreate { assessment_id : ID ; disposition : 'INVITE_FOR_FORMAL_SCREENING' | 'NOT_SUITABLE' | 'SEEK_MORE_INFORMATION' ; rationale : string ; cited_evidence_ids : ID [ ] ; }",
+      "fields": [
+        {
+          "name": "assessment_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "disposition",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "cited_evidence_ids",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ScreeningDisposition": {
+      "signature": "export interface ScreeningDisposition { disposition_id : ID ; patient_id : ID ; trial_id : ID ; assessment_id : ID ; disposition : ScreeningDispositionCreate [ 'disposition' ] ; rationale : string ; cited_evidence_ids : ID [ ] ; actor_id : ID ; decided_at : IsoInstant ; workflow_status : 'INVESTIGATOR_DISPOSITIONED' ; }",
+      "fields": [
+        {
+          "name": "disposition_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "assessment_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "disposition",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "cited_evidence_ids",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "actor_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "decided_at",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "workflow_status",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ParticipationCreate": {
+      "signature": "export interface ParticipationCreate { next_status : 'PARTICIPATING' | 'ENDED' ; external_record_source_id : ID ; external_record_reference : string ; rationale : string ; }",
+      "fields": [
+        {
+          "name": "next_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "external_record_source_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "external_record_reference",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "rationale",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "ParticipationRecord": {
+      "signature": "export interface ParticipationRecord { participation_id : ID ; trial_id : ID ; patient_id : ID ; from_status : ParticipationStatus ; to_status : ParticipationStatus ; source_id : ID ; external_record_reference : string ; actor_id : ID ; decided_at : IsoInstant ; }",
+      "fields": [
+        {
+          "name": "participation_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "trial_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "patient_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "from_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "to_status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "source_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "external_record_reference",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "actor_id",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "decided_at",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    },
+    "Health": {
+      "signature": "export interface Health { status : 'ok' | 'degraded' ; database : 'ok' | 'unavailable' ; migrations : 'current' | 'pending' | 'unknown' ; worker : 'running' | 'stopped' ; llm : 'enabled' | 'disabled' | 'unavailable' ; synthetic_only : true ; api_version : 'v1' ; contract_version : '1.0.0-rc2' ; }",
+      "fields": [
+        {
+          "name": "status",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "database",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "migrations",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "worker",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "llm",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "synthetic_only",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "api_version",
+          "optional": false,
+          "nullable": false
+        },
+        {
+          "name": "contract_version",
+          "optional": false,
+          "nullable": false
+        }
+      ]
+    }
+  }
+}

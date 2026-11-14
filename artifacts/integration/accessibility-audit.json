@@ -1,0 +1,26 @@
+[
+  {
+    "path": "/protocol",
+    "violations": []
+  },
+  {
+    "path": "/selector?run=RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+    "violations": []
+  },
+  {
+    "path": "/patients/P-042?run=RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+    "violations": []
+  },
+  {
+    "path": "/monitor",
+    "violations": []
+  },
+  {
+    "path": "/cases?case=CASE-b7587421540e40019a2ace18b63f905d",
+    "violations": []
+  },
+  {
+    "path": "/audit",
+    "violations": []
+  }
+]

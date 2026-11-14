@@ -1,0 +1,2 @@
+200
+{"data": {"status": "ok", "database": "ok", "migrations": "current", "worker": "running", "llm": "disabled", "synthetic_only": true, "api_version": "v1", "contract_version": "1.0.0-rc2"}, "request_id": "f28cecdf-8e12-46a2-8a77-20180a36130c"}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "backend/tests/test_ai_integration.py::test_actual_gateway_monitoring_case_already_exists",
+    "-q",
+    "--basetemp",
+    "backend/var/qa-final-auto"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 3.137
+}

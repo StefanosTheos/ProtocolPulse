@@ -1,0 +1,122 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+________ test_real_adapter_gateway_and_ai_entrypoint[P-083-PX-EXC-02] _________
+
+env = (<starlette.testclient.TestClient object at 0x0000027EC9AE0C50>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000027EC88296A0>
+patient = 'P-083', criterion = 'PX-EXC-02'
+
+    @pytest.mark.parametrize('patient,criterion', [('P-083', 'PX-EXC-02'), ('P-124', 'PX-INC-03')])
+    def test_real_adapter_gateway_and_ai_entrypoint(env, monkeypatch, patient, criterion):
+        screen(env)
+        env[3].llm_enabled, env[3].llm_api_key = True, SecretStr('synthetic-ic-test-key')
+        monkeypatch.setenv('LLM_ENABLED', 'true')
+        monkeypatch.setenv('LLM_API_KEY', 'synthetic-ic-test-key')
+        from ai import entrypoints
+        monkeypatch.setattr(entrypoints, 'GeminiProvider', EvidenceDrivenModel)
+        response = env[0].post('/api/v1/agent-investigations', headers=headers(), json={
+            'role': 'EVIDENCE_INVESTIGATOR' if patient == 'P-124' else 'MEDICATION_SAFETY_INVESTIGATOR',
+            'trial_id': 'TR-PX104', 'protocol_version_id': 'PV-PX104-1.0', 'patient_id': patient,
+            'criterion_ids': [criterion], 'event_id': None, 'objective': 'Investigate actual scoped synthetic evidence.'})
+        assert response.status_code == 202, response.text
+        work(env)
+        execution = env[0].get('/api/v1/agent-executions/' + response.json()['data']['resource_id'], headers=headers()).json()['data']
+>       assert execution['status'] == 'PARTIAL', execution
+E       AssertionError: {'execution_id': 'EXEC-adca8860387f4a8b9daa897e9ec4d22a', 'role': 'MEDICATION_SAFETY_INVESTIGATOR', 'status': 'FAILED', 'trial_id': 'TR-PX104', ...}
+E       assert 'FAILED' == 'PARTIAL'
+E         
+E         - PARTIAL
+E         + FAILED
+
+backend\tests\test_ai_integration.py:81: AssertionError
+________ test_real_adapter_gateway_and_ai_entrypoint[P-124-PX-INC-03] _________
+
+env = (<starlette.testclient.TestClient object at 0x0000027EC9F86C60>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000027EC9B9EBD0>
+patient = 'P-124', criterion = 'PX-INC-03'
+
+    @pytest.mark.parametrize('patient,criterion', [('P-083', 'PX-EXC-02'), ('P-124', 'PX-INC-03')])
+    def test_real_adapter_gateway_and_ai_entrypoint(env, monkeypatch, patient, criterion):
+        screen(env)
+        env[3].llm_enabled, env[3].llm_api_key = True, SecretStr('synthetic-ic-test-key')
+        monkeypatch.setenv('LLM_ENABLED', 'true')
+        monkeypatch.setenv('LLM_API_KEY', 'synthetic-ic-test-key')
+        from ai import entrypoints
+        monkeypatch.setattr(entrypoints, 'GeminiProvider', EvidenceDrivenModel)
+        response = env[0].post('/api/v1/agent-investigations', headers=headers(), json={
+            'role': 'EVIDENCE_INVESTIGATOR' if patient == 'P-124' else 'MEDICATION_SAFETY_INVESTIGATOR',
+            'trial_id': 'TR-PX104', 'protocol_version_id': 'PV-PX104-1.0', 'patient_id': patient,
+            'criterion_ids': [criterion], 'event_id': None, 'objective': 'Investigate actual scoped synthetic evidence.'})
+        assert response.status_code == 202, response.text
+        work(env)
+        execution = env[0].get('/api/v1/agent-executions/' + response.json()['data']['resource_id'], headers=headers()).json()['data']
+>       assert execution['status'] == 'PARTIAL', execution
+E       AssertionError: {'execution_id': 'EXEC-6e2cff9e5f7d4a83bc637aadba68a2b0', 'role': 'EVIDENCE_INVESTIGATOR', 'status': 'FAILED', 'trial_id': 'TR-PX104', ...}
+E       assert 'FAILED' == 'PARTIAL'
+E         
+E         - PARTIAL
+E         + FAILED
+
+backend\tests\test_ai_integration.py:81: AssertionError
+_____________ test_actual_gateway_monitoring_case_already_exists ______________
+
+env = (<starlette.testclient.TestClient object at 0x0000027ECA0D17C0>, <backend.app.services.jobs.JobRunner object at 0x0000...12, job_poll_interval_ms=500, job_lease_seconds=60, job_max_attempts=3, job_retry_backoff_seconds=0, job_batch_size=1))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000027EC9E65940>
+
+    def test_actual_gateway_monitoring_case_already_exists(env, monkeypatch):
+        screen(env)
+        participate(env)
+        receipt = post_event(env).json()['data']
+        work(env)
+        case = env[0].get('/api/v1/trials/TR-PX104/cases', headers=headers()).json()['data']['items'][0]
+        assert case['status'] == 'OPEN'
+        env[3].llm_enabled, env[3].llm_api_key = True, SecretStr('synthetic-ic-test-key')
+        monkeypatch.setenv('LLM_ENABLED', 'true')
+        monkeypatch.setenv('LLM_API_KEY', 'synthetic-ic-test-key')
+    
+        class MonitoringModel(EvidenceDrivenModel):
+            async def next(self, req, tools):
+                names = [n for n, _ in self.seen]
+                if not names:
+                    return ToolCall('classify_event_relevance', {'event_id': req['event_id'], 'protocol_version_id': req['protocol_version_id']})
+                if 'get_prior_evaluation' not in names:
+                    assert self.seen[-1][1]['data']['category'] == 'RELEVANT'
+                    return ToolCall('get_prior_evaluation', {'patient_id': req['patient_id'],
+                        'criterion_ids': req['criterion_ids'], 'before_event_id': req['event_id']})
+                if 'get_case_status' not in names:
+                    return ToolCall('get_case_status', {'case_id': case['case_id']})
+                if 'retrieve_patient_evidence' not in names:
+                    return ToolCall('retrieve_patient_evidence', {'patient_id': req['patient_id'],
+                        'snapshot_id': req['evidence_snapshot_id'], 'criterion_ids': req['criterion_ids'],
+                        'evidence_types': ['ADMINISTRATION']})
+                return FinalProposal(summary='Backend case already exists for documented synthetic administration; investigator review remains required.',
+                    evidence_refs=[EvidenceReference.model_validate(r) for r in self.refs])
+    
+        from ai import entrypoints
+        monkeypatch.setattr(entrypoints, 'GeminiProvider', MonitoringModel)
+        response = env[0].post('/api/v1/agent-investigations', headers=headers(), json={
+            'role': 'MONITORING_WORKFLOW', 'trial_id': 'TR-PX104', 'protocol_version_id': 'PV-PX104-1.0',
+            'patient_id': 'P-042', 'criterion_ids': ['PX-MON-01'], 'event_id': receipt['event_id'],
+            'objective': 'Summarize the existing backend monitoring case.'})
+        assert response.status_code == 202, response.text
+        work(env)
+        execution = env[0].get('/api/v1/agent-executions/' + response.json()['data']['resource_id'], headers=headers()).json()['data']
+>       assert execution['status'] == 'SUCCEEDED', execution
+E       AssertionError: {'execution_id': 'EXEC-968a8f1b4a29459b9e49d9b7ef9d049d', 'role': 'MONITORING_WORKFLOW', 'status': 'FAILED', 'trial_id': 'TR-PX104', ...}
+E       assert 'FAILED' == 'SUCCEEDED'
+E         
+E         - SUCCEEDED
+E         + FAILED
+
+backend\tests\test_ai_integration.py:131: AssertionError
+============================== warnings summary ===============================
+.venv\Lib\site-packages\starlette\testclient.py:37
+  C:\Users\steve\OneDrive\Υπολογιστής\Hackathon\.venv\Lib\site-packages\starlette\testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend\tests\test_ai_integration.py::test_real_adapter_gateway_and_ai_entrypoint[P-083-PX-EXC-02]
+FAILED backend\tests\test_ai_integration.py::test_real_adapter_gateway_and_ai_entrypoint[P-124-PX-INC-03]
+FAILED backend\tests\test_ai_integration.py::test_actual_gateway_monitoring_case_already_exists
+3 failed, 1 warning in 3.22s

@@ -1,0 +1,4344 @@
+{
+  "/trials/TR-PX104": {
+    "title": "Fictional PX-104 synthetic study",
+    "fictional_product_code": "PX-104",
+    "site_id": "SITE-SYN-01",
+    "site_timezone": "Europe/Athens",
+    "planned_start_date": "2026-11-01",
+    "planned_end_date": "2027-01-24",
+    "synthetic_only": true,
+    "trial_id": "TR-PX104",
+    "active_protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "created_at": "2026-10-30T10:00:00Z",
+    "revision": 2,
+    "protocol_version_ids": [
+      "PV-PX104-1.0",
+      "PV-49f53ecfbfb749e7859418d2d7c61048"
+    ],
+    "patient_count": 15,
+    "finding_count": 3,
+    "trial_notice": "Synthetic demonstration. Screening is not enrollment; pharmacological interactions not assessed."
+  },
+  "/trials/TR-PX104/protocols/PV-49f53ecfbfb749e7859418d2d7c61048": {
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "trial_id": "TR-PX104",
+    "label": "IC-browser-1794692051545",
+    "state": "ACTIVE",
+    "revision": 4,
+    "source": {
+      "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+      "source_version": 1,
+      "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+      "filename": "PX-104-v1.0-fictional.pdf",
+      "mime_type": "application/pdf",
+      "created_at": "2026-11-14T21:34:12.349079Z",
+      "synthetic_only": true
+    },
+    "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+    "criteria": [
+      {
+        "criterion_id": "PX-EXC-01",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "type": "EXCLUSION",
+        "clinical_subject": "condition",
+        "operator": "ABSENCE_CONFIRMED_ACTIVE",
+        "threshold": "SYN-EXCLUDED-CONDITION",
+        "unit": null,
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": 0,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": true,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Verified active condition or reviewed record-completeness declaration for its absence.",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "The patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_page": 3,
+        "source_anchor": {
+          "start": 138,
+          "end": 563
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "APPROVED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": "ACT-INV-01",
+        "approved_at": "2026-11-14T21:34:14.389985Z"
+      },
+      {
+        "criterion_id": "PX-EXC-02",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "type": "EXCLUSION",
+        "clinical_subject": "medication",
+        "operator": "NO_RESTRICTED_USE",
+        "threshold": "SYN-CLASS-R",
+        "unit": null,
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": -30,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": false,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Dated verified administration/reliable reported use, or reviewed no-use reconciliation covering the full window.",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "The patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_page": 3,
+        "source_anchor": {
+          "start": 610,
+          "end": 1166
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "APPROVED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": "ACT-INV-01",
+        "approved_at": "2026-11-14T21:34:14.389985Z"
+      },
+      {
+        "criterion_id": "PX-INC-01",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "type": "INCLUSION",
+        "clinical_subject": "age",
+        "operator": "AGE_RANGE_INCLUSIVE",
+        "threshold": [
+          40.0,
+          70.0
+        ],
+        "unit": "years",
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": 0,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": true,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Sourced birth date with sufficient precision for age at screening. Reviewed against the source in integration QA.",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "The patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_page": 2,
+        "source_anchor": {
+          "start": 129,
+          "end": 418
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "APPROVED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": "ACT-INV-01",
+        "approved_at": "2026-11-14T21:34:14.389985Z"
+      },
+      {
+        "criterion_id": "PX-INC-02",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "type": "INCLUSION",
+        "clinical_subject": "diagnosis",
+        "operator": "CODE_CONFIRMED",
+        "threshold": "SYN-CONDITION-A",
+        "unit": null,
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": 0,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": true,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Verified condition code or synthetic adjudicated diagnosis note as of screening.",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "The patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_page": 2,
+        "source_anchor": {
+          "start": 459,
+          "end": 803
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "APPROVED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": "ACT-INV-01",
+        "approved_at": "2026-11-14T21:34:14.389985Z"
+      },
+      {
+        "criterion_id": "PX-INC-03",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "type": "INCLUSION",
+        "clinical_subject": "egfr",
+        "operator": "LAB_GTE",
+        "threshold": 60.0,
+        "unit": "mL/min/1.73m\u00b2",
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": -30,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": true,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Latest relevant numeric eGFR with valid specimen date, provenance and reviewed unit.",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "The latest relevant eGFR must be at least 60 mL/min/1.73m\u00b2. Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_page": 2,
+        "source_anchor": {
+          "start": 837,
+          "end": 1266
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "APPROVED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": "ACT-INV-01",
+        "approved_at": "2026-11-14T21:34:14.389985Z"
+      },
+      {
+        "criterion_id": "PX-MON-01",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "type": "MONITORING",
+        "clinical_subject": "medication",
+        "operator": "EVENT_RESTRICTED_USE",
+        "threshold": "SYN-CLASS-R",
+        "unit": null,
+        "window": {
+          "anchor": "PARTICIPATION",
+          "start_offset_days": null,
+          "end_offset_days": null,
+          "start_inclusive": true,
+          "end_inclusive": false,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "INSTANT"
+        },
+        "evidence_requirement": "Confirmed dated administration or reliable documented use during participation.",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "During human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_page": 4,
+        "source_anchor": {
+          "start": 150,
+          "end": 598
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+        "workflow_status": "APPROVED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": "ACT-INV-01",
+        "approved_at": "2026-11-14T21:34:14.389985Z"
+      },
+      {
+        "criterion_id": "PX-MON-02",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "type": "MONITORING",
+        "clinical_subject": "medication",
+        "operator": "EVENT_ORDER_ONLY",
+        "threshold": "SYN-CLASS-R",
+        "unit": null,
+        "window": {
+          "anchor": "PARTICIPATION",
+          "start_offset_days": null,
+          "end_offset_days": null,
+          "start_inclusive": true,
+          "end_inclusive": false,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "INSTANT"
+        },
+        "evidence_requirement": "Dated restricted-class order/dispense with no confirmed use, requiring human reconciliation.",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "During human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_page": 4,
+        "source_anchor": {
+          "start": 643,
+          "end": 1076
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+        "workflow_status": "APPROVED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": "ACT-INV-01",
+        "approved_at": "2026-11-14T21:34:14.389985Z"
+      },
+      {
+        "criterion_id": "PX-MON-03",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "type": "MONITORING",
+        "clinical_subject": "egfr",
+        "operator": "EVENT_LAB_LT",
+        "threshold": 60.0,
+        "unit": "mL/min/1.73m\u00b2",
+        "window": {
+          "anchor": "PARTICIPATION",
+          "start_offset_days": null,
+          "end_offset_days": null,
+          "start_inclusive": true,
+          "end_inclusive": false,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "INSTANT"
+        },
+        "evidence_requirement": "New synthetic numeric eGFR below the fictional threshold during participation, with valid units and specimen/effective time.",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "During human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m\u00b2 requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "source_page": 4,
+        "source_anchor": {
+          "start": 1105,
+          "end": 1523
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+        "workflow_status": "APPROVED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": "ACT-INV-01",
+        "approved_at": "2026-11-14T21:34:14.389985Z"
+      }
+    ],
+    "coverage": [
+      {
+        "section_id": "PX-INFO-CALENDAR",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 1,
+        "span_start": 567,
+        "span_end": 1146,
+        "status": "INFORMATIONAL",
+        "criterion_ids": [],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-INFO-EVIDENCE",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 5,
+        "span_start": 123,
+        "span_end": 717,
+        "status": "INFORMATIONAL",
+        "criterion_ids": [],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-INFO-IDENTITY",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 1,
+        "span_start": 106,
+        "span_end": 567,
+        "status": "INFORMATIONAL",
+        "criterion_ids": [],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-INFO-REVIEW",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 5,
+        "span_start": 717,
+        "span_end": 1491,
+        "status": "INFORMATIONAL",
+        "criterion_ids": [],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-SECTION-EXC-01",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 3,
+        "span_start": 97,
+        "span_end": 563,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-EXC-01"
+        ],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-SECTION-EXC-02",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 3,
+        "span_start": 563,
+        "span_end": 1166,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-EXC-02"
+        ],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-SECTION-INC-01",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 2,
+        "span_start": 97,
+        "span_end": 418,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-INC-01"
+        ],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-SECTION-INC-02",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 2,
+        "span_start": 418,
+        "span_end": 803,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-INC-02"
+        ],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-SECTION-INC-03",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 2,
+        "span_start": 803,
+        "span_end": 1266,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-INC-03"
+        ],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-SECTION-MON-01",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 4,
+        "span_start": 110,
+        "span_end": 598,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-MON-01"
+        ],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-SECTION-MON-02",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 4,
+        "span_start": 598,
+        "span_end": 1076,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-MON-02"
+        ],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      },
+      {
+        "section_id": "PX-SECTION-MON-03",
+        "source_id": "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9",
+        "page": 4,
+        "span_start": 1076,
+        "span_end": 1523,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-MON-03"
+        ],
+        "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+      }
+    ],
+    "coverage_signed_by": "ACT-INV-01",
+    "coverage_signed_at": "2026-11-14T21:34:14.389985Z",
+    "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+    "approved_at": "2026-11-14T21:34:14.389985Z",
+    "extraction_job_id": "JOB-dcf6ce3e3377438d829cdd34bd83939b",
+    "blocking_count": 0
+  },
+  "/screenings/RUN-4d35eb9ab34a47f099e3a3c6898c91d0": {
+    "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+    "trial_id": "TR-PX104",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+    "screening_date": "2026-10-31",
+    "evidence_cutoff_at": "2026-10-31T22:00:00Z",
+    "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+    "engine_version": "px104-eval-v1",
+    "terminology_map_version": "px104-terminology-v1",
+    "status": "COMPLETE",
+    "job_id": "JOB-65668163c1e44c129c4340cea0f7fc4a",
+    "patient_count": 15,
+    "counts": {
+      "POTENTIAL_MATCH": 3,
+      "NEEDS_REVIEW": 6,
+      "PROTOCOL_CONFLICT": 6,
+      "EVALUATION_ERROR": 0
+    },
+    "created_at": "2026-11-14T21:34:14.891465Z",
+    "completed_at": "2026-11-14T21:34:22.752298Z",
+    "stale": false,
+    "error_code": null
+  },
+  "/screenings/RUN-4d35eb9ab34a47f099e3a3c6898c91d0/assessments?limit=100": {
+    "items": [
+      {
+        "assessment_id": "ASM-09d4e048147d487c93111e8cdc03f8d5",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-042",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "POTENTIAL_MATCH",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-52e89feb905146e8b56a51a228d42f45",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-042-excluded_condition_absence",
+                "source_id": "SRC-P-042-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-0e9879b00fce439487a134952b5e2d9b",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-042-no_restricted_use",
+                "source_id": "SRC-P-042-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-4874248dadf043d5a7f4658dd3be6ea0",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-042-birth_date",
+                "source_id": "SRC-P-042-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 58 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-4fcf0827e5b94dd79ee57fbfdbaef842",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-042-A",
+                "source_id": "SRC-P-042-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-0698798fc97e43ffbce9e99e3455119e",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-042-0",
+                "source_id": "SRC-P-042-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 82.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-4fc84b4cd7b5461a960f1a362ed32acb",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-083",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-a56cc871f5824082aaa4dbcf49e49d97",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-083-excluded_condition_absence",
+                "source_id": "SRC-P-083-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-132ebeab9157456799c16d17b2be36d3",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "ORDER_ONLY"
+            ],
+            "evidence_refs": [
+              {
+                "evidence_id": "MED-P-083-1",
+                "source_id": "SRC-P-083-med",
+                "source_version": 1,
+                "evidence_type": "ORDER",
+                "effective_at": "2026-10-14T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Medication evidence unresolved",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-f8b71120e74046988ea0b28667c5fb2b",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-083-birth_date",
+                "source_id": "SRC-P-083-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 50 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-fdf33c8c0e844a698ccab7e9d85970ed",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-083-A",
+                "source_id": "SRC-P-083-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-f5ecb9b28fcc44adada889efee0797b3",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-083-0",
+                "source_id": "SRC-P-083-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 80.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-ed3a76c72fbd473987468a31582387e1",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-117",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "PROTOCOL_CONFLICT",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-b6a1059515e94b3bba7f4a639e7668a3",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-117-excluded_condition_absence",
+                "source_id": "SRC-P-117-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-cc3386259fcd42b6ad0107811be48ea8",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "FAIL",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "MED-P-117-1",
+                "source_id": "SRC-P-117-med",
+                "source_version": 1,
+                "evidence_type": "ADMINISTRATION",
+                "effective_at": "2026-10-14T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 50
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Confirmed restricted use inside approved window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-02a417a79e0844e9912642f941826e65",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-117-birth_date",
+                "source_id": "SRC-P-117-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 52 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-b21ce772b500496086eecfe366f810f9",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-117-A",
+                "source_id": "SRC-P-117-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-7b32d86d26444d3cb3ef20d0b51b6363",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-117-0",
+                "source_id": "SRC-P-117-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-f49def9380d24844938e0dbd8c0b7921",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-118",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "POTENTIAL_MATCH",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-f2eddeb2b39844778a52eb3bf46a3237",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-118-excluded_condition_absence",
+                "source_id": "SRC-P-118-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-9eec2e0335f14e38b3bce8dbb1c84cb1",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-118-no_restricted_use",
+                "source_id": "SRC-P-118-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-d915db4d230d461c9f12b37172c1bc37",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-118-birth_date",
+                "source_id": "SRC-P-118-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 51 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-df135c403b0e4ae7b508bf100fe9f654",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-118-A",
+                "source_id": "SRC-P-118-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-c8301ca001aa4f0ba0fc83952a61a079",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-118-0",
+                "source_id": "SRC-P-118-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-859f87c9a4944b3a8dcc36b122f2e45d",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-124",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-986e6426f44e47f381572d6e14db55e5",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-124-excluded_condition_absence",
+                "source_id": "SRC-P-124-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-bb056e91304841a2bd7d3450c9929ff0",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-124-no_restricted_use",
+                "source_id": "SRC-P-124-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-faacf04eb57c4c77ae5c0295e669e47f",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-124-birth_date",
+                "source_id": "SRC-P-124-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 54 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-763f0e781cc340c58ac1a515a7c3a239",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-124-A",
+                "source_id": "SRC-P-124-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-75fb6f94028546a1958d7342e1d0e084",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "OUTDATED_LAB"
+            ],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-124-0",
+                "source_id": "SRC-P-124-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-08-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "OUTDATED_LAB",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 80.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-8b84e69900754ea6908f8744771b0f35",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-140",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-9526e8bca7ac4402b2452915f5fe0a11",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-140-excluded_condition_absence",
+                "source_id": "SRC-P-140-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-a7580704c6b14142866270d0cfe665de",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "CONFLICTING_SOURCES"
+            ],
+            "evidence_refs": [
+              {
+                "evidence_id": "MED-P-140-1",
+                "source_id": "SRC-P-140-med",
+                "source_version": 1,
+                "evidence_type": "REPORTED_USE",
+                "effective_at": "2026-10-14T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 48
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "CONFLICTING_SOURCES",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-29978aaa8c1a44f29a35fd30ddc222a5",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-140-birth_date",
+                "source_id": "SRC-P-140-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 49 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-21c4002596ba40f2ad88a4d6058d01b3",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-140-A",
+                "source_id": "SRC-P-140-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-d1e3faf3a7124ad6824023c805ca46e1",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-140-0",
+                "source_id": "SRC-P-140-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 80.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-a298a384b7474b0197d8190fb76147bb",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-151",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "POTENTIAL_MATCH",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-b1683f562813405ab02d4a7e31abdc15",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-151-excluded_condition_absence",
+                "source_id": "SRC-P-151-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-82601f12ad8c401db49b5c9fdb90cb0e",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-151-no_restricted_use",
+                "source_id": "SRC-P-151-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-b20c9bc5f39146fb9e436947f2354efa",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-151-birth_date",
+                "source_id": "SRC-P-151-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 48 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-306d40b024364ff08b15790af8324a97",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-151-A",
+                "source_id": "SRC-P-151-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-8899876949a4477caef9bf6f9ff6c579",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-151-0",
+                "source_id": "SRC-P-151-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-c2b596c37d83437ab596a25ead83ad41",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-161",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "PROTOCOL_CONFLICT",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-39e4a27e834a4a7ab4f326a3bdadae7f",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-161-excluded_condition_absence",
+                "source_id": "SRC-P-161-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-28eabd17785e492f843f8e99e7cbd817",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-161-no_restricted_use",
+                "source_id": "SRC-P-161-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-0e80f7e8d50b442a9b7970f015b1d263",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-161-birth_date",
+                "source_id": "SRC-P-161-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 53 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-e500a9c9a09843af8f9b48bd923a8697",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-161-A",
+                "source_id": "SRC-P-161-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-641399dac8fb494ba6d48decfe0dd3bc",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "FAIL",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-161-0",
+                "source_id": "SRC-P-161-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 54.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-53b09420bac742d887b75171f1c1ad47",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-175",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "PROTOCOL_CONFLICT",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-55462c8b4e934aa9ba606f086cfb9be1",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "FAIL",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-175-X",
+                "source_id": "SRC-P-175-exclusion",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 49
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-1977a1ec3589404d91ce9cdb05475f4b",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-175-no_restricted_use",
+                "source_id": "SRC-P-175-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-ba2b60040caa45a9815ff36366d34efa",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-175-birth_date",
+                "source_id": "SRC-P-175-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 55 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-51e208c97be94b0699f5239f2c2e9f33",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-175-A",
+                "source_id": "SRC-P-175-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-aecbf41eacd14de4a90e0d5ae0914b9b",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-175-0",
+                "source_id": "SRC-P-175-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-be612e7a20b949d49364b8a1a1885854",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-201",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "PROTOCOL_CONFLICT",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-b4f98a0f528245e7974e2ff76f9273b3",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-201-excluded_condition_absence",
+                "source_id": "SRC-P-201-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-9dad91ae3ee240c482dc4a487265b0c7",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-201-no_restricted_use",
+                "source_id": "SRC-P-201-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-0b7973b9ed7a4a4fa65e0676cc268c83",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "FAIL",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-201-birth_date",
+                "source_id": "SRC-P-201-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 36 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-f03844d7bf334f90a1fd9080a744804f",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-201-A",
+                "source_id": "SRC-P-201-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-d15c908bc17c4c0bb55a4ec2122b1a03",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-201-0",
+                "source_id": "SRC-P-201-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-7843b819711d4863ad8e7a01587688c9",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-202",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "PROTOCOL_CONFLICT",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-0a810ba6af0b4f0fae0bafe78cc82477",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-202-excluded_condition_absence",
+                "source_id": "SRC-P-202-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-c80280d7c7f4481c8f659b6d189f3135",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-202-no_restricted_use",
+                "source_id": "SRC-P-202-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-fdba584586e44be5aa31c8b48e51dc62",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "FAIL",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-202-birth_date",
+                "source_id": "SRC-P-202-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 86 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-aa2e4917c96c4bfea78bf652d4e429d4",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-202-A",
+                "source_id": "SRC-P-202-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-65519b9639274f54b45ffa3cfcac14f1",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-202-0",
+                "source_id": "SRC-P-202-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-a7c0726023ea496ca8b650bd6e4c7ab8",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-203",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-5fe1c4f688504a84999cdae28a8ece71",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-203-excluded_condition_absence",
+                "source_id": "SRC-P-203-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-8347ccba1b0b4e71bbae6acd5b3ff61b",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "UNMAPPED_CODE"
+            ],
+            "evidence_refs": [
+              {
+                "evidence_id": "MED-P-203-1",
+                "source_id": "SRC-P-203-med",
+                "source_version": 1,
+                "evidence_type": "ADMINISTRATION",
+                "effective_at": "2026-10-14T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 50
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Medication evidence unresolved",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-d3c96c7a9c9442fcbf06a9ebbbdcc81a",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-203-birth_date",
+                "source_id": "SRC-P-203-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 55 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-13412dd3134c4fa296db816c7ca36a7e",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-203-A",
+                "source_id": "SRC-P-203-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-9c59e01855ed482092b1c59460a8efe8",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-203-0",
+                "source_id": "SRC-P-203-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 80.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-df8d1eaf27f742b081207524a708c93d",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-204",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-6dd71f7fa8cc4128b682dc890b3978ce",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-204-excluded_condition_absence",
+                "source_id": "SRC-P-204-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-cbba2665b3d8481bad431114a13843ea",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "DATE_AMBIGUOUS"
+            ],
+            "evidence_refs": [
+              {
+                "evidence_id": "MED-P-204-1",
+                "source_id": "SRC-P-204-med",
+                "source_version": 1,
+                "evidence_type": "ADMINISTRATION",
+                "effective_at": null,
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 65
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Medication evidence unresolved",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-cd95aeb2405740f4808638c0cd519d7c",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-204-birth_date",
+                "source_id": "SRC-P-204-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 54 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-2fcc0894637343efa06560919afc4338",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-204-A",
+                "source_id": "SRC-P-204-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-7d3051a0c58c467dbb4e6171a8f8e824",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-204-0",
+                "source_id": "SRC-P-204-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 80.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-8c872b177e3a44f4bee9e83a6edf250a",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-205",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "NEEDS_REVIEW",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-58c8305881704577921a4b015fa7c8ff",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "UNKNOWN",
+            "reason_codes": [
+              "INSUFFICIENT_ABSENCE_EVIDENCE"
+            ],
+            "evidence_refs": [],
+            "considered_interval": null,
+            "explanation": "INSUFFICIENT_ABSENCE_EVIDENCE",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-e6745d71d8b44aa7a4419dc64f67d10a",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-205-no_restricted_use",
+                "source_id": "SRC-P-205-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-f00f7d86aafa4bf7ba829cfe3cca0266",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-205-birth_date",
+                "source_id": "SRC-P-205-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 53 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-2bd90896894649088c2f406068bbbe0c",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-205-A",
+                "source_id": "SRC-P-205-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-f3eb9baca2394be5b8140cbc1575661d",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-205-0",
+                "source_id": "SRC-P-205-lab-0",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-19T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-20: 78.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 80.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      },
+      {
+        "assessment_id": "ASM-3805efe8126f4d93bc724babea505898",
+        "run_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-206",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+        "evidence_snapshot_id": "SNAP-060682fde42945da9134f05c41b3bfa2",
+        "assessment_type": "SCREENING",
+        "screening_date": "2026-10-31",
+        "evaluation_at": "2026-11-14T21:34:22.752298Z",
+        "evaluation_state": "COMPLETE",
+        "candidate_status": "PROTOCOL_CONFLICT",
+        "criteria": [
+          {
+            "criterion_result_id": "RES-4a760ddeb41048e59498ba16cf78cadb",
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-206-excluded_condition_absence",
+                "source_id": "SRC-P-206-excluded_condition_absence",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 152
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Reviewed explicit condition absence",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-5a7ea7e32d5940e6ab7d6b1910e5e2b6",
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-206-no_restricted_use",
+                "source_id": "SRC-P-206-no_restricted_use",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 223
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-30T22:00:00Z"
+            },
+            "explanation": "Reviewed no-use reconciliation covers complete window",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-7d1b2c7cc4974aaaa9c6c4676c09aeb6",
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "FACT-P-206-birth_date",
+                "source_id": "SRC-P-206-birth_date",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2026-10-30T10:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 41
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Age 52 within inclusive (40.0, 70.0)",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-86364c96c74e4b28bfbd6887b02cf2c5",
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "PASS",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "COND-P-206-A",
+                "source_id": "SRC-P-206-diagnosis",
+                "source_version": 1,
+                "evidence_type": "OTHER",
+                "effective_at": "2024-05-31T21:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 59
+              }
+            ],
+            "considered_interval": null,
+            "explanation": "Verified active condition at screening",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          },
+          {
+            "criterion_result_id": "RES-b92c5fe1608c436db71dfe29b13bc0ba",
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+            "status": "FAIL",
+            "reason_codes": [],
+            "evidence_refs": [
+              {
+                "evidence_id": "LAB-P-206-2",
+                "source_id": "SRC-P-206-lab-2",
+                "source_version": 1,
+                "evidence_type": "LAB",
+                "effective_at": "2026-10-28T22:00:00Z",
+                "recorded_at": "2026-10-30T10:00:00Z",
+                "page": null,
+                "span_start": 0,
+                "span_end": 52
+              }
+            ],
+            "considered_interval": {
+              "start": "2026-09-30T21:00:00Z",
+              "end": "2026-10-31T22:00:00Z"
+            },
+            "explanation": "Latest specimen 2026-10-29: 58.0 mL/min/1.73m\u00b2; minimum 60.0",
+            "evaluated_at": "2026-11-14T21:34:22.752298Z"
+          }
+        ],
+        "before_assessment_id": null,
+        "caused_by_event_id": null,
+        "related_finding_ids": [],
+        "evidence_completeness_percent": 100.0,
+        "participation_status": "NOT_ENROLLED",
+        "stale": false
+      }
+    ],
+    "page": {
+      "next_cursor": null,
+      "limit": 100,
+      "total_count": 15
+    }
+  },
+  "/trials/TR-PX104/patients/P-042": {
+    "patient_id": "P-042",
+    "trial_id": "TR-PX104",
+    "synthetic_only": true,
+    "site_id": "SITE-SYN-01",
+    "screening_snapshot_date": "2026-10-31",
+    "demographics": {
+      "birth_date": {
+        "fact_id": "FACT-P-042-birth_date",
+        "value": "1968-06-15",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-birth_date",
+          "source_id": "SRC-P-042-birth_date",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 41
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "sex_at_birth": {
+        "fact_id": "FACT-P-042-sex_at_birth",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-sex_at_birth",
+          "source_id": "SRC-P-042-sex_at_birth",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 35
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_RECORDED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "location_jurisdiction": {
+        "fact_id": "FACT-P-042-location_jurisdiction",
+        "value": "Synthetic Athens site; Greece",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-location_jurisdiction",
+          "source_id": "SRC-P-042-location_jurisdiction",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 71
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    },
+    "index_disease": {
+      "code": "SYN-CONDITION-A",
+      "diagnosis_criteria": [
+        {
+          "fact_id": "COND-P-042-A",
+          "value": "SYN-CONDITION-A",
+          "unit": null,
+          "effective_at": "2024-05-31T21:00:00Z",
+          "onset_date": "2024-06-01",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "COND-P-042-A",
+            "source_id": "SRC-P-042-diagnosis",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2024-05-31T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 59
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "severity": {
+        "fact_id": "FACT-P-042-severity",
+        "value": "Synthetic moderate label; no selection restriction",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-severity",
+          "source_id": "SRC-P-042-severity",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 79
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "first_onset": {
+        "fact_id": "FACT-P-042-first_onset",
+        "value": "2024-06-01",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-first_onset",
+          "source_id": "SRC-P-042-first_onset",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 42
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "diagnostic_evidence": [
+        {
+          "evidence_id": "COND-P-042-A",
+          "source_id": "SRC-P-042-diagnosis",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2024-05-31T21:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 59
+        }
+      ]
+    },
+    "medical_conditions": [
+      {
+        "fact_id": "COND-P-042-A",
+        "value": "SYN-CONDITION-A",
+        "unit": null,
+        "effective_at": "2024-05-31T21:00:00Z",
+        "onset_date": "2024-06-01",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "COND-P-042-A",
+          "source_id": "SRC-P-042-diagnosis",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2024-05-31T21:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 59
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "surgeries_hospitalizations": [
+      {
+        "fact_id": "FACT-P-042-surgery_history",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-surgery_history",
+          "source_id": "SRC-P-042-surgery_history",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 38
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "family_history": [
+      {
+        "fact_id": "FACT-P-042-family_history",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-family_history",
+          "source_id": "SRC-P-042-family_history",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 37
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_RECORDED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "genetics": [
+      {
+        "fact_id": "FACT-P-042-genotype",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-genotype",
+          "source_id": "SRC-P-042-genotype",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 31
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "symptom_history": [
+      {
+        "fact_id": "FACT-P-042-symptom_course",
+        "value": "Synthetic symptoms recorded 2024-06; stable at October encounter",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-symptom_course",
+          "source_id": "SRC-P-042-symptom_course",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 99
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "observations": [
+      {
+        "kind": "LAB",
+        "analyte_code": "egfr",
+        "observation": {
+          "fact_id": "LAB-P-042-0",
+          "value": 82.0,
+          "unit": "mL/min/1.73m\u00b2",
+          "effective_at": "2026-10-19T21:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "LAB-P-042-0",
+            "source_id": "SRC-P-042-lab-0",
+            "source_version": 1,
+            "evidence_type": "LAB",
+            "effective_at": "2026-10-19T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 52
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "FUNCTIONAL",
+        "analyte_code": "SYN-FUNCTIONAL",
+        "observation": {
+          "fact_id": "OBS-P-042-FUNCTIONAL",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-FUNCTIONAL",
+            "source_id": "SRC-P-042-FUNCTIONAL",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 33
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "PULMONARY",
+        "analyte_code": "SYN-PULMONARY",
+        "observation": {
+          "fact_id": "OBS-P-042-PULMONARY",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-PULMONARY",
+            "source_id": "SRC-P-042-PULMONARY",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 32
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "ECG",
+        "analyte_code": "SYN-ECG",
+        "observation": {
+          "fact_id": "OBS-P-042-ECG",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-ECG",
+            "source_id": "SRC-P-042-ECG",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 26
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "IMAGING",
+        "analyte_code": "SYN-IMAGING",
+        "observation": {
+          "fact_id": "OBS-P-042-IMAGING",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-IMAGING",
+            "source_id": "SRC-P-042-IMAGING",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 30
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "VITAL",
+        "analyte_code": "SYN-VITAL",
+        "observation": {
+          "fact_id": "OBS-P-042-VITAL",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-VITAL",
+            "source_id": "SRC-P-042-VITAL",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 28
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      }
+    ],
+    "medications": [
+      {
+        "exposure_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+        "medication_code": "SYN-MED-R1",
+        "mapped_class": "SYN-CLASS-R",
+        "evidence_type": "ADMINISTRATION",
+        "asserted_start_at": "2026-11-19T07:30:00Z",
+        "asserted_end_exclusive_at": null,
+        "dose": {
+          "fact_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+          "value": 1.0,
+          "unit": "synthetic-unit",
+          "effective_at": "2026-11-19T07:30:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-11-20T09:00:00Z",
+          "ingested_at": "2026-11-14T21:34:24.646349Z",
+          "source": {
+            "evidence_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+            "source_id": "SRC-MED-D18-P042",
+            "source_version": 1,
+            "evidence_type": "ADMINISTRATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "route": {
+          "fact_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+          "value": "ORAL",
+          "unit": null,
+          "effective_at": "2026-11-19T07:30:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-11-20T09:00:00Z",
+          "ingested_at": "2026-11-14T21:34:24.646349Z",
+          "source": {
+            "evidence_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+            "source_id": "SRC-MED-D18-P042",
+            "source_version": 1,
+            "evidence_type": "ADMINISTRATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "last_changed_at": "2026-11-20T09:00:00Z",
+        "stop_reason": null,
+        "adverse_reactions": [],
+        "evidence": {
+          "fact_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+          "value": "SYN-MED-R1",
+          "unit": null,
+          "effective_at": "2026-11-19T07:30:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-11-20T09:00:00Z",
+          "ingested_at": "2026-11-14T21:34:24.646349Z",
+          "source": {
+            "evidence_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+            "source_id": "SRC-MED-D18-P042",
+            "source_version": 1,
+            "evidence_type": "ADMINISTRATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "source": {
+          "evidence_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+          "source_id": "SRC-MED-D18-P042",
+          "source_version": 1,
+          "evidence_type": "ADMINISTRATION",
+          "effective_at": "2026-11-19T07:30:00Z",
+          "recorded_at": "2026-11-20T09:00:00Z",
+          "page": null,
+          "span_start": null,
+          "span_end": null
+        }
+      }
+    ],
+    "study_product_exposure": {
+      "blinded": true,
+      "assignment_masked": {
+        "fact_id": "FACT-P-042-assignment_masked",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-assignment_masked",
+          "source_id": "SRC-P-042-assignment_masked",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 40
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_APPLICABLE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "exposures": []
+    },
+    "prior_clinical_research": [
+      {
+        "research_id": "RES-P-042",
+        "kind": "OBSERVATIONAL",
+        "exposure": null,
+        "last_dose_at": null,
+        "half_life_hours": null,
+        "completion_status": "NOT_ASSESSED",
+        "ongoing_restrictions": [],
+        "source": {
+          "evidence_id": "RES-P-042",
+          "source_id": "SRC-P-042-prior",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 70
+        }
+      }
+    ],
+    "procedures_and_imaging": [
+      {
+        "fact_id": "FACT-P-042-procedure_review",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-procedure_review",
+          "source_id": "SRC-P-042-procedure_review",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 39
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "allergies": [
+      {
+        "fact_id": "FACT-P-042-allergy_review",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-allergy_review",
+          "source_id": "SRC-P-042-allergy_review",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 37
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "pregnancy_contraception": [
+      {
+        "fact_id": "FACT-P-042-pregnancy_review",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-pregnancy_review",
+          "source_id": "SRC-P-042-pregnancy_review",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 39
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "decision_capacity": {
+      "fact_id": "FACT-P-042-decision_capacity",
+      "value": null,
+      "unit": null,
+      "effective_at": "2026-10-30T10:00:00Z",
+      "onset_date": null,
+      "recorded_at": "2026-10-30T10:00:00Z",
+      "ingested_at": "2026-10-30T10:00:00Z",
+      "source": {
+        "evidence_id": "FACT-P-042-decision_capacity",
+        "source_id": "SRC-P-042-decision_capacity",
+        "source_version": 1,
+        "evidence_type": "OTHER",
+        "effective_at": "2026-10-30T10:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 40
+      },
+      "evidence_quality": "HIGH",
+      "evidence_state": "NOT_ASSESSED",
+      "time_uncertainty": null,
+      "verification_status": "VERIFIED"
+    },
+    "study_partner": {
+      "fact_id": "FACT-P-042-study_partner",
+      "value": null,
+      "unit": null,
+      "effective_at": "2026-10-30T10:00:00Z",
+      "onset_date": null,
+      "recorded_at": "2026-10-30T10:00:00Z",
+      "ingested_at": "2026-10-30T10:00:00Z",
+      "source": {
+        "evidence_id": "FACT-P-042-study_partner",
+        "source_id": "SRC-P-042-study_partner",
+        "source_version": 1,
+        "evidence_type": "OTHER",
+        "effective_at": "2026-10-30T10:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 36
+      },
+      "evidence_quality": "HIGH",
+      "evidence_state": "NOT_RECORDED",
+      "time_uncertainty": null,
+      "verification_status": "VERIFIED"
+    },
+    "administration_ability": {
+      "fact_id": "FACT-P-042-administration_ability",
+      "value": null,
+      "unit": null,
+      "effective_at": "2026-10-30T10:00:00Z",
+      "onset_date": null,
+      "recorded_at": "2026-10-30T10:00:00Z",
+      "ingested_at": "2026-10-30T10:00:00Z",
+      "source": {
+        "evidence_id": "FACT-P-042-administration_ability",
+        "source_id": "SRC-P-042-administration_ability",
+        "source_version": 1,
+        "evidence_type": "OTHER",
+        "effective_at": "2026-10-30T10:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 45
+      },
+      "evidence_quality": "HIGH",
+      "evidence_state": "NOT_ASSESSED",
+      "time_uncertainty": null,
+      "verification_status": "VERIFIED"
+    },
+    "encounters": [
+      {
+        "encounter_id": "ENC-P-042",
+        "occurred_at": "2026-10-30T10:00:00Z",
+        "source_ids": [
+          "SRC-P-042-narrative"
+        ],
+        "summary": "Synthetic pre-screen source review"
+      }
+    ],
+    "source_document_index": [
+      {
+        "source_id": "SRC-P-042-birth_date",
+        "source_version": 1,
+        "sha256": "777e30c9d2eeeb45dad3ffec090ef425a88d7212452d6d4e80c70969466a8dda",
+        "filename": "SRC-P-042-birth_date.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-sex_at_birth",
+        "source_version": 1,
+        "sha256": "bc677c824c6a4e538a8711c722890303765dde4265e2c3db77eaf42eaad91f78",
+        "filename": "SRC-P-042-sex_at_birth.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-location_jurisdiction",
+        "source_version": 1,
+        "sha256": "2e5b19518b59c74267544185adc132b38bbf35fbdae41565e2879a87e25938b7",
+        "filename": "SRC-P-042-location_jurisdiction.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-severity",
+        "source_version": 1,
+        "sha256": "1e73b1a5ea2c5b146276d4b472d46b3ac5fb21f4afbef5d7519af00d57505f1a",
+        "filename": "SRC-P-042-severity.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-first_onset",
+        "source_version": 1,
+        "sha256": "603405bc907b2eb71ccc611201b5ff21b63cca4607de4a6739dd3c3e57e1f8ea",
+        "filename": "SRC-P-042-first_onset.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-surgery_history",
+        "source_version": 1,
+        "sha256": "7a45599ba824d51a070fdc59cc1e01b11841cb3cff25b0a049375a5c665ecee7",
+        "filename": "SRC-P-042-surgery_history.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-family_history",
+        "source_version": 1,
+        "sha256": "fb3c13a3def6cb7313ad59fa0804f7eb0d3ff1fb3fecf070dc2961781fc97ff9",
+        "filename": "SRC-P-042-family_history.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-genotype",
+        "source_version": 1,
+        "sha256": "114fa829cc0f8864e866972852585158e601f7eaabf5abaf9e319b4a21a85d20",
+        "filename": "SRC-P-042-genotype.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-symptom_course",
+        "source_version": 1,
+        "sha256": "8fbcb0a8dc1060b3974fc9998696eead2f60652c6bdb4e664913aea3a9de4a8a",
+        "filename": "SRC-P-042-symptom_course.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-procedure_review",
+        "source_version": 1,
+        "sha256": "e3b5c0dab44e049778436077eda63108a65f4e6f81c3b0d6cd95db3daa6016de",
+        "filename": "SRC-P-042-procedure_review.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-allergy_review",
+        "source_version": 1,
+        "sha256": "0b94bfd2670ec78930712db6431513a4589a29a274396aec6730582de97bbadb",
+        "filename": "SRC-P-042-allergy_review.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-pregnancy_review",
+        "source_version": 1,
+        "sha256": "f5678ea0ac1faf41254c9ff34f99e9bb374054e9a412336cb7d07d0d2d4145ef",
+        "filename": "SRC-P-042-pregnancy_review.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-decision_capacity",
+        "source_version": 1,
+        "sha256": "8e8f36be10d896c8abc248a030c1d480be27a4f0e619fa5b15f7199c66dfee23",
+        "filename": "SRC-P-042-decision_capacity.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-study_partner",
+        "source_version": 1,
+        "sha256": "2ebeefd62f0432db921b90f00f3b75634ad047df38424231cca68a9f8d97c83b",
+        "filename": "SRC-P-042-study_partner.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-administration_ability",
+        "source_version": 1,
+        "sha256": "9cf5309c61dc274d9fbf9f67acb50bba5f0631b8381c65ecae1890794ee71263",
+        "filename": "SRC-P-042-administration_ability.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-assignment_masked",
+        "source_version": 1,
+        "sha256": "8c3e8866c5c4cf5f2a03609ab491465ca86350c528fa05243bcf1c0bed7a2a97",
+        "filename": "SRC-P-042-assignment_masked.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-excluded_condition_absence",
+        "source_version": 1,
+        "sha256": "058bcf171efa7f082e7d066f7725c69156b595b0941e9467ae86a65ef38723c9",
+        "filename": "SRC-P-042-excluded_condition_absence.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-no_restricted_use",
+        "source_version": 1,
+        "sha256": "b8dcf0274f56c4fc3e379a9937e7ba1b02d0ab864496a80c61cb5a0be1ec1852",
+        "filename": "SRC-P-042-no_restricted_use.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-diagnosis",
+        "source_version": 1,
+        "sha256": "60fb08499d0ca772db16d5e68824d0e1ee759c5cb0dc70b80a8a82b8a7e3997d",
+        "filename": "SRC-P-042-diagnosis.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-lab-0",
+        "source_version": 1,
+        "sha256": "2f28580881db95bbe8d12cb94dea03843af99fae2b758a3ebdfc9d3fde77950f",
+        "filename": "SRC-P-042-lab-0.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-FUNCTIONAL",
+        "source_version": 1,
+        "sha256": "0a9032b7472a3711b97fb362cf7fe8f3b443051fef60d4978723944792c5ac83",
+        "filename": "SRC-P-042-FUNCTIONAL.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-PULMONARY",
+        "source_version": 1,
+        "sha256": "ef6f52bbc340115e9cd6192bce20485d3c81e9a7e5c87943769f4531c706b845",
+        "filename": "SRC-P-042-PULMONARY.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-ECG",
+        "source_version": 1,
+        "sha256": "4bef1d07c25ea393c0489da34a3d03264841cb152ead0b953648e9d55b358550",
+        "filename": "SRC-P-042-ECG.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-IMAGING",
+        "source_version": 1,
+        "sha256": "7c5a211d8154fc936b14fb80437b84c77f5f79863f2722da6c96cd4cf39dead2",
+        "filename": "SRC-P-042-IMAGING.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-VITAL",
+        "source_version": 1,
+        "sha256": "24bafd28e1f76debedf1056cfa5065a1ffd7360f9b5282306fa4b948b53bb50b",
+        "filename": "SRC-P-042-VITAL.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-prior",
+        "source_version": 1,
+        "sha256": "498f236cb4078708dcf2d2835a794322b6576cb07d7563bfea9dcc57d8955664",
+        "filename": "SRC-P-042-prior.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-narrative",
+        "source_version": 1,
+        "sha256": "dd41d56958e69085377c8d908b00dc44e3a2083d40b606721d920c1b74df58ad",
+        "filename": "SRC-P-042-narrative.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-external",
+        "source_version": 1,
+        "sha256": "5900b7610dc968fc7b3212eac831c78a5e6ffcad3de6d01345b808dcebd54325",
+        "filename": "SRC-P-042-external.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-MED-D18-P042",
+        "source_version": 1,
+        "sha256": "5fba23fcd773dd90781f409777814c412aca65863a92e5d142ed33c0a61e828d",
+        "filename": "SRC-MED-D18-P042.json",
+        "mime_type": "application/json",
+        "created_at": "2026-11-20T09:00:00Z",
+        "synthetic_only": true
+      }
+    ],
+    "clinical_narratives": [
+      {
+        "note_id": "NOTE-P-042",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "NOTE-P-042",
+          "source_id": "SRC-P-042-narrative",
+          "source_version": 1,
+          "evidence_type": "NOTE",
+          "effective_at": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": null,
+          "span_end": null
+        },
+        "text": "P-042 is a wholly invented patient at the synthetic Athens site. The latest dated eGFR is 82. A reviewed no-use reconciliation covers the complete restricted window. The index condition is represented by a verified fictional code with a separate source. Family history and genetics remain unassessed or unrecorded rather than presumed negative. Functional, pulmonary, ECG and imaging sections preserve explicit gaps. Prior research exposure, capacity, study partner and administration ability require further assessment. No study product has been assigned or administered in this screening record. These notes are claims for reviewer inspection; structured source evidence and approved rules determine screening. No clinical enrollment, treatment change or safety conclusion is implied.",
+        "extraction_status": "REVIEWED"
+      }
+    ],
+    "open_items": [
+      {
+        "open_item_id": "OPEN-P-042",
+        "reason_code": "SOURCE_UNAVAILABLE",
+        "description": "Long-tail unassessed sections require review; they are not extra eligibility rules",
+        "blocking": false,
+        "status": "OPEN",
+        "conflicting_evidence_ids": [],
+        "requested_for_role": "COORDINATOR"
+      }
+    ],
+    "participation_status": "PARTICIPATING",
+    "current_assessment_id": "ASM-98e33785fc3446cda6df3304f8d0db23",
+    "data_watermark": "2026-11-14T21:34:24.646349Z"
+  },
+  "/cases/CASE-b7587421540e40019a2ace18b63f905d": {
+    "case_id": "CASE-b7587421540e40019a2ace18b63f905d",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-042",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "criterion_id": "PX-MON-01",
+    "issue_key": "medication:SYN-CLASS-R",
+    "status": "ACKNOWLEDGED",
+    "priority": "HIGH",
+    "assigned_actor_id": "ACT-INV-01",
+    "finding_ids": [
+      "FIND-38276ae03cfe4c26a9914a23ba31b8c3"
+    ],
+    "current_summary": "Confirmed restricted use during participation",
+    "summary_origin": "SYSTEM_DETERMINISTIC",
+    "agent_execution_id": "EXEC-5aa54f5f46534570b0bcce819ff7fbc9",
+    "revision": 3,
+    "opened_at": "2026-11-14T21:34:24.824834Z",
+    "updated_at": "2026-11-14T21:34:26.299747Z",
+    "decisions": [
+      {
+        "decision_id": "DEC-4128ba6b8d8345a0a61c4b5ee95b77f6",
+        "actor_id": "ACT-MON-01",
+        "actor_role": "MONITOR",
+        "from_status": "OPEN",
+        "to_status": "ACKNOWLEDGED",
+        "disposition": "REVIEW_REQUIRED",
+        "rationale": "Actual source administration requires investigator review under the approved fictional rule.",
+        "cited_evidence_ids": [
+          "EVT-05d9aa1e4a524624abbf4f24b6276921"
+        ],
+        "decided_at": "2026-11-14T21:34:26.299747Z"
+      }
+    ]
+  },
+  "/trials/TR-PX104/findings?limit=100": {
+    "items": [
+      {
+        "finding_id": "FIND-dff96b141d664a4ab4ffe3d4c958077e",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-203",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "criterion_id": "PX-MON-01",
+        "triggering_event_id": "EVT-5be916fddd684910b66fdc9e0295f040",
+        "before_assessment_id": "ASM-a7c0726023ea496ca8b650bd6e4c7ab8",
+        "after_assessment_id": "ASM-7b9a75d08db046f7866d013899b3be9c",
+        "category": "DATA_QUALITY_DISCREPANCY",
+        "priority": "MEDIUM",
+        "case_id": "CASE-a57a7681fdca43ef9c949666189a30fd",
+        "evidence_refs": [
+          {
+            "evidence_id": "EVT-5be916fddd684910b66fdc9e0295f040",
+            "source_id": "SRC-IC-fbac91ae0d9a410b91f9d4c2bf755d9f",
+            "source_version": 1,
+            "evidence_type": "MEDICATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          }
+        ],
+        "issue_key": "medication:SYN-CLASS-R",
+        "created_at": "2026-11-14T21:36:24.482992Z"
+      },
+      {
+        "finding_id": "FIND-a67fc9cc0e244cea934dd33066a570f7",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-083",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "criterion_id": "PX-MON-02",
+        "triggering_event_id": "EVT-304214b22abd4d53b4cc5be7770ffe0e",
+        "before_assessment_id": "ASM-4fc84b4cd7b5461a960f1a362ed32acb",
+        "after_assessment_id": "ASM-e776254da2874a5a920f3d8a4b707e39",
+        "category": "POTENTIAL_SAFETY_REVIEW",
+        "priority": "MEDIUM",
+        "case_id": "CASE-d024a48b55df4026bf6c72af6f067a22",
+        "evidence_refs": [
+          {
+            "evidence_id": "EVT-304214b22abd4d53b4cc5be7770ffe0e",
+            "source_id": "SRC-IC-deba88fd9c3d4450bf69031f49d141e6",
+            "source_version": 1,
+            "evidence_type": "MEDICATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          }
+        ],
+        "issue_key": "medication:SYN-CLASS-R",
+        "created_at": "2026-11-14T21:36:23.924155Z"
+      },
+      {
+        "finding_id": "FIND-38276ae03cfe4c26a9914a23ba31b8c3",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-042",
+        "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "criterion_id": "PX-MON-01",
+        "triggering_event_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+        "before_assessment_id": "ASM-09d4e048147d487c93111e8cdc03f8d5",
+        "after_assessment_id": "ASM-98e33785fc3446cda6df3304f8d0db23",
+        "category": "CONFIRMED_PROTOCOL_CONFLICT",
+        "priority": "HIGH",
+        "case_id": "CASE-b7587421540e40019a2ace18b63f905d",
+        "evidence_refs": [
+          {
+            "evidence_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+            "source_id": "SRC-MED-D18-P042",
+            "source_version": 1,
+            "evidence_type": "MEDICATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          }
+        ],
+        "issue_key": "medication:SYN-CLASS-R",
+        "created_at": "2026-11-14T21:34:24.824834Z"
+      }
+    ],
+    "page": {
+      "next_cursor": null,
+      "limit": 100,
+      "total_count": 3
+    }
+  },
+  "/trials/TR-PX104/audit?limit=100": {
+    "items": [
+      {
+        "audit_id": "AUD-2be1b278584344e0b0cc2125aa281908",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "EVENT_RELEVANCE",
+        "target_type": "PatientEvent",
+        "target_id": "EVT-c9fa549295a94fd99cd57911a2446fd8",
+        "target_version": null,
+        "correlation_id": "5cf1cebc-aca2-4ae4-bb6e-7dc525b85102",
+        "request_id": "5cf1cebc-aca2-4ae4-bb6e-7dc525b85102",
+        "input_hash": null,
+        "output_ref_ids": [],
+        "result_code": "NO_ACTION",
+        "occurred_at": "2026-11-14T21:36:25.018542Z"
+      },
+      {
+        "audit_id": "AUD-4fc05704b2634782a8a0e416ba0e8d07",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "EVENT_ACCEPTED",
+        "target_type": "PatientEvent",
+        "target_id": "EVT-c9fa549295a94fd99cd57911a2446fd8",
+        "target_version": null,
+        "correlation_id": "5cf1cebc-aca2-4ae4-bb6e-7dc525b85102",
+        "request_id": "5cf1cebc-aca2-4ae4-bb6e-7dc525b85102",
+        "input_hash": "9dc9d9259d9fe59781998769bb6afec8bb8a99ea7de04ec04693f455b2fca09a",
+        "output_ref_ids": [
+          "SRC-IC-0c3751bf0e614aee9da0fbb91a3de711",
+          "JOB-d7f77ddb8fcf41438f5df6b42f841c19"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:36:24.566496Z"
+      },
+      {
+        "audit_id": "AUD-178d948fb72b42ea8a9f1cea2b93c4e1",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "EXTERNAL_PARTICIPATION_RECORDED",
+        "target_type": "ParticipationRecord",
+        "target_id": "PART-f57a12802a09439cae1dedfebfcab7c2",
+        "target_version": null,
+        "correlation_id": "44451ed8-ee90-49fb-a20a-97df968c7273",
+        "request_id": "44451ed8-ee90-49fb-a20a-97df968c7273",
+        "input_hash": null,
+        "output_ref_ids": [
+          "SRC-P-151-external"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:36:24.559215Z"
+      },
+      {
+        "audit_id": "AUD-2ec582188e4546b38d3b5441d3bcda58",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "AGENT_UNAVAILABLE",
+        "target_type": "AgentExecution",
+        "target_id": "EXEC-ace14efb0aec4ce19b1815f73befd3f7",
+        "target_version": null,
+        "correlation_id": "dd2d3836-01f7-4aba-a85f-9706e1859aab",
+        "request_id": "dd2d3836-01f7-4aba-a85f-9706e1859aab",
+        "input_hash": null,
+        "output_ref_ids": [
+          "CASE-a57a7681fdca43ef9c949666189a30fd"
+        ],
+        "result_code": "UNAVAILABLE",
+        "occurred_at": "2026-11-14T21:36:24.500694Z"
+      },
+      {
+        "audit_id": "AUD-cf077130a2c14e0884e070c49c8c30e9",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "MONITORING_EVALUATED",
+        "target_type": "PatientEvent",
+        "target_id": "EVT-5be916fddd684910b66fdc9e0295f040",
+        "target_version": null,
+        "correlation_id": "dd2d3836-01f7-4aba-a85f-9706e1859aab",
+        "request_id": "dd2d3836-01f7-4aba-a85f-9706e1859aab",
+        "input_hash": null,
+        "output_ref_ids": [
+          "ASM-7b9a75d08db046f7866d013899b3be9c",
+          "FIND-dff96b141d664a4ab4ffe3d4c958077e",
+          "CASE-a57a7681fdca43ef9c949666189a30fd"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:36:24.498039Z"
+      },
+      {
+        "audit_id": "AUD-2baea5d001e048a0b41652e5895d0c83",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "EVENT_ACCEPTED",
+        "target_type": "PatientEvent",
+        "target_id": "EVT-5be916fddd684910b66fdc9e0295f040",
+        "target_version": null,
+        "correlation_id": "dd2d3836-01f7-4aba-a85f-9706e1859aab",
+        "request_id": "dd2d3836-01f7-4aba-a85f-9706e1859aab",
+        "input_hash": "d6326e050f13bc79fa08bcadea8b20e6fc3872db0c51a3dc338533d830a7add6",
+        "output_ref_ids": [
+          "SRC-IC-fbac91ae0d9a410b91f9d4c2bf755d9f",
+          "JOB-26de5a5743794e0c944edabe29761dc2"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:36:24.008502Z"
+      },
+      {
+        "audit_id": "AUD-d5e45bf0972d434fb1c86ee5a0fa9bd4",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "EXTERNAL_PARTICIPATION_RECORDED",
+        "target_type": "ParticipationRecord",
+        "target_id": "PART-e5dff61dcf21472cbb9a2c9a4a2e2723",
+        "target_version": null,
+        "correlation_id": "4e986246-1529-46cb-87ad-09c280fa2dfa",
+        "request_id": "4e986246-1529-46cb-87ad-09c280fa2dfa",
+        "input_hash": null,
+        "output_ref_ids": [
+          "SRC-P-203-external"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:36:23.997826Z"
+      },
+      {
+        "audit_id": "AUD-87046be55bfc404e94e4b2f51e18c475",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "AGENT_UNAVAILABLE",
+        "target_type": "AgentExecution",
+        "target_id": "EXEC-52b1312808474ac6ac74333c18f77890",
+        "target_version": null,
+        "correlation_id": "c99fbf51-7cc4-4bdf-851b-7eb8095580b7",
+        "request_id": "c99fbf51-7cc4-4bdf-851b-7eb8095580b7",
+        "input_hash": null,
+        "output_ref_ids": [
+          "CASE-d024a48b55df4026bf6c72af6f067a22"
+        ],
+        "result_code": "UNAVAILABLE",
+        "occurred_at": "2026-11-14T21:36:23.953486Z"
+      },
+      {
+        "audit_id": "AUD-3e22cd253df548d38e8e9680713a0fa8",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "MONITORING_EVALUATED",
+        "target_type": "PatientEvent",
+        "target_id": "EVT-304214b22abd4d53b4cc5be7770ffe0e",
+        "target_version": null,
+        "correlation_id": "c99fbf51-7cc4-4bdf-851b-7eb8095580b7",
+        "request_id": "c99fbf51-7cc4-4bdf-851b-7eb8095580b7",
+        "input_hash": null,
+        "output_ref_ids": [
+          "ASM-e776254da2874a5a920f3d8a4b707e39",
+          "FIND-a67fc9cc0e244cea934dd33066a570f7",
+          "CASE-d024a48b55df4026bf6c72af6f067a22"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:36:23.949499Z"
+      },
+      {
+        "audit_id": "AUD-302c544432534740bf51b51d33845cd5",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "EVENT_ACCEPTED",
+        "target_type": "PatientEvent",
+        "target_id": "EVT-304214b22abd4d53b4cc5be7770ffe0e",
+        "target_version": null,
+        "correlation_id": "c99fbf51-7cc4-4bdf-851b-7eb8095580b7",
+        "request_id": "c99fbf51-7cc4-4bdf-851b-7eb8095580b7",
+        "input_hash": "83e5e7e5b741f87d5261f240546b6557cdf26e8012013cce4c72390d3c1071b1",
+        "output_ref_ids": [
+          "SRC-IC-deba88fd9c3d4450bf69031f49d141e6",
+          "JOB-07bae38e933641ea90b24932d7896768"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:36:15.999398Z"
+      },
+      {
+        "audit_id": "AUD-2c7c1fe2380a4cad84f1845cd36197fe",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "EXTERNAL_PARTICIPATION_RECORDED",
+        "target_type": "ParticipationRecord",
+        "target_id": "PART-a095f6b81d8a45d592261b4ff5255ed9",
+        "target_version": null,
+        "correlation_id": "142d8708-4459-4284-a7b3-a07d01821bc5",
+        "request_id": "142d8708-4459-4284-a7b3-a07d01821bc5",
+        "input_hash": null,
+        "output_ref_ids": [
+          "SRC-P-083-external"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:36:15.990358Z"
+      },
+      {
+        "audit_id": "AUD-db2acb41d16e47cca003471e0ff80f23",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-MON-01",
+        "actor_role": "MONITOR",
+        "action": "CASE_REVIEWED",
+        "target_type": "ReviewCase",
+        "target_id": "CASE-b7587421540e40019a2ace18b63f905d",
+        "target_version": null,
+        "correlation_id": "2b20d342-c78e-497e-b0af-a881c2e48a24",
+        "request_id": "2b20d342-c78e-497e-b0af-a881c2e48a24",
+        "input_hash": null,
+        "output_ref_ids": [
+          "EVT-05d9aa1e4a524624abbf4f24b6276921"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:26.299747Z"
+      },
+      {
+        "audit_id": "AUD-5bc118cc00a648f5939bdbce7492147e",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "AGENT_UNAVAILABLE",
+        "target_type": "AgentExecution",
+        "target_id": "EXEC-5aa54f5f46534570b0bcce819ff7fbc9",
+        "target_version": null,
+        "correlation_id": "bb5c6d96-4f9a-47dd-8085-ef080391c4e5",
+        "request_id": "bb5c6d96-4f9a-47dd-8085-ef080391c4e5",
+        "input_hash": null,
+        "output_ref_ids": [
+          "CASE-b7587421540e40019a2ace18b63f905d"
+        ],
+        "result_code": "UNAVAILABLE",
+        "occurred_at": "2026-11-14T21:34:24.832454Z"
+      },
+      {
+        "audit_id": "AUD-e5f311c2238b498c949bd0d08d0b2f1b",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "MONITORING_EVALUATED",
+        "target_type": "PatientEvent",
+        "target_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+        "target_version": null,
+        "correlation_id": "bb5c6d96-4f9a-47dd-8085-ef080391c4e5",
+        "request_id": "bb5c6d96-4f9a-47dd-8085-ef080391c4e5",
+        "input_hash": null,
+        "output_ref_ids": [
+          "ASM-98e33785fc3446cda6df3304f8d0db23",
+          "FIND-38276ae03cfe4c26a9914a23ba31b8c3",
+          "CASE-b7587421540e40019a2ace18b63f905d"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:24.832454Z"
+      },
+      {
+        "audit_id": "AUD-e6b15b8bc3fc4b6aa619f7e277ade0b5",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "EVENT_ACCEPTED",
+        "target_type": "PatientEvent",
+        "target_id": "EVT-05d9aa1e4a524624abbf4f24b6276921",
+        "target_version": null,
+        "correlation_id": "bb5c6d96-4f9a-47dd-8085-ef080391c4e5",
+        "request_id": "bb5c6d96-4f9a-47dd-8085-ef080391c4e5",
+        "input_hash": "5fba23fcd773dd90781f409777814c412aca65863a92e5d142ed33c0a61e828d",
+        "output_ref_ids": [
+          "SRC-MED-D18-P042",
+          "JOB-2fb1417bf7ef428c8ae7af81f3f1a631"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:24.646349Z"
+      },
+      {
+        "audit_id": "AUD-2a79aa615c6d486b9660bc7576b826d0",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "EXTERNAL_PARTICIPATION_RECORDED",
+        "target_type": "ParticipationRecord",
+        "target_id": "PART-b7040937caf842a99239e6e173f1e87f",
+        "target_version": null,
+        "correlation_id": "54ef9e7c-cde3-4368-8ed9-e664681623df",
+        "request_id": "54ef9e7c-cde3-4368-8ed9-e664681623df",
+        "input_hash": null,
+        "output_ref_ids": [
+          "SRC-P-042-external"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:24.346778Z"
+      },
+      {
+        "audit_id": "AUD-d0fec3ef0add459c97042dc193d4a17d",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "SCREENING_COMPLETE",
+        "target_type": "ScreeningRun",
+        "target_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "target_version": null,
+        "correlation_id": "d4ae2afa-d1c7-4365-b012-329ed32efb4a",
+        "request_id": "d4ae2afa-d1c7-4365-b012-329ed32efb4a",
+        "input_hash": null,
+        "output_ref_ids": [
+          "SNAP-060682fde42945da9134f05c41b3bfa2"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:22.821074Z"
+      },
+      {
+        "audit_id": "AUD-8bf773d6ae9a43b79562b4d3974f4094",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "SCREENING_QUEUED",
+        "target_type": "ScreeningRun",
+        "target_id": "RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+        "target_version": null,
+        "correlation_id": "d4ae2afa-d1c7-4365-b012-329ed32efb4a",
+        "request_id": "d4ae2afa-d1c7-4365-b012-329ed32efb4a",
+        "input_hash": null,
+        "output_ref_ids": [
+          "JOB-65668163c1e44c129c4340cea0f7fc4a",
+          "SNAP-060682fde42945da9134f05c41b3bfa2"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:14.891465Z"
+      },
+      {
+        "audit_id": "AUD-8281f8e342384cd3917e52e28030e510",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "PROTOCOL_APPROVED",
+        "target_type": "ProtocolVersion",
+        "target_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "target_version": null,
+        "correlation_id": "103b8ef5-e67d-41e0-beb3-d055b6681a79",
+        "request_id": "103b8ef5-e67d-41e0-beb3-d055b6681a79",
+        "input_hash": null,
+        "output_ref_ids": [
+          "PX-EXC-01",
+          "PX-EXC-02",
+          "PX-INC-01",
+          "PX-INC-02",
+          "PX-INC-03",
+          "PX-MON-01",
+          "PX-MON-02",
+          "PX-MON-03"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:14.392002Z"
+      },
+      {
+        "audit_id": "AUD-71b9cdbaffb8430d83e9f131f88f07a1",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "PROPOSAL_REPLACED",
+        "target_type": "ProtocolVersion",
+        "target_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "target_version": null,
+        "correlation_id": "eba286cd-5c7e-41e9-93ba-aafc0e127fe0",
+        "request_id": "eba286cd-5c7e-41e9-93ba-aafc0e127fe0",
+        "input_hash": null,
+        "output_ref_ids": [],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:14.133144Z"
+      },
+      {
+        "audit_id": "AUD-31221eccd8a848618acbc4136585b9a9",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "CURATED_PROPOSAL_LOADED",
+        "target_type": "ProtocolVersion",
+        "target_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "target_version": null,
+        "correlation_id": "c870238a-d651-4d04-bd5d-d82e8bb79e35",
+        "request_id": "c870238a-d651-4d04-bd5d-d82e8bb79e35",
+        "input_hash": null,
+        "output_ref_ids": [],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:12.771878Z"
+      },
+      {
+        "audit_id": "AUD-9d61177257f745649d44a7feec1d8b37",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "PROPOSAL_REPLACED",
+        "target_type": "ProtocolVersion",
+        "target_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "target_version": null,
+        "correlation_id": "c870238a-d651-4d04-bd5d-d82e8bb79e35",
+        "request_id": "c870238a-d651-4d04-bd5d-d82e8bb79e35",
+        "input_hash": null,
+        "output_ref_ids": [],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:12.768817Z"
+      },
+      {
+        "audit_id": "AUD-73872af286fd42ca98ed6b9d1b1938e3",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "EXTRACTION_QUEUED",
+        "target_type": "ProtocolVersion",
+        "target_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "target_version": null,
+        "correlation_id": "c870238a-d651-4d04-bd5d-d82e8bb79e35",
+        "request_id": "c870238a-d651-4d04-bd5d-d82e8bb79e35",
+        "input_hash": null,
+        "output_ref_ids": [
+          "JOB-dcf6ce3e3377438d829cdd34bd83939b"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:12.429221Z"
+      },
+      {
+        "audit_id": "AUD-3242b960aeb3475ea096bb25e826d18d",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-COORD-01",
+        "actor_role": "COORDINATOR",
+        "action": "PROTOCOL_UPLOADED",
+        "target_type": "ProtocolVersion",
+        "target_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+        "target_version": null,
+        "correlation_id": "28526dac-331e-4d41-addf-7b0cd738a6b6",
+        "request_id": "28526dac-331e-4d41-addf-7b0cd738a6b6",
+        "input_hash": null,
+        "output_ref_ids": [
+          "SRC-PDF-e0008c46d1004b8c8e2335e1693c5bc9"
+        ],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:34:12.352062Z"
+      },
+      {
+        "audit_id": "AUD-afbdb8dab3194349961ade06949e7171",
+        "trial_id": "TR-PX104",
+        "actor_id": "ACT-INV-01",
+        "actor_role": "INVESTIGATOR",
+        "action": "CURATED_PROPOSAL",
+        "target_type": "ProtocolVersion",
+        "target_id": "PV-PX104-1.0",
+        "target_version": null,
+        "correlation_id": "00000000-0000-0000-0000-0000000028af",
+        "request_id": "00000000-0000-0000-0000-0000000028af",
+        "input_hash": null,
+        "output_ref_ids": [],
+        "result_code": "OK",
+        "occurred_at": "2026-11-14T21:33:52.611785Z"
+      }
+    ],
+    "page": {
+      "next_cursor": null,
+      "limit": 100,
+      "total_count": 25
+    }
+  },
+  "sqlite_counts": {
+    "patient": 15,
+    "protocol_version": 3,
+    "criterion_approval": 8,
+    "patient_event": 4,
+    "review_case": 3,
+    "review_decision": 1,
+    "audit_entry": 30,
+    "screening_run": 1,
+    "patient_trial_assessment": 18
+  }
+}

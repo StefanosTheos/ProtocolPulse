@@ -1,0 +1,35 @@
+{
+  "equal": true,
+  "sha256": "f850cc0f0ca43cc3002869b8dc2854cf68e3d1d571aa237f8f5c3804764fcf7d",
+  "counts": {
+    "patient": 15,
+    "protocol_version": 3,
+    "criterion_approval": 8,
+    "patient_event": 4,
+    "review_case": 3,
+    "review_decision": 1,
+    "audit_entry": 30,
+    "screening_run": 1,
+    "patient_trial_assessment": 18
+  },
+  "api_paths_compared": [
+    "/trials/TR-PX104",
+    "/trials/TR-PX104/protocols/PV-49f53ecfbfb749e7859418d2d7c61048",
+    "/screenings/RUN-4d35eb9ab34a47f099e3a3c6898c91d0",
+    "/screenings/RUN-4d35eb9ab34a47f099e3a3c6898c91d0/assessments?limit=100",
+    "/trials/TR-PX104/patients/P-042",
+    "/cases/CASE-b7587421540e40019a2ace18b63f905d",
+    "/trials/TR-PX104/findings?limit=100",
+    "/trials/TR-PX104/audit?limit=100"
+  ],
+  "health_after_restart": {
+    "status": "ok",
+    "database": "ok",
+    "migrations": "current",
+    "worker": "running",
+    "llm": "disabled",
+    "synthetic_only": true,
+    "api_version": "v1",
+    "contract_version": "1.0.0-rc2"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "command": [
+    ".venv/Scripts/python.exe",
+    "tools/integration/persistence.py",
+    "after"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.428
+}
