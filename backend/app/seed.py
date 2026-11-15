@@ -40,13 +40,13 @@ STAMP = datetime(2026, 10, 30, 10, tzinfo=timezone.utc)
 SITE = "SITE-SYN-01"
 
 
-def source(session, source_id, body, patient_id=None, kind="OTHER", pages=None):
+def source(session, source_id, body, patient_id=None, kind="OTHER", pages=None, trial_id=TRIAL_ID):
     data = body if isinstance(body, bytes) else body.encode()
     row = m.EvidenceSource(
         source_pk=new_id("SRC"),
         source_id=source_id,
         source_version=1,
-        trial_id=TRIAL_ID,
+        trial_id=trial_id,
         patient_id=patient_id,
         kind=kind,
         filename=source_id + (".pdf" if kind == "PDF" else ".txt"),
@@ -92,7 +92,7 @@ def clinical_fields(src, effective=STAMP, state="POSITIVE", quality="HIGH", veri
     )
 
 
-def seed_patient(session, pid, index):
+def seed_patient(session, pid, index, trial_id=TRIAL_ID, site_id=SITE):
     birth = date(1968, 6, 15) if pid == "P-042" else date(1970 + index % 10, 3, 12)
     if pid == "P-201":
         birth = date(1990, 1, 1)
@@ -100,8 +100,8 @@ def seed_patient(session, pid, index):
         birth = date(1940, 1, 1)
     patient = m.Patient(
         patient_id=pid,
-        trial_id=TRIAL_ID,
-        site_id=SITE,
+        trial_id=trial_id,
+        site_id=site_id,
         synthetic_only=True,
         birth_date=birth,
         sex_at_birth="NOT_RECORDED",
@@ -116,7 +116,7 @@ def seed_patient(session, pid, index):
 
     def fact(section, key, value, state="POSITIVE", verification="VERIFIED"):
         body = f"SYNTHETIC {pid}: {key}: " + json.dumps(value, ensure_ascii=False)
-        src = source(session, f"SRC-{pid}-{key}", body, pid)
+        src = source(session, f"SRC-{pid}-{key}", body, pid, trial_id=trial_id)
         row = m.PatientFact(
             fact_id=f"FACT-{pid}-{key}",
             domain_section=section,
@@ -173,7 +173,7 @@ def seed_patient(session, pid, index):
             "EXPLICITLY_NEGATIVE",
         )
     condition_src = source(
-        session, f"SRC-{pid}-diagnosis", "Synthetic verified SYN-CONDITION-A, active since 2024-06-01", pid
+        session, f"SRC-{pid}-diagnosis", "Synthetic verified SYN-CONDITION-A, active since 2024-06-01", pid, trial_id=trial_id
     )
     session.add(
         m.ConditionRecord(
@@ -187,7 +187,7 @@ def seed_patient(session, pid, index):
     )
     if pid == "P-175":
         src = source(
-            session, f"SRC-{pid}-exclusion", "Synthetic confirmed active SYN-EXCLUDED-CONDITION", pid
+            session, f"SRC-{pid}-exclusion", "Synthetic confirmed active SYN-EXCLUDED-CONDITION", pid, trial_id=trial_id
         )
         session.add(
             m.ConditionRecord(
@@ -212,7 +212,7 @@ def seed_patient(session, pid, index):
             f"SRC-{pid}-lab-{count}",
             f"Synthetic eGFR specimen {day}: {value} mL/min/1.73m²",
             pid,
-            "LAB",
+            "LAB", trial_id=trial_id
         )
         session.add(
             m.LabObservation(
@@ -228,7 +228,7 @@ def seed_patient(session, pid, index):
         )
     # All other measurement domains remain explicitly unassessed, not normal by omission.
     for kind in ("FUNCTIONAL", "PULMONARY", "ECG", "IMAGING", "VITAL"):
-        src = source(session, f"SRC-{pid}-{kind}", f"Synthetic {kind} not assessed", pid)
+        src = source(session, f"SRC-{pid}-{kind}", f"Synthetic {kind} not assessed", pid, trial_id=trial_id)
         session.add(
             m.ObservationRecord(
                 observation_id=f"OBS-{pid}-{kind}",
@@ -257,7 +257,7 @@ def seed_patient(session, pid, index):
             f"SRC-{pid}-med",
             f"Synthetic {kind}: {code} on {day or '2026-10 (month precision)'}",
             pid,
-            "MEDICATION",
+            "MEDICATION", trial_id=trial_id
         )
         med = m.MedicationExposure(
             exposure_id=f"MED-{pid}-1",
@@ -291,7 +291,7 @@ def seed_patient(session, pid, index):
         session,
         f"SRC-{pid}-prior",
         "Prior synthetic research not assessed; last dose and half-life unknown",
-        pid,
+        pid, trial_id=trial_id
     )
     session.add(
         m.PriorResearchRecord(
@@ -329,7 +329,7 @@ def seed_patient(session, pid, index):
         "These notes are claims for reviewer inspection; structured source evidence and approved rules determine screening. "
         "No clinical enrollment, treatment change or safety conclusion is implied."
     )
-    note_src = source(session, f"SRC-{pid}-narrative", narrative, pid, "NOTE")
+    note_src = source(session, f"SRC-{pid}-narrative", narrative, pid, "NOTE", trial_id=trial_id)
     session.add(
         m.ClinicalNote(
             note_id=f"NOTE-{pid}",
@@ -349,7 +349,7 @@ def seed_patient(session, pid, index):
                 "Synthetic claim: stopped SYN-MED-R1 before October; timing uncertain.",
             )
         ):
-            src = source(session, f"SRC-{pid}-conflict-{number}", claim, pid, "NOTE")
+            src = source(session, f"SRC-{pid}-conflict-{number}", claim, pid, "NOTE", trial_id=trial_id)
             session.add(
                 m.ClinicalNote(
                     note_id=f"NOTE-{pid}-{number}",
@@ -412,7 +412,7 @@ def seed_patient(session, pid, index):
             "1": f"Synthetic external reference EXT-{pid}; participation starts 2026-11-01; ends 2027-01-24",
             "participation_start_at": "2026-11-01T00:00:00+02:00",
             "participation_end_at": "2027-01-24T00:00:00+02:00",
-        },
+        }, trial_id=trial_id
     )
     session.flush()
     patient360(session, patient)

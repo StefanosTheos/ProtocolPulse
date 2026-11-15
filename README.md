@@ -84,6 +84,16 @@ SQLite runtime files and `.env` stay outside Git. A normal fresh setup has 30 pa
 after this import. Run a **new screening** to include them; historical runs retain
 their original cohort. After a demo reset, rerun the import to restore the extra fifteen.
 
+A study created in the app starts with no patients, so it cannot be screened. To give it
+the same fifteen synthetic profiles, pass its study ID (shown in the study's URL):
+
+```powershell
+.venv/Scripts/python.exe -m tools.add_demo_patients --trial TR-<study-id>
+```
+
+Because patient IDs are global, those patients get study-specific IDs such as
+`P-272e70-301` to `P-272e70-315`. Rerunning skips existing patients.
+
 ## AI configuration
 
 Default `LLM_ENABLED=false` needs no key. Deterministic screening/events/cases continue; agents show `UNAVAILABLE` without fabricated traces. Explicit investigations return `503 AGENT_UNAVAILABLE` when disabled/unconfigured.
