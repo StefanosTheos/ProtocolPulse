@@ -131,6 +131,7 @@ export function ProtocolUpload({ trialId, onUploaded }: { trialId: string; onUpl
         </div>
       )}
 
+      <div className="grid items-start gap-4 md:grid-cols-2">
       <div>
         <span className="label required">Protocol file</span>
         <input
@@ -163,6 +164,7 @@ export function ProtocolUpload({ trialId, onUploaded }: { trialId: string; onUpl
         {fileMsg && <p id="pdf-file-msg" className="mt-1 text-fail-fg">{fileMsg}</p>}
       </div>
 
+      <div className="space-y-4">
       <div className="max-w-xs">
         <label className="label required" htmlFor="version-label">Version label</label>
         <input
@@ -182,21 +184,23 @@ export function ProtocolUpload({ trialId, onUploaded }: { trialId: string; onUpl
         </label>
         {declMsg && <p id="declare-msg" className="mt-1 text-fail-fg">{declMsg}</p>}
       </div>
+      <button type="submit" className="btn-primary" disabled={!allowed || uploading}>{uploading ? 'Uploading' : 'Upload PDF'}</button>
+      </div>
+      </div>
 
       {uploading && (
         <div className="space-y-1" aria-live="polite">
           <div className="flex items-center justify-between gap-3 text-xs text-ink-muted">
-            <span>Uploading… {Math.round((progress ?? 0) * 100)}%</span>
+            <span>Uploading, {Math.round((progress ?? 0) * 100)}%</span>
             <button type="button" className="btn-ghost px-2 py-1 text-xs" onClick={() => abortRef.current?.abort()}>Cancel upload</button>
           </div>
-          <div className="h-1.5 w-full overflow-hidden rounded bg-line" role="progressbar" aria-label="Upload progress" aria-valuenow={Math.round((progress ?? 0) * 100)} aria-valuemin={0} aria-valuemax={100}>
-            <div className="h-full bg-brand transition-[width]" style={{ width: `${(progress ?? 0) * 100}%` }} />
+          <div className="h-2 w-full overflow-hidden rounded-full bg-brand-soft" role="progressbar" aria-label="Upload progress" aria-valuenow={Math.round((progress ?? 0) * 100)} aria-valuemin={0} aria-valuemax={100}>
+            <div className="h-full rounded-full bg-brand transition-[width] duration-500" style={{ width: `${(progress ?? 0) * 100}%` }} />
           </div>
         </div>
       )}
       {error ? <ErrorPanel error={error} context="Upload not completed" /> : null}
       <p className="text-xs text-ink-muted"><span aria-hidden="true" className="text-fail-fg">*</span> Required field</p>
-      <button type="submit" className="btn-primary" disabled={!allowed || uploading}>{uploading ? 'Uploading…' : 'Upload PDF'}</button>
     </form>
   );
 }

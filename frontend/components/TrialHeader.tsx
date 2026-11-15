@@ -96,8 +96,8 @@ export function TrialHeader({ trialId, children }: { trialId?: string; children?
         </div>
         {!changingStudy && trial.data && (protocolApproved ? <Pill tone="pass">Protocol approved</Pill> : <Pill tone="unknown">No approved protocol</Pill>)}
       </div>
-      <nav aria-label="Study workflow" className="overflow-x-auto border-b border-line">
-        <ul className="flex min-w-max gap-1">
+      <nav aria-label="Study workflow" className="border-b border-line">
+        <ul className="flex flex-wrap gap-1">
           {steps.map((s, i) => {
             const active = s.key === current.key;
             const done = s.key === 'protocol' && protocolApproved;

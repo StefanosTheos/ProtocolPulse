@@ -1,5 +1,6 @@
 // UI gating derived only from backend-reported workflow state. These decide whether to offer a
 // control; the backend re-validates every request and remains authoritative.
+import { ruleLabel, sentenceCase } from './labels';
 import type { ActorRole, Criterion, ProtocolDetail, TrialDetail, WindowSpec } from './types';
 
 export interface Gate { allowed: boolean; reasons: string[] }
@@ -7,19 +8,20 @@ export interface Gate { allowed: boolean; reasons: string[] }
 // Zero coverage blockers never substitutes for investigator approval of every rule + coverage.
 export function screeningGate(trial: Pick<TrialDetail, 'active_protocol_version_id'> | null, protocol: ProtocolDetail | null): Gate {
   const reasons: string[] = [];
-  if (!trial?.active_protocol_version_id) reasons.push('The trial has no Clinical Lead-approved active protocol version.');
+  if (!trial?.active_protocol_version_id) reasons.push('The study has no protocol approved by the Clinical Lead.');
   if (!protocol) {
-    reasons.push('No protocol version loaded.');
+    reasons.push('No protocol has been uploaded.');
     return { allowed: false, reasons };
   }
   if (trial?.active_protocol_version_id && trial.active_protocol_version_id !== protocol.protocol_version_id) {
-    reasons.push(`Protocol ${protocol.protocol_version_id} is not the trial's active version.`);
+    reasons.push(`Protocol ${protocol.label} is not the version in use for this study.`);
   }
-  if (protocol.state !== 'ACTIVE') reasons.push(`Protocol state is ${protocol.state}, not ACTIVE.`);
+  if (protocol.state === 'EXTRACTING') reasons.push('The rules are still being read from the protocol.');
+  else if (protocol.state !== 'ACTIVE') reasons.push(`Protocol ${protocol.label} is not in use yet.`);
   const unapproved = protocol.criteria.filter((c) => c.workflow_status !== 'APPROVED' || !c.approved_by || !c.approved_at);
-  if (unapproved.length) reasons.push(`${unapproved.length} of ${protocol.criteria.length} rules lack a recorded Clinical Lead approval.`);
-  if (!protocol.coverage_signed_by || !protocol.coverage_signed_at) reasons.push('Coverage has not been signed by the Clinical Lead.');
-  if (!protocol.approved_set_hash) reasons.push('No approved rule-set hash is recorded.');
+  if (unapproved.length) reasons.push(`${unapproved.length} of ${protocol.criteria.length} rules are waiting for Clinical Lead approval.`);
+  if (!protocol.coverage_signed_by || !protocol.coverage_signed_at) reasons.push('Section coverage has not been signed by the Clinical Lead.');
+  if (!protocol.approved_set_hash) reasons.push('The approved set of rules has not been recorded.');
   return { allowed: reasons.length === 0, reasons };
 }
 
@@ -30,17 +32,17 @@ export const REVIEWABLE_STATES: ProtocolDetail['state'][] = ['DRAFT', 'EXTRACTIO
 export function approvalGate(protocol: ProtocolDetail, role: ActorRole, hasUnsavedEdits: boolean): Gate {
   const reasons: string[] = [];
   if (role !== 'INVESTIGATOR') reasons.push('Only the Clinical Lead can approve rules and sign coverage.');
-  if (!REVIEWABLE_STATES.includes(protocol.state)) reasons.push(`Protocol is ${protocol.state}; it is not a reviewable proposal.`);
+  if (!REVIEWABLE_STATES.includes(protocol.state)) reasons.push('This version is not open for review.');
   if (protocol.criteria.length === 0) reasons.push('No proposed rules to approve.');
   const blocking = protocol.coverage.filter((c) => c.status === 'BLOCKING');
   if (protocol.blocking_count > 0 || blocking.length > 0) {
-    reasons.push(`${Math.max(protocol.blocking_count, blocking.length)} coverage section(s) are BLOCKING.`);
+    reasons.push(`${Math.max(protocol.blocking_count, blocking.length)} protocol section(s) are marked as blocking.`);
   }
   const unclear = protocol.criteria.filter((c) => c.workflow_status === 'NEEDS_CLARIFICATION' || c.workflow_status === 'REJECTED');
-  if (unclear.length) reasons.push(`${unclear.map((c) => c.criterion_id).join(', ')} need clarification.`);
+  if (unclear.length) reasons.push(`Needs clarification: ${unclear.map((c) => sentenceCase(ruleLabel(c.criterion_id))).join(', ')}.`);
   const ambiguous = protocol.criteria.filter((c) => c.ambiguity && !unclear.includes(c));
-  if (ambiguous.length) reasons.push(`${ambiguous.map((c) => c.criterion_id).join(', ')} carry an unresolved ambiguity note.`);
-  if (hasUnsavedEdits) reasons.push('Save or discard inline corrections first.');
+  if (ambiguous.length) reasons.push(`Unresolved note on: ${ambiguous.map((c) => sentenceCase(ruleLabel(c.criterion_id))).join(', ')}.`);
+  if (hasUnsavedEdits) reasons.push('Save or discard your corrections first.');
   return { allowed: reasons.length === 0, reasons };
 }
 

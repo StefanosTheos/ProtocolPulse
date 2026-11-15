@@ -6,12 +6,12 @@ import { ConfirmReviewDialog } from './ConfirmReviewDialog';
 import { ErrorPanel } from './ErrorBoundary';
 import { ProtocolCitation } from './ProtocolCitation';
 import { Pill, type Tone } from './StatusPill';
-import { REVIEWABLE_STATES, approvalGate, formatThreshold, formatWindow, parseThresholdInput } from '@/lib/api/gates';
+import { REVIEWABLE_STATES, approvalGate, formatThreshold, parseThresholdInput } from '@/lib/api/gates';
 import { actorById, getApi } from '@/lib/api/runtime';
 import { formatInstant } from '@/lib/api/time';
 import type { CoverageItem, Criterion, CriterionDraftInput, ProtocolDetail } from '@/lib/api/types';
 import { notifyTrialChanged } from '@/lib/api/events';
-import { COVERAGE_LABEL, MISSING_DATA_TEXT, actorRoleLabel, criterionName, operatorText, plainText, ruleLabel, sentenceCase } from '@/lib/api/labels';
+import { COVERAGE_LABEL, MISSING_DATA_TEXT, actorRoleLabel, criterionName, operatorText, plainText, ruleLabel, sectionLabel, sentenceCase, windowText } from '@/lib/api/labels';
 
 const roleOf = (id: string) => actorById(id)?.role;
 
@@ -29,7 +29,7 @@ function toDraft(c: Criterion, edit: CriterionEdit | undefined): CriterionDraftI
   let threshold = c.threshold;
   if (edit) {
     const parsed = parseThresholdInput(edit.threshold, c.threshold);
-    if (parsed instanceof Error) return new Error(`${c.criterion_id}: ${parsed.message}`);
+    if (parsed instanceof Error) return new Error(`${sentenceCase(ruleLabel(c.criterion_id))}: ${parsed.message}`);
     threshold = parsed;
   }
   const workflow = edit?.workflow_status ?? (c.workflow_status === 'NEEDS_CLARIFICATION' ? 'NEEDS_CLARIFICATION' : 'PROPOSED');
@@ -108,7 +108,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
       discard();
       setSaveOpen(false);
       setChangeReason('');
-      setNotice(`Corrections saved as protocol revision ${res.data.revision}. They remain proposals until approved.`);
+      setNotice('Corrections saved. The rules remain proposals until approved.');
       onChanged(res.data);
     } catch (e) {
       setActionError(e);
@@ -145,20 +145,20 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
           <div>
             <h2>Extracted rules <span className="font-normal text-ink-muted">({protocol.criteria.length})</span></h2>
-            <p className="text-xs text-ink-muted">Every rule cites its source page and code-point anchor. Proposals are not operational until the Clinical Lead approves them.</p>
+            <p className="text-xs text-ink-muted">Every rule links to its text in the protocol. Proposals are not in use until the Clinical Lead approves them.</p>
           </div>
           {canEdit && (
             <div className="flex gap-2">
               {!editing && <button type="button" className="btn-secondary" onClick={() => setEditing(true)}>Edit proposals</button>}
               {editing && <button type="button" className="btn-secondary" onClick={discard}>Discard edits</button>}
-              {editing && <button type="button" className="btn-primary" disabled={!hasEdits} onClick={() => setSaveOpen(true)}>Save corrections…</button>}
+              {editing && <button type="button" className="btn-primary" disabled={!hasEdits} onClick={() => setSaveOpen(true)}>Save corrections</button>}
             </div>
           )}
         </div>
         <div className="overflow-x-auto">
           <table className="data-table">
             <thead>
-              <tr><th>Rule</th><th>What is checked</th><th>Threshold</th><th>Time window</th><th>Evidence needed</th><th>Status</th><th>Source</th></tr>
+              <tr><th>Rule</th><th>What is checked</th><th>Threshold</th><th>When</th><th>Evidence needed</th><th>Status</th><th>Source</th></tr>
             </thead>
             <tbody>
               {protocol.criteria.map((c) => {
@@ -167,44 +167,44 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
                   <Fragment key={c.criterion_id}>
                     <tr>
                       <td className="whitespace-nowrap">
-                        <div className="font-semibold">{criterionName(c, c.criterion_id)}</div>
-                        <div className="text-2xs text-ink-faint">{sentenceCase(ruleLabel(c.criterion_id))} · <span className="mono">{c.criterion_id}</span></div>
+                        <div className="text-[15px] font-semibold">{criterionName(c, c.criterion_id)}</div>
+                        <div className="text-xs font-semibold text-ink-muted">{sentenceCase(ruleLabel(c.criterion_id))}</div>
                       </td>
-                      <td><div>{operatorText(c.operator)}</div><div className="text-xs text-ink-faint">{plainText(c.clinical_subject)}</div></td>
+                      <td>{operatorText(c.operator)}</td>
                       <td className="whitespace-nowrap">
                         {editing ? (
                           <div className="flex w-40 flex-col gap-1">
-                            <label className="sr-only" htmlFor={`thr-${c.criterion_id}`}>Threshold for {c.criterion_id}</label>
+                            <label className="sr-only" htmlFor={`thr-${c.criterion_id}`}>Threshold for {ruleLabel(c.criterion_id)}</label>
                             <input id={`thr-${c.criterion_id}`} className="input" value={edit?.threshold ?? thresholdText(c)} onChange={(e) => editCriterion(c, { threshold: e.target.value })} />
-                            <label className="sr-only" htmlFor={`unit-${c.criterion_id}`}>Unit for {c.criterion_id}</label>
-                            <input id={`unit-${c.criterion_id}`} className="input" placeholder="unit" value={edit?.unit ?? c.unit ?? ''} onChange={(e) => editCriterion(c, { unit: e.target.value })} />
+                            <label className="sr-only" htmlFor={`unit-${c.criterion_id}`}>Unit for {ruleLabel(c.criterion_id)}</label>
+                            <input id={`unit-${c.criterion_id}`} className="input" placeholder="Unit" value={edit?.unit ?? c.unit ?? ''} onChange={(e) => editCriterion(c, { unit: e.target.value })} />
                           </div>
                         ) : plainText(formatThreshold(c))}
                       </td>
-                      <td className="text-xs">{formatWindow(c.window)}</td>
-                      <td className="min-w-[14rem] text-xs">
+                      <td>{windowText(c.window)}</td>
+                      <td className="min-w-[14rem] text-ink-muted">
                         {editing ? (
                           <>
-                            <label className="sr-only" htmlFor={`req-${c.criterion_id}`}>Evidence requirement for {c.criterion_id}</label>
+                            <label className="sr-only" htmlFor={`req-${c.criterion_id}`}>Evidence requirement for {ruleLabel(c.criterion_id)}</label>
                             <textarea id={`req-${c.criterion_id}`} className="input" rows={3} value={edit?.evidence_requirement ?? c.evidence_requirement} onChange={(e) => editCriterion(c, { evidence_requirement: e.target.value })} />
                           </>
                         ) : (
                           <>
                             {plainText(c.evidence_requirement)}
-                            <div className="mt-1 text-ink-faint">{MISSING_DATA_TEXT[c.missing_data_policy] ?? `Missing data: ${sentenceCase(c.missing_data_policy)}`}</div>
+                            <div className="mt-1 text-xs text-ink-faint">{MISSING_DATA_TEXT[c.missing_data_policy] ?? `Missing data: ${sentenceCase(c.missing_data_policy)}`}</div>
                           </>
                         )}
                       </td>
                       <td className="whitespace-nowrap">
                         {editing ? (
                           <div className="flex w-44 flex-col gap-1">
-                            <label className="sr-only" htmlFor={`wf-${c.criterion_id}`}>Review status for {c.criterion_id}</label>
+                            <label className="sr-only" htmlFor={`wf-${c.criterion_id}`}>Review status for {ruleLabel(c.criterion_id)}</label>
                             <select id={`wf-${c.criterion_id}`} className="input" value={edit?.workflow_status ?? (c.workflow_status === 'NEEDS_CLARIFICATION' ? 'NEEDS_CLARIFICATION' : 'PROPOSED')} onChange={(e) => editCriterion(c, { workflow_status: e.target.value as CriterionEdit['workflow_status'] })}>
                               <option value="PROPOSED">Proposed</option>
                               <option value="NEEDS_CLARIFICATION">Needs clarification</option>
                             </select>
-                            <label className="sr-only" htmlFor={`amb-${c.criterion_id}`}>Ambiguity note for {c.criterion_id}</label>
-                            <input id={`amb-${c.criterion_id}`} className="input" placeholder="ambiguity note" value={edit?.ambiguity ?? c.ambiguity ?? ''} onChange={(e) => editCriterion(c, { ambiguity: e.target.value })} />
+                            <label className="sr-only" htmlFor={`amb-${c.criterion_id}`}>Note for {ruleLabel(c.criterion_id)}</label>
+                            <input id={`amb-${c.criterion_id}`} className="input" placeholder="Note on what is unclear" value={edit?.ambiguity ?? c.ambiguity ?? ''} onChange={(e) => editCriterion(c, { ambiguity: e.target.value })} />
                           </div>
                         ) : (
                           <div className="space-y-1">
@@ -214,12 +214,12 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
                           </div>
                         )}
                       </td>
-                      <td className="whitespace-nowrap text-xs">Page {c.source_page}</td>
+                      <td className="whitespace-nowrap">Page {c.source_page}</td>
                     </tr>
                     <tr className="hover:bg-transparent">
                       <td colSpan={7} className="bg-canvas/50">
                         <details>
-                          <summary className="cursor-pointer text-xs text-brand">Source text for {criterionName(c, c.criterion_id).toLowerCase()} ({ruleLabel(c.criterion_id)})</summary>
+                          <summary className="cursor-pointer text-xs font-semibold text-brand">View source text for {criterionName(c, c.criterion_id).toLowerCase()} ({ruleLabel(c.criterion_id)})</summary>
                           <div className="mt-2">
                             <ProtocolCitation trialId={trialId} sourceId={c.source_id} page={c.source_page} start={c.source_anchor.start} end={c.source_anchor.end} quote={c.source_quote} />
                           </div>
@@ -236,25 +236,25 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
 
       <section className="card">
         <div className="border-b border-line px-4 py-3">
-          <h2>Extraction coverage <span className="font-normal text-ink-muted">({protocol.coverage.length} sections)</span></h2>
+          <h2>Section coverage <span className="font-normal text-ink-muted">({protocol.coverage.length} sections)</span></h2>
           <p className="text-xs text-ink-muted">
-            {mapped} mapped · {informational} informational · {blocking} blocking. Every numbered protocol section must be accounted for before approval.
-            Informational sections explain the rules but create no executable criteria.
+            {mapped} covered by a rule · {informational} background only · {blocking} blocking. Every numbered protocol section must be accounted for before approval.
+            Background sections explain the rules but create no rules of their own.
           </p>
         </div>
         <div className="overflow-x-auto">
           <table className="data-table">
-            <thead><tr><th>Section</th><th>Coverage</th><th>Rules from this section</th><th>Page</th><th>Review note</th></tr></thead>
+            <thead><tr><th>Protocol section</th><th>Coverage</th><th>Rules from this section</th><th>Page</th><th>Review note</th></tr></thead>
             <tbody>
               {protocol.coverage.map((item) => {
                 const edit = coverageEdits[item.section_id];
                 return (
                   <tr key={item.section_id}>
-                    <td className="mono">{item.section_id}</td>
+                    <td className="font-semibold">{sectionLabel(item.section_id)}</td>
                     <td>
                       {editing ? (
                         <>
-                          <label className="sr-only" htmlFor={`cov-${item.section_id}`}>Coverage status for {item.section_id}</label>
+                          <label className="sr-only" htmlFor={`cov-${item.section_id}`}>Coverage status for {sectionLabel(item.section_id)}</label>
                           <select id={`cov-${item.section_id}`} className="input w-40" value={edit?.status ?? item.status} onChange={(e) => editCoverage(item, { status: e.target.value as CoverageItem['status'] })}>
                             <option value="MAPPED">Covered by a rule</option>
                             <option value="INFORMATIONAL">Background only</option>
@@ -264,11 +264,11 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
                       ) : <Pill tone={COVERAGE_TONE[item.status]}>{COVERAGE_LABEL[item.status]}</Pill>}
                     </td>
                     <td>{item.criterion_ids.length ? item.criterion_ids.map((id) => sentenceCase(ruleLabel(id))).join(', ') : <span className="text-ink-faint">none</span>}</td>
-                    <td className="whitespace-nowrap text-xs">Page {item.page}</td>
+                    <td className="whitespace-nowrap">Page {item.page}</td>
                     <td className="text-xs">
                       {editing ? (
                         <>
-                          <label className="sr-only" htmlFor={`note-${item.section_id}`}>Review note for {item.section_id}</label>
+                          <label className="sr-only" htmlFor={`note-${item.section_id}`}>Review note for {sectionLabel(item.section_id)}</label>
                           <input id={`note-${item.section_id}`} className="input" value={edit?.review_note ?? item.review_note ?? ''} onChange={(e) => editCoverage(item, { review_note: e.target.value || null })} />
                         </>
                       ) : item.review_note ?? <span className="text-ink-faint">—</span>}
@@ -290,29 +290,28 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
         <section className="card card-pad" aria-labelledby="approve-heading">
           <h2 id="approve-heading">Clinical Lead approval</h2>
           <p className="mt-1 text-ink-muted">
-            Approval signs all {protocol.criteria.length} rules individually and attests to complete coverage, then activates this version.
-            Zero blockers does not approve anything by itself.
+            Approving signs all {protocol.criteria.length} rules, confirms that every section is covered and puts this version into use for screening.
           </p>
           {!gate.allowed && (
             <ul className="mt-2 list-disc pl-5 text-unknown-fg">{gate.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
           )}
           <button type="button" className="btn-primary mt-3" disabled={!gate.allowed} onClick={() => { setAttested(false); setDecisionReason(''); setApproveKey(`approve-${protocol.protocol_version_id}-r${protocol.revision}-${crypto.randomUUID()}`); setApproveOpen(true); }}>
-            Approve criteria…
+            Approve rules
           </button>
         </section>
       )}
 
       <ConfirmReviewDialog
-        open={saveOpen} title="Save inline corrections" confirmLabel="Save corrections" busy={busy}
+        open={saveOpen} title="Save corrections" confirmLabel="Confirm and save" busy={busy}
         confirmDisabled={!changeReason.trim()} onCancel={() => setSaveOpen(false)} onConfirm={saveCorrections}
       >
-        <p>Corrections replace the proposed rule set (revision {protocol.revision} → {protocol.revision + 1}). They stay proposals and still need approval.</p>
+        <p>Your corrections replace the proposed rules. They stay proposals and still need approval.</p>
         <label className="label" htmlFor="change-reason">Change reason (required)</label>
         <textarea id="change-reason" className="input" rows={3} value={changeReason} onChange={(e) => setChangeReason(e.target.value)} />
       </ConfirmReviewDialog>
 
       <ConfirmReviewDialog
-        open={approveOpen} title={`Approve ${protocol.criteria.length} protocol rules`} confirmLabel="Approve and activate" busy={busy}
+        open={approveOpen} title={`Approve ${protocol.criteria.length} protocol rules`} confirmLabel="Approve and put into use" busy={busy}
         confirmDisabled={!attested || !decisionReason.trim()} onCancel={() => setApproveOpen(false)} onConfirm={approve}
       >
         <p>As the Clinical Lead, you are approving protocol version {protocol.label} with these rules:</p>

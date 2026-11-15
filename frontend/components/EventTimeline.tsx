@@ -18,7 +18,7 @@ export function EventTimeline({ trialId, findings, timeZone }: { trialId: string
                 <PriorityPill priority={f.priority} />
               </div>
               <h3 className="text-base">
-                Patient <Link className="text-brand underline-offset-2 hover:underline" href={`${base}/patients/${encodeURIComponent(f.patient_id)}`}>{f.patient_id}</Link>
+                Patient <Link className="text-brand underline underline-offset-2" href={`${base}/patients/${encodeURIComponent(f.patient_id)}`}>{f.patient_id}</Link>
               </h3>
               <p className="text-ink-muted">
                 Occurred {formatInstant(ev?.effective_at ?? null, timeZone)} · Recorded {formatInstant(ev?.recorded_at ?? null, timeZone)} · Found {formatInstant(f.created_at, timeZone)} · {f.evidence_refs.length} supporting record{f.evidence_refs.length === 1 ? '' : 's'}

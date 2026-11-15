@@ -42,7 +42,7 @@ test('real protocol → screening → evidence → dated event → human case �
     const version = (await (await upload).json()).data.protocol_version_id;
     evidence.protocol_version_id = version;
     await expect(page).toHaveURL(/version=PV/);
-    await page.getByRole('button', { name: 'Run extraction', exact: true }).click();
+    await page.getByRole('button', { name: 'Read rules from protocol', exact: true }).click();
     await expect(page.getByRole('heading', { name: /Extracted rules.*8/ })).toBeVisible();
     await expect.poll(async () => (await get(`/trials/TR-PX104/protocols/${version}`)).state).toBe('EXTRACTION_REVIEW');
     const proposal = await get(`/trials/TR-PX104/protocols/${version}`);
@@ -53,19 +53,19 @@ test('real protocol → screening → evidence → dated event → human case �
     evidence.extraction = { origin: 'CURATED_FIXTURE_NOT_MODEL_EXTRACTION', source: proposal.source, criteria: proposal.criteria, coverage: proposal.coverage };
 
     await actor('ACT-INV-01');
-    await page.getByText(/^Source text for age \(inclusion rule 1\)$/).click();
+    await page.getByText(/^View source text for age \(inclusion rule 1\)$/).click();
     await page.getByRole('button', { name: 'Show in source page', exact: true }).click();
     await expect(page.locator('mark').first()).toContainText('40 to 70');
     await page.getByRole('button', { name: 'Edit proposals', exact: true }).click();
-    await page.getByLabel('Evidence requirement for PX-INC-01', { exact: true }).fill(proposal.criteria.find((c: {criterion_id: string}) => c.criterion_id === 'PX-INC-01').evidence_requirement + ' Reviewed against the source in integration QA.');
-    await page.getByRole('button', { name: 'Save corrections…', exact: true }).click();
-    await page.getByLabel('Change reason (required)', { exact: true }).fill('Source review annotation; frozen rule semantics retained.');
+    await page.getByLabel('Evidence requirement for inclusion rule 1', { exact: true }).fill(proposal.criteria.find((c: {criterion_id: string}) => c.criterion_id === 'PX-INC-01').evidence_requirement + ' Reviewed against the source in integration QA.');
     await page.getByRole('button', { name: 'Save corrections', exact: true }).click();
+    await page.getByLabel('Change reason (required)', { exact: true }).fill('Source review annotation; frozen rule semantics retained.');
+    await page.getByRole('button', { name: 'Confirm and save', exact: true }).click();
     await expect.poll(async () => (await get(`/trials/TR-PX104/protocols/${version}`)).revision).toBe(proposal.revision + 1);
-    await page.getByRole('button', { name: 'Approve criteria…', exact: true }).click();
+    await page.getByRole('button', { name: 'Approve rules', exact: true }).click();
     await page.getByLabel(/I reviewed every rule against its cited source clause/).check();
     await page.getByLabel('Decision reason (required)').fill('Synthetic investigator verified all eight rules and twelve source sections.');
-    await page.getByRole('button', { name: 'Approve and activate', exact: true }).click();
+    await page.getByRole('button', { name: 'Approve and put into use', exact: true }).click();
     await expect.poll(async () => (await get(`/trials/TR-PX104/protocols/${version}`)).state).toBe('ACTIVE');
     await shot('01-protocol-approved');
 
@@ -74,7 +74,7 @@ test('real protocol → screening → evidence → dated event → human case �
     await expect(page).toHaveURL(/run=RUN/, { timeout: 60_000 });
     const run = new URL(page.url()).searchParams.get('run')!;
     const assessments = (await get(`/screenings/${run}/assessments?limit=100`)).items;
-    expect(assessments).toHaveLength(15);
+    expect(assessments).toHaveLength(30);
     evidence.run = await get(`/screenings/${run}`);
     evidence.baseline_assessments = assessments;
     const statuses = Object.fromEntries(assessments.map((a: {patient_id:string;candidate_status:string}) => [a.patient_id, a.candidate_status]));
@@ -89,20 +89,20 @@ test('real protocol → screening → evidence → dated event → human case �
     await page.getByRole('link', { name: 'P-042', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Record sections', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Evidence timeline', exact: true })).toBeVisible();
-    await page.getByRole('button', { name: 'Record external participation…', exact: true }).click();
+    await page.getByRole('button', { name: 'Record external participation', exact: true }).click();
     await page.getByLabel('Registered external participation source').selectOption('SRC-P-042-external');
     await page.getByLabel('External record reference').fill('EXT-P-042');
     await page.getByLabel('Rationale', { exact: true }).fill('Record the independently registered synthetic external participation evidence.');
-    await page.getByRole('button', { name: 'Record PARTICIPATING', exact: true }).click();
+    await page.getByRole('button', { name: 'Record participation', exact: true }).click();
     await expect.poll(async () => (await get('/trials/TR-PX104/patients/P-042')).participation_status).toBe('PARTICIPATING');
     await shot('03-patient-evidence');
 
     await page.goto(trial + '/monitor');
     await actor('ACT-COORD-01');
     const postEvent = async () => {
-      await page.getByRole('button', { name: 'Simulate new record…', exact: true }).click();
+      await page.getByRole('button', { name: 'Simulate new record', exact: true }).click();
       const pending = page.waitForResponse(r => r.request().method() === 'POST' && /\/patients\/P-042\/events$/.test(r.url()));
-      await page.getByRole('button', { name: 'Post event', exact: true }).click();
+      await page.getByRole('button', { name: 'Add record', exact: true }).click();
       const response = await pending;
       return { status: response.status(), body: (await response.json()).data };
     };
@@ -117,7 +117,7 @@ test('real protocol → screening → evidence → dated event → human case �
     evidence.event_receipt = first;
     evidence.findings = findings;
     const caseId = findings[0].case_id;
-    await expect(page.getByRole('button', { name: 'Simulate new record…', exact: true })).toBeEnabled();
+    await expect(page.getByRole('button', { name: 'Simulate new record', exact: true })).toBeEnabled();
     await shot('04-monitor-case');
     const duplicate = await postEvent();
     expect(duplicate.status).toBe(200);
@@ -129,10 +129,10 @@ test('real protocol → screening → evidence → dated event → human case �
     await actor('ACT-INV-01');
     await page.getByLabel('Next status', { exact: true }).selectOption('ACKNOWLEDGED');
     await page.getByLabel('Owner', { exact: true }).selectOption('ACT-INV-01');
-    await page.getByLabel('Disposition', { exact: true }).fill('REVIEW_REQUIRED');
+    await page.getByLabel('Decision', { exact: true }).fill('REVIEW_REQUIRED');
     await page.getByLabel('Rationale', { exact: true }).fill('Actual source administration requires investigator review under the approved fictional rule.');
-    await page.getByLabel(new RegExp(findings[0].evidence_refs[0].evidence_id)).check();
-    await page.getByRole('button', { name: 'Review and submit…', exact: true }).click();
+    await page.getByRole('group', { name: /Evidence to cite/ }).getByRole('checkbox').first().check();
+    await page.getByRole('button', { name: 'Review and submit', exact: true }).click();
     await page.getByRole('dialog').getByRole('button', { name: /Confirm|Submit|Record/ }).click();
     await expect.poll(async () => (await get('/cases/' + caseId)).status).toBe('ACKNOWLEDGED');
     evidence.review_case = await get('/cases/' + caseId);
@@ -143,7 +143,7 @@ test('real protocol → screening → evidence → dated event → human case �
 
     await page.goto(trial + '/audit');
     await actor('ACT-INV-01');
-    await expect(page.getByText('Approved the protocol', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('Approved the protocol', { exact: true }).filter({ visible: true }).first()).toBeVisible();
     await shot('06-audit');
     evidence.audit = (await get('/trials/TR-PX104/audit?limit=100')).items;
     expect(errors).toEqual([]);

@@ -17,7 +17,7 @@
 @layer components {
   .card { @apply rounded-xl border border-line bg-surface shadow-sm; }
   .card-pad { @apply p-5; }
-  .btn { @apply inline-flex items-center justify-center gap-1.5 rounded-lg border px-3.5 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn { @apply inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border px-3.5 py-2 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50; }
   .btn-primary { @apply btn border-brand bg-brand text-white hover:bg-brand-hover; }
   .btn-secondary { @apply btn border-line-strong bg-surface text-ink hover:bg-canvas; }
   .btn-ghost { @apply btn border-transparent bg-transparent text-brand hover:bg-brand-soft; }
@@ -30,5 +30,16 @@
   .data-table tbody tr:hover { @apply bg-canvas; }
   .mono { @apply font-mono text-xs; }
   .note { @apply rounded-lg border border-line bg-canvas p-3 text-sm text-ink-muted; }
+  /* Full-width colour band inside the centred page container, without causing horizontal scroll. */
+  .hero-band { @apply bg-brand text-white; box-shadow: 0 0 0 100vmax theme('colors.brand.DEFAULT'); clip-path: inset(0 -100vmax); }
+  .progress-sheen { animation: progress-sheen 1.5s ease-in-out infinite; }
   .done-banner { @apply flex flex-wrap items-center justify-between gap-3 rounded-xl border border-pass-line bg-pass-bg px-5 py-4; }
+}
+
+@keyframes progress-sheen {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(420%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress-sheen { animation: none; }
 }

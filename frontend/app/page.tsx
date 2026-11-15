@@ -1,7 +1,7 @@
 'use client';
 
-import { TrialHeader } from '@/components/TrialHeader';
+import { Landing } from '@/components/Landing';
 
-export default function OverviewPage() {
-  return <TrialHeader />;
+export default function LandingPage() {
+  return <Landing />;
 }

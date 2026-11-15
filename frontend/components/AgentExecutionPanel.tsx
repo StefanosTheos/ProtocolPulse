@@ -2,45 +2,33 @@
 
 import { ErrorPanel } from './ErrorBoundary';
 import { LoadingSkeleton } from './LoadingSkeleton';
-import { AgentStatusPill, Pill } from './StatusPill';
+import { AgentStatusPill } from './StatusPill';
 import { REASON_LABEL, sentenceCase } from '@/lib/api/labels';
 import { useApiQuery } from '@/lib/api/hooks';
 import { getApi } from '@/lib/api/runtime';
 import { formatInstant } from '@/lib/api/time';
 import type { AgentExecution, UnknownReason } from '@/lib/api/types';
 
-// Shows only the backend-recorded summarised tool trace: tool name, reference IDs, result
-// code and elapsed time. There is no model reasoning to show and none is fabricated.
+// Shows the outcome of an automated summary in plain words. The step-by-step tool record
+// (tool names, reference IDs, result codes) is technical detail and stays in the audit trail.
 export function AgentExecutionView({ execution: e, timeZone }: { execution: AgentExecution; timeZone?: string }) {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2">
         <AgentStatusPill status={e.status} />
-        <span className="text-xs text-ink-muted">{sentenceCase(e.role)}</span>
       </div>
       {e.status === 'UNAVAILABLE' && (
         <p className="rounded border border-line bg-canvas p-2 text-xs">
-          Automated summary unavailable{e.error_code ? <> <span className="mono text-2xs text-ink-faint">({e.error_code})</span></> : null}. No model ran, so there is nothing to show. Screening, safety checks and case review work as normal.
+          Automated summary unavailable. No model ran, so there is nothing to show. Screening, safety checks and case review work as normal.
         </p>
       )}
       {e.status === 'FAILED' && (
         <p className="rounded border border-fail-line bg-fail-bg p-2 text-xs text-fail-fg">
-          The automated summary didn&apos;t finish{e.error_code ? <> <span className="mono text-2xs">({e.error_code})</span></> : null}. Screening results are still valid; nothing below was concluded by the automated summary.
+          The automated summary didn&apos;t finish. Screening results are still valid; nothing below was concluded by the automated summary.
         </p>
       )}
-      {e.status === 'PARTIAL' && <p className="rounded border border-unknown-line bg-unknown-bg p-2 text-xs text-unknown-fg">Partial result: some tools did not complete. Treat the summary as incomplete.</p>}
+      {e.status === 'PARTIAL' && <p className="rounded border border-unknown-line bg-unknown-bg p-2 text-xs text-unknown-fg">Partial result: some steps did not complete. Treat the summary as incomplete.</p>}
       <p className="text-xs text-ink-muted">Ran {formatInstant(e.created_at, timeZone)}{e.patient_id ? ` for patient ${e.patient_id}` : ''}.</p>
-      <details className="text-xs">
-        <summary className="text-ink-muted">Technical details</summary>
-        <dl className="mt-1 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
-          <dt className="text-ink-muted">Run</dt><dd className="mono break-all">{e.execution_id}</dd>
-          <dt className="text-ink-muted">Model</dt><dd className="mono">{e.model_id ?? 'none'}</dd>
-          <dt className="text-ink-muted">Rules</dt><dd className="mono">{e.criterion_ids.join(', ') || '—'}</dd>
-          <dt className="text-ink-muted">Event</dt><dd className="mono">{e.event_id ?? '—'}</dd>
-          <dt className="text-ink-muted">Correlation</dt><dd className="mono break-all">{e.correlation_id}</dd>
-          <dt className="text-ink-muted">Finished</dt><dd>{formatInstant(e.finished_at, timeZone)}</dd>
-        </dl>
-      </details>
       {e.summary && (
         <div className="rounded border border-info-line bg-info-bg p-2 text-xs">
           <p className="font-semibold text-info-fg">AI-drafted summary (not a clinical decision)</p>
@@ -51,33 +39,14 @@ export function AgentExecutionView({ execution: e, timeZone }: { execution: Agen
       {e.verification_questions.length > 0 && (
         <div className="text-xs"><p className="text-ink-muted">Verification questions proposed for humans:</p><ul className="list-disc pl-5">{e.verification_questions.map((q) => <li key={q}>{q}</li>)}</ul></div>
       )}
-      {e.trace.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="data-table">
-            <thead><tr><th>#</th><th>Tool</th><th>Input refs</th><th>Output refs</th><th>Result</th><th>Elapsed</th></tr></thead>
-            <tbody>
-              {e.trace.map((t, i) => (
-                <tr key={i}>
-                  <td className="text-xs">{i + 1}</td>
-                  <td className="mono">{t.tool_name}</td>
-                  <td className="mono text-2xs">{t.input_reference_ids.join(', ') || '—'}</td>
-                  <td className="mono text-2xs">{t.output_reference_ids.join(', ') || '—'}</td>
-                  <td className="mono text-2xs">{t.result_code}{t.error_code ? ` / ${t.error_code}` : ''}</td>
-                  <td className="whitespace-nowrap text-xs">{t.elapsed_ms} ms</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : e.status !== 'UNAVAILABLE' && <p className="text-xs text-ink-muted">No tool calls recorded.</p>}
-      {e.evidence_refs.length > 0 && <p className="text-xs text-ink-muted">Cited evidence: <span className="mono">{e.evidence_refs.map((r) => r.evidence_id).join(', ')}</span></p>}
+      {e.evidence_refs.length > 0 && <p className="text-xs text-ink-muted">{e.evidence_refs.length} source record{e.evidence_refs.length === 1 ? '' : 's'} cited. The full step-by-step record is in the audit trail.</p>}
     </div>
   );
 }
 
 export function AgentExecutionPanel({ executionId, timeZone }: { executionId: string; timeZone?: string }) {
   const exec = useApiQuery(() => getApi().getAgentExecution(executionId).then((r) => r.data), [executionId]);
-  if (exec.loading) return <LoadingSkeleton rows={2} label="Loading agent execution" />;
-  if (exec.error) return <ErrorPanel error={exec.error} context={`Agent execution ${executionId}`} onRetry={exec.reload} />;
+  if (exec.loading) return <LoadingSkeleton rows={2} label="Loading automated summary" />;
+  if (exec.error) return <ErrorPanel error={exec.error} context="Automated summary" onRetry={exec.reload} />;
   return exec.data ? <AgentExecutionView execution={exec.data} timeZone={timeZone} /> : null;
 }

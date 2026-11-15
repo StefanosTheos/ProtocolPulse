@@ -18,7 +18,7 @@ export function ErrorPanel({ error, onRetry, context }: { error: unknown; onRetr
       <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-ink-muted">
         {onRetry && !isNotFound(error) && <button type="button" className="btn-secondary" onClick={onRetry}>Try again</button>}
         <details>
-          <summary>Technical details</summary>
+          <summary>Details for support</summary>
           <p className="mono mt-1 break-all">{e.technical}{e.requestId ? ` · Request ID ${e.requestId}` : ''}</p>
         </details>
       </div>

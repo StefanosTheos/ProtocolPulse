@@ -6,24 +6,27 @@ import { useActor } from './ActorContext';
 import { EmptyState, ErrorPanel } from './ErrorBoundary';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import { useApiQuery } from '@/lib/api/hooks';
-import { displayTitle, formatDay } from '@/lib/api/labels';
+import { displayTitle } from '@/lib/api/labels';
 import { getApi } from '@/lib/api/runtime';
 import type { Trial } from '@/lib/api/types';
+
+// Every study the current role can see, newest first, across all result pages.
+export async function listAllTrials(): Promise<Trial[]> {
+  const items: Trial[] = [];
+  let cursor: string | undefined;
+  do {
+    const result = await getApi().listTrials({ sort: '-created_at', limit: 100, cursor });
+    items.push(...result.data.items);
+    cursor = result.data.page.next_cursor ?? undefined;
+  } while (cursor);
+  return items;
+}
 
 export function StudySelector({ trialId, onNavigate }: { trialId?: string; onNavigate?: (href: string) => void }) {
   const { actor } = useActor();
   const router = useRouter();
   const id = useId();
-  const studies = useApiQuery(async () => {
-    const items: Trial[] = [];
-    let cursor: string | undefined;
-    do {
-      const result = await getApi().listTrials({ sort: '-created_at', limit: 100, cursor });
-      items.push(...result.data.items);
-      cursor = result.data.page.next_cursor ?? undefined;
-    } while (cursor);
-    return items;
-  }, [actor.actor_id]);
+  const studies = useApiQuery(listAllTrials, [actor.actor_id]);
   const selectedStudy = studies.data?.find((study) => study.trial_id === trialId);
 
   useEffect(() => {
@@ -39,7 +42,7 @@ export function StudySelector({ trialId, onNavigate }: { trialId?: string; onNav
           const selected = event.target.value;
           (onNavigate ?? router.push)(selected ? `/trials/${encodeURIComponent(selected)}` : '/');
         }}>
-          <option value="">Select a study…</option>
+          <option value="">All studies</option>
           {trialId && !studies.data?.some((s) => s.trial_id === trialId) && <option value={trialId} disabled>Current study</option>}
           {studies.data?.map((study) => <option key={study.trial_id} value={study.trial_id}>{displayTitle(study.title)}</option>)}
         </select>
@@ -49,11 +52,10 @@ export function StudySelector({ trialId, onNavigate }: { trialId?: string; onNav
       {selectedStudy && (
         <dl className="flex flex-wrap gap-x-8 gap-y-2 text-sm">
           <div><dt className="text-ink-muted">Site time zone</dt><dd>{selectedStudy.site_timezone}</dd></div>
-          <div><dt className="text-ink-muted">Planned dates</dt><dd>{formatDay(selectedStudy.planned_start_date)} – {formatDay(selectedStudy.planned_end_date)}</dd></div>
+          <div><dt className="text-ink-muted">Planned dates</dt><dd>{selectedStudy.planned_start_date} → {selectedStudy.planned_end_date}</dd></div>
         </dl>
       )}
       {studies.data?.length === 0 && <EmptyState title="No studies yet">The Sponsor registers a study before it appears here.</EmptyState>}
-      {!trialId && <p className="text-ink-muted">Choose a study to view its overview.</p>}
     </section>
   );
 }

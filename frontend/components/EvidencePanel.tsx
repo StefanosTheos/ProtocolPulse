@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { ProtocolCitation, SourceViewer } from './ProtocolCitation';
 import { CriterionStatusPill, EvidenceStatePill, Pill } from './StatusPill';
-import { formatThreshold, formatWindow } from '@/lib/api/gates';
-import { REASON_LABEL, criterionName, plainText, sentenceCase } from '@/lib/api/labels';
+import { formatThreshold } from '@/lib/api/gates';
+import { REASON_LABEL, criterionName, plainText, sentenceCase, windowText } from '@/lib/api/labels';
 import { formatFactValue, type LabelledFact } from '@/lib/api/patient';
 import { formatInstant } from '@/lib/api/time';
 import type { Criterion, CriterionResult, EvidenceRef } from '@/lib/api/types';
@@ -65,7 +65,7 @@ export function EvidencePanel({ trialId, result, criterion, factsByEvidence, tim
       {criterion ? (
         <div className="space-y-2">
           <h4 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Protocol clause</h4>
-          <p className="text-xs">{plainText(formatThreshold(criterion))} · {formatWindow(criterion.window)}</p>
+          <p className="text-xs">{plainText(formatThreshold(criterion))} · {windowText(criterion.window)}</p>
           <ProtocolCitation trialId={trialId} sourceId={criterion.source_id} page={criterion.source_page} start={criterion.source_anchor.start} end={criterion.source_anchor.end} quote={criterion.source_quote} />
         </div>
       ) : (
