@@ -120,9 +120,9 @@ export function ProtocolUpload({ trialId, onUploaded }: { trialId: string; onUpl
     <form className="card card-pad space-y-4" onSubmit={submit} aria-labelledby="upload-heading" noValidate>
       <div>
         <h2 id="upload-heading">Upload a new protocol version</h2>
-        <p className="text-ink-muted">PDF only, up to {MAX_PDF_MB} MB. After uploading, read the rules from it and send them to the investigator for approval.</p>
+        <p className="text-ink-muted">PDF only, up to {MAX_PDF_MB} MB. After uploading, read the rules from it and send them to the Clinical Lead for approval.</p>
       </div>
-      {!allowed && <p className="note">Uploading is done by a coordinator or research IT. Switch role in &quot;Viewing as&quot; to upload.</p>}
+      {!allowed && <p className="note">Uploading is done by the Sponsor. Switch role in &quot;Viewing as&quot; to upload.</p>}
 
       {done && (
         <div role="status" className="done-banner">

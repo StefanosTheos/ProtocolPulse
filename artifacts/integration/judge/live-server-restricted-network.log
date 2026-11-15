@@ -1,0 +1,49 @@
+INFO:     Started server process [19612]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8015 (Press CTRL+C to quit)
+INFO:     127.0.0.1:59496 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "POST /api/v1/agent-investigations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-b6df9002b94448809f53d0cfa484c354 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-b6df9002b94448809f53d0cfa484c354 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-b6df9002b94448809f53d0cfa484c354 HTTP/1.1" 200 OK
+INFO:ai.providers.gemini:model_call execution_id=EXEC-d55f79157ef24cb3a8cae6249214ecb6 role=EVIDENCE_INVESTIGATOR phase=tool_selection attempt=1 result_code=PROVIDER_ERROR elapsed_ms=63 input_tokens=None output_tokens=None thinking_tokens=None
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-b6df9002b94448809f53d0cfa484c354 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/agent-executions/EXEC-d55f79157ef24cb3a8cae6249214ecb6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "POST /api/v1/agent-investigations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-adc941e105c94336b6f5a5002783cb56 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-adc941e105c94336b6f5a5002783cb56 HTTP/1.1" 200 OK
+INFO:ai.providers.gemini:model_call execution_id=EXEC-f50aa9d09d1047fd8412227b226142fa role=MEDICATION_SAFETY_INVESTIGATOR phase=tool_selection attempt=1 result_code=PROVIDER_ERROR elapsed_ms=16 input_tokens=None output_tokens=None thinking_tokens=None
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-adc941e105c94336b6f5a5002783cb56 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/agent-executions/EXEC-f50aa9d09d1047fd8412227b226142fa HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "POST /api/v1/agent-investigations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-d5d68723107949ccb7e31caba4d99ce3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-d5d68723107949ccb7e31caba4d99ce3 HTTP/1.1" 200 OK
+INFO:ai.providers.gemini:model_call execution_id=EXEC-2595f73ab2d8446d92d62119e967e4b2 role=MEDICATION_SAFETY_INVESTIGATOR phase=tool_selection attempt=1 result_code=PROVIDER_ERROR elapsed_ms=0 input_tokens=None output_tokens=None thinking_tokens=None
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-d5d68723107949ccb7e31caba4d99ce3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-d5d68723107949ccb7e31caba4d99ce3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/agent-executions/EXEC-2595f73ab2d8446d92d62119e967e4b2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "POST /api/v1/agent-investigations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-3ae5c670e4ed4be880d463d6e21cb70a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-3ae5c670e4ed4be880d463d6e21cb70a HTTP/1.1" 200 OK
+INFO:ai.providers.gemini:model_call execution_id=EXEC-5315bb9848074d5782c7b8e9d20355fc role=MONITORING_WORKFLOW phase=tool_selection attempt=1 result_code=PROVIDER_ERROR elapsed_ms=14 input_tokens=None output_tokens=None thinking_tokens=None
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-3ae5c670e4ed4be880d463d6e21cb70a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/agent-executions/EXEC-5315bb9848074d5782c7b8e9d20355fc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "POST /api/v1/agent-investigations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-e31484bffbc545aaad38f66769132d3a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-e31484bffbc545aaad38f66769132d3a HTTP/1.1" 200 OK
+INFO:ai.providers.gemini:model_call execution_id=EXEC-8acf732fd4bb454995c8f4f4324d1081 role=MONITORING_WORKFLOW phase=tool_selection attempt=1 result_code=PROVIDER_ERROR elapsed_ms=14 input_tokens=None output_tokens=None thinking_tokens=None
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-e31484bffbc545aaad38f66769132d3a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-e31484bffbc545aaad38f66769132d3a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/agent-executions/EXEC-8acf732fd4bb454995c8f4f4324d1081 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "POST /api/v1/agent-investigations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-4c3cc45637474a01989c9ddfa3886076 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-4c3cc45637474a01989c9ddfa3886076 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-4c3cc45637474a01989c9ddfa3886076 HTTP/1.1" 200 OK
+INFO:ai.providers.gemini:model_call execution_id=EXEC-94d42f1ae4714783ab1475b26a653ba9 role=PROTOCOL_INTELLIGENCE phase=propose_rule attempt=1 result_code=PROVIDER_ERROR elapsed_ms=31 input_tokens=None output_tokens=None thinking_tokens=None
+INFO:ai.providers.gemini:model_call execution_id=EXEC-94d42f1ae4714783ab1475b26a653ba9 role=PROTOCOL_INTELLIGENCE phase=propose_rule attempt=2 result_code=PROVIDER_ERROR elapsed_ms=16 input_tokens=None output_tokens=None thinking_tokens=None
+INFO:     127.0.0.1:59496 - "GET /api/v1/jobs/JOB-4c3cc45637474a01989c9ddfa3886076 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/agent-executions/EXEC-94d42f1ae4714783ab1475b26a653ba9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/trials/TR-PX104/patients/P-124 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/trials/TR-PX104/patients/P-083 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59496 - "GET /api/v1/trials/TR-PX104/patients/P-140 HTTP/1.1" 200 OK

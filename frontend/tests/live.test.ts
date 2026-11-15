@@ -146,7 +146,7 @@ function day18(patientId: string, sourceEventId: string, code: string, evidenceT
   });
 
   it('case lifecycle: monitor acknowledges; RESOLVED/CLOSED are investigator-only; decisions are attributed', async () => {
-    let c: ReviewCase = (await as('ACT-MON-01', () => api.getCase(state.caseId!))).data;
+    let c: ReviewCase = (await as('ACT-INV-01', () => api.getCase(state.caseId!))).data;
     expect(c.status).toBe('OPEN');
     const evidence = (await api.listFindings('TR-PX104', { patient_id: 'P-042' })).data.items.filter((f) => f.case_id === c.case_id).flatMap((f) => f.evidence_refs.map((e) => e.evidence_id));
     const patch = (next: ReviewCase['status'], rev: number) => ({ expected_revision: rev, next_status: next, assigned_actor_id: 'ACT-INV-01', disposition: 'REVIEW_REQUIRED', rationale: `Live smoke ${next}`, cited_evidence_ids: evidence.slice(0, 1) });
@@ -159,12 +159,12 @@ function day18(patientId: string, sourceEventId: string, code: string, evidenceT
     expect(c.status).toBe('CLOSED');
     const full = (await api.getCase(c.case_id)).data;
     expect(full.decisions.map((d) => [d.actor_id, d.to_status])).toEqual([
-      ['ACT-MON-01', 'ACKNOWLEDGED'], ['ACT-MON-01', 'INVESTIGATING'], ['ACT-INV-01', 'RESOLVED'], ['ACT-INV-01', 'CLOSED'],
+      ['ACT-INV-01', 'ACKNOWLEDGED'], ['ACT-INV-01', 'INVESTIGATING'], ['ACT-INV-01', 'RESOLVED'], ['ACT-INV-01', 'CLOSED'],
     ]);
   });
 
   it('audit is retrievable and the agent path is honestly unavailable with the LLM off', async () => {
-    const audit = (await as('ACT-AUD-01', () => api.listAudit('TR-PX104', { limit: 100 }))).data.items;
+    const audit = (await as('ACT-INV-01', () => api.listAudit('TR-PX104', { limit: 100 }))).data.items;
     expect(audit.some((a) => a.action === 'PROTOCOL_APPROVED' && a.actor_id === 'ACT-INV-01')).toBe(true);
     const c = (await as('ACT-INV-01', () => api.getCase(state.caseId!))).data;
     if (c.agent_execution_id) {

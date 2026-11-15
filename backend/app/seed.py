@@ -438,7 +438,7 @@ def seed_database(factory, storage):
                     site_id=SITE,
                     display_label=f"Fictional {role}",
                     synthetic_only=True,
-                    active=True,
+                    active=role in ("INVESTIGATOR", "COORDINATOR"),
                 )
             )
         session.add(

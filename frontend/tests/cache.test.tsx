@@ -36,7 +36,7 @@ describe('scoped read cache', () => {
     const client = new ApiClient({ transport, getActorId: () => actor });
     try {
       expect((await client.request('GET', '/trials/TR-PX104')).data).toBe(actor);
-      actor = 'ACT-MON-01';
+      actor = 'ACT-COORD-01';
       expect((await client.request('GET', '/trials/TR-PX104')).data).toBe(actor);
       expect(transport).toHaveBeenCalledTimes(2);
       now.mockReturnValue(6_001);
@@ -98,12 +98,12 @@ describe('query freshness and roles', () => {
     setApiForTesting(createApi(transport));
     const { result } = renderHook(() => useApiQuery(() => getApi().getTrial('TR-PX104').then((r) => r.data), []));
     await waitFor(() => expect(result.current.data?.title).toBe('Investigator data'));
-    act(() => setCurrentActorId('ACT-MON-01'));
+    act(() => setCurrentActorId('ACT-COORD-01'));
     expect(result.current.data).toBeNull();
     expect(result.current.loading).toBe(true);
-    await act(async () => { monitor.resolve(response({ title: 'Monitor data' })); });
-    await waitFor(() => expect(result.current.data?.title).toBe('Monitor data'));
-    expect(transport.mock.calls[1][0].headers['X-Demo-Actor-Id']).toBe('ACT-MON-01');
+    await act(async () => { monitor.resolve(response({ title: 'Sponsor data' })); });
+    await waitFor(() => expect(result.current.data?.title).toBe('Sponsor data'));
+    expect(transport.mock.calls[1][0].headers['X-Demo-Actor-Id']).toBe('ACT-COORD-01');
   });
 
   it('ignores an old response after the actor switches', async () => {
@@ -111,7 +111,7 @@ describe('query freshness and roles', () => {
     const transport = vi.fn<Transport>().mockReturnValueOnce(old.promise).mockResolvedValue(response({ title: 'Current role' }));
     setApiForTesting(createApi(transport));
     const { result } = renderHook(() => useApiQuery(() => getApi().getTrial('TR-PX104').then((r) => r.data), []));
-    act(() => setCurrentActorId('ACT-MON-01'));
+    act(() => setCurrentActorId('ACT-COORD-01'));
     await waitFor(() => expect(result.current.data?.title).toBe('Current role'));
     await act(async () => { old.resolve(response({ title: 'Previous role' })); });
     expect(result.current.data?.title).toBe('Current role');

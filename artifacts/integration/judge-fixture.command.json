@@ -1,0 +1,9 @@
+{
+  "command": [
+    "backend/var/venv312/Scripts/python.exe",
+    "tools/protocol_fixture.py",
+    "--check"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.749
+}

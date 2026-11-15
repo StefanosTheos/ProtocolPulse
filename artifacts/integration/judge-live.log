@@ -1,0 +1,7 @@
+{"role": "EVIDENCE_INVESTIGATOR", "patient": "P-124", "status": "FAILED", "error": "PROVIDER_ERROR", "tools": []}
+{"role": "MEDICATION_SAFETY_INVESTIGATOR", "patient": "P-083", "status": "FAILED", "error": "PROVIDER_ERROR", "tools": []}
+{"role": "MEDICATION_SAFETY_INVESTIGATOR", "patient": "P-140", "status": "FAILED", "error": "PROVIDER_ERROR", "tools": []}
+{"role": "MONITORING_WORKFLOW", "patient": "P-042", "status": "FAILED", "error": "PROVIDER_ERROR", "tools": []}
+{"role": "MONITORING_WORKFLOW", "patient": "P-151", "status": "FAILED", "error": "PROVIDER_ERROR", "tools": []}
+{"role": "PROTOCOL_INTELLIGENCE", "patient": null, "status": "FAILED", "error": "PROVIDER_ERROR", "tools": ["parse_protocol", "locate_clause"]}
+Live probes complete

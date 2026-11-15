@@ -15,13 +15,14 @@ export const navigation = {
   pathname: '/',
   replace: vi.fn(),
   push: vi.fn(),
+  prefetch: vi.fn(),
 };
 
 vi.mock('next/navigation', () => ({
   useParams: () => navigation.params,
   useSearchParams: () => navigation.search,
   usePathname: () => navigation.pathname,
-  useRouter: () => ({ replace: navigation.replace, push: navigation.push, back: vi.fn(), refresh: vi.fn() }),
+  useRouter: () => ({ replace: navigation.replace, push: navigation.push, prefetch: navigation.prefetch, back: vi.fn(), refresh: vi.fn() }),
 }));
 
 afterEach(() => {
@@ -33,4 +34,5 @@ afterEach(() => {
   navigation.pathname = '/';
   navigation.replace.mockReset();
   navigation.push.mockReset();
+  navigation.prefetch.mockReset();
 });

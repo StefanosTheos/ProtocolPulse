@@ -9,8 +9,7 @@ import { onTrialChanged } from '@/lib/api/events';
 
 // The trial title and step bar live in the layout so they stay mounted while switching tabs.
 // They refresh on every navigation and whenever a page reports a change.
-function TrialShell({ children }: { children: ReactNode }) {
-  const { trialId } = useParams<{ trialId: string }>();
+function TrialShell({ trialId, children }: { trialId: string; children: ReactNode }) {
   const pathname = usePathname();
   const search = useSearchParams()?.toString();
   const trial = useTrial(trialId);
@@ -31,21 +30,16 @@ function TrialShell({ children }: { children: ReactNode }) {
       </div>
     );
   }
-  return (
-    <div>
-      <TrialHeader trialId={trialId} trial={trial} />
-      {children}
-    </div>
-  );
+  return <TrialHeader trialId={trialId}>{children}</TrialHeader>;
 }
 
 export default function TrialLayout({ children }: { children: ReactNode }) {
   const { trialId } = useParams<{ trialId: string }>();
   return (
-    <Suspense fallback={null}>
-      <TrialDataProvider trialId={trialId}>
-        <TrialShell>{children}</TrialShell>
-      </TrialDataProvider>
-    </Suspense>
+    <TrialDataProvider trialId={trialId}>
+      <Suspense fallback={null}>
+        <TrialShell trialId={trialId}>{children}</TrialShell>
+      </Suspense>
+    </TrialDataProvider>
   );
 }

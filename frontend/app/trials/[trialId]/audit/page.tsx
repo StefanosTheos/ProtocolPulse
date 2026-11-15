@@ -96,7 +96,7 @@ export default function AuditPage() {
             </div>
           </div>
           {audit.loading && !audit.data && <LoadingSkeleton rows={5} label="Loading audit trail" />}
-          {audit.error ? <ErrorPanel error={audit.error} context="Audit trail (auditor, investigator, monitor or sponsor operations role required)" onRetry={audit.reload} /> : null}
+          {audit.error ? <ErrorPanel error={audit.error} context="Audit trail (Clinical Lead role required)" onRetry={audit.reload} /> : null}
           {audit.data && items.length === 0 && <EmptyState title="No entries">Nothing has been recorded for these filters. Choose &quot;Everyone&quot; or &quot;All activity&quot; to see more.</EmptyState>}
           {days.map((g) => (
             <div key={g.day} className="card overflow-x-auto" tabIndex={0} role="region" aria-label={`Audit entries for ${g.day}`}>

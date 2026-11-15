@@ -30,7 +30,7 @@ export function AppHeader() {
           <label className="flex items-center gap-2 text-sm">
             <span className="text-ink-muted">Viewing as</span>
             <select className="input w-auto font-semibold" value={actor.actor_id} onChange={(e) => setActorId(e.target.value)}>
-              {DEMO_ACTORS.map((a) => <option key={a.actor_id} value={a.actor_id}>{ROLE_LABEL[a.role]}</option>)}
+              {DEMO_ACTORS.slice().reverse().map((a) => <option key={a.actor_id} value={a.actor_id}>{ROLE_LABEL[a.role]}</option>)}
             </select>
           </label>
         </div>

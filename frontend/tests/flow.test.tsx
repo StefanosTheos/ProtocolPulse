@@ -59,7 +59,7 @@ describe('J-01 protocol review and approval', () => {
     useMock();
     renderAs('ACT-COORD-01', <ProtocolCoverageReview trialId="TR-PX104" protocol={fixture} onChanged={() => {}} />);
     expect(screen.getByRole('button', { name: /Approve criteria/ })).toBeDisabled();
-    expect(screen.getByText(/Only an investigator can approve/)).toBeInTheDocument();
+    expect(screen.getByText(/Only the Clinical Lead can approve/)).toBeInTheDocument();
   });
 
   it('coverage blockers disable approval', () => {
@@ -89,7 +89,7 @@ describe('J-01 protocol review and approval', () => {
     expect(approveCall.headers['Idempotency-Key']).toMatch(/^approve-PV-PX104-1\.0-r1-/);
     expect((approveCall.body as { criterion_ids: string[] }).criterion_ids).toEqual(fixture.criteria.map((c) => c.criterion_id));
     expect(onChanged.mock.calls[0][0].state).toBe('ACTIVE');
-    expect(screen.getByRole('status')).toHaveTextContent(/Protocol approved by the investigator/);
+    expect(screen.getByRole('status')).toHaveTextContent(/Protocol approved by the Clinical Lead/);
   });
 
   it('shows a revision conflict from the API instead of a success', async () => {
@@ -145,7 +145,7 @@ describe('J-02 screening gate', () => {
     navigation.pathname = '/trials/TR-PX104/selector';
     renderAs('ACT-COORD-01', <SelectorPage />);
     expect(await screen.findByText('Screening disabled')).toBeInTheDocument();
-    expect(screen.getByText(/no investigator-approved active protocol/)).toBeInTheDocument();
+    expect(screen.getByText(/no Clinical Lead-approved active protocol/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Run screening' })).toBeDisabled();
   });
 });
@@ -246,10 +246,11 @@ describe('J-05 review update', () => {
     const caseId = await seedCase(transport);
     const onUpdated = vi.fn();
     const user = userEvent.setup();
-    renderAs('ACT-MON-01', <CaseReviewPanel trialId="TR-PX104" caseId={caseId} onUpdated={onUpdated} />);
+    renderAs('ACT-INV-01', <CaseReviewPanel trialId="TR-PX104" caseId={caseId} onUpdated={onUpdated} />);
     const statusSelect = await screen.findByLabelText('Next status');
-    expect(within(statusSelect).getByRole('option', { name: /Resolved — investigator only/ })).toBeDisabled();
-    expect(within(statusSelect).getByRole('option', { name: /Closed — investigator only/ })).toBeDisabled();
+    expect(within(statusSelect).getByRole('option', { name: /^Resolved/ })).toBeEnabled();
+    expect(within(statusSelect).getByRole('option', { name: /^Closed/ })).toBeEnabled();
+    expect(within(screen.getByLabelText('Owner')).getAllByRole('option').map((o) => o.textContent)).toEqual(['Unassigned', 'Clinical Lead']);
     expect(screen.getByText('System-generated deterministic summary')).toBeInTheDocument();
 
     await user.selectOptions(statusSelect, 'ACKNOWLEDGED');

@@ -85,7 +85,7 @@ export function EventSimulator({ trialId, onProcessed }: { trialId: string; onPr
       <h2 id="sim-heading">Demo: add a clinical record</h2>
       <p className="text-xs text-ink-muted">For demonstrations: adds a medication or lab record for a participating patient, as if it arrived from the hospital system. The safety check runs on it automatically.</p>
       <button type="button" className="btn-primary" disabled={!allowed || busy || job.running} onClick={() => { setError(null); setOpen(true); }}>Simulate new record…</button>
-      {!allowed && <p className="text-xs text-unknown-fg">Records are added by a coordinator or research IT.</p>}
+      {!allowed && <p className="text-xs text-unknown-fg">Records are added by the Sponsor.</p>}
       {receipt && (
         <div className="space-y-1 rounded border border-line bg-canvas p-3 text-xs" aria-live="polite">
           <div className="flex flex-wrap items-center gap-2">
