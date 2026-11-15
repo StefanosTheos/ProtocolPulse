@@ -7,7 +7,7 @@ export interface Gate { allowed: boolean; reasons: string[] }
 // Zero coverage blockers never substitutes for investigator approval of every rule + coverage.
 export function screeningGate(trial: Pick<TrialDetail, 'active_protocol_version_id'> | null, protocol: ProtocolDetail | null): Gate {
   const reasons: string[] = [];
-  if (!trial?.active_protocol_version_id) reasons.push('The trial has no investigator-approved active protocol version.');
+  if (!trial?.active_protocol_version_id) reasons.push('The trial has no Clinical Lead-approved active protocol version.');
   if (!protocol) {
     reasons.push('No protocol version loaded.');
     return { allowed: false, reasons };
@@ -17,8 +17,8 @@ export function screeningGate(trial: Pick<TrialDetail, 'active_protocol_version_
   }
   if (protocol.state !== 'ACTIVE') reasons.push(`Protocol state is ${protocol.state}, not ACTIVE.`);
   const unapproved = protocol.criteria.filter((c) => c.workflow_status !== 'APPROVED' || !c.approved_by || !c.approved_at);
-  if (unapproved.length) reasons.push(`${unapproved.length} of ${protocol.criteria.length} rules lack a recorded investigator approval.`);
-  if (!protocol.coverage_signed_by || !protocol.coverage_signed_at) reasons.push('Coverage has not been signed by an investigator.');
+  if (unapproved.length) reasons.push(`${unapproved.length} of ${protocol.criteria.length} rules lack a recorded Clinical Lead approval.`);
+  if (!protocol.coverage_signed_by || !protocol.coverage_signed_at) reasons.push('Coverage has not been signed by the Clinical Lead.');
   if (!protocol.approved_set_hash) reasons.push('No approved rule-set hash is recorded.');
   return { allowed: reasons.length === 0, reasons };
 }
@@ -29,7 +29,7 @@ export const REVIEWABLE_STATES: ProtocolDetail['state'][] = ['DRAFT', 'EXTRACTIO
 
 export function approvalGate(protocol: ProtocolDetail, role: ActorRole, hasUnsavedEdits: boolean): Gate {
   const reasons: string[] = [];
-  if (role !== 'INVESTIGATOR') reasons.push('Only an investigator can approve rules and sign coverage.');
+  if (role !== 'INVESTIGATOR') reasons.push('Only the Clinical Lead can approve rules and sign coverage.');
   if (!REVIEWABLE_STATES.includes(protocol.state)) reasons.push(`Protocol is ${protocol.state}; it is not a reviewable proposal.`);
   if (protocol.criteria.length === 0) reasons.push('No proposed rules to approve.');
   const blocking = protocol.coverage.filter((c) => c.status === 'BLOCKING');

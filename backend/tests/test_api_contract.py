@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from conftest import approve, event_body, headers, participate, post_event, screen, work
 from sqlalchemy import func, select
 
@@ -114,6 +116,17 @@ def test_actor_errors_query_filters_and_request_id(env):
         == 403
     )
     assert client.get("/api/v1/missing", headers=headers()).status_code == 404
+
+
+@pytest.mark.parametrize("actor_id", ["ACT-MON-01", "ACT-AUD-01", "ACT-SPONSOR-01", "ACT-IT-01"])
+def test_retired_demo_actor_cannot_be_used_even_in_an_existing_database(env, actor_id):
+    with env[2].begin() as session:
+        actor = session.get(m.ClinicalActor, actor_id)
+        assert actor.active is False
+        actor.active = True  # Existing databases may still carry the old active flag.
+    response = env[0].get("/api/v1/trials/TR-PX104", headers=headers(actor_id))
+    assert response.status_code == 403
+    assert response.json()["error"]["code"] == "ROLE_FORBIDDEN"
 
 
 def test_agent_off_no_job(env):

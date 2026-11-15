@@ -68,6 +68,8 @@ No automatic clinical diagnosis, pharmacological interaction discovery, adjudica
 
 ## 2. Stakeholder map and authority
 
+**Current prototype policy (user-authorized 2026-11-15):** the application exposes only **Sponsor** (`COORDINATOR`: protocol preparation/event entry) and **Clinical Lead** (`INVESTIGATOR`: approval, screening, participation and case review). Supporting application roles are retired and rejected by the API; the broader stakeholder responsibilities below describe the clinical ecosystem and historical design, not selectable demo personas. Sponsor is a UI label, not reassignment to `SPONSOR_OPS` or a claim to replace independent sponsor monitoring. [API_CONTRACTS §1](docs/API_CONTRACTS.md#1-wire-rules-and-global-openapi-semantics) governs the active policy.
+
 | Stakeholder | Primary incentive and responsibility | Permitted product activities (conceptual role) | Reserved accountability / boundaries |
 |---|---|---|---|
 | Sponsor / clinical operations (`SPONSOR_OPS`) | Trial-wide visibility, consistent protocol application, monitoring risk and burden | View aggregate site/cohort indicators, configuration and audit summaries; request protocol changes | Own overall sponsor oversight and approved monitoring processes; cannot override investigator medical judgments |

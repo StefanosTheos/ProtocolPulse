@@ -9,8 +9,7 @@ export default function TrialLayout({ children }: { children: ReactNode }) {
   const { trialId } = useParams<{ trialId: string }>();
   return (
     <TrialDataProvider trialId={trialId}>
-      <TrialHeader trialId={trialId} />
-      {children}
+      <TrialHeader trialId={trialId}>{children}</TrialHeader>
     </TrialDataProvider>
   );
 }

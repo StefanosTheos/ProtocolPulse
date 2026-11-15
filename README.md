@@ -94,6 +94,18 @@ Protocol preparation preserves actual PDF text/Unicode anchors. The model interp
 
 Never put secrets in browser configuration, `NEXT_PUBLIC_*`, DTOs, model input, traces or Git. The only frontend variable is `NEXT_PUBLIC_API_BASE_URL`. `.env`, virtual environments and `backend/var/` are ignored. Demo actors simulate roles and provide **no production authentication**.
 
+## Demo roles and workflow
+
+The **Viewing as** dropdown contains **Sponsor** (`COORDINATOR`, `ACT-COORD-01`) first and **Clinical Lead** (`INVESTIGATOR`, `ACT-INV-01`) second. Sponsor is the display name for the existing preparation/event-entry role, not the retired `SPONSOR_OPS` identity. There are no sign-in accounts. Supporting actors cannot be selected, restored, assigned cases or used through the API; old saved selections reset to Clinical Lead. Historical audit records remain intact.
+
+Both roles land on an empty **Overview** at `/`. Select a study from the **Study** dropdown to load its current overview and enable the appropriate workflow tabs. Site time zone, planned dates, protocol state and existing attention/summary information appear only after selection. Use the dropdown on Overview to switch studies or select the blank option to clear the selection. The selected study is carried in `/trials/{trial_id}` and survives refresh; returning to `/` starts with no study selected. No trial-specific API requests are made from the unselected Overview.
+
+Study selections and tab highlights respond before navigation completes. The previous view stays hidden while the destination loads, preserving unsaved inputs if a pending change is cancelled. Up to five study routes preload their route code; tab route code and authorized reads warm only on hover/focus. The existing actor-scoped five-second data cache, mutation/role invalidation and always-fresh job polling remain in force. Fresh data still requires its normal API response; preloading never performs extraction, screening, event writes or AI calls.
+
+The Sponsor uploads the PDF and runs extraction. While proposals await approval, the overview and protocol screen show **Waiting for a Clinical Lead to approve these rules** and refresh status every five seconds. The Clinical Lead checks citations and coverage, resolves blockers, approves the rules, screens patients and records any externally confirmed participation. The Sponsor enters new events from Safety; the backend reassesses relevant rules automatically and the Clinical Lead investigates and dispositions resulting cases. A screening match never enrolls a patient.
+
+Tabs: Sponsor **Overview → Protocol → Safety**; Clinical Lead **Overview → Protocol → Screen patients → Safety**, with **Audit trail** available throughout. This site workflow supports protocol surveillance and clinical review; independent sponsor monitoring remains a separate responsibility. Wire role identifiers and clinical gates are unchanged; the active demo policy rejects the four retired roles with `403 ROLE_FORBIDDEN` even in existing databases.
+
 ## Verification
 
 ```powershell

@@ -98,7 +98,7 @@ export function PatientActions({ trialId, patient, assessment, protocolVersionId
         </button>
         <button type="button" className="btn-secondary" disabled={!protocolVersionId || actor.role === 'AUDITOR'} onClick={requestInvestigation}>Request agent investigation</button>
       </div>
-      {!isInvestigator && <p className="text-xs text-ink-muted">Dispositions and participation records are investigator-only.</p>}
+      {!isInvestigator && <p className="text-xs text-ink-muted">Dispositions and participation records are restricted to the Clinical Lead.</p>}
       {!assessment && <p className="text-xs text-ink-muted">Open this patient from a screening run to record a disposition against that assessment.</p>}
 
       <ConfirmReviewDialog open={dialog === 'participation'} title={`Record external participation: ${patient.patient_id}`} confirmLabel={`Record ${nextParticipation ?? ''}`} busy={busy}
@@ -123,7 +123,7 @@ export function PatientActions({ trialId, patient, assessment, protocolVersionId
 
       <ConfirmReviewDialog open={dialog === 'disposition'} title={`Screening disposition: ${patient.patient_id}`} confirmLabel="Record disposition" busy={busy}
         confirmDisabled={!rationale.trim()} onCancel={() => setDialog(null)} onConfirm={submitDisposition}>
-        <p className="text-xs">Against assessment <span className="mono">{assessment?.assessment_id}</span>. The computed pre-screen status is unchanged; this is a separate investigator decision.</p>
+        <p className="text-xs">Against assessment <span className="mono">{assessment?.assessment_id}</span>. The computed pre-screen status is unchanged; this is a separate Clinical Lead decision.</p>
         <label className="label" htmlFor="disp">Disposition</label>
         <select id="disp" className="input" value={disposition} onChange={(e) => setDisposition(e.target.value as ScreeningDispositionCreate['disposition'])}>
           {DISPOSITIONS.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}

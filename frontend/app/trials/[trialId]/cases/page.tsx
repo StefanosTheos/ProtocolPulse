@@ -38,7 +38,7 @@ function CasesInner() {
           <div>
             <Link href={`/trials/${encodeURIComponent(trialId)}/monitor`} className="btn-ghost -ml-3 mb-1">← Safety</Link>
             <h2 id="queue-heading" className="text-xl">Review cases</h2>
-            <p className="text-ink-muted">Safety findings that need a decision from a person. Monitors acknowledge and comment; the investigator resolves and closes.</p>
+            <p className="text-ink-muted">Safety findings that need a decision from a person. The Clinical Lead acknowledges, investigates, resolves and closes cases.</p>
           </div>
           <div className="flex flex-wrap items-end gap-3">
             <div>

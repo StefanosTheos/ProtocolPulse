@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { useActor } from '@/components/ActorContext';
 import { CaseTable } from '@/components/CaseRow';
 import { ErrorPanel } from '@/components/ErrorBoundary';
@@ -39,7 +40,12 @@ export default function TrialOverviewPage() {
   const role = actor.role;
   const latest = protocols.data?.items[0] ?? null;
   const active = protocols.data?.items.find((p) => p.state === 'ACTIVE') ?? null;
-  const needsApproval = !active && latest && latest.state === 'EXTRACTION_REVIEW';
+  const needsApproval = !!latest && (latest.state === 'DRAFT' || latest.state === 'EXTRACTION_REVIEW') && latest.criteria.length > 0;
+  useEffect(() => {
+    if (!needsApproval || role !== 'COORDINATOR') return;
+    const timer = window.setInterval(protocols.reload, 5000);
+    return () => window.clearInterval(timer);
+  }, [needsApproval, role, protocols.reload]);
   const attentionCases: ReviewCase[] = [...(reopened.data?.items ?? []), ...(openCases.data?.items ?? [])];
 
   // Only what the current role can act on.
@@ -47,12 +53,21 @@ export default function TrialOverviewPage() {
   if (protocols.data && !latest && is(role, 'COORDINATOR', 'RESEARCH_IT')) {
     items.push({ tone: 'warn', title: 'No protocol has been uploaded', detail: 'Upload the protocol document to start.', cta: 'Upload protocol', href: `${base}/protocol` });
   }
+  if (protocols.data && !latest && role === 'INVESTIGATOR') {
+    items.push({ tone: 'info', title: 'Waiting for the Sponsor to upload a protocol', detail: 'You can review the rules after the coordinator uploads the document and runs extraction.', cta: 'View protocol status', href: `${base}/protocol` });
+  }
+  if (latest?.state === 'DRAFT' && latest.criteria.length === 0 && is(role, 'COORDINATOR', 'INVESTIGATOR')) {
+    items.push({ tone: 'info', title: role === 'COORDINATOR' ? 'Next: Extract the protocol rules' : 'Waiting for protocol rule extraction', detail: 'The PDF is uploaded. Run extraction before clinical review can begin.', cta: 'Open protocol', href: `${base}/protocol?version=${encodeURIComponent(latest.protocol_version_id)}` });
+  }
+  if (latest?.state === 'EXTRACTING' && is(role, 'COORDINATOR', 'INVESTIGATOR')) {
+    items.push({ tone: 'info', title: 'Protocol rules are being extracted', detail: 'Wait for extraction to finish before reviewing or approving rules.', cta: 'View extraction progress', href: `${base}/protocol?version=${encodeURIComponent(latest.protocol_version_id)}` });
+  }
   if (latest?.state === 'EXTRACTION_FAILED' && is(role, 'COORDINATOR', 'INVESTIGATOR')) {
     items.push({ tone: 'urgent', title: 'The protocol rules could not be read', detail: 'Try again or upload a text-readable document.', cta: 'Open protocol', href: `${base}/protocol` });
   }
   if (needsApproval && latest) {
-    if (role === 'INVESTIGATOR') items.push({ tone: 'warn', title: `${latest.criteria.length} protocol rules are waiting for your approval`, detail: 'Screening stays unavailable until you approve them.', cta: 'Review rules', href: `${base}/protocol` });
-    else if (role === 'COORDINATOR') items.push({ tone: 'info', title: 'Protocol rules are waiting for the investigator', detail: 'Screening becomes available after approval.', cta: 'View protocol', href: `${base}/protocol` });
+    if (role === 'INVESTIGATOR') items.push({ tone: 'warn', title: `${latest.criteria.length} protocol rules are waiting for your approval`, detail: 'Check the source citations, resolve blockers and approve coverage. This version cannot screen until approved.', cta: 'Review rules', href: `${base}/protocol?version=${encodeURIComponent(latest.protocol_version_id)}` });
+    else if (role === 'COORDINATOR') items.push({ tone: 'info', title: 'Waiting for a Clinical Lead to approve these rules', detail: 'Your next step is to wait for review. Screening stays unavailable for this version until the rules and coverage are approved. Approval status updates automatically.', cta: 'View pending rules', href: `${base}/protocol?version=${encodeURIComponent(latest.protocol_version_id)}` });
   }
   if (attentionCases.length > 0 && is(role, 'INVESTIGATOR', 'MONITOR')) {
     const first = attentionCases[0];
@@ -63,8 +78,11 @@ export default function TrialOverviewPage() {
       cta: 'Review case', href: `${base}/cases?case=${encodeURIComponent(first.case_id)}`,
     });
   }
-  if (active && is(role, 'INVESTIGATOR', 'COORDINATOR')) {
+  if (active && role === 'INVESTIGATOR') {
     items.push({ tone: 'info', title: 'Patient screening is available', detail: 'The protocol is approved. Screen patients or review the candidates.', cta: 'Screen patients', href: `${base}/selector` });
+  }
+  if (active && role === 'COORDINATOR') {
+    items.push({ tone: 'info', title: 'Protocol approved — clinical review continues', detail: 'The Clinical Lead can screen patients and record external participation. Enter new patient records from Safety when available; the system checks relevant events automatically.', cta: 'Open Safety', href: `${base}/monitor` });
   }
   if (is(role, 'AUDITOR', 'SPONSOR_OPS')) {
     items.push({ tone: 'info', title: 'The audit trail is up to date', detail: 'Every protocol, screening and review action is recorded.', cta: 'Open audit trail', href: `${base}/audit` });

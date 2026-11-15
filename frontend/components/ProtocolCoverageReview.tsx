@@ -137,7 +137,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
           <div>
             <h2>Extracted rules <span className="font-normal text-ink-muted">({protocol.criteria.length})</span></h2>
-            <p className="text-xs text-ink-muted">Every rule cites its source page and code-point anchor. Proposals are not operational until an investigator approves them.</p>
+            <p className="text-xs text-ink-muted">Every rule cites its source page and code-point anchor. Proposals are not operational until the Clinical Lead approves them.</p>
           </div>
           {canEdit && (
             <div className="flex gap-2">
@@ -280,7 +280,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
 
       {reviewable && (
         <section className="card card-pad" aria-labelledby="approve-heading">
-          <h2 id="approve-heading">Investigator approval</h2>
+          <h2 id="approve-heading">Clinical Lead approval</h2>
           <p className="mt-1 text-ink-muted">
             Approval signs all {protocol.criteria.length} rules individually and attests to complete coverage, then activates this version.
             Zero blockers does not approve anything by itself.
@@ -307,7 +307,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
         open={approveOpen} title={`Approve ${protocol.criteria.length} rules as ${actor.actor_id}`} confirmLabel="Approve and activate" busy={busy}
         confirmDisabled={!attested || !decisionReason.trim()} onCancel={() => setApproveOpen(false)} onConfirm={approve}
       >
-        <p>You are signing, as investigator <span className="mono">{actor.actor_id}</span>, revision {protocol.revision} of <span className="mono">{protocol.protocol_version_id}</span>:</p>
+        <p>You are signing, as Clinical Lead <span className="mono">{actor.actor_id}</span>, revision {protocol.revision} of <span className="mono">{protocol.protocol_version_id}</span>:</p>
         <p className="mono rounded bg-canvas p-2">{protocol.criteria.map((c) => c.criterion_id).join(', ')}</p>
         <label className="flex items-start gap-2">
           <input type="checkbox" className="mt-0.5" checked={attested} onChange={(e) => setAttested(e.target.checked)} />

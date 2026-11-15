@@ -126,7 +126,7 @@ test('real protocol → screening → evidence → dated event → human case �
     evidence.duplicate = duplicate;
 
     await page.goto(trial + `/cases?case=${caseId}`);
-    await actor('ACT-MON-01');
+    await actor('ACT-INV-01');
     await page.getByLabel('Next status', { exact: true }).selectOption('ACKNOWLEDGED');
     await page.getByLabel('Owner', { exact: true }).selectOption('ACT-INV-01');
     await page.getByLabel('Disposition', { exact: true }).fill('REVIEW_REQUIRED');
@@ -136,13 +136,13 @@ test('real protocol → screening → evidence → dated event → human case �
     await page.getByRole('dialog').getByRole('button', { name: /Confirm|Submit|Record/ }).click();
     await expect.poll(async () => (await get('/cases/' + caseId)).status).toBe('ACKNOWLEDGED');
     evidence.review_case = await get('/cases/' + caseId);
-    expect((evidence.review_case as {decisions: {actor_id:string}[]}).decisions[0].actor_id).toBe('ACT-MON-01');
+    expect((evidence.review_case as {decisions: {actor_id:string}[]}).decisions[0].actor_id).toBe('ACT-INV-01');
     await shot('05-human-case-review');
     await page.reload();
     await expect(page.locator('span').filter({ hasText: /^Acknowledged$/ }).first()).toBeVisible();
 
     await page.goto(trial + '/audit');
-    await actor('ACT-AUD-01');
+    await actor('ACT-INV-01');
     await expect(page.getByText('Approved the protocol', { exact: true }).first()).toBeVisible();
     await shot('06-audit');
     evidence.audit = (await get('/trials/TR-PX104/audit?limit=100')).items;

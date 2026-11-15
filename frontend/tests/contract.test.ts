@@ -52,7 +52,7 @@ describe('shared protocol fixture (px104-protocol-v1)', () => {
   it('zero blockers never enables screening on the unsigned proposal', () => {
     const gate = screeningGate({ active_protocol_version_id: null }, fixture);
     expect(gate.allowed).toBe(false);
-    expect(gate.reasons.join(' ')).toMatch(/no investigator-approved active protocol/);
+    expect(gate.reasons.join(' ')).toMatch(/no Clinical Lead-approved active protocol/);
     expect(gate.reasons.join(' ')).toMatch(/8 of 8 rules lack/);
     expect(gate.reasons.join(' ')).toMatch(/Coverage has not been signed/);
   });
@@ -230,7 +230,7 @@ describe('mock backend honours the contract guards', () => {
     expect(replay.status).toBe(200);
     expect(replay.data).toMatchObject({ event_id: first.data.event_id, deduplicated: true, job: { job_id: first.data.job.job_id } });
     await expect(client.createPatientEvent('P-042', { ...day18, recorded_at: '2026-11-21T11:00:00+02:00' }, 'evt-2')).rejects.toMatchObject({ status: 409, code: 'EVENT_VERSION_CONFLICT' });
-    actor = 'ACT-MON-01';
+    actor = 'ACT-INV-01';
     await expect(client.createAgentInvestigation({ role: 'MONITORING_WORKFLOW', trial_id: 'TR-PX104', protocol_version_id: 'PV-PX104-1.0', patient_id: 'P-042', criterion_ids: [], event_id: null, objective: 'x' }, 'inv-1'))
       .rejects.toMatchObject({ status: 503, code: 'AGENT_UNAVAILABLE' });
   });
