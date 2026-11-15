@@ -5,9 +5,10 @@ import type { ActorRole, Criterion, ProtocolDetail, TrialDetail, WindowSpec } fr
 export interface Gate { allowed: boolean; reasons: string[] }
 
 // Zero coverage blockers never substitutes for investigator approval of every rule + coverage.
-export function screeningGate(trial: Pick<TrialDetail, 'active_protocol_version_id'> | null, protocol: ProtocolDetail | null): Gate {
+export function screeningGate(trial: Pick<TrialDetail, 'active_protocol_version_id' | 'patient_count'> | null, protocol: ProtocolDetail | null): Gate {
   const reasons: string[] = [];
   if (!trial?.active_protocol_version_id) reasons.push('The trial has no Clinical Lead-approved active protocol version.');
+  if (trial?.patient_count === 0) reasons.push('This study has no patients to screen. Choose a study with patients from Overview.');
   if (!protocol) {
     reasons.push('No protocol version loaded.');
     return { allowed: false, reasons };

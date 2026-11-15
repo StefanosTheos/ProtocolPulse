@@ -50,11 +50,22 @@ describe('shared protocol fixture (px104-protocol-v1)', () => {
   });
 
   it('zero blockers never enables screening on the unsigned proposal', () => {
-    const gate = screeningGate({ active_protocol_version_id: null }, fixture);
+    const gate = screeningGate({ active_protocol_version_id: null, patient_count: 15 }, fixture);
     expect(gate.allowed).toBe(false);
     expect(gate.reasons.join(' ')).toMatch(/no Clinical Lead-approved active protocol/);
     expect(gate.reasons.join(' ')).toMatch(/8 of 8 rules lack/);
     expect(gate.reasons.join(' ')).toMatch(/Coverage has not been signed/);
+  });
+
+  it('an approved protocol still needs patients before screening', () => {
+    const approved: ProtocolDetail = {
+      ...fixture, state: 'ACTIVE', approved_set_hash: 'approved-test', coverage_signed_by: 'ACT-INV-01', coverage_signed_at: '2026-11-15T00:00:00Z',
+      criteria: fixture.criteria.map((c) => ({ ...c, workflow_status: 'APPROVED', approved_by: 'ACT-INV-01', approved_at: '2026-11-15T00:00:00Z' })),
+    };
+    expect(screeningGate({ active_protocol_version_id: approved.protocol_version_id, patient_count: 0 }, approved)).toEqual({
+      allowed: false, reasons: ['This study has no patients to screen. Choose a study with patients from Overview.'],
+    });
+    expect(screeningGate({ active_protocol_version_id: approved.protocol_version_id, patient_count: 15 }, approved).allowed).toBe(true);
   });
 
   it('only an investigator may approve; blocking coverage and clarification block approval', () => {

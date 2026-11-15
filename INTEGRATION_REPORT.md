@@ -2,6 +2,14 @@
 
 **Verdict: PARTIALLY INTEGRATED — AI integration blockers resolved in the recorded follow-up.** Uploaded-source Gemini extraction, persisted unapproved proposals, synthetic investigator approval, fifteen-patient screening and automatic monitoring enrichment now pass real API/gateway/SQLite checks. The recorded uncertainty and irrelevant-event branches also pass. Independent judging and the existing broader UX/security/style backlogs remain; this is a local synthetic prototype, not a production or clinically validated release.
 
+## Empty-study screening guidance — 2026-11-15
+
+Investigated the reported `422 VALIDATION_ERROR` / "Patient IDs must be a nonempty unique trial subset". The screening UI submits `patient_ids:null`, which the backend expands to patients belonging to the selected study. Live read-only inspection found Integration QA approved with **0 patients**, while PX-104 had **15 patients**. Screening the empty study therefore fails the backend's required nonempty cohort validation. The reported request ID was not found in retained logs, so its exact selected study was not independently recovered.
+
+Added backend-count-based UI gating: empty studies show **No patients to screen**, explain that approval does not supply patient records, disable Run screening, and link back to Overview for another study. Overview no longer advertises screening availability for an approved empty study; the shared readiness gate also covers the protocol screen. The backend's nonempty/unique/trial-membership validation remains unchanged. No patient data was added, moved or reset.
+
+Verification: **75 frontend tests passed**, **10 destructive opt-in live-client tests skipped**, TypeScript/lint/build passed. `test:e2e -- empty-study.spec.ts --reporter=list` passed **1 real GET-only browser check** against the existing empty QA study, confirming guidance, disabled screening and return to study selection. No screening or AI call was submitted. The production frontend was rebuilt/restarted; existing backend/data preserved.
+
 ## Dropdown/tab responsiveness follow-up — 2026-11-15
 
 Measured the existing production browser flow before changing it: a first study choice took 193ms to its visible overview marker; tab markers took 55–140ms; the role change sample took 35ms. API reads were mostly 20–50ms. These action-to-marker samples include Playwright actionability waits and are not full-page loading times or latency percentiles.
