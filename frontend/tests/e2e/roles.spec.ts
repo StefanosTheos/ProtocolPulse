@@ -25,7 +25,8 @@ test('only Clinical Lead and Sponsor can be selected and use their authorized ta
   await expect(nav.getByRole('link', { name: 'Screen patients' })).toHaveCount(0);
   await expect(nav.getByRole('link', { name: 'Audit trail' })).toHaveCount(0);
   await expect(nav.getByRole('link', { name: /Protocol/ })).toBeVisible();
-  await expect(nav.getByRole('link', { name: /Safety/ })).toBeVisible();
+  await expect(nav.getByRole('link', { name: /Participation/ })).toBeVisible();
+  await expect(nav.getByRole('link', { name: /Safety/ })).toHaveCount(0);
   await page.evaluate(() => localStorage.setItem('protocolpulse.demoActor', 'ACT-MON-01'));
   await page.reload();
   await expect(dropdown).toHaveValue('ACT-INV-01');

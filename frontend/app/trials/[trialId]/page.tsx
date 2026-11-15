@@ -85,7 +85,7 @@ export default function TrialOverviewPage() {
     items.push({ tone: 'info', title: 'Patient screening is available', detail: 'The protocol is approved. Screen patients or review the candidates.', cta: 'Screen patients', href: `${base}/selector` });
   }
   if (active && (trial.data?.patient_count ?? 0) > 0 && role === 'COORDINATOR') {
-    items.push({ tone: 'info', title: 'Protocol approved — clinical review continues', detail: 'The Clinical Lead can screen patients and record external participation. Enter new patient records from Safety when available; the system checks relevant events automatically.', cta: 'Open Safety', href: `${base}/monitor` });
+    items.push({ tone: 'info', title: 'Protocol approved — clinical review continues', detail: 'The Clinical Lead screens patients and approves participation. Follow enrollment numbers from Participation.', cta: 'Open Participation', href: `${base}/participation` });
   }
   if (is(role, 'AUDITOR', 'SPONSOR_OPS')) {
     items.push({ tone: 'info', title: 'The audit trail is up to date', detail: 'Every protocol, screening and review action is recorded.', cta: 'Open audit trail', href: `${base}/audit` });
@@ -148,6 +148,13 @@ export default function TrialOverviewPage() {
                   <span className="block font-semibold text-brand">Review cases</span>
                 </Link>
               </>
+            )}
+            {hasStep('participation') && (
+              <Link href={`${base}/participation`} className={tile}>
+                <span className="block text-ink-muted">Patients in the study</span>
+                <span className="block text-3xl font-bold tabular-nums">{trial.data.patient_count}</span>
+                <span className="block font-semibold text-brand">View participation</span>
+              </Link>
             )}
             {hasStep('audit') && (
               <Link href={`${base}/audit`} className={tile}>

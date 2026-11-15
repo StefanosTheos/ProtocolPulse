@@ -48,7 +48,7 @@ export default function MonitorPage() {
             <div>
               <h2 id="findings-heading" className="text-xl">Safety</h2>
               <p className="text-ink-muted">New records for participating patients are checked against the protocol. A finding is a prompt for review, not a diagnosis.</p>
-              <p className="text-ink-muted">{actor.role === 'COORDINATOR' ? 'Next: Enter a new record. The system reassesses relevant rules and routes any resulting case to the Clinical Lead.' : 'Next: Open a case, inspect its sources and record your review. Monitoring starts from recorded external participation; screening alone does not enroll anyone.'}</p>
+              <p className="text-ink-muted">Next: Simulate a new record, or open a case, inspect its sources and record your review. The system reassesses relevant rules for participating patients and opens a case when needed.</p>
             </div>
             <div className="flex items-center gap-3 text-xs">
               <label className="flex items-center gap-1.5"><input type="checkbox" checked={autoRefresh} onChange={(e) => setAutoRefresh(e.target.checked)} /> Refresh every 10 seconds</label>

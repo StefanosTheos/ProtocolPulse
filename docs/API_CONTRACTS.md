@@ -81,6 +81,7 @@ export interface TrialCreate {title:string; fictional_product_code:string; site_
  site_timezone:string; planned_start_date:IsoDate; planned_end_date:IsoDate; synthetic_only:true}
 export interface TrialDetail extends Trial {protocol_version_ids:ID[]; patient_count:number;
  finding_count:number; trial_notice:string}
+export interface ParticipationSummary {trial_id:ID; cohort_count:number; participating_count:number; ended_count:number}
 export interface SourceRef {source_id:ID; source_version:number; sha256:string;
  filename:string; mime_type:string; created_at:IsoInstant; synthetic_only:true}
 export interface WindowSpec {anchor:'SCREENING_DATE'|'EVENT_EFFECTIVE_AT'|'PARTICIPATION';
@@ -285,6 +286,7 @@ Table format: `ROLE` gives allowed simulated roles; `REQ` defines path/query/hea
 | `GET /api/v1/trials` | `listTrials` / all known actors | `limit,cursor,sort=created_at|-created_at|title` | `200 Envelope<Page<Trial>>` |
 | `POST /api/v1/trials` | `createTrial` / `COORDINATOR,RESEARCH_IT` | `TrialCreate` JSON | `201 Envelope<Trial>`; inserts trial and audit |
 | `GET /api/v1/trials/{trial_id}` | `getTrial` / site-scoped roles | `trial_id` path | `200 Envelope<TrialDetail>` |
+| `GET /api/v1/trials/{trial_id}/participation-summary` | `getParticipationSummary` / site-scoped roles | `trial_id` path | `200 Envelope<ParticipationSummary>`: `{trial_id, cohort_count, participating_count, ended_count}`; aggregate counts only, no patient identifiers (Sponsor Participation tab) |
 | `GET /api/v1/trials/{trial_id}/protocols` | `listProtocols` / site-scoped roles | `limit,cursor,sort=label|-created_at` | `200 Envelope<Page<ProtocolDetail>>` |
 | `POST /api/v1/trials/{trial_id}/protocols` | `uploadProtocol` / `COORDINATOR,RESEARCH_IT` | multipart `file` required PDF bytes, `version_label` string required, `source_declared_synthetic=true` | `201 Envelope<ProtocolDetail>`; original PDF and version persisted (no extraction yet) |
 | `GET /api/v1/trials/{trial_id}/protocols/{version_id}` | `getProtocol` / site-scoped roles | path `trial_id,version_id` | `200 Envelope<ProtocolDetail>` |
@@ -295,7 +297,7 @@ Table format: `ROLE` gives allowed simulated roles; `REQ` defines path/query/hea
 | `GET /api/v1/screenings/{run_id}` | `getScreeningRun` / site-scoped roles | run ID | `200 Envelope<ScreeningRun>`; `202` polling ONLY job endpoint, not GET run |
 | `GET /api/v1/screenings/{run_id}/assessments` | `listAssessments` / site-scoped roles | `limit,cursor,status=CandidateStatus,reason=UnknownReason,sort=patient_id|-evidence_completeness_percent` | `200 Envelope<Page<PatientAssessment>>`; includes all criterion-level evidence refs |
 | `GET /api/v1/trials/{trial_id}/patients/{patient_id}` | `getPatient360` / `COORDINATOR,INVESTIGATOR,MONITOR,AUDITOR` scoped | path IDs, optional `as_of` RFC3339 UTC for evidence watermark | `200 Envelope<Patient360>`; clinical narratives cannot override structured data |
-| `POST /api/v1/patients/{patient_id}/events` | `createPatientEvent` / `COORDINATOR,RESEARCH_IT` | `EventCreate` JSON with trial ID; clinical `effective_at != recorded_at` allowed | `202 Envelope<EventReceipt>` creates immutable event + `INGEST_EVENT` job; **same event/version/body replay `200`**, same key different body `409` |
+| `POST /api/v1/patients/{patient_id}/events` | `createPatientEvent` / `INVESTIGATOR,COORDINATOR,RESEARCH_IT` (UI: Clinical Lead only) | `EventCreate` JSON with trial ID; clinical `effective_at != recorded_at` allowed | `202 Envelope<EventReceipt>` creates immutable event + `INGEST_EVENT` job; **same event/version/body replay `200`**, same key different body `409` |
 | `GET /api/v1/trials/{trial_id}/findings` | `listFindings` / `MONITOR,INVESTIGATOR,COORDINATOR,AUDITOR` | `limit,cursor,category=FindingCategory,patient_id,priority=HIGH|MEDIUM|LOW,from_at,to_at,sort=-created_at|created_at` | `200 Envelope<Page<MonitoringFinding>>` |
 | `GET /api/v1/trials/{trial_id}/cases` | `listCases` / `MONITOR,INVESTIGATOR,COORDINATOR,AUDITOR` | `limit,cursor,status=CaseStatus,category=FindingCategory,assigned_actor_id,patient_id,sort=-updated_at|updated_at` | `200 Envelope<Page<ReviewCase>>` (decisions may be empty in list) |
 | `GET /api/v1/cases/{case_id}` | `getCase` / site-scoped review roles | case ID | `200 Envelope<ReviewCase>`; all review decisions included |

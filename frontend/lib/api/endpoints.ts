@@ -2,7 +2,7 @@ import { ApiClient, type ApiResult } from './client';
 import type {
   AgentExecution, AgentInvestigationCreate, ApprovalReceipt, ApprovalRequest, AssessmentQuery,
   AuditEntry, AuditQuery, CaseQuery, CasePatch, CriteriaReplaceRequest, EventCreate, EventReceipt,
-  EvidenceQuery, EvidenceSourceDetail, FindingQuery, Health, JobDetail, JobReceipt, MonitoringFinding,
+  EvidenceQuery, EvidenceSourceDetail, FindingQuery, Health, JobDetail, JobReceipt, MonitoringFinding, ParticipationSummary,
   Page, PageQuery, ParticipationCreate, ParticipationRecord, Patient360, PatientAssessment,
   ProtocolDetail, ReviewCase, ScreeningCreate, ScreeningDisposition, ScreeningDispositionCreate,
   ScreeningRun, Trial, TrialCreate, TrialDetail,
@@ -22,6 +22,8 @@ export function createEndpoints(client: ApiClient) {
       client.request('POST', '/trials', { body, idempotencyKey }),
     getTrial: (trialId: string): Promise<ApiResult<TrialDetail>> =>
       client.request('GET', `/trials/${enc(trialId)}`),
+    getParticipationSummary: (trialId: string): Promise<ApiResult<ParticipationSummary>> =>
+      client.request('GET', `/trials/${enc(trialId)}/participation-summary`),
 
     listProtocols: (trialId: string, q: PageQuery & { sort?: 'label' | '-created_at' } = {}): Promise<ApiResult<Page<ProtocolDetail>>> =>
       client.request('GET', `/trials/${enc(trialId)}/protocols`, { query: q as Q }),

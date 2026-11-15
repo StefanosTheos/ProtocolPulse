@@ -44,7 +44,12 @@ for (const [role, actor, landingTitle] of [['Sponsor', 'ACT-COORD-01', 'Start a 
       await expect(page.getByText(`${study.planned_start_date} → ${study.planned_end_date}`, { exact: true })).toBeVisible();
       const summary = page.getByRole('region', { name: 'Study summary' });
       await expect(summary).toBeVisible();
-      await expect(summary.getByRole('link', { name: /^Safety findings/ }).getByText(String(detail.finding_count), { exact: true })).toBeVisible();
+      if (actor === 'ACT-INV-01') {
+        await expect(summary.getByRole('link', { name: /^Safety findings/ }).getByText(String(detail.finding_count), { exact: true })).toBeVisible();
+      } else {
+        await expect(summary.getByRole('link', { name: /^Patients in the study/ }).getByText(String(detail.patient_count), { exact: true })).toBeVisible();
+        await expect(summary.getByRole('link', { name: /^Safety findings/ })).toHaveCount(0);
+      }
       await expect(nav.getByRole('link', { name: 'Overview' })).toHaveAttribute('href', base);
       if (actor === 'ACT-INV-01') await expect(nav.getByRole('link', { name: 'Screen patients' })).toBeVisible();
       else await expect(nav.getByRole('link', { name: 'Screen patients' })).toHaveCount(0);
@@ -56,6 +61,8 @@ for (const [role, actor, landingTitle] of [['Sponsor', 'ACT-COORD-01', 'Start a 
     await expect(page).toHaveURL('http://localhost:3000/');
     await expect(page.getByRole('heading', { level: 1, name: landingTitle })).toBeVisible();
     await expect(page.getByRole('region', { name: 'Study summary' })).toHaveCount(0);
+    // The Sponsor sees aggregate counts only: no patient, finding, case or screening data is requested.
+    if (actor === 'ACT-COORD-01') expect(apiPaths.filter((path) => /\/(patients|findings|cases|screenings)\b/.test(path))).toEqual([]);
     expect(errors).toEqual([]);
   });
 }

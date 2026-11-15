@@ -7,7 +7,9 @@ import MonitorPage from '@/app/trials/[trialId]/monitor/page';
 import SelectorPage from '@/app/trials/[trialId]/selector/page';
 import { ActorProvider } from '@/components/ActorContext';
 import { AgentExecutionView } from '@/components/AgentExecutionPanel';
+import { CandidateTable } from '@/components/CandidateTable';
 import { CaseReviewPanel } from '@/components/CaseReviewPanel';
+import { PatientActions } from '@/components/PatientActions';
 import { CriterionMatrix } from '@/components/CriterionMatrix';
 import { EmptyState, ErrorPanel } from '@/components/ErrorBoundary';
 import { EventSimulator } from '@/components/EventSimulator';
@@ -155,6 +157,65 @@ describe('J-02 screening gate', () => {
   });
 });
 
+describe('candidate list participation', () => {
+  it('shows current participation recorded after the screening run, not the run snapshot', async () => {
+    const { transport } = useMock();
+    const inv = directClient(transport, 'ACT-INV-01');
+    await inv.approveProtocol('TR-PX104', 'PV-PX104-1.0', { criterion_ids: fixture.criteria.map((c) => c.criterion_id), coverage_attestation: true, activate: true, decision_reason: 'r' }, 1, 'k-a');
+    const receipt = await inv.createScreening('TR-PX104', { protocol_version_id: 'PV-PX104-1.0', screening_date: '2026-10-31', evidence_cutoff_at: '2026-10-31T22:00:00Z', patient_ids: null, purpose: 'BASELINE' }, 'k-s');
+    const job = await pollJob((id) => inv.getJob(id), receipt.data.job_id, { sleep: async () => {} });
+    const runId = (job.result as { run_id: string }).run_id;
+    const assessments = (await inv.listAssessments(runId, { limit: 100 })).data.items;
+    expect(assessments.find((a) => a.patient_id === 'P-042')?.participation_status).toBe('NOT_ENROLLED');
+    await inv.recordParticipation('TR-PX104', 'P-042', { next_status: 'PARTICIPATING', external_record_source_id: 'SRC-P-042-PARTICIPATION', external_record_reference: 'EXT-1', rationale: 'r' }, 'k-p');
+
+    renderAs('ACT-INV-01', <CandidateTable trialId="TR-PX104" runId={runId} assessments={assessments} />);
+    const row = (pid: string) => screen.getByRole('link', { name: pid }).closest('tr')!;
+    await waitFor(() => expect(within(row('P-042')).getByText('Participating')).toBeInTheDocument());
+    const other = assessments.find((a) => a.patient_id !== 'P-042')!.patient_id;
+    expect(within(row(other)).getByText('Not participating')).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Participation now' })).toBeInTheDocument();
+  });
+});
+
+describe('patient approval', () => {
+  async function screened(transport: Transport) {
+    const inv = directClient(transport, 'ACT-INV-01');
+    await inv.approveProtocol('TR-PX104', 'PV-PX104-1.0', { criterion_ids: fixture.criteria.map((c) => c.criterion_id), coverage_attestation: true, activate: true, decision_reason: 'r' }, 1, 'k-a');
+    const receipt = await inv.createScreening('TR-PX104', { protocol_version_id: 'PV-PX104-1.0', screening_date: '2026-10-31', evidence_cutoff_at: '2026-10-31T22:00:00Z', patient_ids: null, purpose: 'BASELINE' }, 'k-s');
+    const job = await pollJob((id) => inv.getJob(id), receipt.data.job_id, { sleep: async () => {} });
+    return { inv, assessments: (await inv.listAssessments((job.result as { run_id: string }).run_id, { limit: 100 })).data.items };
+  }
+
+  it('approves a potential match into participation with its registered external record', async () => {
+    const { transport, calls } = useMock();
+    const { inv, assessments } = await screened(transport);
+    const assessment = assessments.find((a) => a.candidate_status === 'POTENTIAL_MATCH')!;
+    const patient = (await inv.getPatient360('TR-PX104', assessment.patient_id)).data;
+    const onChanged = vi.fn();
+    const user = userEvent.setup();
+    renderAs('ACT-INV-01', <PatientActions trialId="TR-PX104" patient={patient} assessment={assessment} onChanged={onChanged} />);
+    expect(screen.queryByRole('button', { name: /Record external participation|Request automated summary/ })).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Approve' }));
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Confirm approval' }));
+    await screen.findByText(`${assessment.patient_id} approved: now participating.`);
+    const call = calls.find((c) => c.method === 'POST' && c.path.endsWith('/participation'))!;
+    expect(call.body).toMatchObject({ next_status: 'PARTICIPATING', external_record_source_id: `SRC-${assessment.patient_id}-PARTICIPATION`, external_record_reference: `EXT-${assessment.patient_id}` });
+    expect((await inv.getPatient360('TR-PX104', assessment.patient_id)).data.participation_status).toBe('PARTICIPATING');
+    expect(onChanged).toHaveBeenCalled();
+  });
+
+  it('cannot approve a protocol conflict', async () => {
+    const { transport } = useMock();
+    const { inv, assessments } = await screened(transport);
+    const assessment = assessments.find((a) => a.candidate_status === 'PROTOCOL_CONFLICT')!;
+    const patient = (await inv.getPatient360('TR-PX104', assessment.patient_id)).data;
+    renderAs('ACT-INV-01', <PatientActions trialId="TR-PX104" patient={patient} assessment={assessment} onChanged={() => {}} />);
+    expect(screen.getByRole('button', { name: 'Approve' })).toBeDisabled();
+    expect(screen.getByText('Only patients whose result is Needs review or Potential match can be approved.')).toBeInTheDocument();
+  });
+});
+
 describe('J-03 evidence display', () => {
   const unknown: CriterionResult = {
     criterion_result_id: 'CR-1', criterion_id: 'PX-INC-03', protocol_version_id: 'PV-PX104-1.0', status: 'UNKNOWN', reason_codes: ['MISSING_LAB'],
@@ -195,7 +256,7 @@ describe('J-04 event simulation and refresh', () => {
     useMock({ pollsUntilDone: 2 });
     const onProcessed = vi.fn();
     const user = userEvent.setup();
-    renderAs('ACT-COORD-01', <EventSimulator trialId="TR-PX104" onProcessed={onProcessed} />);
+    renderAs('ACT-INV-01', <EventSimulator trialId="TR-PX104" onProcessed={onProcessed} />);
     await user.click(screen.getByRole('button', { name: 'Simulate new record' }));
     await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Add record' }));
     expect(await screen.findByText('Safety check')).toBeInTheDocument();
@@ -218,7 +279,7 @@ describe('J-04 event simulation and refresh', () => {
     navigation.params = { trialId: 'TR-PX104' };
     navigation.pathname = '/trials/TR-PX104/monitor';
     const user = userEvent.setup();
-    renderAs('ACT-COORD-01', <MonitorPage />);
+    renderAs('ACT-INV-01', <MonitorPage />);
     expect(await screen.findByText('No findings')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Simulate new record' }));
     await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Add record' }));
@@ -227,6 +288,15 @@ describe('J-04 event simulation and refresh', () => {
     expect(await screen.findByRole('link', { name: /Open case for patient P-042/ }, { timeout: 4000 })).toBeInTheDocument();
     expect(screen.queryByText('No findings')).not.toBeInTheDocument();
     expect(screen.getAllByText('Confirmed protocol conflict').some((el) => el.tagName === 'SPAN')).toBe(true);
+  });
+});
+
+describe('simulated records', () => {
+  it('are only available to the Clinical Lead', () => {
+    useMock();
+    renderAs('ACT-COORD-01', <EventSimulator trialId="TR-PX104" onProcessed={() => {}} />);
+    expect(screen.getByRole('button', { name: 'Simulate new record' })).toBeDisabled();
+    expect(screen.getByText('Records are added by the Clinical Lead.')).toBeInTheDocument();
   });
 });
 

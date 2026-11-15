@@ -64,6 +64,8 @@ export interface TrialCreate {title:string; fictional_product_code:string; site_
  site_timezone:string; planned_start_date:IsoDate; planned_end_date:IsoDate; synthetic_only:true}
 export interface TrialDetail extends Trial {protocol_version_ids:ID[]; patient_count:number;
  finding_count:number; trial_notice:string}
+// Aggregate counts only; no patient identifiers or clinical data.
+export interface ParticipationSummary {trial_id:ID; cohort_count:number; participating_count:number; ended_count:number}
 export interface SourceRef {source_id:ID; source_version:number; sha256:string;
  filename:string; mime_type:string; created_at:IsoInstant; synthetic_only:true}
 export interface WindowSpec {anchor:'SCREENING_DATE'|'EVENT_EFFECTIVE_AT'|'PARTICIPATION';

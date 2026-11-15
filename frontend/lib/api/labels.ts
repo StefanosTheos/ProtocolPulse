@@ -148,9 +148,10 @@ export function actionLabel(action: string): string {
 
 // Which roles the API lets read each kind of record. Screens only request what the role may read.
 export const CAN_READ: Record<'patients' | 'findings' | 'cases' | 'audit', ActorRole[]> = {
-  patients: ['COORDINATOR', 'INVESTIGATOR', 'MONITOR', 'AUDITOR'],
-  findings: ['MONITOR', 'INVESTIGATOR', 'COORDINATOR', 'AUDITOR'],
-  cases: ['MONITOR', 'INVESTIGATOR', 'COORDINATOR', 'AUDITOR'],
+  // The Sponsor (COORDINATOR) sees aggregate participation counts only, never patient-level data.
+  patients: ['INVESTIGATOR', 'MONITOR', 'AUDITOR'],
+  findings: ['MONITOR', 'INVESTIGATOR', 'AUDITOR'],
+  cases: ['MONITOR', 'INVESTIGATOR', 'AUDITOR'],
   audit: ['AUDITOR', 'INVESTIGATOR', 'MONITOR', 'SPONSOR_OPS'],
 };
 
@@ -161,7 +162,8 @@ export const STEPS: Step[] = [
   { key: 'overview', label: 'Overview', href: '', paths: [], roles: ALL_ROLES },
   { key: 'protocol', label: 'Protocol', href: '/protocol', paths: ['/protocol'], roles: ALL_ROLES },
   { key: 'screen', label: 'Screen patients', href: '/selector', paths: ['/selector', '/patients'], roles: ['INVESTIGATOR'] },
-  { key: 'safety', label: 'Safety', href: '/monitor', paths: ['/monitor', '/cases'], roles: ALL_ROLES },
+  { key: 'participation', label: 'Participation', href: '/participation', paths: ['/participation'], roles: ['COORDINATOR'] },
+  { key: 'safety', label: 'Safety', href: '/monitor', paths: ['/monitor', '/cases'], roles: ['INVESTIGATOR'] },
   { key: 'audit', label: 'Audit trail', href: '/audit', paths: ['/audit'], roles: ['INVESTIGATOR'] },
 ];
 

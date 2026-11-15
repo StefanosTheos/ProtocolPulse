@@ -85,6 +85,15 @@ class TrialDetail(Trial):
     trial_notice: str
 
 
+class ParticipationSummary(ContractBase):
+    """Aggregate counts only; no patient identifiers or clinical data."""
+
+    trial_id: ID
+    cohort_count: int
+    participating_count: int
+    ended_count: int
+
+
 class SourceRef(ContractBase):
     source_id: ID
     source_version: int
