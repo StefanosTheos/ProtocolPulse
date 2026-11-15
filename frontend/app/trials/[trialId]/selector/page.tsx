@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useActor } from '@/components/ActorContext';
 import { CandidateTable } from '@/components/CandidateTable';
 import { EmptyState, ErrorPanel } from '@/components/ErrorBoundary';
@@ -13,17 +13,20 @@ import { TrialHeader, useTrial } from '@/components/TrialHeader';
 import { ApiError } from '@/lib/api/client';
 import { screeningGate } from '@/lib/api/gates';
 import { useApiQuery, useIdempotencyKey, useJobRunner } from '@/lib/api/hooks';
+import { REASON_LABEL } from '@/lib/api/labels';
+import { forgetRun, getLastRun, rememberRun } from '@/lib/api/lastRun';
 import { getApi } from '@/lib/api/runtime';
 import { addDays, endOfScreeningDayWatermark, formatInstant } from '@/lib/api/time';
-import type { AssessmentQuery, CandidateStatus, UnknownReason } from '@/lib/api/types';
+import type { AssessmentQuery, CandidateStatus, Criterion, UnknownReason } from '@/lib/api/types';
 
+// "Needs review" comes first and is the default: those patients are the reviewer's work.
 const TABS: { status: CandidateStatus | null; label: string }[] = [
-  { status: null, label: 'All' },
-  { status: 'POTENTIAL_MATCH', label: CANDIDATE_LABEL.POTENTIAL_MATCH },
   { status: 'NEEDS_REVIEW', label: CANDIDATE_LABEL.NEEDS_REVIEW },
+  { status: 'POTENTIAL_MATCH', label: CANDIDATE_LABEL.POTENTIAL_MATCH },
   { status: 'PROTOCOL_CONFLICT', label: CANDIDATE_LABEL.PROTOCOL_CONFLICT },
+  { status: null, label: 'All patients' },
 ];
-const REASONS: UnknownReason[] = ['MISSING_LAB', 'OUTDATED_LAB', 'DATE_AMBIGUOUS', 'ORDER_ONLY', 'CONFLICTING_SOURCES', 'UNMAPPED_CODE', 'UNAPPROVED_RULE', 'INCOMPLETE_EXTRACTION', 'INSUFFICIENT_ABSENCE_EVIDENCE', 'UNIT_UNSUPPORTED', 'SOURCE_UNAVAILABLE'];
+const REASONS = Object.keys(REASON_LABEL) as UnknownReason[];
 const PAGE_SIZE = 25;
 
 function SelectorInner() {
@@ -36,12 +39,14 @@ function SelectorInner() {
   const protocol = useApiQuery(activeId ? () => getApi().getProtocol(trialId, activeId).then((r) => r.data) : null, [trialId, activeId, actor.actor_id]);
 
   const runId = search?.get('run') ?? null;
-  const status = (search?.get('status') as CandidateStatus | null) ?? null;
+  const statusParam = search?.get('status') ?? null;
+  const status: CandidateStatus | null = statusParam === 'ALL' ? null : (statusParam as CandidateStatus | null) ?? 'NEEDS_REVIEW';
   const reason = (search?.get('reason') as UnknownReason | null) ?? null;
   const sort = (search?.get('sort') as AssessmentQuery['sort'] | null) ?? 'patient_id';
   const [cursorStack, setCursorStack] = useState<(string | undefined)[]>([undefined]);
   const cursor = cursorStack[cursorStack.length - 1];
   const [query, setQuery] = useState('');
+  const [justRan, setJustRan] = useState(false);
 
   const base = `/trials/${encodeURIComponent(trialId)}`;
   const setParams = (patch: Record<string, string | null>) => {
@@ -53,6 +58,26 @@ function SelectorInner() {
 
   const run = useApiQuery(runId ? () => getApi().getScreeningRun(runId).then((r) => r.data) : null, [runId, actor.actor_id]);
   const runComplete = run.data?.status === 'COMPLETE';
+
+  // Opened from a tab or link without ?run=: show the last screening run instead of an empty page.
+  useEffect(() => {
+    if (runId) return;
+    const remembered = getLastRun(trialId);
+    if (remembered) setParams({ run: remembered });
+    // setParams changes on every render; this should only run when the URL has no run.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runId, trialId]);
+  useEffect(() => {
+    if (runId && runComplete) rememberRun(trialId, runId);
+  }, [runId, runComplete, trialId]);
+  useEffect(() => {
+    // A remembered run the backend no longer has (for example after a reset) is dropped.
+    if (runId && run.error instanceof ApiError && run.error.status === 404) {
+      forgetRun(trialId, runId);
+      setParams({ run: null });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [run.error, runId, trialId]);
   const assessments = useApiQuery(
     runId && runComplete ? () => getApi().listAssessments(runId, { status: status ?? undefined, reason: reason ?? undefined, sort, limit: PAGE_SIZE, cursor }).then((r) => r.data) : null,
     [runId, runComplete, status, reason, sort, cursor, actor.actor_id],
@@ -69,10 +94,12 @@ function SelectorInner() {
 
   const gate = screeningGate(trial.data, protocol.data);
   const canRun = actor.role === 'COORDINATOR' || actor.role === 'INVESTIGATOR';
+  const criteriaById = useMemo(() => Object.fromEntries((protocol.data?.criteria ?? []).map((c) => [c.criterion_id, c])) as Record<string, Criterion>, [protocol.data]);
 
   async function startScreening() {
     if (!activeId || !date) return;
     setScreenError(null);
+    setJustRan(false);
     try {
       const receipt = await getApi().createScreening(trialId, { protocol_version_id: activeId, screening_date: date, evidence_cutoff_at: cutoff, patient_ids: null, purpose: 'BASELINE' }, screenKey.current());
       const job = await screenJob.run(receipt.data.job_id);
@@ -85,6 +112,7 @@ function SelectorInner() {
         throw new ApiError({ status: 0, code: 'RUN_NOT_COMPLETE', message: `Job SUCCEEDED but screening run ${newRunId} is ${finished.data.status}. Results are not shown until the run is COMPLETE.` });
       }
       screenKey.reset();
+      setJustRan(true);
       setParams({ run: newRunId, status: null, reason: null });
     } catch (e) {
       setScreenError(e);
@@ -99,111 +127,120 @@ function SelectorInner() {
 
   return (
     <div>
-      <TrialHeader trialId={trialId} />
-      <div className="grid gap-5 lg:grid-cols-[20rem_1fr]">
-        <aside className="space-y-5">
-          <section className="card card-pad space-y-3" aria-labelledby="run-heading">
-            <h2 id="run-heading">Baseline screening</h2>
-            <p className="text-xs text-ink-muted">Evaluates the five approved eligibility rules for all synthetic patients. A result is a pre-screen, not enrollment.</p>
-            {protocol.loading && <LoadingSkeleton rows={1} />}
-            {!gate.allowed && (
-              <div className="rounded border border-unknown-line bg-unknown-bg p-2 text-xs text-unknown-fg">
-                <p className="font-semibold">Screening disabled</p>
-                <ul className="list-disc pl-4">{gate.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
-                <Link href={`${base}/protocol`} className="mt-1 inline-block underline">Review protocol rules</Link>
-              </div>
-            )}
-            <div>
-              <label className="label" htmlFor="screen-date">Screening date ({tz})</label>
-              <input id="screen-date" type="date" className="input" value={date} onChange={(e) => { screenKey.reset(); setScreeningDate(e.target.value); }} />
-            </div>
-            <div className="text-xs">
-              <span className="text-ink-muted">End-of-screening-day evidence watermark</span>
-              <div className="mono">{cutoff || '—'}</div>
-              <div className="text-ink-faint">Next local midnight; not the medication-window end.</div>
-            </div>
-            <button type="button" className="btn-primary w-full" disabled={!gate.allowed || !canRun || screenJob.running || !date} onClick={startScreening}>
-              {screenJob.running ? 'Screening…' : 'Run screening'}
-            </button>
-            {!canRun && <p className="text-xs text-unknown-fg">Coordinator or investigator role required.</p>}
-            <JobProgress job={screenJob.job} error={screenJob.error} running={screenJob.running} label="Screening job" />
-            {screenError ? <ErrorPanel error={screenError} context="Screening" /> : null}
-          </section>
+      <div className="space-y-5">
+        <div>
+          <h2 className="text-xl">Screen patients</h2>
+          <p className="text-ink-muted">Each patient is checked against the approved eligibility criteria. A potential match is a candidate for formal screening by the investigator, not an enrolment.</p>
+        </div>
 
+        <section className="card card-pad space-y-3" aria-labelledby="run-heading">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="min-w-0">
+              <h3 id="run-heading" className="text-base">Baseline screening</h3>
+              {run.data
+                ? <p className="text-ink-muted">{run.data.patient_count} patients screened for {run.data.screening_date}{run.data.completed_at ? ` · Completed ${formatInstant(run.data.completed_at, tz)}` : ''}{run.data.stale && <> <Pill tone="unknown">Out of date</Pill></>}</p>
+                : <p className="text-ink-muted">Uses records available up to the end of the screening day.</p>}
+            </div>
+            <div className="flex flex-wrap items-end gap-3">
+              <div>
+                <label className="label" htmlFor="screen-date">Screening date</label>
+                <input id="screen-date" type="date" className="input" value={date} disabled={!canRun} onChange={(e) => { screenKey.reset(); setScreeningDate(e.target.value); }} />
+              </div>
+              <button type="button" className="btn-primary" disabled={!gate.allowed || !canRun || screenJob.running || !date} onClick={startScreening}>
+                {screenJob.running ? 'Screening…' : 'Run screening'}
+              </button>
+            </div>
+          </div>
+          {protocol.loading && <LoadingSkeleton rows={1} />}
+          {!gate.allowed && (
+            <div className="rounded-lg border border-unknown-line bg-unknown-bg p-3 text-unknown-fg">
+              <p className="font-semibold">Screening disabled</p>
+              <ul className="list-disc pl-5">{gate.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
+              <Link href={`${base}/protocol`} className="mt-1 inline-block underline">Review protocol rules</Link>
+            </div>
+          )}
+          {!canRun && <p className="note">Screening is run by a coordinator or the investigator.</p>}
+          <JobProgress job={screenJob.job} error={screenJob.error} running={screenJob.running} label="Screening" />
+          {screenError ? <ErrorPanel error={screenError} context="Screening" /> : null}
+          {run.data?.error_code && <p className="text-fail-fg">Screening did not finish. Run it again.</p>}
           {run.data && (
-            <section className="card card-pad space-y-2 text-xs" aria-labelledby="run-meta">
-              <h3 id="run-meta">Run <span className="mono font-normal">{run.data.run_id}</span></h3>
-              <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
-                <dt className="text-ink-muted">Status</dt><dd>{run.data.status}{run.data.stale && <Pill tone="unknown">Stale</Pill>}</dd>
-                <dt className="text-ink-muted">Screen date</dt><dd>{run.data.screening_date}</dd>
-                <dt className="text-ink-muted">Watermark</dt><dd>{formatInstant(run.data.evidence_cutoff_at, tz)}</dd>
-                <dt className="text-ink-muted">Protocol</dt><dd className="mono">{run.data.protocol_version_id}</dd>
+            <details className="text-xs">
+              <summary className="font-semibold text-ink-muted">Technical details</summary>
+              <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
+                <dt className="text-ink-muted">Run</dt><dd className="mono break-all">{run.data.run_id}</dd>
+                <dt className="text-ink-muted">Status</dt><dd>{run.data.status}</dd>
+                <dt className="text-ink-muted">Records up to</dt><dd>{formatInstant(run.data.evidence_cutoff_at, tz)}</dd>
+                <dt className="text-ink-muted">Protocol</dt><dd className="mono break-all">{run.data.protocol_version_id}</dd>
                 <dt className="text-ink-muted">Rule-set hash</dt><dd className="mono break-all">{run.data.approved_set_hash}</dd>
                 <dt className="text-ink-muted">Engine</dt><dd className="mono">{run.data.engine_version}</dd>
                 <dt className="text-ink-muted">Terminology</dt><dd className="mono">{run.data.terminology_map_version}</dd>
-                <dt className="text-ink-muted">Snapshot</dt><dd className="mono">{run.data.evidence_snapshot_id}</dd>
-                <dt className="text-ink-muted">Completed</dt><dd>{formatInstant(run.data.completed_at, tz)}</dd>
+                <dt className="text-ink-muted">Snapshot</dt><dd className="mono break-all">{run.data.evidence_snapshot_id}</dd>
+                {run.data.error_code && <><dt className="text-ink-muted">Error</dt><dd className="mono">{run.data.error_code}</dd></>}
               </dl>
-              {run.data.error_code && <p className="text-fail-fg">Run error: <span className="mono">{run.data.error_code}</span></p>}
-            </section>
+            </details>
           )}
-        </aside>
+        </section>
 
-        <section className="min-w-0 space-y-3" aria-labelledby="candidates-heading">
+        {justRan && run.data && runComplete && (
+          <div role="status" className="done-banner">
+            <p className="font-semibold text-pass-fg">✓ Screening completed. {run.data.patient_count} patients checked, {run.data.counts.NEEDS_REVIEW} need review.</p>
+            <button type="button" className="btn-primary" onClick={() => { setJustRan(false); setParams({ status: null }); }}>Next: Review these patients</button>
+          </div>
+        )}
+
+        <section className="min-w-0 space-y-4" aria-labelledby="candidates-heading">
           <h2 id="candidates-heading">Candidates</h2>
-          {!runId && <EmptyState title="No screening run selected">Run baseline screening once the protocol is approved. Results appear only after the job SUCCEEDED and the run is COMPLETE.</EmptyState>}
+          {!runId && <EmptyState title="No screening yet">Run baseline screening once the protocol is approved. Results appear when screening has finished.</EmptyState>}
           {run.loading && <LoadingSkeleton rows={4} />}
-          {run.error ? <ErrorPanel error={run.error} context="Screening run" onRetry={run.reload} /> : null}
+          {run.error ? <ErrorPanel error={run.error} context="Screening" onRetry={run.reload} /> : null}
           {run.data && !runComplete && (
-            <p className="rounded border border-unknown-line bg-unknown-bg p-3 text-unknown-fg">Run is {run.data.status}. Assessments are hidden until it is COMPLETE. <button type="button" className="underline" onClick={run.reload}>Refresh</button></p>
+            <p className="rounded-lg border border-unknown-line bg-unknown-bg p-3 text-unknown-fg">Screening is still in progress. Results appear when it has finished. <button type="button" className="underline" onClick={run.reload}>Refresh</button></p>
           )}
           {run.data && runComplete && (
             <>
-              <div role="tablist" aria-label="Candidate status" className="flex flex-wrap gap-2">
+              <div role="tablist" aria-label="Filter by result" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {TABS.map((t) => {
                   const count = t.status === null ? run.data!.patient_count : run.data!.counts[t.status];
                   const selected = status === t.status;
                   return (
-                    <button key={t.label} role="tab" type="button" aria-selected={selected} onClick={() => setParams({ status: t.status })}
-                      className={`rounded border px-3 py-1.5 text-sm ${selected ? 'border-brand bg-brand-soft font-semibold text-brand' : 'border-line-strong bg-surface text-ink hover:bg-canvas'}`}>
-                      {t.label} <span className="ml-1 tabular-nums">{count}</span>
+                    <button key={t.label} role="tab" type="button" aria-selected={selected} onClick={() => setParams({ status: t.status ?? 'ALL' })}
+                      className={`flex flex-col items-start rounded-xl border-2 px-4 py-3 text-left ${selected ? 'border-brand bg-brand-soft text-brand' : 'border-line bg-surface text-ink hover:bg-canvas'}`}>
+                      <span className="text-2xl font-bold tabular-nums leading-tight">{count}</span>
+                      <span className="font-semibold">{t.label}</span>
                     </button>
                   );
                 })}
-                {run.data.counts.EVALUATION_ERROR > 0 && (
-                  <span className="self-center"><Pill tone="neutral">Evaluation errors {run.data.counts.EVALUATION_ERROR}</Pill></span>
-                )}
               </div>
-              <p className="text-xs text-ink-muted">Counts come from screening run <span className="mono">{run.data.run_id}</span> as reported by the API. &quot;Pre-screened potential match&quot; means a candidate for formal investigator screening, never enrollment.</p>
+              {run.data.counts.EVALUATION_ERROR > 0 && <p><Pill tone="neutral">{run.data.counts.EVALUATION_ERROR} could not be evaluated</Pill></p>}
               <div className="flex flex-wrap items-end gap-3">
+                <div className="min-w-[12rem] flex-1">
+                  <label className="label" htmlFor="search">Find a patient (this page)</label>
+                  <input id="search" type="search" className="input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Patient ID, e.g. P-042" />
+                </div>
                 <div>
                   <label className="label" htmlFor="reason-filter">Reason</label>
                   <select id="reason-filter" className="input w-auto" value={reason ?? ''} onChange={(e) => setParams({ reason: e.target.value || null })}>
                     <option value="">Any reason</option>
-                    {REASONS.map((r) => <option key={r} value={r}>{r}</option>)}
+                    {REASONS.map((r) => <option key={r} value={r}>{REASON_LABEL[r]}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="label" htmlFor="sort">Sort</label>
                   <select id="sort" className="input w-auto" value={sort} onChange={(e) => setParams({ sort: e.target.value })}>
                     <option value="patient_id">Patient ID</option>
-                    <option value="-evidence_completeness_percent">Evidence completeness (high first)</option>
+                    <option value="-evidence_completeness_percent">Most complete record first</option>
                   </select>
                 </div>
-                <div className="min-w-[12rem] flex-1">
-                  <label className="label" htmlFor="search">Search patient ID (this page)</label>
-                  <input id="search" type="search" className="input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. P-042" />
-                </div>
               </div>
-              {assessments.loading && <LoadingSkeleton rows={5} label="Loading assessments" />}
-              {assessments.error ? <ErrorPanel error={assessments.error} context="Assessments" onRetry={assessments.reload} /> : null}
+              {assessments.loading && <LoadingSkeleton rows={5} label="Loading patients" />}
+              {assessments.error ? <ErrorPanel error={assessments.error} context="Patients" onRetry={assessments.reload} /> : null}
               {assessments.data && (
                 <div className="card">
-                  <CandidateTable trialId={trialId} runId={run.data.run_id} assessments={visible} />
-                  <div className="flex items-center justify-between border-t border-line px-3 py-2 text-xs text-ink-muted">
+                  <CandidateTable trialId={trialId} runId={run.data.run_id} assessments={visible} criteriaById={criteriaById} />
+                  <div className="flex items-center justify-between border-t border-line px-4 py-3 text-xs text-ink-muted">
                     <span>
                       Page {cursorStack.length}
-                      {assessments.data.page.total_count !== null && <> · {assessments.data.page.total_count} matching</>}
+                      {assessments.data.page.total_count !== null && <> · {assessments.data.page.total_count} patients</>}
                     </span>
                     <span className="flex gap-2">
                       <button type="button" className="btn-secondary px-2 py-1" disabled={cursorStack.length === 1} onClick={() => setCursorStack((s) => s.slice(0, -1))}>Previous</button>

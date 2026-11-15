@@ -35,7 +35,7 @@ export function ProtocolUpload({ trialId, onUploaded }: { trialId: string; onUpl
   const idem = useIdempotencyKey('upload');
   const allowed = actor.role === 'COORDINATOR' || actor.role === 'RESEARCH_IT';
   const problems = validateUpload(file, label);
-  if (!declared) problems.push('Confirm the document is fictional/synthetic.');
+  if (!declared) problems.push('Confirm the document contains no real patient data.');
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -80,7 +80,7 @@ export function ProtocolUpload({ trialId, onUploaded }: { trialId: string; onUpl
       </div>
       <label className="flex items-start gap-2 text-sm">
         <input type="checkbox" className="mt-0.5" checked={declared} onChange={(e) => setDeclared(e.target.checked)} disabled={!allowed} />
-        <span>This document is fictional and contains no real patient or sponsor data.</span>
+        <span>This document contains no real patient or sponsor data.</span>
       </label>
       {touched && problems.length > 0 && (
         <ul role="alert" className="list-disc pl-5 text-fail-fg">{problems.map((p) => <li key={p}>{p}</li>)}</ul>

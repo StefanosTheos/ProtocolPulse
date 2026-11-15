@@ -8,12 +8,19 @@ import { ConfirmReviewDialog } from './ConfirmReviewDialog';
 import { ErrorPanel } from './ErrorBoundary';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import { SourceViewer } from './ProtocolCitation';
-import { CaseStatusPill, CategoryPill, Pill, PriorityPill } from './StatusPill';
+import { CaseStatusPill, CategoryPill, PriorityPill } from './StatusPill';
 import { ApiError } from '@/lib/api/client';
 import { useApiQuery } from '@/lib/api/hooks';
-import { DEMO_ACTORS, getApi } from '@/lib/api/runtime';
+import { ROLE_LABEL, plainText, sentenceCase } from '@/lib/api/labels';
+import { DEMO_ACTORS, actorById, getApi } from '@/lib/api/runtime';
 import { formatInstant } from '@/lib/api/time';
 import type { CasePatch, CaseStatus, EvidenceRef, ReviewCase } from '@/lib/api/types';
+
+function ownerLabel(actorId: string | null): string {
+  if (!actorId) return 'Unassigned';
+  const owner = actorById(actorId);
+  return owner ? ROLE_LABEL[owner.role] : 'Assigned';
+}
 
 const STATUSES: CaseStatus[] = ['OPEN', 'ACKNOWLEDGED', 'INVESTIGATING', 'RESOLVED', 'CLOSED', 'REOPENED'];
 export const INVESTIGATOR_ONLY: CaseStatus[] = ['RESOLVED', 'CLOSED'];
@@ -22,8 +29,8 @@ function EvidenceLink({ trialId, evidence, timeZone }: { trialId: string; eviden
   const [open, setOpen] = useState(false);
   return (
     <li className="text-xs">
-      <button type="button" className="mono text-brand underline-offset-2 hover:underline" aria-expanded={open} onClick={() => setOpen((o) => !o)}>{evidence.evidence_id}</button>
-      <span className="ml-2 text-ink-muted">{evidence.evidence_type} · effective {formatInstant(evidence.effective_at, timeZone)} · recorded {formatInstant(evidence.recorded_at, timeZone)} · <span className="mono">{evidence.source_id} v{evidence.source_version}</span></span>
+      <button type="button" className="font-semibold text-brand underline-offset-2 hover:underline" aria-expanded={open} aria-label={`Source record ${evidence.evidence_id}`} onClick={() => setOpen((o) => !o)}>{open ? 'Hide source record' : 'Open source record'}</button>
+      <span className="ml-2 text-ink-muted">{sentenceCase(evidence.evidence_type)} · occurred {formatInstant(evidence.effective_at, timeZone)} · recorded {formatInstant(evidence.recorded_at, timeZone)} · <span className="mono">{evidence.source_id} v{evidence.source_version}</span></span>
       {open && <div className="mt-2"><SourceViewer trialId={trialId} sourceId={evidence.source_id} version={evidence.source_version} page={evidence.page} start={evidence.span_start} end={evidence.span_end} /></div>}
     </li>
   );
@@ -89,19 +96,20 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
-        <h2 className="mono">{c.case_id}</h2>
+        <h2>Patient {c.patient_id}</h2>
         <CaseStatusPill status={c.status} />
         <PriorityPill priority={c.priority} />
-        <span className="text-xs text-ink-muted">revision {c.revision}</span>
       </div>
-      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 text-xs">
-        <dt className="text-ink-muted">Patient</dt><dd><Link className="mono text-brand underline-offset-2 hover:underline" href={`/trials/${encodeURIComponent(trialId)}/patients/${encodeURIComponent(c.patient_id)}`}>{c.patient_id}</Link></dd>
-        <dt className="text-ink-muted">Rule</dt><dd className="mono">{c.criterion_id} · {c.protocol_version_id}</dd>
-        <dt className="text-ink-muted">Owner</dt><dd className="mono">{c.assigned_actor_id ?? 'Unassigned'}</dd>
+      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+        <dt className="text-ink-muted">Patient</dt><dd><Link className="font-semibold text-brand underline-offset-2 hover:underline" href={`/trials/${encodeURIComponent(trialId)}/patients/${encodeURIComponent(c.patient_id)}`}>{c.patient_id}</Link></dd>
+        <dt className="text-ink-muted">Assigned to</dt><dd>{ownerLabel(c.assigned_actor_id)}</dd>
         <dt className="text-ink-muted">Opened</dt><dd>{formatInstant(c.opened_at, timeZone)}</dd>
         <dt className="text-ink-muted">Updated</dt><dd>{formatInstant(c.updated_at, timeZone)}</dd>
-        <dt className="text-ink-muted">Issue key</dt><dd className="mono">{c.issue_key}</dd>
       </dl>
+      <details className="text-xs">
+        <summary className="font-semibold text-ink-muted">Technical details</summary>
+        <p className="mono mt-1 break-all text-ink-muted">{c.case_id} · revision {c.revision} · {c.criterion_id} · {c.protocol_version_id} · {c.issue_key}</p>
+      </details>
 
       {notice && <p role="status" className="rounded border border-info-line bg-info-bg p-2 text-xs text-info-fg">{notice}</p>}
       {error ? (
@@ -119,8 +127,7 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
           <div key={f.finding_id} className="rounded border border-line p-2">
             <div className="flex flex-wrap items-center gap-2 text-xs">
               <CategoryPill category={f.category} />
-              <span className="mono">{f.finding_id}</span>
-              <span className="text-ink-muted">event <span className="mono">{f.triggering_event_id}</span> · before <span className="mono">{f.before_assessment_id ?? 'none'}</span> → after <span className="mono">{f.after_assessment_id}</span></span>
+              <span className="text-ink-muted">Found {formatInstant(f.created_at, timeZone)}</span>
             </div>
             <ul className="mt-2 space-y-1">{f.evidence_refs.map((e) => <EvidenceLink key={e.evidence_id} trialId={trialId} evidence={e} timeZone={timeZone} />)}</ul>
           </div>
@@ -133,14 +140,14 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
         {c.current_summary ? (
           <div className={`rounded border p-2 text-xs ${c.summary_origin === 'AI_DRAFT' ? 'border-info-line bg-info-bg' : 'border-line bg-canvas'}`}>
             <p className="mb-1 font-semibold">{c.summary_origin === 'AI_DRAFT' ? 'AI-drafted summary (not a clinical decision)' : 'System-generated deterministic summary'}</p>
-            <p>{c.current_summary}</p>
+            <p>{plainText(c.current_summary)}</p>
           </div>
         ) : <p className="text-xs text-ink-muted">No summary recorded.</p>}
       </section>
 
       {c.agent_execution_id && (
         <section className="space-y-2">
-          <h3>Agent investigation</h3>
+          <h3>Automated summary</h3>
           <AgentExecutionPanel executionId={c.agent_execution_id} timeZone={timeZone} />
         </section>
       )}
@@ -152,13 +159,13 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
             {c.decisions.map((d) => (
               <li key={d.decision_id} className="rounded border border-line p-2 text-xs">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="mono font-semibold">{d.actor_id}</span><Pill tone="neutral">{d.actor_role}</Pill>
-                  <span>{d.from_status ?? '—'} → {d.to_status ?? '—'}</span>
+                  <span className="font-semibold">{ROLE_LABEL[d.actor_role] ?? d.actor_role}</span>
+                  <span>{d.from_status ? sentenceCase(d.from_status) : '—'} → {d.to_status ? sentenceCase(d.to_status) : '—'}</span>
                   <span className="text-ink-muted">{formatInstant(d.decided_at, timeZone)}</span>
                 </div>
-                <p className="mt-1"><span className="text-ink-muted">Disposition:</span> <span className="mono">{d.disposition}</span></p>
+                <p className="mt-1"><span className="text-ink-muted">Disposition:</span> {sentenceCase(d.disposition)}</p>
                 <p><span className="text-ink-muted">Rationale:</span> {d.rationale}</p>
-                {d.cited_evidence_ids.length > 0 && <p className="text-ink-muted">Cited <span className="mono">{d.cited_evidence_ids.join(', ')}</span></p>}
+                {d.cited_evidence_ids.length > 0 && <p className="text-ink-muted">{d.cited_evidence_ids.length} evidence record{d.cited_evidence_ids.length === 1 ? '' : 's'} cited</p>}
               </li>
             ))}
           </ol>
@@ -167,7 +174,7 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
 
       <section className="card card-pad space-y-3" aria-labelledby="transition-heading">
         <h3 id="transition-heading">Record a review decision</h3>
-        {!canPatch && <p className="text-xs text-unknown-fg">Only monitor or investigator actors can update cases.</p>}
+        {!canPatch && <p className="text-xs text-unknown-fg">Cases are updated by a monitor or the investigator.</p>}
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
             <label className="label" htmlFor="next-status">Next status</label>
@@ -183,7 +190,7 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
             <label className="label" htmlFor="assignee">Owner</label>
             <select id="assignee" className="input" value={effectiveAssignee} onChange={(e) => setAssignee(e.target.value)} disabled={!canPatch}>
               <option value="">Unassigned</option>
-              {DEMO_ACTORS.filter((a) => a.role === 'MONITOR' || a.role === 'INVESTIGATOR').map((a) => <option key={a.actor_id} value={a.actor_id}>{a.actor_id} · {a.role}</option>)}
+              {DEMO_ACTORS.filter((a) => a.role === 'MONITOR' || a.role === 'INVESTIGATOR').map((a) => <option key={a.actor_id} value={a.actor_id}>{ROLE_LABEL[a.role]}</option>)}
             </select>
           </div>
         </div>
@@ -211,13 +218,13 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
         <button type="button" className="btn-primary" disabled={!canPatch || !ready} onClick={() => setConfirmOpen(true)}>Review and submit…</button>
       </section>
 
-      <ConfirmReviewDialog open={confirmOpen} title={`Confirm decision on ${c.case_id}`} confirmLabel="Submit decision" busy={busy} onCancel={() => setConfirmOpen(false)} onConfirm={submit}>
-        <p>As <span className="mono">{actor.actor_id}</span> ({actor.role}), at case revision {c.revision}:</p>
+      <ConfirmReviewDialog open={confirmOpen} title={`Confirm decision for patient ${c.patient_id}`} confirmLabel="Submit decision" busy={busy} onCancel={() => setConfirmOpen(false)} onConfirm={submit}>
+        <p>As {ROLE_LABEL[actor.role].toLowerCase()}, you are recording:</p>
         <ul className="list-disc pl-5 text-xs">
           <li>Status {c.status} → <strong>{nextStatus}</strong></li>
-          <li>Owner: <span className="mono">{effectiveAssignee || 'Unassigned'}</span></li>
+          <li>Assigned to: {ownerLabel(effectiveAssignee || null)}</li>
           <li>Disposition: <span className="mono">{disposition}</span></li>
-          <li>Cited evidence: <span className="mono">{cited.join(', ') || 'none'}</span></li>
+          <li>Cited evidence: {cited.length || 'none'}</li>
         </ul>
         <p className="text-xs text-ink-muted">This records a human review decision. It does not change treatment, participation or enrollment.</p>
       </ConfirmReviewDialog>

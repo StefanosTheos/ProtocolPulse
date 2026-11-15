@@ -1,3 +1,4 @@
+import { sentenceCase } from '@/lib/api/labels';
 import type {
   AgentStatus, CandidateStatus, CaseStatus, CriterionStatus, EvidenceState, FindingCategory,
   FindingPriority, JobStatus, MedicationEvidenceType, ProtocolState,
@@ -15,17 +16,17 @@ const TONE_CLASS: Record<Tone, string> = {
 
 export function Pill({ tone, children, title }: { tone: Tone; children: React.ReactNode; title?: string }) {
   return (
-    <span title={title} className={`inline-flex items-center whitespace-nowrap rounded border px-1.5 py-0.5 text-2xs font-semibold uppercase tracking-wide ${TONE_CLASS[tone]}`}>
+    <span title={title} className={`inline-flex items-center whitespace-nowrap rounded-full border px-2 py-0.5 text-xs font-semibold ${TONE_CLASS[tone]}`}>
       {children}
     </span>
   );
 }
 
-// UNKNOWN is always amber with its own glyph; it is never rendered as a pass.
+// UNKNOWN is always amber with its own glyph; it is never rendered as met.
 const CRITERION: Record<CriterionStatus, { tone: Tone; label: string; glyph: string }> = {
-  PASS: { tone: 'pass', label: 'Pass', glyph: '✓' },
-  FAIL: { tone: 'fail', label: 'Fail', glyph: '✕' },
-  UNKNOWN: { tone: 'unknown', label: 'Unknown', glyph: '?' },
+  PASS: { tone: 'pass', label: 'Met', glyph: '✓' },
+  FAIL: { tone: 'fail', label: 'Not met', glyph: '✕' },
+  UNKNOWN: { tone: 'unknown', label: 'Unclear', glyph: '?' },
 };
 export function CriterionStatusPill({ status }: { status: CriterionStatus }) {
   const s = CRITERION[status];
@@ -33,13 +34,13 @@ export function CriterionStatusPill({ status }: { status: CriterionStatus }) {
 }
 
 export const CANDIDATE_LABEL: Record<CandidateStatus, string> = {
-  POTENTIAL_MATCH: 'Pre-screened potential match',
+  POTENTIAL_MATCH: 'Potential match',
   NEEDS_REVIEW: 'Needs review',
   PROTOCOL_CONFLICT: 'Protocol conflict',
 };
-const CANDIDATE_TONE: Record<CandidateStatus, Tone> = { POTENTIAL_MATCH: 'info', NEEDS_REVIEW: 'unknown', PROTOCOL_CONFLICT: 'fail' };
+const CANDIDATE_TONE: Record<CandidateStatus, Tone> = { POTENTIAL_MATCH: 'pass', NEEDS_REVIEW: 'unknown', PROTOCOL_CONFLICT: 'fail' };
 export function CandidateStatusPill({ status }: { status: CandidateStatus | null }) {
-  if (status === null) return <Pill tone="neutral" title="Operational evaluation error: no authoritative candidate status">Evaluation error</Pill>;
+  if (status === null) return <Pill tone="neutral" title="The patient could not be evaluated; no status is assigned">Could not be evaluated</Pill>;
   return <Pill tone={CANDIDATE_TONE[status]}>{CANDIDATE_LABEL[status]}</Pill>;
 }
 
@@ -48,7 +49,7 @@ const PROTOCOL_TONE: Record<ProtocolState, Tone> = {
   APPROVED: 'info', ACTIVE: 'pass', SUPERSEDED: 'neutral',
 };
 export function ProtocolStatePill({ state }: { state: ProtocolState }) {
-  return <Pill tone={PROTOCOL_TONE[state]}>{state.replace(/_/g, ' ')}</Pill>;
+  return <Pill tone={PROTOCOL_TONE[state]}>{sentenceCase(state)}</Pill>;
 }
 
 const JOB_TONE: Record<JobStatus, Tone> = { QUEUED: 'neutral', RUNNING: 'info', SUCCEEDED: 'pass', FAILED: 'fail' };
@@ -58,12 +59,12 @@ export function JobStatusPill({ status }: { status: JobStatus }) {
 
 const CASE_TONE: Record<CaseStatus, Tone> = { OPEN: 'unknown', ACKNOWLEDGED: 'info', INVESTIGATING: 'info', RESOLVED: 'neutral', CLOSED: 'neutral', REOPENED: 'unknown' };
 export function CaseStatusPill({ status }: { status: CaseStatus }) {
-  return <Pill tone={CASE_TONE[status]}>{status}</Pill>;
+  return <Pill tone={CASE_TONE[status]}>{sentenceCase(status)}</Pill>;
 }
 
 // Priority is a backend workflow label, shown as text without alarm colours.
 export function PriorityPill({ priority }: { priority: FindingPriority }) {
-  return <Pill tone={priority === 'HIGH' ? 'fail' : 'neutral'} title="Workflow triage priority (backend-defined), not clinical severity">{priority} priority</Pill>;
+  return <Pill tone={priority === 'HIGH' ? 'fail' : 'neutral'} title="Review priority, not clinical severity">{sentenceCase(priority)} priority</Pill>;
 }
 
 export const CATEGORY_LABEL: Record<FindingCategory, string> = {

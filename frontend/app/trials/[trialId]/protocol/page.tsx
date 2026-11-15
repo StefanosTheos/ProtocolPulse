@@ -13,6 +13,7 @@ import { ProtocolStatePill } from '@/components/StatusPill';
 import { TrialHeader, useTrial } from '@/components/TrialHeader';
 import { screeningGate } from '@/lib/api/gates';
 import { useApiQuery, useIdempotencyKey, useJobRunner } from '@/lib/api/hooks';
+import { sentenceCase } from '@/lib/api/labels';
 import { getApi } from '@/lib/api/runtime';
 import type { ProtocolDetail } from '@/lib/api/types';
 
@@ -69,29 +70,30 @@ function ProtocolPageInner() {
 
   return (
     <div>
-      <TrialHeader trialId={trialId} />
       <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
         <div className="min-w-0 space-y-5">
           {protocols.loading && !protocols.data && <LoadingSkeleton rows={4} label="Loading protocol" />}
           {protocols.error ? <ErrorPanel error={protocols.error} context="Could not load protocol versions" onRetry={protocols.reload} /> : null}
-          {protocols.data && !protocol && <EmptyState title="No protocol version uploaded">Upload the fictional protocol PDF to begin extraction and review.</EmptyState>}
+          {protocols.data && !protocol && <EmptyState title="No protocol uploaded">Upload the protocol document to read its rules and review them.</EmptyState>}
 
           {protocol && (
             <section className="card card-pad space-y-2" aria-labelledby="version-heading">
               <div className="flex flex-wrap items-center gap-2">
                 <h2 id="version-heading">Protocol {protocol.label}</h2>
                 <ProtocolStatePill state={protocol.state} />
-                <span className="mono text-ink-faint">{protocol.protocol_version_id} · revision {protocol.revision}</span>
               </div>
-              <p className="text-xs text-ink-muted">
-                Source <span className="mono">{protocol.source.source_id}</span> v{protocol.source.source_version} · {protocol.source.filename} ·
-                SHA-256 <span className="mono break-all">{protocol.file_sha256}</span>
-              </p>
+              <details className="text-xs">
+                <summary className="font-semibold text-ink-muted">Technical details</summary>
+                <p className="mt-1 text-ink-muted">
+                  <span className="mono">{protocol.protocol_version_id}</span> · revision {protocol.revision} · source <span className="mono">{protocol.source.source_id}</span> v{protocol.source.source_version} · {protocol.source.filename} ·
+                  SHA-256 <span className="mono break-all">{protocol.file_sha256}</span>
+                </p>
+              </details>
               {items.length > 1 && (
                 <label className="flex items-center gap-2 text-xs">
                   <span className="text-ink-muted">Version</span>
                   <select className="input w-auto py-1" value={protocol.protocol_version_id} onChange={(e) => { setOverride(null); router.replace(`${base}/protocol?version=${encodeURIComponent(e.target.value)}`); }}>
-                    {items.map((p) => <option key={p.protocol_version_id} value={p.protocol_version_id}>{p.label} · {p.state}</option>)}
+                    {items.map((p) => <option key={p.protocol_version_id} value={p.protocol_version_id}>{p.label} · {sentenceCase(p.state)}</option>)}
                   </select>
                 </label>
               )}
@@ -105,7 +107,7 @@ function ProtocolPageInner() {
 
           {protocol && (protocol.state === 'DRAFT' || protocol.state === 'EXTRACTION_FAILED' || protocol.state === 'EXTRACTING') && (
             <section className="card card-pad space-y-3" aria-labelledby="extract-heading">
-              <h2 id="extract-heading">Rule extraction</h2>
+              <h2 id="extract-heading">Read rules from the protocol</h2>
               {protocol.state === 'DRAFT' && protocol.criteria.length === 0 && <p className="text-ink-muted">Extraction has not run. No rules or coverage exist yet, so there is nothing to review.</p>}
               {protocol.state === 'DRAFT' && protocol.criteria.length > 0 && (
                 <p className="text-ink-muted">A proposal is registered without an extraction run. Review it below, or run extraction to re-validate it against the stored source.</p>
@@ -135,12 +137,12 @@ function ProtocolPageInner() {
             <h2 id="screen-gate">Screening readiness</h2>
             {gate.allowed ? (
               <>
-                <p className="mt-1 text-pass-fg">All rules and coverage are investigator-approved. Baseline screening evaluates the five eligibility rules.</p>
-                <Link href={`${base}/selector`} className="btn-primary mt-3">Go to patient selector</Link>
+                <p className="mt-1 text-pass-fg">✓ All rules are approved by the investigator. Screening is available.</p>
+                <Link href={`${base}/selector`} className="btn-primary mt-3">Next: Screen patients</Link>
               </>
             ) : (
               <>
-                <p className="mt-1 text-ink-muted">Screening is disabled:</p>
+                <p className="mt-1 text-ink-muted">Screening is not available yet:</p>
                 <ul className="mt-1 list-disc pl-5 text-unknown-fg">{gate.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
                 <button type="button" className="btn-primary mt-3" disabled>Start screening</button>
               </>

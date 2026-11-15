@@ -82,28 +82,30 @@ export function EventSimulator({ trialId, onProcessed }: { trialId: string; onPr
   return (
     <section className="card card-pad space-y-3" aria-labelledby="sim-heading">
       <h2 id="sim-heading">Simulate new record</h2>
-      <p className="text-xs text-ink-muted">Posts a synthetic source event to the backend. Findings appear only after the backend re-evaluates and the job SUCCEEDED; nothing is counted locally.</p>
+      <p className="text-xs text-ink-muted">Adds a source record for a participating patient. Findings appear only after the backend re-evaluates and the job SUCCEEDED; nothing is counted locally.</p>
       <button type="button" className="btn-primary" disabled={!allowed || busy || job.running} onClick={() => { setError(null); setOpen(true); }}>Simulate new record…</button>
       {!allowed && <p className="text-xs text-unknown-fg">Coordinator or research IT role required to post events.</p>}
       {receipt && (
         <div className="space-y-1 rounded border border-line bg-canvas p-3 text-xs" aria-live="polite">
           <div className="flex flex-wrap items-center gap-2">
-            <span>Event <span className="mono">{receipt.event_id}</span> for <span className="mono">{receipt.patient_id}</span></span>
-            {receipt.deduplicated ? <Pill tone="info">Deduplicated replay</Pill> : <Pill tone="neutral">Accepted (202)</Pill>}
+            <span>Record added for patient {receipt.patient_id}</span>
+            {receipt.deduplicated ? <Pill tone="info">Deduplicated replay</Pill> : <Pill tone="neutral">Accepted</Pill>}
           </div>
           {receipt.deduplicated && <p>The backend returned the original event and job. No second event, finding or case is created.</p>}
-          <p className="text-ink-muted">Ingested {receipt.ingested_at}</p>
         </div>
       )}
       <JobProgress job={job.job} error={job.error} running={job.running} label={job.running ? 'Awaiting backend re-evaluation' : 'Ingest job'} />
       {job.job?.status === 'SUCCEEDED' && job.job.result && (
-        <dl className="grid grid-cols-[auto_1fr] gap-x-3 text-xs">
-          {Object.entries(job.job.result).map(([k, v]) => <Fragment key={k}><dt className="text-ink-muted">{k}</dt><dd className="mono">{String(v)}</dd></Fragment>)}
-        </dl>
+        <details className="text-xs">
+          <summary className="font-semibold text-ink-muted">Technical details</summary>
+          <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3">
+            {Object.entries(job.job.result).map(([k, v]) => <Fragment key={k}><dt className="text-ink-muted">{k}</dt><dd className="mono break-all">{String(v)}</dd></Fragment>)}
+          </dl>
+        </details>
       )}
       {error ? <ErrorPanel error={error} context="Event submission" /> : null}
 
-      <ConfirmReviewDialog open={open} title="Simulate a synthetic source record" confirmLabel="Post event" busy={busy}
+      <ConfirmReviewDialog open={open} title="Add a source record" confirmLabel="Post event" busy={busy}
         confirmDisabled={!effectiveAt || !recordedAt || sourceVersion < 1} onCancel={() => setOpen(false)} onConfirm={submit}>
         <fieldset className="space-y-2">
           <legend className="label">Fixture</legend>
