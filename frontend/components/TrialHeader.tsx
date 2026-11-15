@@ -2,19 +2,31 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { createContext, useContext, useEffect, useRef, type ReactNode } from 'react';
 import { useActor } from './ActorContext';
 import { ErrorPanel } from './ErrorBoundary';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import { Pill } from './StatusPill';
-import { useApiQuery } from '@/lib/api/hooks';
+import { useApiQuery, type QueryState } from '@/lib/api/hooks';
 import { ROLE_LABEL, STEPS, displayTitle } from '@/lib/api/labels';
 import { getApi } from '@/lib/api/runtime';
 import type { TrialDetail } from '@/lib/api/types';
 
-export function useTrial(trialId: string) {
+const TrialContext = createContext<{ trialId: string; state: QueryState<TrialDetail> } | null>(null);
+
+export function TrialDataProvider({ trialId, children }: { trialId: string; children: ReactNode }) {
   const { actor } = useActor();
-  return useApiQuery<TrialDetail>(() => getApi().getTrial(trialId).then((r) => r.data), [trialId, actor.actor_id]);
+  const state = useApiQuery<TrialDetail>(() => getApi().getTrial(trialId).then((r) => r.data), [trialId, actor.actor_id]);
+  return <TrialContext.Provider value={{ trialId, state }}>{children}</TrialContext.Provider>;
+}
+
+export function useTrial(trialId: string) {
+  const shared = useContext(TrialContext);
+  const { actor } = useActor();
+  const hasShared = shared?.trialId === trialId;
+  // Standalone screens remain usable in component tests without a route layout.
+  const fallback = useApiQuery<TrialDetail>(hasShared ? null : () => getApi().getTrial(trialId).then((r) => r.data), [trialId, actor.actor_id]);
+  return hasShared ? shared.state : fallback;
 }
 
 export function TrialHeader({ trialId }: { trialId: string }) {

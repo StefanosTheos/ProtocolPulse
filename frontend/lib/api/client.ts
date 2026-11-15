@@ -1,4 +1,5 @@
 import type { Detail, Envelope, ErrorEnvelope, JobDetail } from './types';
+import { getReadRevision, invalidateReads } from './cache';
 
 // A transport turns one HTTP request into a status + parsed JSON body. The live transport
 // uses fetch/XHR against NEXT_PUBLIC_API_BASE_URL; the mock transport (mocks.ts) answers
@@ -82,12 +83,44 @@ export interface ApiResult<T> {
 }
 
 export class ApiClient {
+  private readonly reads = new Map<string, {
+    revision: number; expiresAt: number; promise: Promise<ApiResult<unknown>>;
+  }>();
+
   constructor(private readonly config: ClientConfig) {}
 
   async request<T>(method: ApiRequest['method'], path: string, opts: RequestOptions = {}): Promise<ApiResult<T>> {
+    const actor = this.config.getActorId();
+    if (method !== 'GET') {
+      const result = await this.send<T>(method, path, opts, actor);
+      invalidateReads();
+      return result;
+    }
+    const query = Object.entries(opts.query ?? {}).filter(([, value]) => value !== undefined)
+      .sort(([a], [b]) => a.localeCompare(b));
+    const key = JSON.stringify([actor, path, query]);
+    const revision = getReadRevision();
+    const existing = this.reads.get(key);
+    if (existing?.revision === revision && existing.expiresAt > Date.now()) {
+      return existing.promise as Promise<ApiResult<T>>;
+    }
+    // Polling/readiness and mutable execution state always hit the server after
+    // the current in-flight request completes. Other reads live for at most 5s.
+    const polling = path === '/health' || /^\/(jobs|agent-executions)\//.test(path) || /^\/screenings\/[^/]+$/.test(path);
+    const entry = { revision, expiresAt: Infinity, promise: this.send<T>(method, path, opts, actor) };
+    this.reads.set(key, entry);
+    if (this.reads.size > 100) this.reads.delete(this.reads.keys().next().value!);
+    void entry.promise.then(() => {
+      if (getReadRevision() !== revision) {
+        if (this.reads.get(key) === entry) this.reads.delete(key);
+      } else entry.expiresAt = Date.now() + (polling ? 0 : 5_000);
+    }, () => { if (this.reads.get(key) === entry) this.reads.delete(key); });
+    return entry.promise;
+  }
+
+  private async send<T>(method: ApiRequest['method'], path: string, opts: RequestOptions, actor: string | null): Promise<ApiResult<T>> {
     const requestId = newRequestId();
     const headers: Record<string, string> = { 'X-Request-ID': requestId };
-    const actor = this.config.getActorId();
     if (actor && path !== '/health') headers['X-Demo-Actor-Id'] = actor;
     if (method === 'POST') {
       if (!opts.idempotencyKey) throw new Error(`POST ${path} requires an Idempotency-Key`);

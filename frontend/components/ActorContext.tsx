@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { DEMO_ACTORS, actorById, getCurrentActorId, setCurrentActorId, type DemoActor } from '@/lib/api/runtime';
+import { invalidateReads } from '@/lib/api/cache';
 
 const STORAGE_KEY = 'protocolpulse.demoActor';
 
@@ -27,6 +28,16 @@ export function ActorProvider({ children, initialActorId }: { children: ReactNod
   }, [initialActorId]);
 
   useEffect(() => { setCurrentActorId(actorId); }, [actorId]);
+
+  useEffect(() => {
+    const refresh = () => { if (document.visibilityState === 'visible') invalidateReads(); };
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', refresh);
+    return () => {
+      window.removeEventListener('focus', refresh);
+      document.removeEventListener('visibilitychange', refresh);
+    };
+  }, []);
 
   const setActorId = useCallback((id: string) => {
     setCurrentActorId(id);

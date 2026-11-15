@@ -1,8 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { pollJob, type PollOptions } from './client';
-import { getApi } from './runtime';
+import { getApi, getCurrentActorId } from './runtime';
+import { getReadRevision, invalidateReads, subscribeReads } from './cache';
 import type { JobDetail } from './types';
 
 export interface QueryState<T> {
@@ -14,29 +15,29 @@ export interface QueryState<T> {
 
 // Minimal fetch-on-deps hook. `load` returning null means "nothing to fetch yet".
 export function useApiQuery<T>(load: (() => Promise<T>) | null, deps: unknown[]): QueryState<T> {
-  const [state, setState] = useState<{ data: T | null; error: unknown; loading: boolean }>({ data: null, error: null, loading: !!load });
-  const [tick, setTick] = useState(0);
+  const revision = useSyncExternalStore(subscribeReads, getReadRevision, () => 0);
+  const scope = JSON.stringify([getCurrentActorId(), deps, Boolean(load)]);
+  const [state, setState] = useState<{ scope: string; data: T | null; error: unknown; loading: boolean }>({ scope, data: null, error: null, loading: !!load });
   const loadRef = useRef(load);
   loadRef.current = load;
 
   useEffect(() => {
     const fn = loadRef.current;
     if (!fn) {
-      setState({ data: null, error: null, loading: false });
+      setState({ scope, data: null, error: null, loading: false });
       return;
     }
     let cancelled = false;
-    setState((s) => ({ data: s.data, error: null, loading: true }));
+    setState((s) => ({ scope, data: s.scope === scope ? s.data : null, error: null, loading: true }));
     fn().then(
-      (data) => { if (!cancelled) setState({ data, error: null, loading: false }); },
-      (error) => { if (!cancelled) setState({ data: null, error, loading: false }); },
+      (data) => { if (!cancelled && getReadRevision() === revision) setState({ scope, data, error: null, loading: false }); },
+      (error) => { if (!cancelled && getReadRevision() === revision) setState({ scope, data: null, error, loading: false }); },
     );
     return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...deps, tick]);
+  }, [scope, revision]);
 
-  const reload = useCallback(() => setTick((t) => t + 1), []);
-  return { ...state, reload };
+  const reload = useCallback(() => invalidateReads(), []);
+  return { ...(state.scope === scope ? state : { data: null, error: null, loading: !!load }), reload };
 }
 
 // One stable Idempotency-Key per intended logical operation; reset after the operation succeeds
@@ -77,6 +78,7 @@ export function useJobRunner(pollOptions: Omit<PollOptions, 'onUpdate' | 'signal
         signal: controller.signal,
         onUpdate: (j) => { if (!controller.signal.aborted) setState({ job: j, error: null, running: true }); },
       });
+      invalidateReads();
       if (!controller.signal.aborted) setState({ job, error: null, running: false });
       return job;
     } catch (error) {

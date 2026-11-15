@@ -32,6 +32,8 @@ Open **http://localhost:3000**. Health: **http://127.0.0.1:8000/api/v1/health**.
 
 For production frontend: stop the dev server, run `npm --prefix frontend run build`, then `npm --prefix frontend run start -- --hostname localhost --port 3000`.
 
+Use this production frontend for the live demo: development mode compiles screens on first visit. The browser shares trial metadata across tabs and deduplicates identical in-flight reads. Completed read responses are cached in memory for at most five seconds, separately per actor and request parameters; operational job/run/execution and health reads are never served from a completed-response cache. Updates, job completion, Refresh and returning to the browser window invalidate reads. Role switches hide previous-role query data immediately and fetch under the new actor. No clinical data is stored in localStorage by this cache.
+
 ## POSIX setup
 
 ```sh

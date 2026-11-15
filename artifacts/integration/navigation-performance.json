@@ -1,0 +1,102 @@
+{
+  "mode": "REAL_PRODUCTION_BROWSER_API_READ_ONLY",
+  "timings": [
+    {
+      "route": "/protocol",
+      "content_ready_ms": 535
+    },
+    {
+      "route": "/selector",
+      "content_ready_ms": 76
+    },
+    {
+      "route": "/monitor",
+      "content_ready_ms": 79
+    },
+    {
+      "route": "/protocol",
+      "content_ready_ms": 94
+    }
+  ],
+  "api_requests": [
+    {
+      "url": "http://127.0.0.1:8000/api/v1/health"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=10",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=OPEN&sort=-updated_at&limit=5",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=REOPENED&limit=5",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols/PV-49f53ecfbfb749e7859418d2d7c61048",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/findings?sort=-created_at&limit=50",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=20",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/health"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+      "actor": "ACT-MON-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+      "actor": "ACT-MON-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=10",
+      "actor": "ACT-MON-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=OPEN&sort=-updated_at&limit=5",
+      "actor": "ACT-MON-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=REOPENED&limit=5",
+      "actor": "ACT-MON-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/health"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=10",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=OPEN&sort=-updated_at&limit=5",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=REOPENED&limit=5",
+      "actor": "ACT-INV-01"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+      "actor": "ACT-INV-01"
+    }
+  ],
+  "role_isolation": "verified",
+  "browser_errors": []
+}

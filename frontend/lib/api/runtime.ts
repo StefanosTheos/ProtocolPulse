@@ -3,6 +3,7 @@ import { createEndpoints, type Endpoints } from './endpoints';
 import { createLiveTransport } from './live';
 import { createMockTransport } from './mocks';
 import type { ActorRole } from './types';
+import { invalidateReads } from './cache';
 
 // The only browser configuration is NEXT_PUBLIC_API_BASE_URL (see .env.example).
 // The literal value "mock" selects the explicitly labelled in-memory mock backend.
@@ -30,7 +31,12 @@ export const DEMO_ACTORS: DemoActor[] = [
 ];
 
 let currentActorId: string = DEMO_ACTORS[0].actor_id;
-export function setCurrentActorId(id: string) { currentActorId = id; }
+export function setCurrentActorId(id: string) {
+  if (currentActorId !== id) {
+    currentActorId = id;
+    invalidateReads();
+  }
+}
 export function getCurrentActorId() { return currentActorId; }
 export function actorById(id: string): DemoActor | undefined {
   return DEMO_ACTORS.find((a) => a.actor_id === id);
@@ -61,4 +67,4 @@ export function getApi(): Endpoints {
 }
 
 // Tests inject a transport without touching module-level environment.
-export function setApiForTesting(next: Endpoints | null) { api = next; }
+export function setApiForTesting(next: Endpoints | null) { api = next; invalidateReads(); }
