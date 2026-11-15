@@ -40,7 +40,7 @@ export const CANDIDATE_LABEL: Record<CandidateStatus, string> = {
 };
 const CANDIDATE_TONE: Record<CandidateStatus, Tone> = { POTENTIAL_MATCH: 'pass', NEEDS_REVIEW: 'unknown', PROTOCOL_CONFLICT: 'fail' };
 export function CandidateStatusPill({ status }: { status: CandidateStatus | null }) {
-  if (status === null) return <Pill tone="neutral" title="The patient could not be evaluated; no status is assigned">Could not be evaluated</Pill>;
+  if (status === null) return <Pill tone="neutral" title="The patient could not be evaluated. No status is assigned">Could not be evaluated</Pill>;
   return <Pill tone={CANDIDATE_TONE[status]}>{CANDIDATE_LABEL[status]}</Pill>;
 }
 
@@ -97,9 +97,9 @@ export const MEDICATION_TYPE_LABEL: Record<MedicationEvidenceType, { label: stri
   ORDER: { label: 'Order', note: 'Prescribed — not evidence of use' },
   DISPENSE: { label: 'Dispense', note: 'Supplied — not evidence of use' },
   ADMINISTRATION: { label: 'Administration', note: 'Documented dose given' },
-  REPORTED_USE: { label: 'Reported use', note: 'Attributed statement; needs reconciliation' },
-  DISCONTINUATION: { label: 'Discontinuation', note: 'Modifies an order/report; history kept' },
-  CANCELLATION: { label: 'Cancellation', note: 'Cancels an order; history kept' },
+  REPORTED_USE: { label: 'Reported use', note: 'Attributed statement. Needs reconciliation' },
+  DISCONTINUATION: { label: 'Discontinuation', note: 'Modifies an order/report. History kept' },
+  CANCELLATION: { label: 'Cancellation', note: 'Cancels an order. History kept' },
 };
 export function MedicationTypePill({ type }: { type: MedicationEvidenceType }) {
   const tone: Tone = type === 'ADMINISTRATION' ? 'info' : type === 'REPORTED_USE' ? 'unknown' : 'neutral';

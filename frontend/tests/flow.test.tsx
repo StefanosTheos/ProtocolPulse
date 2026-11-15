@@ -236,7 +236,7 @@ describe('J-03 evidence display', () => {
     const p140 = mockPatient360('P-140', 'NOT_ENROLLED', null);
     render(<MedicationTimeline medications={p140.medications} openItems={p140.open_items} timeZone="Europe/Athens" />);
     expect(screen.getByRole('note')).toHaveTextContent(/Records disagree/);
-    expect(screen.getByRole('note')).toHaveTextContent(/neither is chosen automatically/);
+    expect(screen.getByRole('note')).toHaveTextContent(/Neither is chosen automatically/);
     expect(screen.getByText('Reported use')).toBeInTheDocument();
     expect(screen.getByText('Discontinuation')).toBeInTheDocument();
     expect(screen.getAllByText('Conflict')).toHaveLength(2);
@@ -360,7 +360,7 @@ describe('J-06 agent activity', () => {
     const message = screen.getByText(/automated summary didn.t finish/);
     expect(message).not.toHaveTextContent('TOOL_TIMEOUT');
     expect(screen.queryByText('get_medication_timeline')).not.toBeInTheDocument();
-    expect(screen.getByText(/nothing below was concluded by the automated summary/)).toBeInTheDocument();
+    expect(screen.getByText(/Nothing below was concluded by the automated summary/)).toBeInTheDocument();
   });
 
   it('shows UNAVAILABLE without any trace or summary', () => {

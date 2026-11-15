@@ -24,7 +24,7 @@ export function MedicationTimeline({ medications, openItems = [], timeZone, titl
       <h3>{title}</h3>
       {conflicts.map((o) => (
         <div key={o.open_item_id} role="note" className="rounded border border-unknown-line bg-unknown-bg p-2 text-xs text-unknown-fg">
-          <strong>Records disagree</strong>: {plainText(o.description)} Both entries are kept; neither is chosen automatically.
+          <strong>Records disagree</strong>: {plainText(o.description)} Both entries are kept. Neither is chosen automatically.
         </div>
       ))}
       {sorted.length === 0 ? (
@@ -55,7 +55,7 @@ export function MedicationTimeline({ medications, openItems = [], timeZone, titl
                     <><dt>Possible interval</dt><dd>{formatInstant(m.evidence.time_uncertainty.possible_interval.earliest, timeZone)} to before {formatInstant(m.evidence.time_uncertainty.possible_interval.latest_exclusive, timeZone)}</dd></>
                   )}
                   <dt>Recorded</dt><dd>{formatInstant(m.evidence.recorded_at, timeZone)}</dd>
-                  {m.adverse_reactions.length > 0 && <><dt>Reactions</dt><dd>{m.adverse_reactions.join('; ')}</dd></>}
+                  {m.adverse_reactions.length > 0 && <><dt>Reactions</dt><dd>{m.adverse_reactions.join('. ')}</dd></>}
                 </dl>
               </li>
             );

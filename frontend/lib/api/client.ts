@@ -204,7 +204,7 @@ export async function pollJob(
     if (Date.now() - started >= timeoutMs) {
       throw new ApiError({
         status: 0, code: 'POLL_TIMEOUT', retryable: true,
-        message: `Job ${jobId} is still ${data.status} after ${Math.round(timeoutMs / 1000)}s. It may still finish; refresh to check again.`,
+        message: `Job ${jobId} is still ${data.status} after ${Math.round(timeoutMs / 1000)}s. It may still finish. Refresh to check again.`,
       });
     }
     await sleep(intervalMs);

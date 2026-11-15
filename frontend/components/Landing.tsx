@@ -23,7 +23,7 @@ const COPY = {
     steps: [
       ['Rules are read from the protocol', 'Eligibility and safety rules are found, each linked to its page in the document.'],
       ['The Clinical Lead approves them', 'Nothing is used for screening until every rule is approved.'],
-      ['You add new clinical records', 'Each record is checked against the protocol; findings go to the Clinical Lead.'],
+      ['You add new clinical records', 'Each record is checked against the protocol. Findings go to the Clinical Lead.'],
     ],
   },
   INVESTIGATOR: {

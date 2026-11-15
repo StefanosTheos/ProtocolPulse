@@ -67,7 +67,7 @@ export const REASON_LABEL: Record<UnknownReason, string> = {
   MISSING_LAB: 'No lab result on record',
   OUTDATED_LAB: 'Lab result is out of date',
   DATE_AMBIGUOUS: 'A date in the record is unclear',
-  ORDER_ONLY: 'Medication was ordered; use is not confirmed',
+  ORDER_ONLY: 'Medication was ordered. Use is not confirmed',
   CONFLICTING_SOURCES: 'Records disagree with each other',
   UNMAPPED_CODE: 'An entry could not be identified',
   UNAPPROVED_RULE: 'The rule is not approved yet',
@@ -118,10 +118,10 @@ export function plainReason(a: PatientAssessment, criteriaById: Record<string, C
   if (a.evaluation_state === 'EVALUATION_ERROR') return 'Could not be evaluated';
   const name = (c: CriterionResult) => criterionName(criteriaById[c.criterion_id], c.criterion_id);
   const failed = a.criteria.filter((c) => c.status === 'FAIL');
-  if (failed.length) return failed.map((c) => `${name(c)} not met`).join('; ');
+  if (failed.length) return failed.map((c) => `${name(c)} not met`).join('. ');
   const unclear = a.criteria.filter((c) => c.status === 'UNKNOWN');
   if (unclear.length) {
-    return unclear.map((c) => `${name(c)}: ${c.reason_codes.map((r) => REASON_LABEL[r] ?? sentenceCase(r)).join(', ') || 'unclear'}`).join('; ');
+    return unclear.map((c) => `${name(c)}: ${c.reason_codes.map((r) => REASON_LABEL[r] ?? sentenceCase(r)).join(', ') || 'unclear'}`).join('. ');
   }
   return 'Meets all eligibility criteria';
 }

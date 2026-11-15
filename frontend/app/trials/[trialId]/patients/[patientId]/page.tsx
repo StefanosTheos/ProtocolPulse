@@ -128,7 +128,7 @@ function PatientInner() {
           <details className="card">
             <summary className="px-5 py-3"><h2 id="timeline-heading" className="inline">Evidence timeline</h2></summary>
             <div className="space-y-3 border-t border-line p-5">
-              <p className="text-xs text-ink-muted">In order of clinical date. The date each entry was recorded is shown separately; undated entries come last.</p>
+              <p className="text-xs text-ink-muted">In order of clinical date. The date each entry was recorded is shown separately. Undated entries come last.</p>
               <EvidenceTimeline patient={patient.data} timeZone={tz} />
             </div>
           </details>
