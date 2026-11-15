@@ -1,0 +1,4020 @@
+{
+  "mode": "READ_ONLY_DISCOVERY",
+  "run_id": "RUN-b4e64839650246c083e5c0a848f44a9e",
+  "health": {
+    "status": "ok",
+    "database": "ok",
+    "migrations": "current",
+    "worker": "running",
+    "llm": "enabled",
+    "synthetic_only": true,
+    "api_version": "v1",
+    "contract_version": "1.0.0-rc2"
+  },
+  "trial": {
+    "title": "Fictional PX-104 synthetic study",
+    "fictional_product_code": "PX-104",
+    "site_id": "SITE-SYN-01",
+    "site_timezone": "Europe/Athens",
+    "planned_start_date": "2026-11-01",
+    "planned_end_date": "2027-01-24",
+    "synthetic_only": true,
+    "trial_id": "TR-PX104",
+    "active_protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+    "created_at": "2026-10-30T10:00:00Z",
+    "revision": 2,
+    "protocol_version_ids": [
+      "PV-PX104-1.0",
+      "PV-f364aef6c3c7406293ea916824c4e1dd",
+      "PV-52138bfe902841f5b02f662377855a09",
+      "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+      "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+      "PV-b8c04b1ffb764375b06798a036954cf9",
+      "PV-766948f32ca54c479c540f77f9186a8f",
+      "PV-62b3ae2ddcb14cda81cb3331e7e16e2f"
+    ],
+    "patient_count": 30,
+    "finding_count": 1,
+    "trial_notice": "Synthetic demonstration. Screening is not enrollment; pharmacological interactions not assessed."
+  },
+  "protocols": {
+    "items": [
+      {
+        "protocol_version_id": "PV-f364aef6c3c7406293ea916824c4e1dd",
+        "trial_id": "TR-PX104",
+        "label": "1",
+        "state": "EXTRACTION_FAILED",
+        "revision": 1,
+        "source": {
+          "source_id": "SRC-PDF-477bf99b62cc4ff7bb48d45136d60952",
+          "source_version": 1,
+          "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "filename": "PX-104-v1.0-fictional.pdf",
+          "mime_type": "application/pdf",
+          "created_at": "2026-11-14T23:37:13.029566Z",
+          "synthetic_only": true
+        },
+        "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+        "criteria": [],
+        "coverage": [],
+        "coverage_signed_by": null,
+        "coverage_signed_at": null,
+        "approved_set_hash": null,
+        "approved_at": null,
+        "extraction_job_id": "JOB-90913d82ea4b4078904885fcb7879285",
+        "blocking_count": 0
+      },
+      {
+        "protocol_version_id": "PV-PX104-1.0",
+        "trial_id": "TR-PX104",
+        "label": "1.0",
+        "state": "EXTRACTION_FAILED",
+        "revision": 1,
+        "source": {
+          "source_id": "SRC-PROTOCOL-PX104-V1",
+          "source_version": 1,
+          "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "filename": "SRC-PROTOCOL-PX104-V1.pdf",
+          "mime_type": "application/pdf",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-PX104-1.0",
+            "type": "EXCLUSION",
+            "clinical_subject": "condition",
+            "operator": "ABSENCE_CONFIRMED_ACTIVE",
+            "threshold": "SYN-EXCLUDED-CONDITION",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Verified active condition or reviewed record-completeness declaration for its absence.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "The patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 138,
+              "end": 563
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-PX104-1.0",
+            "type": "EXCLUSION",
+            "clinical_subject": "medication",
+            "operator": "NO_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Dated verified administration/reliable reported use, or reviewed no-use reconciliation covering the full window.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "The patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 610,
+              "end": 1166
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-PX104-1.0",
+            "type": "INCLUSION",
+            "clinical_subject": "age",
+            "operator": "AGE_RANGE_INCLUSIVE",
+            "threshold": [
+              40.0,
+              70.0
+            ],
+            "unit": "years",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Sourced birth date with sufficient precision for age at screening.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "The patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 129,
+              "end": 418
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-PX104-1.0",
+            "type": "INCLUSION",
+            "clinical_subject": "diagnosis",
+            "operator": "CODE_CONFIRMED",
+            "threshold": "SYN-CONDITION-A",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Verified condition code or synthetic adjudicated diagnosis note as of screening.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "The patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 459,
+              "end": 803
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-PX104-1.0",
+            "type": "INCLUSION",
+            "clinical_subject": "egfr",
+            "operator": "LAB_GTE",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Latest relevant numeric eGFR with valid specimen date, provenance and reviewed unit.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "The latest relevant eGFR must be at least 60 mL/min/1.73m\u00b2. Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 837,
+              "end": 1266
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-01",
+            "protocol_version_id": "PV-PX104-1.0",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "Confirmed dated administration or reliable documented use during participation.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "During human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 150,
+              "end": 598
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-02",
+            "protocol_version_id": "PV-PX104-1.0",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_ORDER_ONLY",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "Dated restricted-class order/dispense with no confirmed use, requiring human reconciliation.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "During human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 643,
+              "end": 1076
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-03",
+            "protocol_version_id": "PV-PX104-1.0",
+            "type": "MONITORING",
+            "clinical_subject": "egfr",
+            "operator": "EVENT_LAB_LT",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New synthetic numeric eGFR below the fictional threshold during participation, with valid units and specimen/effective time.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "During human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m\u00b2 requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 1105,
+              "end": 1523
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          }
+        ],
+        "coverage": [
+          {
+            "section_id": "PX-INFO-CALENDAR",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 1,
+            "span_start": 567,
+            "span_end": 1146,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-INFO-EVIDENCE",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 5,
+            "span_start": 123,
+            "span_end": 717,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-INFO-IDENTITY",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 1,
+            "span_start": 106,
+            "span_end": 567,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-INFO-REVIEW",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 5,
+            "span_start": 717,
+            "span_end": 1491,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-SECTION-EXC-01",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 3,
+            "span_start": 97,
+            "span_end": 563,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-01"
+            ],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-SECTION-EXC-02",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 3,
+            "span_start": 563,
+            "span_end": 1166,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-02"
+            ],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-SECTION-INC-01",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 2,
+            "span_start": 97,
+            "span_end": 418,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-01"
+            ],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-SECTION-INC-02",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 2,
+            "span_start": 418,
+            "span_end": 803,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-02"
+            ],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-SECTION-INC-03",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 2,
+            "span_start": 803,
+            "span_end": 1266,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-03"
+            ],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-SECTION-MON-01",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 4,
+            "span_start": 110,
+            "span_end": 598,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-01"
+            ],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-SECTION-MON-02",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 4,
+            "span_start": 598,
+            "span_end": 1076,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-02"
+            ],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          },
+          {
+            "section_id": "PX-SECTION-MON-03",
+            "source_id": "SRC-PROTOCOL-PX104-V1",
+            "page": 4,
+            "span_start": 1076,
+            "span_end": 1523,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-03"
+            ],
+            "review_note": "Curated fixture proposal; not AI-generated; investigator review required."
+          }
+        ],
+        "coverage_signed_by": null,
+        "coverage_signed_at": null,
+        "approved_set_hash": null,
+        "approved_at": null,
+        "extraction_job_id": "JOB-1c68eadcccb84dbca6dff7bdc699cf48",
+        "blocking_count": 0
+      },
+      {
+        "protocol_version_id": "PV-52138bfe902841f5b02f662377855a09",
+        "trial_id": "TR-PX104",
+        "label": "1.1",
+        "state": "EXTRACTION_FAILED",
+        "revision": 1,
+        "source": {
+          "source_id": "SRC-PDF-2580c6b32e3e4f768cd36aa8ee9cb92d",
+          "source_version": 1,
+          "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "filename": "PX-104-v1.0-fictional.pdf",
+          "mime_type": "application/pdf",
+          "created_at": "2026-11-14T23:37:31.265108Z",
+          "synthetic_only": true
+        },
+        "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+        "criteria": [],
+        "coverage": [],
+        "coverage_signed_by": null,
+        "coverage_signed_at": null,
+        "approved_set_hash": null,
+        "approved_at": null,
+        "extraction_job_id": "JOB-c8d80e5d1da844a2b0946a0f53e89917",
+        "blocking_count": 0
+      },
+      {
+        "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+        "trial_id": "TR-PX104",
+        "label": "Demo 12",
+        "state": "ACTIVE",
+        "revision": 3,
+        "source": {
+          "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+          "source_version": 1,
+          "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "filename": "PX-104-v1.0-fictional.pdf",
+          "mime_type": "application/pdf",
+          "created_at": "2026-11-14T23:44:28.124584Z",
+          "synthetic_only": true
+        },
+        "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+            "type": "EXCLUSION",
+            "clinical_subject": "condition",
+            "operator": "ABSENCE_CONFIRMED_ACTIVE",
+            "threshold": "SYN-EXCLUDED-CONDITION",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Reviewed record completeness declaration confirming absence of active SYN-EXCLUDED-CONDITION.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "6. PX-EXC-01 - Excluded active condition\nThe patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 97,
+              "end": 563
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "APPROVED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": "ACT-INV-01",
+            "approved_at": "2026-11-14T23:47:05.081313Z"
+          },
+          {
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+            "type": "EXCLUSION",
+            "clinical_subject": "medication",
+            "operator": "NO_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "No administration or reported use of SYN-CLASS-R within 30 days prior to screening",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "7. PX-EXC-02 - Restricted use before screening\nThe patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 563,
+              "end": 1166
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "APPROVED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": "ACT-INV-01",
+            "approved_at": "2026-11-14T23:47:05.081313Z"
+          },
+          {
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+            "type": "INCLUSION",
+            "clinical_subject": "age",
+            "operator": "AGE_RANGE_INCLUSIVE",
+            "threshold": [
+              40.0,
+              70.0
+            ],
+            "unit": "years",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Birth date establishing age 40 to 70 inclusive at screening.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "3. PX-INC-01 - Age at screening\nThe patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 97,
+              "end": 418
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "APPROVED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": "ACT-INV-01",
+            "approved_at": "2026-11-14T23:47:05.081313Z"
+          },
+          {
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+            "type": "INCLUSION",
+            "clinical_subject": "diagnosis",
+            "operator": "CODE_CONFIRMED",
+            "threshold": "SYN-CONDITION-A",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Verified condition code or adjudicated note for SYN-CONDITION-A.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "4. PX-INC-02 - Confirmed index diagnosis\nThe patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 418,
+              "end": 803
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "APPROVED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": "ACT-INV-01",
+            "approved_at": "2026-11-14T23:47:05.081313Z"
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+            "type": "INCLUSION",
+            "clinical_subject": "egfr",
+            "operator": "LAB_GTE",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Latest timely specimen eGFR result >= 60 mL/min/1.73m\u00b2.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "5. PX-INC-03 - Latest timely eGFR\nThe latest relevant eGFR must be at least 60 mL/min/1.73m\u00b2. Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 803,
+              "end": 1266
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "APPROVED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": "ACT-INV-01",
+            "approved_at": "2026-11-14T23:47:05.081313Z"
+          },
+          {
+            "criterion_id": "PX-MON-01",
+            "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New confirmed administration or documented use of SYN-CLASS-R during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "8. PX-MON-01 - Confirmed restricted use\nDuring human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 110,
+              "end": 598
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "APPROVED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": "ACT-INV-01",
+            "approved_at": "2026-11-14T23:47:05.081313Z"
+          },
+          {
+            "criterion_id": "PX-MON-02",
+            "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_ORDER_ONLY",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New order or dispense of SYN-CLASS-R without confirmed use during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "9. PX-MON-02 - Order or dispense without use\nDuring human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 598,
+              "end": 1076
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "APPROVED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": "ACT-INV-01",
+            "approved_at": "2026-11-14T23:47:05.081313Z"
+          },
+          {
+            "criterion_id": "PX-MON-03",
+            "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+            "type": "MONITORING",
+            "clinical_subject": "egfr",
+            "operator": "EVENT_LAB_LT",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New eGFR result below 60 mL/min/1.73m\u00b2 during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "10. PX-MON-03 - New low eGFR\nDuring human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m\u00b2 requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 1076,
+              "end": 1523
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "APPROVED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": "ACT-INV-01",
+            "approved_at": "2026-11-14T23:47:05.081313Z"
+          }
+        ],
+        "coverage": [
+          {
+            "section_id": "PX-INFO-CALENDAR",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 1,
+            "span_start": 567,
+            "span_end": 1146,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-EVIDENCE",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 5,
+            "span_start": 123,
+            "span_end": 717,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-IDENTITY",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 1,
+            "span_start": 106,
+            "span_end": 567,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-REVIEW",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 5,
+            "span_start": 717,
+            "span_end": 1491,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-01",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 3,
+            "span_start": 97,
+            "span_end": 563,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-02",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 3,
+            "span_start": 563,
+            "span_end": 1166,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-01",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 2,
+            "span_start": 97,
+            "span_end": 418,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-02",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 2,
+            "span_start": 418,
+            "span_end": 803,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-03",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 2,
+            "span_start": 803,
+            "span_end": 1266,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-03"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-01",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 4,
+            "span_start": 110,
+            "span_end": 598,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-02",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 4,
+            "span_start": 598,
+            "span_end": 1076,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-03",
+            "source_id": "SRC-PDF-031ab2da95654bbea0a60404b1f3d0a3",
+            "page": 4,
+            "span_start": 1076,
+            "span_end": 1523,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-03"
+            ],
+            "review_note": null
+          }
+        ],
+        "coverage_signed_by": "ACT-INV-01",
+        "coverage_signed_at": "2026-11-14T23:47:05.081313Z",
+        "approved_set_hash": "3dec3c3301192e9c43d942d7b9a17fb34f902890169c82a7f2e91cbef1ad936e",
+        "approved_at": "2026-11-14T23:47:05.081313Z",
+        "extraction_job_id": "JOB-9914fce243db40538fb4a9166a3fd48d",
+        "blocking_count": 0
+      },
+      {
+        "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+        "trial_id": "TR-PX104",
+        "label": "Demo-2026-11-15-01",
+        "state": "EXTRACTION_REVIEW",
+        "revision": 2,
+        "source": {
+          "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+          "source_version": 1,
+          "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "filename": "PX-104-v1.0-fictional.pdf",
+          "mime_type": "application/pdf",
+          "created_at": "2026-11-14T23:41:14.099108Z",
+          "synthetic_only": true
+        },
+        "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+            "type": "EXCLUSION",
+            "clinical_subject": "condition",
+            "operator": "ABSENCE_CONFIRMED_ACTIVE",
+            "threshold": "SYN-EXCLUDED-CONDITION",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Reviewed record-completeness declaration supporting absence of active SYN-EXCLUDED-CONDITION at screening",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "6. PX-EXC-01 - Excluded active condition\nThe patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 97,
+              "end": 563
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+            "type": "EXCLUSION",
+            "clinical_subject": "medication",
+            "operator": "NO_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "No administration or reported use of SYN-CLASS-R in the 30 days preceding screening.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "7. PX-EXC-02 - Restricted use before screening\nThe patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 563,
+              "end": 1166
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+            "type": "INCLUSION",
+            "clinical_subject": "age",
+            "operator": "AGE_RANGE_INCLUSIVE",
+            "threshold": [
+              40.0,
+              70.0
+            ],
+            "unit": "years",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Verified birth date conclusively establishing age 40 to 70 years inclusive on screening date",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "3. PX-INC-01 - Age at screening\nThe patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 97,
+              "end": 418
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+            "type": "INCLUSION",
+            "clinical_subject": "diagnosis",
+            "operator": "CODE_CONFIRMED",
+            "threshold": "SYN-CONDITION-A",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Confirmed diagnosis of SYN-CONDITION-A via verified condition code or synthetic adjudicated note",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "4. PX-INC-02 - Confirmed index diagnosis\nThe patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 418,
+              "end": 803
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+            "type": "INCLUSION",
+            "clinical_subject": "egfr",
+            "operator": "LAB_GTE",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Latest timely specimen eGFR result >= 60 mL/min/1.73m\u00b2 within screening window",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "5. PX-INC-03 - Latest timely eGFR\nThe latest relevant eGFR must be at least 60 mL/min/1.73m\u00b2. Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 803,
+              "end": 1266
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-01",
+            "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New confirmed administration or documented use of SYN-CLASS-R during participation.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "8. PX-MON-01 - Confirmed restricted use\nDuring human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 110,
+              "end": 598
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-02",
+            "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_ORDER_ONLY",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New order or dispense of SYN-CLASS-R without confirmed use during participation.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "9. PX-MON-02 - Order or dispense without use\nDuring human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 598,
+              "end": 1076
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-03",
+            "protocol_version_id": "PV-d5f340dce3b64bb5ba30f6bf0cc55aca",
+            "type": "MONITORING",
+            "clinical_subject": "egfr",
+            "operator": "EVENT_LAB_LT",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New synthetic eGFR result below 60 mL/min/1.73m\u00b2 during participation.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "10. PX-MON-03 - New low eGFR\nDuring human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m\u00b2 requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 1076,
+              "end": 1523
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          }
+        ],
+        "coverage": [
+          {
+            "section_id": "PX-INFO-CALENDAR",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 1,
+            "span_start": 567,
+            "span_end": 1146,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-EVIDENCE",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 5,
+            "span_start": 123,
+            "span_end": 717,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-IDENTITY",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 1,
+            "span_start": 106,
+            "span_end": 567,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-REVIEW",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 5,
+            "span_start": 717,
+            "span_end": 1491,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-01",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 3,
+            "span_start": 97,
+            "span_end": 563,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-02",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 3,
+            "span_start": 563,
+            "span_end": 1166,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-01",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 2,
+            "span_start": 97,
+            "span_end": 418,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-02",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 2,
+            "span_start": 418,
+            "span_end": 803,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-03",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 2,
+            "span_start": 803,
+            "span_end": 1266,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-03"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-01",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 4,
+            "span_start": 110,
+            "span_end": 598,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-02",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 4,
+            "span_start": 598,
+            "span_end": 1076,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-03",
+            "source_id": "SRC-PDF-f2f1126bce154c84a43b3eebdc49f06b",
+            "page": 4,
+            "span_start": 1076,
+            "span_end": 1523,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-03"
+            ],
+            "review_note": null
+          }
+        ],
+        "coverage_signed_by": null,
+        "coverage_signed_at": null,
+        "approved_set_hash": null,
+        "approved_at": null,
+        "extraction_job_id": "JOB-429dc1b18e1a47c9bde2aaac457e56f8",
+        "blocking_count": 0
+      },
+      {
+        "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+        "trial_id": "TR-PX104",
+        "label": "Ska",
+        "state": "EXTRACTION_REVIEW",
+        "revision": 2,
+        "source": {
+          "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+          "source_version": 1,
+          "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "filename": "PX-104-v1.0-fictional.pdf",
+          "mime_type": "application/pdf",
+          "created_at": "2026-11-15T00:07:44.565360Z",
+          "synthetic_only": true
+        },
+        "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+            "type": "EXCLUSION",
+            "clinical_subject": "condition",
+            "operator": "ABSENCE_CONFIRMED_ACTIVE",
+            "threshold": "SYN-EXCLUDED-CONDITION",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Reviewed record-completeness declaration supporting absence of active SYN-EXCLUDED-CONDITION",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "6. PX-EXC-01 - Excluded active condition\nThe patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 97,
+              "end": 563
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+            "type": "EXCLUSION",
+            "clinical_subject": "medication",
+            "operator": "NO_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "no documented administration or reported use of SYN-CLASS-R in lookback window",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "7. PX-EXC-02 - Restricted use before screening\nThe patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 563,
+              "end": 1166
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+            "type": "INCLUSION",
+            "clinical_subject": "age",
+            "operator": "AGE_RANGE_INCLUSIVE",
+            "threshold": [
+              40.0,
+              70.0
+            ],
+            "unit": "years",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Sourced birth date establishing age on screening date",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "3. PX-INC-01 - Age at screening\nThe patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 97,
+              "end": 418
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+            "type": "INCLUSION",
+            "clinical_subject": "diagnosis",
+            "operator": "CODE_CONFIRMED",
+            "threshold": "SYN-CONDITION-A",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Verified condition code or synthetic adjudicated note confirming SYN-CONDITION-A",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "4. PX-INC-02 - Confirmed index diagnosis\nThe patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 418,
+              "end": 803
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+            "type": "INCLUSION",
+            "clinical_subject": "egfr",
+            "operator": "LAB_GTE",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Latest timely eGFR specimen result within [2026-10-01, 2026-10-31]",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "5. PX-INC-03 - Latest timely eGFR\nThe latest relevant eGFR must be at least 60 mL/min/1.73m\u00b2. Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 803,
+              "end": 1266
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-01",
+            "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "confirmed administration or documented use of SYN-CLASS-R during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "8. PX-MON-01 - Confirmed restricted use\nDuring human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 110,
+              "end": 598
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-02",
+            "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_ORDER_ONLY",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "order or dispense of SYN-CLASS-R without confirmed use during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "9. PX-MON-02 - Order or dispense without use\nDuring human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 598,
+              "end": 1076
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-03",
+            "protocol_version_id": "PV-b8c04b1ffb764375b06798a036954cf9",
+            "type": "MONITORING",
+            "clinical_subject": "egfr",
+            "operator": "EVENT_LAB_LT",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "synthetic eGFR lab result below 60 mL/min/1.73m\u00b2 during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "10. PX-MON-03 - New low eGFR\nDuring human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m\u00b2 requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 1076,
+              "end": 1523
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          }
+        ],
+        "coverage": [
+          {
+            "section_id": "PX-INFO-CALENDAR",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 1,
+            "span_start": 567,
+            "span_end": 1146,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-EVIDENCE",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 5,
+            "span_start": 123,
+            "span_end": 717,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-IDENTITY",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 1,
+            "span_start": 106,
+            "span_end": 567,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-REVIEW",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 5,
+            "span_start": 717,
+            "span_end": 1491,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-01",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 3,
+            "span_start": 97,
+            "span_end": 563,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-02",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 3,
+            "span_start": 563,
+            "span_end": 1166,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-01",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 2,
+            "span_start": 97,
+            "span_end": 418,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-02",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 2,
+            "span_start": 418,
+            "span_end": 803,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-03",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 2,
+            "span_start": 803,
+            "span_end": 1266,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-03"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-01",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 4,
+            "span_start": 110,
+            "span_end": 598,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-02",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 4,
+            "span_start": 598,
+            "span_end": 1076,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-03",
+            "source_id": "SRC-PDF-bc52f22496954870b710ad4a9b0d2ccf",
+            "page": 4,
+            "span_start": 1076,
+            "span_end": 1523,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-03"
+            ],
+            "review_note": null
+          }
+        ],
+        "coverage_signed_by": null,
+        "coverage_signed_at": null,
+        "approved_set_hash": null,
+        "approved_at": null,
+        "extraction_job_id": "JOB-72307fdb2d5645e2a227385d2547bb8f",
+        "blocking_count": 0
+      },
+      {
+        "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+        "trial_id": "TR-PX104",
+        "label": "demo3",
+        "state": "EXTRACTION_REVIEW",
+        "revision": 2,
+        "source": {
+          "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+          "source_version": 1,
+          "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "filename": "PX-104-v1.0-fictional.pdf",
+          "mime_type": "application/pdf",
+          "created_at": "2026-11-15T08:14:27.050327Z",
+          "synthetic_only": true
+        },
+        "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+            "type": "EXCLUSION",
+            "clinical_subject": "condition",
+            "operator": "ABSENCE_CONFIRMED_ACTIVE",
+            "threshold": "SYN-EXCLUDED-CONDITION",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Reviewed record-completeness declaration confirming absence of active SYN-EXCLUDED-CONDITION at screening.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "6. PX-EXC-01 - Excluded active condition\nThe patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 97,
+              "end": 563
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+            "type": "EXCLUSION",
+            "clinical_subject": "medication",
+            "operator": "NO_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "No administration or reported use of SYN-CLASS-R in 30 days prior",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "7. PX-EXC-02 - Restricted use before screening\nThe patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 563,
+              "end": 1166
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+            "type": "INCLUSION",
+            "clinical_subject": "age",
+            "operator": "AGE_RANGE_INCLUSIVE",
+            "threshold": [
+              40.0,
+              70.0
+            ],
+            "unit": "years",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Sourced birth date to establish age 40 to 70 inclusive at screening.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "3. PX-INC-01 - Age at screening\nThe patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 97,
+              "end": 418
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+            "type": "INCLUSION",
+            "clinical_subject": "diagnosis",
+            "operator": "CODE_CONFIRMED",
+            "threshold": "SYN-CONDITION-A",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Verified condition code or synthetic adjudicated note confirming SYN-CONDITION-A at screening.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "4. PX-INC-02 - Confirmed index diagnosis\nThe patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 418,
+              "end": 803
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+            "type": "INCLUSION",
+            "clinical_subject": "egfr",
+            "operator": "LAB_GTE",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Latest eGFR specimen result of at least 60 mL/min/1.73m\u00b2 dated 2026-10-01 to 2026-10-31.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "5. PX-INC-03 - Latest timely eGFR\nThe latest relevant eGFR must be at least 60 mL/min/1.73m\u00b2. Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 803,
+              "end": 1266
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-01",
+            "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "Confirmed administration or documented use of SYN-CLASS-R during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "8. PX-MON-01 - Confirmed restricted use\nDuring human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 110,
+              "end": 598
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-02",
+            "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_ORDER_ONLY",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New order or dispense of SYN-CLASS-R without confirmed use during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "9. PX-MON-02 - Order or dispense without use\nDuring human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 598,
+              "end": 1076
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-03",
+            "protocol_version_id": "PV-766948f32ca54c479c540f77f9186a8f",
+            "type": "MONITORING",
+            "clinical_subject": "egfr",
+            "operator": "EVENT_LAB_LT",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New eGFR result below 60 mL/min/1.73m\u00b2 during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "10. PX-MON-03 - New low eGFR\nDuring human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m\u00b2 requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 1076,
+              "end": 1523
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          }
+        ],
+        "coverage": [
+          {
+            "section_id": "PX-INFO-CALENDAR",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 1,
+            "span_start": 567,
+            "span_end": 1146,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-EVIDENCE",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 5,
+            "span_start": 123,
+            "span_end": 717,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-IDENTITY",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 1,
+            "span_start": 106,
+            "span_end": 567,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-REVIEW",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 5,
+            "span_start": 717,
+            "span_end": 1491,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-01",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 3,
+            "span_start": 97,
+            "span_end": 563,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-02",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 3,
+            "span_start": 563,
+            "span_end": 1166,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-01",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 2,
+            "span_start": 97,
+            "span_end": 418,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-02",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 2,
+            "span_start": 418,
+            "span_end": 803,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-03",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 2,
+            "span_start": 803,
+            "span_end": 1266,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-03"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-01",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 4,
+            "span_start": 110,
+            "span_end": 598,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-02",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 4,
+            "span_start": 598,
+            "span_end": 1076,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-03",
+            "source_id": "SRC-PDF-5c2cb9dfc18645f19bae301c21e9180b",
+            "page": 4,
+            "span_start": 1076,
+            "span_end": 1523,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-03"
+            ],
+            "review_note": null
+          }
+        ],
+        "coverage_signed_by": null,
+        "coverage_signed_at": null,
+        "approved_set_hash": null,
+        "approved_at": null,
+        "extraction_job_id": "JOB-b4e4c53dc888473d9bbe96b71b6c7416",
+        "blocking_count": 0
+      },
+      {
+        "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+        "trial_id": "TR-PX104",
+        "label": "demo6",
+        "state": "EXTRACTION_REVIEW",
+        "revision": 2,
+        "source": {
+          "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+          "source_version": 1,
+          "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "filename": "PX-104-v1.0-fictional.pdf",
+          "mime_type": "application/pdf",
+          "created_at": "2026-11-15T10:08:21.617202Z",
+          "synthetic_only": true
+        },
+        "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+        "criteria": [
+          {
+            "criterion_id": "PX-EXC-01",
+            "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+            "type": "EXCLUSION",
+            "clinical_subject": "condition",
+            "operator": "ABSENCE_CONFIRMED_ACTIVE",
+            "threshold": "SYN-EXCLUDED-CONDITION",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Reviewed record-completeness declaration supporting absence of active SYN-EXCLUDED-CONDITION.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "6. PX-EXC-01 - Excluded active condition\nThe patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 97,
+              "end": 563
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-EXC-02",
+            "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+            "type": "EXCLUSION",
+            "clinical_subject": "medication",
+            "operator": "NO_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Documentation of no administration or reported use of SYN-CLASS-R in the 30 days prior to screening",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "7. PX-EXC-02 - Restricted use before screening\nThe patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "source_page": 3,
+            "source_anchor": {
+              "start": 563,
+              "end": 1166
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-01",
+            "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+            "type": "INCLUSION",
+            "clinical_subject": "age",
+            "operator": "AGE_RANGE_INCLUSIVE",
+            "threshold": [
+              40.0,
+              70.0
+            ],
+            "unit": "years",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Sourced birth date establishing age 40 to 70 inclusive at screening.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "3. PX-INC-01 - Age at screening\nThe patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 97,
+              "end": 418
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-02",
+            "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+            "type": "INCLUSION",
+            "clinical_subject": "diagnosis",
+            "operator": "CODE_CONFIRMED",
+            "threshold": "SYN-CONDITION-A",
+            "unit": null,
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": 0,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Verified condition code or adjudicated note confirming SYN-CONDITION-A.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "4. PX-INC-02 - Confirmed index diagnosis\nThe patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 418,
+              "end": 803
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-INC-03",
+            "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+            "type": "INCLUSION",
+            "clinical_subject": "egfr",
+            "operator": "LAB_GTE",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "SCREENING_DATE",
+              "start_offset_days": -30,
+              "end_offset_days": 0,
+              "start_inclusive": true,
+              "end_inclusive": true,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "LOCAL_DATE"
+            },
+            "evidence_requirement": "Latest timely specimen eGFR result >= 60 mL/min/1.73m\u00b2 within screening window.",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "5. PX-INC-03 - Latest timely eGFR\nThe latest relevant eGFR must be at least 60 mL/min/1.73m\u00b2. Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "source_page": 2,
+            "source_anchor": {
+              "start": 803,
+              "end": 1266
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-ELIGIBILITY-ALL",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-01",
+            "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_RESTRICTED_USE",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New confirmed administration or documented use of SYN-CLASS-R during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "8. PX-MON-01 - Confirmed restricted use\nDuring human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 110,
+              "end": 598
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-02",
+            "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+            "type": "MONITORING",
+            "clinical_subject": "medication",
+            "operator": "EVENT_ORDER_ONLY",
+            "threshold": "SYN-CLASS-R",
+            "unit": null,
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New order or dispense of SYN-CLASS-R without confirmed use during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "9. PX-MON-02 - Order or dispense without use\nDuring human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 598,
+              "end": 1076
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          },
+          {
+            "criterion_id": "PX-MON-03",
+            "protocol_version_id": "PV-62b3ae2ddcb14cda81cb3331e7e16e2f",
+            "type": "MONITORING",
+            "clinical_subject": "egfr",
+            "operator": "EVENT_LAB_LT",
+            "threshold": 60.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "window": {
+              "anchor": "PARTICIPATION",
+              "start_offset_days": null,
+              "end_offset_days": null,
+              "start_inclusive": true,
+              "end_inclusive": false,
+              "time_zone": "Europe/Athens",
+              "anchor_granularity": "INSTANT"
+            },
+            "evidence_requirement": "New eGFR lab result below 60 mL/min/1.73m\u00b2 during participation",
+            "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+            "source_quote": "10. PX-MON-03 - New low eGFR\nDuring human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m\u00b2 requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "source_page": 4,
+            "source_anchor": {
+              "start": 1076,
+              "end": 1523
+            },
+            "applicable_site_ids": [
+              "SITE-SYN-01"
+            ],
+            "terminology_map_version": "px104-terminology-v1",
+            "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+            "workflow_status": "PROPOSED",
+            "ambiguity": null,
+            "revision": 1,
+            "approved_by": null,
+            "approved_at": null
+          }
+        ],
+        "coverage": [
+          {
+            "section_id": "PX-INFO-CALENDAR",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 1,
+            "span_start": 567,
+            "span_end": 1146,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-EVIDENCE",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 5,
+            "span_start": 123,
+            "span_end": 717,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-IDENTITY",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 1,
+            "span_start": 106,
+            "span_end": 567,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-INFO-REVIEW",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 5,
+            "span_start": 717,
+            "span_end": 1491,
+            "status": "INFORMATIONAL",
+            "criterion_ids": [],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-01",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 3,
+            "span_start": 97,
+            "span_end": 563,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-EXC-02",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 3,
+            "span_start": 563,
+            "span_end": 1166,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-EXC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-01",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 2,
+            "span_start": 97,
+            "span_end": 418,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-02",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 2,
+            "span_start": 418,
+            "span_end": 803,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-INC-03",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 2,
+            "span_start": 803,
+            "span_end": 1266,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-INC-03"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-01",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 4,
+            "span_start": 110,
+            "span_end": 598,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-01"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-02",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 4,
+            "span_start": 598,
+            "span_end": 1076,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-02"
+            ],
+            "review_note": null
+          },
+          {
+            "section_id": "PX-SECTION-MON-03",
+            "source_id": "SRC-PDF-dc135e3655eb4eb4b17487d543090f94",
+            "page": 4,
+            "span_start": 1076,
+            "span_end": 1523,
+            "status": "MAPPED",
+            "criterion_ids": [
+              "PX-MON-03"
+            ],
+            "review_note": null
+          }
+        ],
+        "coverage_signed_by": null,
+        "coverage_signed_at": null,
+        "approved_set_hash": null,
+        "approved_at": null,
+        "extraction_job_id": "JOB-048757accf63439eb0b586a0bab95d57",
+        "blocking_count": 0
+      }
+    ],
+    "page": {
+      "next_cursor": null,
+      "limit": 25,
+      "total_count": 8
+    }
+  },
+  "cases": {
+    "items": [
+      {
+        "case_id": "CASE-28ad0fd7cabc44a983d6cacbdd4312ff",
+        "trial_id": "TR-PX104",
+        "patient_id": "P-042",
+        "protocol_version_id": "PV-0a1737752ced41c0b9cd0f2bb055aa4e",
+        "criterion_id": "PX-MON-01",
+        "issue_key": "medication:SYN-CLASS-R",
+        "status": "RESOLVED",
+        "priority": "HIGH",
+        "assigned_actor_id": "ACT-INV-01",
+        "finding_ids": [
+          "FIND-1db30279d09e4dbe9faf0270ce880724"
+        ],
+        "current_summary": "Review summary for patient P-042: Case CASE-28ad0fd7cabc44a983d6cacbdd4312ff is open and linked to finding FIND-1db30279d09e4dbe9faf0270ce880724. Event EVT-e4576080db1446ce83186967bd7ff9bc (effective 2026-11-19T07:30:00Z) was classified as relevant under PX-MON-01 due to confirmed restricted medication use, resulting in prior assessment ASM-b0729b8113814119a6fee7a1857cc1eb failing PX-MON-01 per protocol section 8.",
+        "summary_origin": "AI_DRAFT",
+        "agent_execution_id": "EXEC-9b339a7eeed04774987d3cbea4e16c90",
+        "revision": 6,
+        "opened_at": "2026-11-14T23:56:14.201090Z",
+        "updated_at": "2026-11-15T10:19:19.559848Z",
+        "decisions": [
+          {
+            "decision_id": "DEC-3b99de80324d4016812af21ef2afd4aa",
+            "actor_id": "ACT-INV-01",
+            "actor_role": "INVESTIGATOR",
+            "from_status": "OPEN",
+            "to_status": "ACKNOWLEDGED",
+            "disposition": "acknowledge",
+            "rationale": "idk what to do",
+            "cited_evidence_ids": [
+              "EVT-e4576080db1446ce83186967bd7ff9bc"
+            ],
+            "decided_at": "2026-11-15T00:43:15.553709Z"
+          },
+          {
+            "decision_id": "DEC-0982c7a362b24296b691b47630ff8eec",
+            "actor_id": "ACT-INV-01",
+            "actor_role": "INVESTIGATOR",
+            "from_status": "ACKNOWLEDGED",
+            "to_status": "INVESTIGATING",
+            "disposition": "doing",
+            "rationale": "br",
+            "cited_evidence_ids": [
+              "EVT-e4576080db1446ce83186967bd7ff9bc"
+            ],
+            "decided_at": "2026-11-15T10:18:55.891906Z"
+          },
+          {
+            "decision_id": "DEC-e3fbd069f59247d696a9fb22959c501c",
+            "actor_id": "ACT-INV-01",
+            "actor_role": "INVESTIGATOR",
+            "from_status": "INVESTIGATING",
+            "to_status": "RESOLVED",
+            "disposition": "resolved",
+            "rationale": "br",
+            "cited_evidence_ids": [
+              "EVT-e4576080db1446ce83186967bd7ff9bc"
+            ],
+            "decided_at": "2026-11-15T10:19:19.559848Z"
+          }
+        ]
+      }
+    ],
+    "page": {
+      "next_cursor": null,
+      "limit": 100,
+      "total_count": 1
+    }
+  },
+  "patient": {
+    "patient_id": "P-042",
+    "trial_id": "TR-PX104",
+    "synthetic_only": true,
+    "site_id": "SITE-SYN-01",
+    "screening_snapshot_date": "2026-10-31",
+    "demographics": {
+      "birth_date": {
+        "fact_id": "FACT-P-042-birth_date",
+        "value": "1968-06-15",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-birth_date",
+          "source_id": "SRC-P-042-birth_date",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 41
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "sex_at_birth": {
+        "fact_id": "FACT-P-042-sex_at_birth",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-sex_at_birth",
+          "source_id": "SRC-P-042-sex_at_birth",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 35
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_RECORDED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "location_jurisdiction": {
+        "fact_id": "FACT-P-042-location_jurisdiction",
+        "value": "Synthetic Athens site; Greece",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-location_jurisdiction",
+          "source_id": "SRC-P-042-location_jurisdiction",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 71
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    },
+    "index_disease": {
+      "code": "SYN-CONDITION-A",
+      "diagnosis_criteria": [
+        {
+          "fact_id": "COND-P-042-A",
+          "value": "SYN-CONDITION-A",
+          "unit": null,
+          "effective_at": "2024-05-31T21:00:00Z",
+          "onset_date": "2024-06-01",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "COND-P-042-A",
+            "source_id": "SRC-P-042-diagnosis",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2024-05-31T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 59
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "severity": {
+        "fact_id": "FACT-P-042-severity",
+        "value": "Synthetic moderate label; no selection restriction",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-severity",
+          "source_id": "SRC-P-042-severity",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 79
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "first_onset": {
+        "fact_id": "FACT-P-042-first_onset",
+        "value": "2024-06-01",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-first_onset",
+          "source_id": "SRC-P-042-first_onset",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 42
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "diagnostic_evidence": [
+        {
+          "evidence_id": "COND-P-042-A",
+          "source_id": "SRC-P-042-diagnosis",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2024-05-31T21:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 59
+        }
+      ]
+    },
+    "medical_conditions": [
+      {
+        "fact_id": "COND-P-042-A",
+        "value": "SYN-CONDITION-A",
+        "unit": null,
+        "effective_at": "2024-05-31T21:00:00Z",
+        "onset_date": "2024-06-01",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "COND-P-042-A",
+          "source_id": "SRC-P-042-diagnosis",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2024-05-31T21:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 59
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "surgeries_hospitalizations": [
+      {
+        "fact_id": "FACT-P-042-surgery_history",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-surgery_history",
+          "source_id": "SRC-P-042-surgery_history",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 38
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "family_history": [
+      {
+        "fact_id": "FACT-P-042-family_history",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-family_history",
+          "source_id": "SRC-P-042-family_history",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 37
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_RECORDED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "genetics": [
+      {
+        "fact_id": "FACT-P-042-genotype",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-genotype",
+          "source_id": "SRC-P-042-genotype",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 31
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "symptom_history": [
+      {
+        "fact_id": "FACT-P-042-symptom_course",
+        "value": "Synthetic symptoms recorded 2024-06; stable at October encounter",
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-symptom_course",
+          "source_id": "SRC-P-042-symptom_course",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 99
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "POSITIVE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "observations": [
+      {
+        "kind": "LAB",
+        "analyte_code": "egfr",
+        "observation": {
+          "fact_id": "LAB-P-042-0",
+          "value": 82.0,
+          "unit": "mL/min/1.73m\u00b2",
+          "effective_at": "2026-10-19T21:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "LAB-P-042-0",
+            "source_id": "SRC-P-042-lab-0",
+            "source_version": 1,
+            "evidence_type": "LAB",
+            "effective_at": "2026-10-19T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 52
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "FUNCTIONAL",
+        "analyte_code": "SYN-FUNCTIONAL",
+        "observation": {
+          "fact_id": "OBS-P-042-FUNCTIONAL",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-FUNCTIONAL",
+            "source_id": "SRC-P-042-FUNCTIONAL",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 33
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "PULMONARY",
+        "analyte_code": "SYN-PULMONARY",
+        "observation": {
+          "fact_id": "OBS-P-042-PULMONARY",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-PULMONARY",
+            "source_id": "SRC-P-042-PULMONARY",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 32
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "ECG",
+        "analyte_code": "SYN-ECG",
+        "observation": {
+          "fact_id": "OBS-P-042-ECG",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-ECG",
+            "source_id": "SRC-P-042-ECG",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 26
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "IMAGING",
+        "analyte_code": "SYN-IMAGING",
+        "observation": {
+          "fact_id": "OBS-P-042-IMAGING",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-IMAGING",
+            "source_id": "SRC-P-042-IMAGING",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 30
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      },
+      {
+        "kind": "VITAL",
+        "analyte_code": "SYN-VITAL",
+        "observation": {
+          "fact_id": "OBS-P-042-VITAL",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "OBS-P-042-VITAL",
+            "source_id": "SRC-P-042-VITAL",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 28
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "interpretation": null
+      }
+    ],
+    "medications": [
+      {
+        "exposure_id": "EVT-e4576080db1446ce83186967bd7ff9bc",
+        "medication_code": "SYN-MED-R1",
+        "mapped_class": "SYN-CLASS-R",
+        "evidence_type": "ADMINISTRATION",
+        "asserted_start_at": "2026-11-19T07:30:00Z",
+        "asserted_end_exclusive_at": null,
+        "dose": {
+          "fact_id": "EVT-e4576080db1446ce83186967bd7ff9bc",
+          "value": 1.0,
+          "unit": "synthetic-unit",
+          "effective_at": "2026-11-19T07:30:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-11-20T09:00:00Z",
+          "ingested_at": "2026-11-14T23:56:13.877186Z",
+          "source": {
+            "evidence_id": "EVT-e4576080db1446ce83186967bd7ff9bc",
+            "source_id": "SRC-MED-D18-P042",
+            "source_version": 1,
+            "evidence_type": "ADMINISTRATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "route": {
+          "fact_id": "EVT-e4576080db1446ce83186967bd7ff9bc",
+          "value": "ORAL",
+          "unit": null,
+          "effective_at": "2026-11-19T07:30:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-11-20T09:00:00Z",
+          "ingested_at": "2026-11-14T23:56:13.877186Z",
+          "source": {
+            "evidence_id": "EVT-e4576080db1446ce83186967bd7ff9bc",
+            "source_id": "SRC-MED-D18-P042",
+            "source_version": 1,
+            "evidence_type": "ADMINISTRATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "last_changed_at": "2026-11-20T09:00:00Z",
+        "stop_reason": null,
+        "adverse_reactions": [],
+        "evidence": {
+          "fact_id": "EVT-e4576080db1446ce83186967bd7ff9bc",
+          "value": "SYN-MED-R1",
+          "unit": null,
+          "effective_at": "2026-11-19T07:30:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-11-20T09:00:00Z",
+          "ingested_at": "2026-11-14T23:56:13.877186Z",
+          "source": {
+            "evidence_id": "EVT-e4576080db1446ce83186967bd7ff9bc",
+            "source_id": "SRC-MED-D18-P042",
+            "source_version": 1,
+            "evidence_type": "ADMINISTRATION",
+            "effective_at": "2026-11-19T07:30:00Z",
+            "recorded_at": "2026-11-20T09:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "source": {
+          "evidence_id": "EVT-e4576080db1446ce83186967bd7ff9bc",
+          "source_id": "SRC-MED-D18-P042",
+          "source_version": 1,
+          "evidence_type": "ADMINISTRATION",
+          "effective_at": "2026-11-19T07:30:00Z",
+          "recorded_at": "2026-11-20T09:00:00Z",
+          "page": null,
+          "span_start": null,
+          "span_end": null
+        }
+      }
+    ],
+    "study_product_exposure": {
+      "blinded": true,
+      "assignment_masked": {
+        "fact_id": "FACT-P-042-assignment_masked",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-assignment_masked",
+          "source_id": "SRC-P-042-assignment_masked",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 40
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_APPLICABLE",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "exposures": []
+    },
+    "prior_clinical_research": [
+      {
+        "research_id": "RES-P-042",
+        "kind": "OBSERVATIONAL",
+        "exposure": null,
+        "last_dose_at": null,
+        "half_life_hours": null,
+        "completion_status": "NOT_ASSESSED",
+        "ongoing_restrictions": [],
+        "source": {
+          "evidence_id": "RES-P-042",
+          "source_id": "SRC-P-042-prior",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 70
+        }
+      }
+    ],
+    "procedures_and_imaging": [
+      {
+        "fact_id": "FACT-P-042-procedure_review",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-procedure_review",
+          "source_id": "SRC-P-042-procedure_review",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 39
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "allergies": [
+      {
+        "fact_id": "FACT-P-042-allergy_review",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-allergy_review",
+          "source_id": "SRC-P-042-allergy_review",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 37
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "pregnancy_contraception": [
+      {
+        "fact_id": "FACT-P-042-pregnancy_review",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-042-pregnancy_review",
+          "source_id": "SRC-P-042-pregnancy_review",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 39
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      }
+    ],
+    "decision_capacity": {
+      "fact_id": "FACT-P-042-decision_capacity",
+      "value": null,
+      "unit": null,
+      "effective_at": "2026-10-30T10:00:00Z",
+      "onset_date": null,
+      "recorded_at": "2026-10-30T10:00:00Z",
+      "ingested_at": "2026-10-30T10:00:00Z",
+      "source": {
+        "evidence_id": "FACT-P-042-decision_capacity",
+        "source_id": "SRC-P-042-decision_capacity",
+        "source_version": 1,
+        "evidence_type": "OTHER",
+        "effective_at": "2026-10-30T10:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 40
+      },
+      "evidence_quality": "HIGH",
+      "evidence_state": "NOT_ASSESSED",
+      "time_uncertainty": null,
+      "verification_status": "VERIFIED"
+    },
+    "study_partner": {
+      "fact_id": "FACT-P-042-study_partner",
+      "value": null,
+      "unit": null,
+      "effective_at": "2026-10-30T10:00:00Z",
+      "onset_date": null,
+      "recorded_at": "2026-10-30T10:00:00Z",
+      "ingested_at": "2026-10-30T10:00:00Z",
+      "source": {
+        "evidence_id": "FACT-P-042-study_partner",
+        "source_id": "SRC-P-042-study_partner",
+        "source_version": 1,
+        "evidence_type": "OTHER",
+        "effective_at": "2026-10-30T10:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 36
+      },
+      "evidence_quality": "HIGH",
+      "evidence_state": "NOT_RECORDED",
+      "time_uncertainty": null,
+      "verification_status": "VERIFIED"
+    },
+    "administration_ability": {
+      "fact_id": "FACT-P-042-administration_ability",
+      "value": null,
+      "unit": null,
+      "effective_at": "2026-10-30T10:00:00Z",
+      "onset_date": null,
+      "recorded_at": "2026-10-30T10:00:00Z",
+      "ingested_at": "2026-10-30T10:00:00Z",
+      "source": {
+        "evidence_id": "FACT-P-042-administration_ability",
+        "source_id": "SRC-P-042-administration_ability",
+        "source_version": 1,
+        "evidence_type": "OTHER",
+        "effective_at": "2026-10-30T10:00:00Z",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "page": null,
+        "span_start": 0,
+        "span_end": 45
+      },
+      "evidence_quality": "HIGH",
+      "evidence_state": "NOT_ASSESSED",
+      "time_uncertainty": null,
+      "verification_status": "VERIFIED"
+    },
+    "encounters": [
+      {
+        "encounter_id": "ENC-P-042",
+        "occurred_at": "2026-10-30T10:00:00Z",
+        "source_ids": [
+          "SRC-P-042-narrative"
+        ],
+        "summary": "Synthetic pre-screen source review"
+      }
+    ],
+    "source_document_index": [
+      {
+        "source_id": "SRC-P-042-birth_date",
+        "source_version": 1,
+        "sha256": "777e30c9d2eeeb45dad3ffec090ef425a88d7212452d6d4e80c70969466a8dda",
+        "filename": "SRC-P-042-birth_date.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-sex_at_birth",
+        "source_version": 1,
+        "sha256": "bc677c824c6a4e538a8711c722890303765dde4265e2c3db77eaf42eaad91f78",
+        "filename": "SRC-P-042-sex_at_birth.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-location_jurisdiction",
+        "source_version": 1,
+        "sha256": "2e5b19518b59c74267544185adc132b38bbf35fbdae41565e2879a87e25938b7",
+        "filename": "SRC-P-042-location_jurisdiction.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-severity",
+        "source_version": 1,
+        "sha256": "1e73b1a5ea2c5b146276d4b472d46b3ac5fb21f4afbef5d7519af00d57505f1a",
+        "filename": "SRC-P-042-severity.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-first_onset",
+        "source_version": 1,
+        "sha256": "603405bc907b2eb71ccc611201b5ff21b63cca4607de4a6739dd3c3e57e1f8ea",
+        "filename": "SRC-P-042-first_onset.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-surgery_history",
+        "source_version": 1,
+        "sha256": "7a45599ba824d51a070fdc59cc1e01b11841cb3cff25b0a049375a5c665ecee7",
+        "filename": "SRC-P-042-surgery_history.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-family_history",
+        "source_version": 1,
+        "sha256": "fb3c13a3def6cb7313ad59fa0804f7eb0d3ff1fb3fecf070dc2961781fc97ff9",
+        "filename": "SRC-P-042-family_history.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-genotype",
+        "source_version": 1,
+        "sha256": "114fa829cc0f8864e866972852585158e601f7eaabf5abaf9e319b4a21a85d20",
+        "filename": "SRC-P-042-genotype.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-symptom_course",
+        "source_version": 1,
+        "sha256": "8fbcb0a8dc1060b3974fc9998696eead2f60652c6bdb4e664913aea3a9de4a8a",
+        "filename": "SRC-P-042-symptom_course.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-procedure_review",
+        "source_version": 1,
+        "sha256": "e3b5c0dab44e049778436077eda63108a65f4e6f81c3b0d6cd95db3daa6016de",
+        "filename": "SRC-P-042-procedure_review.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-allergy_review",
+        "source_version": 1,
+        "sha256": "0b94bfd2670ec78930712db6431513a4589a29a274396aec6730582de97bbadb",
+        "filename": "SRC-P-042-allergy_review.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-pregnancy_review",
+        "source_version": 1,
+        "sha256": "f5678ea0ac1faf41254c9ff34f99e9bb374054e9a412336cb7d07d0d2d4145ef",
+        "filename": "SRC-P-042-pregnancy_review.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-decision_capacity",
+        "source_version": 1,
+        "sha256": "8e8f36be10d896c8abc248a030c1d480be27a4f0e619fa5b15f7199c66dfee23",
+        "filename": "SRC-P-042-decision_capacity.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-study_partner",
+        "source_version": 1,
+        "sha256": "2ebeefd62f0432db921b90f00f3b75634ad047df38424231cca68a9f8d97c83b",
+        "filename": "SRC-P-042-study_partner.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-administration_ability",
+        "source_version": 1,
+        "sha256": "9cf5309c61dc274d9fbf9f67acb50bba5f0631b8381c65ecae1890794ee71263",
+        "filename": "SRC-P-042-administration_ability.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-assignment_masked",
+        "source_version": 1,
+        "sha256": "8c3e8866c5c4cf5f2a03609ab491465ca86350c528fa05243bcf1c0bed7a2a97",
+        "filename": "SRC-P-042-assignment_masked.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-excluded_condition_absence",
+        "source_version": 1,
+        "sha256": "058bcf171efa7f082e7d066f7725c69156b595b0941e9467ae86a65ef38723c9",
+        "filename": "SRC-P-042-excluded_condition_absence.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-no_restricted_use",
+        "source_version": 1,
+        "sha256": "b8dcf0274f56c4fc3e379a9937e7ba1b02d0ab864496a80c61cb5a0be1ec1852",
+        "filename": "SRC-P-042-no_restricted_use.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-diagnosis",
+        "source_version": 1,
+        "sha256": "60fb08499d0ca772db16d5e68824d0e1ee759c5cb0dc70b80a8a82b8a7e3997d",
+        "filename": "SRC-P-042-diagnosis.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-lab-0",
+        "source_version": 1,
+        "sha256": "2f28580881db95bbe8d12cb94dea03843af99fae2b758a3ebdfc9d3fde77950f",
+        "filename": "SRC-P-042-lab-0.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-FUNCTIONAL",
+        "source_version": 1,
+        "sha256": "0a9032b7472a3711b97fb362cf7fe8f3b443051fef60d4978723944792c5ac83",
+        "filename": "SRC-P-042-FUNCTIONAL.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-PULMONARY",
+        "source_version": 1,
+        "sha256": "ef6f52bbc340115e9cd6192bce20485d3c81e9a7e5c87943769f4531c706b845",
+        "filename": "SRC-P-042-PULMONARY.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-ECG",
+        "source_version": 1,
+        "sha256": "4bef1d07c25ea393c0489da34a3d03264841cb152ead0b953648e9d55b358550",
+        "filename": "SRC-P-042-ECG.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-IMAGING",
+        "source_version": 1,
+        "sha256": "7c5a211d8154fc936b14fb80437b84c77f5f79863f2722da6c96cd4cf39dead2",
+        "filename": "SRC-P-042-IMAGING.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-VITAL",
+        "source_version": 1,
+        "sha256": "24bafd28e1f76debedf1056cfa5065a1ffd7360f9b5282306fa4b948b53bb50b",
+        "filename": "SRC-P-042-VITAL.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-prior",
+        "source_version": 1,
+        "sha256": "498f236cb4078708dcf2d2835a794322b6576cb07d7563bfea9dcc57d8955664",
+        "filename": "SRC-P-042-prior.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-narrative",
+        "source_version": 1,
+        "sha256": "dd41d56958e69085377c8d908b00dc44e3a2083d40b606721d920c1b74df58ad",
+        "filename": "SRC-P-042-narrative.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-P-042-external",
+        "source_version": 1,
+        "sha256": "5900b7610dc968fc7b3212eac831c78a5e6ffcad3de6d01345b808dcebd54325",
+        "filename": "SRC-P-042-external.txt",
+        "mime_type": "text/plain",
+        "created_at": "2026-10-30T10:00:00Z",
+        "synthetic_only": true
+      },
+      {
+        "source_id": "SRC-MED-D18-P042",
+        "source_version": 1,
+        "sha256": "5fba23fcd773dd90781f409777814c412aca65863a92e5d142ed33c0a61e828d",
+        "filename": "SRC-MED-D18-P042.json",
+        "mime_type": "application/json",
+        "created_at": "2026-11-20T09:00:00Z",
+        "synthetic_only": true
+      }
+    ],
+    "clinical_narratives": [
+      {
+        "note_id": "NOTE-P-042",
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "NOTE-P-042",
+          "source_id": "SRC-P-042-narrative",
+          "source_version": 1,
+          "evidence_type": "NOTE",
+          "effective_at": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": null,
+          "span_end": null
+        },
+        "text": "P-042 is a wholly invented patient at the synthetic Athens site. The latest dated eGFR is 82. A reviewed no-use reconciliation covers the complete restricted window. The index condition is represented by a verified fictional code with a separate source. Family history and genetics remain unassessed or unrecorded rather than presumed negative. Functional, pulmonary, ECG and imaging sections preserve explicit gaps. Prior research exposure, capacity, study partner and administration ability require further assessment. No study product has been assigned or administered in this screening record. These notes are claims for reviewer inspection; structured source evidence and approved rules determine screening. No clinical enrollment, treatment change or safety conclusion is implied.",
+        "extraction_status": "REVIEWED"
+      }
+    ],
+    "open_items": [
+      {
+        "open_item_id": "OPEN-P-042",
+        "reason_code": "SOURCE_UNAVAILABLE",
+        "description": "Long-tail unassessed sections require review; they are not extra eligibility rules",
+        "blocking": false,
+        "status": "OPEN",
+        "conflicting_evidence_ids": [],
+        "requested_for_role": "COORDINATOR"
+      }
+    ],
+    "participation_status": "PARTICIPATING",
+    "current_assessment_id": "ASM-78634cf964b14a81baff0128923d3c36",
+    "data_watermark": "2026-11-14T23:56:13.877186Z"
+  }
+}

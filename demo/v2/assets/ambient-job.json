@@ -1,0 +1,82 @@
+{
+  "status": "completed",
+  "endpoint_id": "elevenlabs/music/v2.5",
+  "decision_id": "3672cd2f-9d11-4455-a02f-3f9b20e2992e",
+  "request_id": "01a1df94-f733-7222-b826-cd893b92843f",
+  "status_url": "https://queue.fal.run/elevenlabs/music/requests/01a1df94-f733-7222-b826-cd893b92843f/status",
+  "response_url": "https://queue.fal.run/elevenlabs/music/requests/01a1df94-f733-7222-b826-cd893b92843f",
+  "cancel_url": "https://queue.fal.run/elevenlabs/music/requests/01a1df94-f733-7222-b826-cd893b92843f/cancel",
+  "recipe": {
+    "endpoint_id": "elevenlabs/music/v2.5",
+    "input": {
+      "prompt": "Exactly 60 seconds of very understated ambient underscore for a real clinical research software demonstration. The emotional theme is quiet clinical focus, careful investigation, trust and thoughtful progress. Extremely sparse warm sustained synth chords, a soft muted felt-like note every few seconds, a very gentle slow pulse with no rhythmic beat. No drums, no percussion, no arpeggiator, no bass groove, no ticking clock, no dramatic builds, no risers, no trailer effects, no bright bells, no climax. Nearly motionless, intimate, calm and unobtrusive. Leave generous sonic space for a spoken female narrator. Low dynamic range, no sudden sound events. Begins softly from the first instant and finishes with a subtle warm resolution. Entirely instrumental, no voices.",
+      "music_length_ms": 60000,
+      "force_instrumental": true,
+      "output_format": "mp3_48000_192"
+    },
+    "note": "These are the submitted inputs, not resolved server defaults. For a variation, copy them and change only requested fields; reuse returned_seed when supported by the schema. Source URLs may expire."
+  },
+  "result": {
+    "audio": {
+      "url": "https://v3b.fal.media/files/b/0ab2932d/6q7FYcIbWNzUAHhguCBq7_music_generated.mp3",
+      "content_type": "audio/mpeg",
+      "file_name": "music_generated.mp3",
+      "file_size": 1440620
+    }
+  },
+  "has_result": true,
+  "next_action": {
+    "tool": "show_media",
+    "jobs": [
+      {
+        "endpoint_id": "elevenlabs/music/v2.5",
+        "request_id": "01a1df94-f733-7222-b826-cd893b92843f"
+      }
+    ],
+    "reason": "The result is in this reply. Pass it and its recipe unchanged in this one-item jobs list; don't read the job again. If this host doesn't render MCP app UI, share the media URLs instead."
+  },
+  "media": [
+    {
+      "url": "https://v3b.fal.media/files/b/0ab2932d/6q7FYcIbWNzUAHhguCBq7_music_generated.mp3",
+      "json_path": "result.audio.url",
+      "output_path": "/audio/url",
+      "media_type": "audio",
+      "content_type": "audio/mpeg",
+      "file_name": "music_generated.mp3",
+      "reference": {
+        "$fal_ref": {
+          "kind": "job",
+          "endpoint_id": "elevenlabs/music/v2.5",
+          "request_id": "01a1df94-f733-7222-b826-cd893b92843f",
+          "response_url": "https://queue.fal.run/elevenlabs/music/requests/01a1df94-f733-7222-b826-cd893b92843f",
+          "output_path": "/audio/url"
+        }
+      }
+    }
+  ],
+  "display_hint": "Present completed media to the user. Forward attached image content blocks to the host's image display helper (for example, image(block)); do not stringify image blocks as text. For Markdown previews use previews[].preview_url, and separately link original_url as the full-resolution file. If no preview is available, show a clearly labeled original-file link. Do not claim a preview rendered unless it is visible. Video, audio and 3D URLs are original result files, not queue URLs.",
+  "next_steps": "After presenting the result, offer a next generation: variations (copy recipe.input and change the text, voice or prompt), or pairing it with a video (lip sync or a soundtrack). Submit several variations together in one submit_jobs call. For a new operation on this output, call recommend_model with its URL as the source.",
+  "presentation": {
+    "state": "available",
+    "mode": "explicit",
+    "resource_uri": "ui://fal/media-viewer/v16.html"
+  },
+  "assets": [
+    {
+      "id": "db1849af6cb5c49a6c6c2f2a3ad27b94a8a06719099fcb14906542d0ffe90659",
+      "url": "https://v3b.fal.media/files/b/0ab2932d/6q7FYcIbWNzUAHhguCBq7_music_generated.mp3",
+      "json_path": "result.audio.url",
+      "kind": "audio",
+      "preview_supported": true,
+      "content_type": "audio/mpeg",
+      "file_name": "music_generated.mp3"
+    }
+  ],
+  "job_presentation": {
+    "state": "completed"
+  },
+  "fal_account": {
+    "name": "Thanos Bits",
+    "id": "github|6nhx8ie08q6v0s12sjg4xgis"
+  }
+}

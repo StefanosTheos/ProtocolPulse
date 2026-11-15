@@ -1,0 +1,178 @@
+[
+  {
+    "name": "start",
+    "source_start": 0.759,
+    "source_end": 8.607,
+    "start": 6.7,
+    "end": 9.7,
+    "frames": 90
+  },
+  {
+    "name": "extract-wait",
+    "source_start": 8.607,
+    "source_end": 16.692,
+    "start": 9.7,
+    "end": 10.1,
+    "frames": 12
+  },
+  {
+    "name": "extract-ready",
+    "source_start": 16.692,
+    "source_end": 17.618,
+    "start": 10.1,
+    "end": 10.6,
+    "frames": 15
+  },
+  {
+    "name": "rules",
+    "source_start": 17.618,
+    "source_end": 20.742,
+    "start": 10.6,
+    "end": 12.299999999999999,
+    "frames": 51
+  },
+  {
+    "name": "source",
+    "source_start": 20.742,
+    "source_end": 32.414,
+    "start": 12.299999999999999,
+    "end": 15.799999999999999,
+    "frames": 105
+  },
+  {
+    "name": "approve-protocol",
+    "source_start": 32.414,
+    "source_end": 34.798,
+    "start": 15.799999999999999,
+    "end": 17.599999999999998,
+    "frames": 54
+  },
+  {
+    "name": "protocol-complete",
+    "source_start": 34.798,
+    "source_end": 37.908,
+    "start": 17.599999999999998,
+    "end": 18.799999999999997,
+    "frames": 36
+  },
+  {
+    "name": "screen-wait",
+    "source_start": 37.908,
+    "source_end": 46.978,
+    "start": 18.799999999999997,
+    "end": 19.199999999999996,
+    "frames": 12
+  },
+  {
+    "name": "screen-ready",
+    "source_start": 46.978,
+    "source_end": 49.647,
+    "start": 19.199999999999996,
+    "end": 20.199999999999996,
+    "frames": 30
+  },
+  {
+    "name": "cohort",
+    "source_start": 49.647,
+    "source_end": 53.915,
+    "start": 20.199999999999996,
+    "end": 23.399999999999995,
+    "frames": 96
+  },
+  {
+    "name": "uncertainty",
+    "source_start": 53.915,
+    "source_end": 60.747,
+    "start": 23.399999999999995,
+    "end": 28.199999999999996,
+    "frames": 144
+  },
+  {
+    "name": "participation-start",
+    "source_start": 60.747,
+    "source_end": 63.621,
+    "start": 28.199999999999996,
+    "end": 30.699999999999996,
+    "frames": 75
+  },
+  {
+    "name": "participation-complete",
+    "source_start": 63.621,
+    "source_end": 67.189,
+    "start": 30.699999999999996,
+    "end": 33.099999999999994,
+    "frames": 72
+  },
+  {
+    "name": "event-form",
+    "source_start": 67.189,
+    "source_end": 70.268,
+    "start": 33.099999999999994,
+    "end": 35.699999999999996,
+    "frames": 78
+  },
+  {
+    "name": "event-wait",
+    "source_start": 70.268,
+    "source_end": 71.112,
+    "start": 35.699999999999996,
+    "end": 36.099999999999994,
+    "frames": 12
+  },
+  {
+    "name": "event-ready",
+    "source_start": 71.112,
+    "source_end": 74.58,
+    "start": 36.099999999999994,
+    "end": 38.3,
+    "frames": 66
+  },
+  {
+    "name": "ai-wait",
+    "source_start": 74.58,
+    "source_end": 89.026,
+    "start": 38.3,
+    "end": 38.8,
+    "frames": 15
+  },
+  {
+    "name": "ai-ready",
+    "source_start": 89.026,
+    "source_end": 91.513,
+    "start": 38.8,
+    "end": 40.599999999999994,
+    "frames": 54
+  },
+  {
+    "name": "case",
+    "source_start": 91.513,
+    "source_end": 94.274,
+    "start": 40.599999999999994,
+    "end": 43.3,
+    "frames": 81
+  },
+  {
+    "name": "case-evidence",
+    "source_start": 94.274,
+    "source_end": 107.117,
+    "start": 43.3,
+    "end": 50.099999999999994,
+    "frames": 204
+  },
+  {
+    "name": "review",
+    "source_start": 107.117,
+    "source_end": 112.359,
+    "start": 50.099999999999994,
+    "end": 53.49999999999999,
+    "frames": 102
+  },
+  {
+    "name": "done",
+    "source_start": 112.359,
+    "source_end": 114.31599999999999,
+    "start": 53.49999999999999,
+    "end": 54.99999999999999,
+    "frames": 45
+  }
+]

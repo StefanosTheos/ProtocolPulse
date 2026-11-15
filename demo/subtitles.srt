@@ -1,0 +1,71 @@
+1
+00:00:00,065 --> 00:00:02,511
+Promising medicines need rigorous trials.
+
+2
+00:00:02,761 --> 00:00:05,120
+Operational delays keep patients waiting.
+
+3
+00:00:05,522 --> 00:00:06,968
+Meet ProtocolPulse.
+
+4
+00:00:07,217 --> 00:00:08,662
+Open a trial protocol.
+
+5
+00:00:08,913 --> 00:00:12,714
+AI extracts inclusion and exclusion criteria into source-linked
+
+6
+00:00:12,739 --> 00:00:13,272
+rules.
+
+7
+00:00:13,739 --> 00:00:16,750
+A clinical lead reviews and approves.
+
+8
+00:00:17,434 --> 00:00:19,598
+Screen the patient cohort.
+
+9
+00:00:19,935 --> 00:00:24,446
+See potential matches, conflicts, and missing evidence.
+
+10
+00:00:24,826 --> 00:00:28,011
+An order alone doesn't prove medication use.
+
+11
+00:00:28,261 --> 00:00:32,707
+Confirm participation, then add a new medication record.
+
+12
+00:00:33,043 --> 00:00:35,794
+Approved rules flag a conflict.
+
+13
+00:00:36,348 --> 00:00:40,163
+AI investigates and drafts a cited summary.
+
+14
+00:00:40,457 --> 00:00:44,881
+The clinical lead reviews the evidence and records the next step.
+
+15
+00:00:45,217 --> 00:00:48,577
+Less repetitive work saves teams time.
+
+16
+00:00:49,043 --> 00:00:53,062
+More efficient trials could help new medicines reach the patients
+
+17
+00:00:53,087 --> 00:00:54,533
+who need them sooner.
+
+18
+00:00:54,783 --> 00:00:57,990
+ProtocolPulse, keep the trial moving.

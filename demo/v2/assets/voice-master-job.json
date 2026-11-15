@@ -1,0 +1,86 @@
+{
+  "status": "completed",
+  "endpoint_id": "fal-ai/minimax/speech-2.8-hd",
+  "decision_id": "2dd14b08-4b50-421f-9e6f-c4e210f8a137",
+  "request_id": "01a1df98-5f43-7852-875b-8da2718514c9",
+  "status_url": "https://queue.fal.run/fal-ai/minimax/requests/01a1df98-5f43-7852-875b-8da2718514c9/status",
+  "response_url": "https://queue.fal.run/fal-ai/minimax/requests/01a1df98-5f43-7852-875b-8da2718514c9",
+  "cancel_url": "https://queue.fal.run/fal-ai/minimax/requests/01a1df98-5f43-7852-875b-8da2718514c9/cancel",
+  "recipe": {
+    "endpoint_id": "fal-ai/minimax/speech-2.8-hd",
+    "input": {
+      "prompt": "Promising medicines need rigorous trials. Operational delays keep patients waiting. Meet Protocol Pulse. Open a trial protocol. AI extracts inclusion and exclusion criteria into source-linked rules. A clinical lead reviews and approves. Screen the patient cohort. See potential matches, conflicts, and missing evidence. An order alone doesn't prove medication use. Confirm participation. Then add a new medication record. Approved rules flag a conflict. AI investigates and drafts a cited summary. The clinical lead reviews the evidence and records the next step. Less repetitive work saves teams time. More efficient trials could help new medicines reach the patients who need them sooner. Protocol Pulse. Keep the trial moving.",
+      "voice_setting": {
+        "voice_id": "Wise_Woman",
+        "speed": 1
+      },
+      "language_boost": "English",
+      "output_format": "url"
+    },
+    "note": "These are the submitted inputs, not resolved server defaults. For a variation, copy them and change only requested fields; reuse returned_seed when supported by the schema. Source URLs may expire."
+  },
+  "result": {
+    "audio": {
+      "url": "https://v3b.fal.media/files/b/0ab29343/-tpvpbvg-tlCpuPmWGQKI_speech.mp3",
+      "content_type": "audio/mpeg",
+      "file_name": "speech.mp3",
+      "file_size": 861108
+    },
+    "duration_ms": 53712
+  },
+  "has_result": true,
+  "next_action": {
+    "tool": "show_media",
+    "jobs": [
+      {
+        "endpoint_id": "fal-ai/minimax/speech-2.8-hd",
+        "request_id": "01a1df98-5f43-7852-875b-8da2718514c9"
+      }
+    ],
+    "reason": "The result is in this reply. Pass it and its recipe unchanged in this one-item jobs list; don't read the job again. If this host doesn't render MCP app UI, share the media URLs instead."
+  },
+  "media": [
+    {
+      "url": "https://v3b.fal.media/files/b/0ab29343/-tpvpbvg-tlCpuPmWGQKI_speech.mp3",
+      "json_path": "result.audio.url",
+      "output_path": "/audio/url",
+      "media_type": "audio",
+      "content_type": "audio/mpeg",
+      "file_name": "speech.mp3",
+      "reference": {
+        "$fal_ref": {
+          "kind": "job",
+          "endpoint_id": "fal-ai/minimax/speech-2.8-hd",
+          "request_id": "01a1df98-5f43-7852-875b-8da2718514c9",
+          "response_url": "https://queue.fal.run/fal-ai/minimax/requests/01a1df98-5f43-7852-875b-8da2718514c9",
+          "output_path": "/audio/url"
+        }
+      }
+    }
+  ],
+  "display_hint": "Present completed media to the user. Forward attached image content blocks to the host's image display helper (for example, image(block)); do not stringify image blocks as text. For Markdown previews use previews[].preview_url, and separately link original_url as the full-resolution file. If no preview is available, show a clearly labeled original-file link. Do not claim a preview rendered unless it is visible. Video, audio and 3D URLs are original result files, not queue URLs.",
+  "next_steps": "After presenting the result, offer a next generation: variations (copy recipe.input and change the text, voice or prompt), or pairing it with a video (lip sync or a soundtrack). Submit several variations together in one submit_jobs call. For a new operation on this output, call recommend_model with its URL as the source.",
+  "presentation": {
+    "state": "available",
+    "mode": "explicit",
+    "resource_uri": "ui://fal/media-viewer/v16.html"
+  },
+  "assets": [
+    {
+      "id": "0a38cd08751afbe63722fd0ab3164f32d2e99eba2a01aa2121360c2494ac6a6e",
+      "url": "https://v3b.fal.media/files/b/0ab29343/-tpvpbvg-tlCpuPmWGQKI_speech.mp3",
+      "json_path": "result.audio.url",
+      "kind": "audio",
+      "preview_supported": true,
+      "content_type": "audio/mpeg",
+      "file_name": "speech.mp3"
+    }
+  ],
+  "job_presentation": {
+    "state": "completed"
+  },
+  "fal_account": {
+    "name": "Thanos Bits",
+    "id": "github|6nhx8ie08q6v0s12sjg4xgis"
+  }
+}

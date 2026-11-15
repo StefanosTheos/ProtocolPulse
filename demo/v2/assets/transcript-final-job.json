@@ -1,0 +1,1528 @@
+{
+  "status": "completed",
+  "endpoint_id": "fal-ai/elevenlabs/speech-to-text/scribe-v2",
+  "request_id": "01a1df96-cfac-7a80-86e8-6c46465c0379",
+  "status_url": "https://queue.fal.run/fal-ai/elevenlabs/requests/01a1df96-cfac-7a80-86e8-6c46465c0379/status",
+  "response_url": "https://queue.fal.run/fal-ai/elevenlabs/requests/01a1df96-cfac-7a80-86e8-6c46465c0379",
+  "cancel_url": "https://queue.fal.run/fal-ai/elevenlabs/requests/01a1df96-cfac-7a80-86e8-6c46465c0379/cancel",
+  "recipe": {
+    "endpoint_id": "fal-ai/elevenlabs/speech-to-text/scribe-v2",
+    "input": {
+      "audio_url": "https://v3b.fal.media/files/b/0ab29335/M_3ihP6buMwolFPQlMDmX_speech.mp3",
+      "language_code": "eng",
+      "diarize": false,
+      "tag_audio_events": false
+    },
+    "note": "These are the submitted inputs, not resolved server defaults. For a variation, copy them and change only requested fields; reuse returned_seed when supported by the schema. Source URLs may expire."
+  },
+  "result": {
+    "text": "Promising medicines can wait on the work of clinical trials. Meet Protocol Pulse. Open a trial protocol. AI extracts inclusion and exclusion criteria into source-linked rules. A clinical lead reviews and approves. Now screen the patient cohort. Potential matches, conflicts, and missing evidence stay distinct. An order alone doesn't prove a medicine was taken. Confirm participation and the workflow keeps going. A new medication record arrives. Approved rules flag a conflict. AI investigates the evidence and drafts a cited summary. The clinical lead reviews the case and records the next step. Less repetitive work, more focused oversight. Protocol Pulse. Keep the trial moving. Bring tomorrow's medicines closer.",
+    "language_code": "eng",
+    "language_probability": 1,
+    "words": [
+      {
+        "text": "Promising",
+        "start": 0.2,
+        "end": 0.6,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 0.6,
+        "end": 0.66,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "medicines",
+        "start": 0.66,
+        "end": 1.08,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 1.08,
+        "end": 1.14,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "can",
+        "start": 1.14,
+        "end": 1.28,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 1.28,
+        "end": 1.32,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "wait",
+        "start": 1.32,
+        "end": 1.48,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 1.48,
+        "end": 1.52,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "on",
+        "start": 1.52,
+        "end": 1.58,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 1.58,
+        "end": 1.6,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "the",
+        "start": 1.6,
+        "end": 1.66,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 1.66,
+        "end": 1.7,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "work",
+        "start": 1.7,
+        "end": 1.84,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 1.84,
+        "end": 1.88,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "of",
+        "start": 1.88,
+        "end": 1.94,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 1.94,
+        "end": 2,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "clinical",
+        "start": 2,
+        "end": 2.26,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 2.26,
+        "end": 2.36,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "trials.",
+        "start": 2.36,
+        "end": 2.76,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 2.76,
+        "end": 2.76,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Meet",
+        "start": 3.28,
+        "end": 3.38,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 3.38,
+        "end": 3.48,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Protocol",
+        "start": 3.48,
+        "end": 3.82,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 3.82,
+        "end": 3.92,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Pulse.",
+        "start": 3.94,
+        "end": 4.22,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 4.22,
+        "end": 4.22,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Open",
+        "start": 5.08,
+        "end": 5.38,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 5.38,
+        "end": 5.54,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "a",
+        "start": 5.54,
+        "end": 5.62,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 5.62,
+        "end": 5.68,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "trial",
+        "start": 5.68,
+        "end": 6.06,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 6.06,
+        "end": 6.18,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "protocol.",
+        "start": 6.18,
+        "end": 6.78,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 6.78,
+        "end": 7.08,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "AI",
+        "start": 7.08,
+        "end": 7.48,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 7.48,
+        "end": 7.54,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "extracts",
+        "start": 7.54,
+        "end": 8.06,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 8.06,
+        "end": 8.119,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "inclusion",
+        "start": 8.119,
+        "end": 8.68,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 8.68,
+        "end": 8.8,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "and",
+        "start": 8.8,
+        "end": 8.86,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 8.86,
+        "end": 8.9,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "exclusion",
+        "start": 8.9,
+        "end": 9.46,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 9.46,
+        "end": 9.54,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "criteria",
+        "start": 9.54,
+        "end": 10.14,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 10.14,
+        "end": 10.24,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "into",
+        "start": 10.24,
+        "end": 10.5,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 10.5,
+        "end": 10.56,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "source-linked",
+        "start": 10.56,
+        "end": 11.14,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 11.14,
+        "end": 11.24,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "rules.",
+        "start": 11.24,
+        "end": 11.62,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 11.62,
+        "end": 12.02,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "A",
+        "start": 12.04,
+        "end": 12.1,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 12.1,
+        "end": 12.14,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "clinical",
+        "start": 12.14,
+        "end": 12.44,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 12.44,
+        "end": 12.54,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "lead",
+        "start": 12.54,
+        "end": 12.76,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 12.76,
+        "end": 12.84,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "reviews",
+        "start": 12.84,
+        "end": 13.26,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 13.26,
+        "end": 13.28,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "and",
+        "start": 13.28,
+        "end": 13.36,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 13.36,
+        "end": 13.4,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "approves.",
+        "start": 13.4,
+        "end": 13.96,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 13.96,
+        "end": 13.96,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Now",
+        "start": 14.86,
+        "end": 15.06,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 15.06,
+        "end": 15.2,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "screen",
+        "start": 15.32,
+        "end": 15.68,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 15.68,
+        "end": 15.74,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "the",
+        "start": 15.74,
+        "end": 15.86,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 15.86,
+        "end": 15.9,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "patient",
+        "start": 15.9,
+        "end": 16.32,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 16.32,
+        "end": 16.46,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "cohort.",
+        "start": 16.46,
+        "end": 17.1,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 17.1,
+        "end": 17.1,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Potential",
+        "start": 17.56,
+        "end": 17.98,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 17.98,
+        "end": 18.06,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "matches,",
+        "start": 18.06,
+        "end": 18.48,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 18.48,
+        "end": 18.76,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "conflicts,",
+        "start": 18.76,
+        "end": 19.34,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 19.34,
+        "end": 19.68,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "and",
+        "start": 19.68,
+        "end": 19.76,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 19.76,
+        "end": 19.82,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "missing",
+        "start": 19.82,
+        "end": 20.14,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 20.14,
+        "end": 20.2,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "evidence",
+        "start": 20.2,
+        "end": 20.58,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 20.58,
+        "end": 20.7,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "stay",
+        "start": 20.7,
+        "end": 20.86,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 20.86,
+        "end": 20.92,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "distinct.",
+        "start": 20.92,
+        "end": 21.36,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 21.36,
+        "end": 21.36,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "An",
+        "start": 21.8,
+        "end": 21.94,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 21.94,
+        "end": 22,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "order",
+        "start": 22,
+        "end": 22.18,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 22.18,
+        "end": 22.26,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "alone",
+        "start": 22.26,
+        "end": 22.6,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 22.6,
+        "end": 22.68,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "doesn't",
+        "start": 22.68,
+        "end": 22.98,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 22.98,
+        "end": 23.04,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "prove",
+        "start": 23.04,
+        "end": 23.42,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 23.42,
+        "end": 23.48,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "a",
+        "start": 23.48,
+        "end": 23.56,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 23.56,
+        "end": 23.6,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "medicine",
+        "start": 23.6,
+        "end": 24.02,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 24.02,
+        "end": 24.06,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "was",
+        "start": 24.06,
+        "end": 24.22,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 24.22,
+        "end": 24.26,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "taken.",
+        "start": 24.26,
+        "end": 24.64,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 24.64,
+        "end": 24.64,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Confirm",
+        "start": 25.32,
+        "end": 25.66,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 25.66,
+        "end": 25.72,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "participation",
+        "start": 25.72,
+        "end": 26.48,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 26.48,
+        "end": 26.84,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "and",
+        "start": 26.84,
+        "end": 26.92,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 26.92,
+        "end": 26.96,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "the",
+        "start": 26.96,
+        "end": 27.02,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 27.02,
+        "end": 27.04,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "workflow",
+        "start": 27.04,
+        "end": 27.36,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 27.36,
+        "end": 27.44,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "keeps",
+        "start": 27.44,
+        "end": 27.66,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 27.66,
+        "end": 27.7,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "going.",
+        "start": 27.7,
+        "end": 28.02,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 28.02,
+        "end": 28.02,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "A",
+        "start": 28.76,
+        "end": 28.82,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 28.82,
+        "end": 28.88,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "new",
+        "start": 28.88,
+        "end": 29.1,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 29.1,
+        "end": 29.14,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "medication",
+        "start": 29.14,
+        "end": 29.7,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 29.7,
+        "end": 29.78,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "record",
+        "start": 29.78,
+        "end": 30.04,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 30.04,
+        "end": 30.1,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "arrives.",
+        "start": 30.1,
+        "end": 30.62,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 30.62,
+        "end": 30.94,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Approved",
+        "start": 30.94,
+        "end": 31.34,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 31.34,
+        "end": 31.4,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "rules",
+        "start": 31.4,
+        "end": 31.78,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 31.78,
+        "end": 31.88,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "flag",
+        "start": 31.88,
+        "end": 32.08,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 32.08,
+        "end": 32.119,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "a",
+        "start": 32.119,
+        "end": 32.18,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 32.18,
+        "end": 32.22,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "conflict.",
+        "start": 32.22,
+        "end": 32.82,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 32.82,
+        "end": 32.82,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "AI",
+        "start": 33.4,
+        "end": 33.68,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 33.68,
+        "end": 33.72,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "investigates",
+        "start": 33.72,
+        "end": 34.42,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 34.42,
+        "end": 34.46,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "the",
+        "start": 34.46,
+        "end": 34.54,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 34.54,
+        "end": 34.6,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "evidence",
+        "start": 34.6,
+        "end": 35.02,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 35.02,
+        "end": 35.06,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "and",
+        "start": 35.06,
+        "end": 35.16,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 35.16,
+        "end": 35.24,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "drafts",
+        "start": 35.24,
+        "end": 35.56,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 35.56,
+        "end": 35.62,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "a",
+        "start": 35.62,
+        "end": 35.72,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 35.72,
+        "end": 35.78,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "cited",
+        "start": 35.78,
+        "end": 36.12,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 36.12,
+        "end": 36.22,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "summary.",
+        "start": 36.22,
+        "end": 36.64,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 36.64,
+        "end": 36.64,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "The",
+        "start": 37.46,
+        "end": 37.54,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 37.54,
+        "end": 37.58,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "clinical",
+        "start": 37.58,
+        "end": 37.98,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 37.98,
+        "end": 38.08,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "lead",
+        "start": 38.08,
+        "end": 38.3,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 38.3,
+        "end": 38.36,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "reviews",
+        "start": 38.36,
+        "end": 38.78,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 38.78,
+        "end": 38.8,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "the",
+        "start": 38.8,
+        "end": 38.9,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 38.9,
+        "end": 38.96,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "case",
+        "start": 38.96,
+        "end": 39.3,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 39.3,
+        "end": 39.4,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "and",
+        "start": 39.4,
+        "end": 39.5,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 39.5,
+        "end": 39.54,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "records",
+        "start": 39.54,
+        "end": 40.08,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 40.08,
+        "end": 40.12,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "the",
+        "start": 40.12,
+        "end": 40.2,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 40.2,
+        "end": 40.24,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "next",
+        "start": 40.24,
+        "end": 40.46,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 40.46,
+        "end": 40.54,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "step.",
+        "start": 40.54,
+        "end": 40.84,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 40.84,
+        "end": 40.84,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Less",
+        "start": 41.48,
+        "end": 41.68,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 41.68,
+        "end": 41.72,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "repetitive",
+        "start": 41.72,
+        "end": 42.16,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 42.16,
+        "end": 42.2,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "work,",
+        "start": 42.2,
+        "end": 42.48,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 42.48,
+        "end": 42.86,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "more",
+        "start": 42.86,
+        "end": 43.02,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 43.02,
+        "end": 43.06,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "focused",
+        "start": 43.06,
+        "end": 43.38,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 43.38,
+        "end": 43.44,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "oversight.",
+        "start": 43.44,
+        "end": 43.94,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 43.94,
+        "end": 43.94,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Protocol",
+        "start": 44.68,
+        "end": 45.08,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 45.08,
+        "end": 45.2,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Pulse.",
+        "start": 45.2,
+        "end": 45.64,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 45.64,
+        "end": 45.64,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Keep",
+        "start": 46.06,
+        "end": 46.38,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 46.38,
+        "end": 46.42,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "the",
+        "start": 46.42,
+        "end": 46.52,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 46.52,
+        "end": 46.56,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "trial",
+        "start": 46.56,
+        "end": 46.84,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 46.84,
+        "end": 46.98,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "moving.",
+        "start": 46.98,
+        "end": 47.38,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 47.38,
+        "end": 47.78,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "Bring",
+        "start": 47.78,
+        "end": 48.04,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 48.04,
+        "end": 48.08,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "tomorrow's",
+        "start": 48.08,
+        "end": 48.5,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 48.5,
+        "end": 48.54,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "medicines",
+        "start": 48.54,
+        "end": 48.94,
+        "type": "word",
+        "speaker_id": null
+      },
+      {
+        "text": " ",
+        "start": 48.94,
+        "end": 49.04,
+        "type": "spacing",
+        "speaker_id": null
+      },
+      {
+        "text": "closer.",
+        "start": 49.04,
+        "end": 49.46,
+        "type": "word",
+        "speaker_id": null
+      }
+    ]
+  },
+  "has_result": true,
+  "next_action": {
+    "tool": null,
+    "reason": "The job finished and its full result is in this reply. It has no media files to display; share the result with the user."
+  },
+  "job_presentation": {
+    "state": "no_media"
+  },
+  "fal_account": {
+    "name": "Thanos Bits",
+    "id": "github|6nhx8ie08q6v0s12sjg4xgis"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "new_production_budget_usd": 10,
+  "jobs": [
+    {
+      "operation": "narration",
+      "endpoint": "fal-ai/minimax/speech-2.8-hd",
+      "request_id": "01a1df8e-d0f6-7572-971c-8b330701345b",
+      "characters": 747,
+      "rate_usd_per_1000_characters": 0.1,
+      "selected": false
+    },
+    {
+      "operation": "narration",
+      "endpoint": "fal-ai/minimax/speech-2.8-hd",
+      "request_id": "01a1df95-a189-70e2-898c-51c23af65bbc",
+      "characters": 740,
+      "rate_usd_per_1000_characters": 0.1,
+      "selected": false
+    },
+    {
+      "operation": "narration",
+      "endpoint": "fal-ai/minimax/speech-2.8-hd",
+      "request_id": "01a1df96-3684-7d63-bce7-a36a7ba1a1cc",
+      "characters": 771,
+      "rate_usd_per_1000_characters": 0.1,
+      "selected": false
+    },
+    {
+      "operation": "narration",
+      "endpoint": "fal-ai/minimax/speech-2.8-hd",
+      "request_id": "01a1df98-5f43-7852-875b-8da2718514c9",
+      "characters": 729,
+      "rate_usd_per_1000_characters": 0.1,
+      "selected": true
+    },
+    {
+      "operation": "music",
+      "endpoint": "elevenlabs/music/v2.5",
+      "request_id": "01a1df8f-4959-7b10-97aa-be7dab573882",
+      "minutes": 1,
+      "rate_usd_per_minute": 0.6,
+      "selected": false
+    },
+    {
+      "operation": "quiet ambient replacement",
+      "endpoint": "elevenlabs/music/v2.5",
+      "request_id": "01a1df94-f733-7222-b826-cd893b92843f",
+      "minutes": 1,
+      "rate_usd_per_minute": 0.6,
+      "selected": true
+    },
+    {
+      "operation": "word timing",
+      "endpoint": "fal-ai/elevenlabs/speech-to-text/scribe-v2",
+      "request_id": "01a1df8f-5e02-70e3-855a-d2e0c4b84324",
+      "rate_usd_per_minute": 0.008,
+      "selected": false
+    },
+    {
+      "operation": "word timing",
+      "endpoint": "fal-ai/elevenlabs/speech-to-text/scribe-v2",
+      "request_id": "01a1df96-cfac-7a80-86e8-6c46465c0379",
+      "rate_usd_per_minute": 0.008,
+      "selected": false
+    },
+    {
+      "operation": "word timing",
+      "endpoint": "fal-ai/elevenlabs/speech-to-text/scribe-v2",
+      "request_id": "01a1df98-9003-72d3-893a-c261d0b8088d",
+      "rate_usd_per_minute": 0.008,
+      "selected": true
+    }
+  ],
+  "estimated_combined_usd": 1.55,
+  "invoice_total": null,
+  "notes": "Includes superseded narration takes requested during iteration and the rejected soundtrack. Approximation from published character/minute rates, not an invoice. Application Gemini usage is separate. All 3D visuals rendered locally without paid generation."
+}

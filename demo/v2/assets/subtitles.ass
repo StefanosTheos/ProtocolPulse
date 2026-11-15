@@ -1,0 +1,28 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 0
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Segoe UI,35,&H00F2F7F6,&H00F2F7F6,&H002B3912,&H002B3912,0,0,0,0,100,100,0,0,3,8,0,2,150,150,25,1
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.06,0:00:02.51,Default,,0,0,0,,{\fad(60,60)}Promising medicines need rigorous trials.
+Dialogue: 0,0:00:02.76,0:00:05.12,Default,,0,0,0,,{\fad(60,60)}Operational delays keep patients waiting.
+Dialogue: 0,0:00:05.52,0:00:06.96,Default,,0,0,0,,{\fad(60,60)}Meet ProtocolPulse.
+Dialogue: 0,0:00:07.21,0:00:08.66,Default,,0,0,0,,{\fad(60,60)}Open a trial protocol.
+Dialogue: 0,0:00:08.91,0:00:12.71,Default,,0,0,0,,{\fad(60,60)}AI extracts inclusion and exclusion criteria into source-linked
+Dialogue: 0,0:00:12.73,0:00:13.27,Default,,0,0,0,,{\fad(60,60)}rules.
+Dialogue: 0,0:00:13.73,0:00:16.75,Default,,0,0,0,,{\fad(60,60)}A clinical lead reviews and approves.
+Dialogue: 0,0:00:17.43,0:00:19.59,Default,,0,0,0,,{\fad(60,60)}Screen the patient cohort.
+Dialogue: 0,0:00:19.93,0:00:24.44,Default,,0,0,0,,{\fad(60,60)}See potential matches, conflicts, and missing evidence.
+Dialogue: 0,0:00:24.82,0:00:28.01,Default,,0,0,0,,{\fad(60,60)}An order alone doesn't prove medication use.
+Dialogue: 0,0:00:28.26,0:00:32.70,Default,,0,0,0,,{\fad(60,60)}Confirm participation, then add a new medication record.
+Dialogue: 0,0:00:33.04,0:00:35.79,Default,,0,0,0,,{\fad(60,60)}Approved rules flag a conflict.
+Dialogue: 0,0:00:36.34,0:00:40.16,Default,,0,0,0,,{\fad(60,60)}AI investigates and drafts a cited summary.
+Dialogue: 0,0:00:40.45,0:00:44.88,Default,,0,0,0,,{\fad(60,60)}The clinical lead reviews the evidence and records the next step.
+Dialogue: 0,0:00:45.21,0:00:48.57,Default,,0,0,0,,{\fad(60,60)}Less repetitive work saves teams time.
+Dialogue: 0,0:00:49.04,0:00:53.06,Default,,0,0,0,,{\fad(60,60)}More efficient trials could help new medicines reach the patients
+Dialogue: 0,0:00:53.08,0:00:54.53,Default,,0,0,0,,{\fad(60,60)}who need them sooner.
+Dialogue: 0,0:00:54.78,0:00:57.99,Default,,0,0,0,,{\fad(60,60)}ProtocolPulse, keep the trial moving.

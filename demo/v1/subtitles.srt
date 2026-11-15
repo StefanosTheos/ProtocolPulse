@@ -1,0 +1,67 @@
+1
+00:00:00,752 --> 00:00:03,557
+New medicines need rigorous clinical trials,
+
+2
+00:00:04,104 --> 00:00:08,983
+but recruiting participants and reviewing changing records can
+delay progress.
+
+3
+00:00:09,900 --> 00:00:11,964
+ProtocolPulse connects that work.
+
+4
+00:00:12,233 --> 00:00:17,833
+AI turns a trial protocol into source-linked rules, reviewed and
+approved by a
+
+5
+00:00:17,863 --> 00:00:18,742
+clinical lead.
+
+6
+00:00:19,678 --> 00:00:23,611
+Screening checks patient records against those rules, showing
+potential
+
+7
+00:00:23,641 --> 00:00:26,668
+matches, conflicts, and missing evidence.
+
+8
+00:00:27,104 --> 00:00:29,539
+Teams can focus their review where it matters.
+
+9
+00:00:30,511 --> 00:00:33,964
+After participation begins, oversight continues.
+
+10
+00:00:34,493 --> 00:00:37,409
+A new medication record triggers a targeted check.
+
+11
+00:00:37,937 --> 00:00:41,890
+A possible protocol conflict becomes a prioritized case
+
+12
+00:00:42,381 --> 00:00:44,298
+with evidence ready for review.
+
+13
+00:00:45,196 --> 00:00:48,224
+The clinical lead decides what happens next.
+
+14
+00:00:49,141 --> 00:00:53,740
+By streamlining trial operations, ProtocolPulse could help
+promising medicines
+
+15
+00:00:53,770 --> 00:00:55,261
+move closer to patients.
+
+16
+00:00:55,548 --> 00:00:58,076
+AI assists, people decide.

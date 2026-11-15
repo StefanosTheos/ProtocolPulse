@@ -1,0 +1,24 @@
+{
+  "duration_seconds": 60.0,
+  "frames": 1800,
+  "fps": 30,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "decode": "passed",
+  "caption_intervals": "valid and nonoverlapping",
+  "single_browser_take": true,
+  "recorded_clicks": 32,
+  "typed_entries": 4,
+  "browser_errors": [],
+  "real_3d_frame_difference": {
+    "intro": 3.446062082047325,
+    "outro": 3.5683532664609054
+  },
+  "quiet_music_target_lufs": -36,
+  "voice_target_lufs": -16,
+  "file_bytes": 16607523
+}

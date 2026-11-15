@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;overflow:hidden;background:#f6faf6}canvas{display:block}</style>
+<script type="module">
+import * as THREE from '../render-tools/node_modules/three/build/three.module.js';
+const scene=new THREE.Scene();scene.background=new THREE.Color('#f5faf6');
+const camera=new THREE.PerspectiveCamera(33,1920/1080,.1,100);camera.position.set(.2,2.3,12.5);camera.lookAt(0,0,0);
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+renderer.setSize(1920,1080);renderer.setPixelRatio(1);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.setClearColor('#f5faf6');renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;document.body.appendChild(renderer.domElement);
+scene.add(new THREE.HemisphereLight(0xffffff,0xb7d7c6,3));
+const key=new THREE.DirectionalLight(0xffffff,4);key.position.set(-4,8,7);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-8;key.shadow.camera.right=8;key.shadow.camera.top=8;key.shadow.camera.bottom=-8;key.shadow.bias=-.0001;key.shadow.normalBias=.03;scene.add(key);
+const rim=new THREE.DirectionalLight(0xc9ffe3,3);rim.position.set(7,4,-3);scene.add(rim);
+const fill=new THREE.DirectionalLight(0xffffff,2);fill.position.set(-6,1,-4);scene.add(fill);
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:'#f5faf6',roughness:.62,metalness:.02}));floor.rotation.x=-Math.PI/2;floor.position.y=-2.55;floor.receiveShadow=true;scene.add(floor);
+const root=new THREE.Group();root.position.set(2.8,.1,0);scene.add(root);
+const mark=new THREE.Group();root.add(mark);
+// The actual P is an extruded shape with an open counter, rounded bevels and cast shadows.
+const p=new THREE.Shape();p.moveTo(-1.35,-1.65);p.lineTo(-1.35,1.65);p.lineTo(.2,1.65);p.bezierCurveTo(2.0,1.65,2.0,-.65,.2,-.65);p.lineTo(-.48,-.65);p.lineTo(-.48,-1.65);p.closePath();
+const hole=new THREE.Path();hole.moveTo(-.48,.77);hole.lineTo(-.48,.23);hole.lineTo(.18,.23);hole.bezierCurveTo(.66,.23,.66,.77,.18,.77);hole.closePath();p.holes.push(hole);
+const geometry=new THREE.ExtrudeGeometry(p,{depth:.55,steps:1,bevelEnabled:true,bevelThickness:.11,bevelSize:.10,bevelSegments:6,curveSegments:48});geometry.translate(0,0,-.28);
+const emerald=new THREE.MeshPhysicalMaterial({color:'#138458',metalness:.25,roughness:.22,clearcoat:1,clearcoatRoughness:.12});
+const edge=new THREE.MeshPhysicalMaterial({color:'#06573d',metalness:.38,roughness:.24,clearcoat:1});
+const glyph=new THREE.Mesh(geometry,[emerald,edge]);glyph.castShadow=true;glyph.receiveShadow=true;mark.add(glyph);
+// White ceramic pulse ribbon, physically raised above the green face.
+const curve=new THREE.CatmullRomCurve3([new THREE.Vector3(-1.65,-.72,.41),new THREE.Vector3(-1.24,-.72,.41),new THREE.Vector3(-.91,-.28,.41),new THREE.Vector3(-.54,-1.0,.41),new THREE.Vector3(-.16,-.48,.41),new THREE.Vector3(.53,-.48,.41)],false,'catmullrom',.05);
+const ribbon=new THREE.Mesh(new THREE.TubeGeometry(curve,100,.052,12,false),new THREE.MeshPhysicalMaterial({color:'#ffffff',roughness:.22,clearcoat:1}));ribbon.castShadow=true;mark.add(ribbon);
+const satelliteMaterial=new THREE.MeshPhysicalMaterial({color:'#d9f2e2',metalness:.12,roughness:.28,clearcoat:1});
+const satellites=[];
+for(let i=0;i<3;i++){
+ const card=new THREE.Mesh(new THREE.BoxGeometry(1.25,1.65,.09,1,1,1),i===1?new THREE.MeshPhysicalMaterial({color:'#ffffff',roughness:.18,clearcoat:1}):satelliteMaterial);
+ card.castShadow=true;satellites.push(card);root.add(card);
+ for(let j=0;j<4;j++){const line=new THREE.Mesh(new THREE.BoxGeometry(.68-j*.08,.035,.022),new THREE.MeshStandardMaterial({color:'#abd5b8'}));line.position.set(-.08,.42-j*.2,.065);card.add(line)}
+}
+const orbit=new THREE.Group();root.add(orbit);
+for(let i=0;i<3;i++){
+ const torus=new THREE.Mesh(new THREE.TorusGeometry(2.5+i*.27,.012,8,180),new THREE.MeshStandardMaterial({color:i===1?'#b3d9c0':'#dfebe1',metalness:.2,roughness:.4}));torus.rotation.set(Math.PI*.43+i*.12,0,i*.3);orbit.add(torus);
+}
+const beads=[];for(let i=0;i<7;i++){const b=new THREE.Mesh(new THREE.SphereGeometry(.05+(i%2)*.025,24,16),new THREE.MeshStandardMaterial({color:i%2?'#69b889':'#ffffff',metalness:.2,roughness:.2}));b.castShadow=true;root.add(b);beads.push(b)}
+window.renderFrame=(t,closing=false)=>{
+ root.position.y=.10+.09*Math.sin(t*.8);
+ mark.rotation.y=-.45+.32*Math.sin(t*.65+(closing?.8:0));mark.rotation.x=.08+.065*Math.sin(t*.6);mark.rotation.z=.025*Math.sin(t*.4);
+ const reveal=closing?1:Math.min(1,t/1.7);
+ for(let i=0;i<3;i++){
+   const a=-1.5+i*2.1+t*.12;const r=2.3+.15*Math.sin(t+i);
+   satellites[i].position.set(Math.cos(a)*r,Math.sin(a)*1.55,-.8-i*.25);
+   satellites[i].rotation.set(.16*Math.sin(t*.4+i),-.3+.18*Math.sin(t*.4+i),-.15+.14*i);
+   satellites[i].scale.setScalar(.7+.07*Math.sin(t*.6+i));
+ }
+ orbit.rotation.y=t*.08;orbit.rotation.z=.03*Math.sin(t*.6);
+ beads.forEach((b,i)=>{const a=t*.2+i*.9;b.position.set(Math.cos(a)*3.0,Math.sin(a)*2.05,.4*Math.sin(a*2))});
+ camera.position.x=.12*Math.sin(t*.25);camera.position.z=12.7-.25*Math.sin(t*.4);camera.lookAt(.15,.03,0);
+ renderer.render(scene,camera);return true;
+};window.renderFrame(0);window.sceneReady=true;
+</script>

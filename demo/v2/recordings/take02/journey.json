@@ -1,0 +1,663 @@
+{
+  "api": "http://127.0.0.1:8005",
+  "synthetic": true,
+  "mocked": false,
+  "viewport": [
+    1600,
+    800
+  ],
+  "marks": [
+    {
+      "name": "start",
+      "time": 0.759
+    },
+    {
+      "name": "extract-wait",
+      "time": 8.607
+    },
+    {
+      "name": "extract-ready",
+      "time": 16.692
+    },
+    {
+      "name": "rules",
+      "time": 17.618
+    },
+    {
+      "name": "source",
+      "time": 20.742
+    },
+    {
+      "name": "approve-protocol",
+      "time": 32.414
+    },
+    {
+      "name": "protocol-complete",
+      "time": 34.798
+    },
+    {
+      "name": "screen-wait",
+      "time": 37.908
+    },
+    {
+      "name": "screen-ready",
+      "time": 46.978
+    },
+    {
+      "name": "cohort",
+      "time": 49.647
+    },
+    {
+      "name": "uncertainty",
+      "time": 53.915
+    },
+    {
+      "name": "participation-start",
+      "time": 60.747
+    },
+    {
+      "name": "participation-complete",
+      "time": 63.621
+    },
+    {
+      "name": "event-form",
+      "time": 67.189
+    },
+    {
+      "name": "event-wait",
+      "time": 70.268
+    },
+    {
+      "name": "event-ready",
+      "time": 71.112
+    },
+    {
+      "name": "finding",
+      "time": 71.839
+    },
+    {
+      "name": "ai-wait",
+      "time": 74.58
+    },
+    {
+      "name": "ai-ready",
+      "time": 89.026
+    },
+    {
+      "name": "case",
+      "time": 91.513
+    },
+    {
+      "name": "case-evidence",
+      "time": 94.274
+    },
+    {
+      "name": "review",
+      "time": 107.117
+    },
+    {
+      "name": "done",
+      "time": 112.359
+    }
+  ],
+  "actions": [
+    {
+      "type": "click",
+      "label": "Name protocol version",
+      "time": 2.147,
+      "x": 1189.05625,
+      "y": 402.15
+    },
+    {
+      "type": "typing",
+      "label": "Name protocol version",
+      "value": "Launch 1.0",
+      "time": 3.088
+    },
+    {
+      "type": "click",
+      "label": "Declare synthetic protocol",
+      "time": 4.627,
+      "x": 1029.41625,
+      "y": 400.4
+    },
+    {
+      "type": "click",
+      "label": "Upload protocol PDF",
+      "time": 6.353,
+      "x": 1077.248125,
+      "y": 401.9
+    },
+    {
+      "type": "click",
+      "label": "Start AI protocol extraction",
+      "time": 8.26,
+      "x": 294.76,
+      "y": 690.15
+    },
+    {
+      "type": "click",
+      "label": "Expand protocol source clause",
+      "time": 20.401,
+      "x": 824.28,
+      "y": 400.3
+    },
+    {
+      "type": "click",
+      "label": "Switch workspace",
+      "time": 23.477,
+      "x": 1363.52,
+      "y": 33.45
+    },
+    {
+      "type": "click",
+      "label": "Review and approve protocol",
+      "time": 25.872,
+      "x": 258.595625,
+      "y": 689.4
+    },
+    {
+      "type": "click",
+      "label": "Attest source review",
+      "time": 27.735,
+      "x": 567.76,
+      "y": 462.775
+    },
+    {
+      "type": "click",
+      "label": "Approval rationale",
+      "time": 29.589,
+      "x": 809.56,
+      "y": 582.025
+    },
+    {
+      "type": "typing",
+      "label": "Approval rationale",
+      "value": "Source clauses and coverage reviewed.",
+      "time": 32.229
+    },
+    {
+      "type": "click",
+      "label": "Activate reviewed rules",
+      "time": 34.43,
+      "x": 946.885,
+      "y": 669.775
+    },
+    {
+      "type": "click",
+      "label": "Navigate: Screen patients",
+      "time": 36.197,
+      "x": 466.11875,
+      "y": 158.95
+    },
+    {
+      "type": "click",
+      "label": "Screen cohort",
+      "time": 37.572,
+      "x": 1345.4525,
+      "y": 362.4
+    },
+    {
+      "type": "click",
+      "label": "Show all screening outcomes",
+      "time": 48.464,
+      "x": 1278.56,
+      "y": 403.9125
+    },
+    {
+      "type": "click",
+      "label": "Review uncertain medication evidence",
+      "time": 52.759,
+      "x": 212.979375,
+      "y": 400.45
+    },
+    {
+      "type": "click",
+      "label": "Return to candidate cohort",
+      "time": 56.903,
+      "x": 246.11875,
+      "y": 225.9
+    },
+    {
+      "type": "click",
+      "label": "Show potential matches",
+      "time": 58.584,
+      "x": 648.56,
+      "y": 403.9125
+    },
+    {
+      "type": "click",
+      "label": "Open potential match P-042",
+      "time": 60.396,
+      "x": 212.979375,
+      "y": 400.7
+    },
+    {
+      "type": "click",
+      "label": "Record external participation",
+      "time": 61.537,
+      "x": 1339.995,
+      "y": 340.9
+    },
+    {
+      "type": "click",
+      "label": "Confirm human participation decision",
+      "time": 63.255,
+      "x": 971.5225,
+      "y": 462.9
+    },
+    {
+      "type": "click",
+      "label": "Navigate: Safety",
+      "time": 65.505,
+      "x": 596.463125,
+      "y": 158.95
+    },
+    {
+      "type": "click",
+      "label": "Add a synthetic clinical record",
+      "time": 66.848,
+      "x": 1315.955,
+      "y": 263.475
+    },
+    {
+      "type": "click",
+      "label": "Submit restricted medication administration",
+      "time": 69.923,
+      "x": 990.49,
+      "y": 659.65
+    },
+    {
+      "type": "click",
+      "label": "Open resulting safety case",
+      "time": 74.243,
+      "x": 1356.995,
+      "y": 485.15
+    },
+    {
+      "type": "click",
+      "label": "Refresh case evidence",
+      "time": 89.717,
+      "x": 495.225625,
+      "y": 349.65
+    },
+    {
+      "type": "click",
+      "label": "Inspect original medication record",
+      "time": 93.937,
+      "x": 1061.6725,
+      "y": 400.8
+    },
+    {
+      "type": "click",
+      "label": "Choose review status",
+      "time": 96.637,
+      "x": 1109.52,
+      "y": 401.95
+    },
+    {
+      "type": "click",
+      "label": "Assign clinical lead",
+      "time": 97.637,
+      "x": 1297.52,
+      "y": 401.95
+    },
+    {
+      "type": "click",
+      "label": "Record decision",
+      "time": 99.251,
+      "x": 1207.28,
+      "y": 426.4
+    },
+    {
+      "type": "typing",
+      "label": "Record decision",
+      "value": "Review required",
+      "time": 100.479
+    },
+    {
+      "type": "click",
+      "label": "Record clinical rationale",
+      "time": 101.984,
+      "x": 1207.28,
+      "y": 518.4
+    },
+    {
+      "type": "typing",
+      "label": "Record clinical rationale",
+      "value": "Review restricted use against the cited protocol.",
+      "time": 105.209
+    },
+    {
+      "type": "click",
+      "label": "Cite medication evidence",
+      "time": 106.785,
+      "x": 1024.76,
+      "y": 600.9
+    },
+    {
+      "type": "click",
+      "label": "Review human decision",
+      "time": 109.068,
+      "x": 1095.9675,
+      "y": 669.15
+    },
+    {
+      "type": "click",
+      "label": "Submit clinical lead acknowledgement",
+      "time": 110.769,
+      "x": 975.865,
+      "y": 520.275
+    }
+  ],
+  "mutations": [
+    {
+      "time": 6.534,
+      "url": "http://127.0.0.1:8005/api/v1/trials/TR-PX104/protocols",
+      "status": 201,
+      "body": {
+        "data": {
+          "protocol_version_id": "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+          "trial_id": "TR-PX104",
+          "label": "Launch 1.0",
+          "state": "DRAFT",
+          "revision": 1,
+          "source": {
+            "source_id": "SRC-PDF-284bb70e055c4e8caa576d345b7dc2f1",
+            "source_version": 1,
+            "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+            "filename": "PX-104-v1.0-fictional.pdf",
+            "mime_type": "application/pdf",
+            "created_at": "2026-11-15T14:19:00.627023Z",
+            "synthetic_only": true
+          },
+          "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+          "criteria": [],
+          "coverage": [],
+          "coverage_signed_by": null,
+          "coverage_signed_at": null,
+          "approved_set_hash": null,
+          "approved_at": null,
+          "extraction_job_id": null,
+          "blocking_count": 0
+        },
+        "request_id": "00e4446d-0a9c-4b0b-af42-9191312ebccd"
+      }
+    },
+    {
+      "time": 8.392,
+      "url": "http://127.0.0.1:8005/api/v1/trials/TR-PX104/protocols/PV-6706f693fb36464b8e0dab9fe5bf1f4b/extract",
+      "status": 202,
+      "body": {
+        "data": {
+          "job_id": "JOB-4ce320dc51064ec6a53ac02cc9b0ba50",
+          "kind": "PROTOCOL_EXTRACT",
+          "status": "QUEUED",
+          "resource_id": "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+          "correlation_id": "7c2a09e2-d861-443d-aaa9-2086995fd0f7",
+          "poll_url": "/api/v1/jobs/JOB-4ce320dc51064ec6a53ac02cc9b0ba50",
+          "created_at": "2026-11-15T14:19:02.505977Z"
+        },
+        "request_id": "7c2a09e2-d861-443d-aaa9-2086995fd0f7"
+      }
+    },
+    {
+      "time": 34.576,
+      "url": "http://127.0.0.1:8005/api/v1/trials/TR-PX104/protocols/PV-6706f693fb36464b8e0dab9fe5bf1f4b/approve",
+      "status": 200,
+      "body": {
+        "data": {
+          "protocol_version_id": "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+          "approved_set_hash": "84e5205238bb9b26a7a03cf5d8c41be21e4d3f1406dd07df81c3fc20ae9a8a44",
+          "signed_criterion_ids": [
+            "PX-EXC-01",
+            "PX-EXC-02",
+            "PX-INC-01",
+            "PX-INC-02",
+            "PX-INC-03",
+            "PX-MON-01",
+            "PX-MON-02",
+            "PX-MON-03"
+          ],
+          "approved_by": "ACT-INV-01",
+          "approved_at": "2026-11-15T14:19:28.688637Z",
+          "state": "ACTIVE",
+          "superseded_version_id": null
+        },
+        "request_id": "17597074-c30a-4625-95ab-71f26fa4831d"
+      }
+    },
+    {
+      "time": 43.304,
+      "url": "http://127.0.0.1:8005/api/v1/trials/TR-PX104/screenings",
+      "status": 202,
+      "body": {
+        "data": {
+          "job_id": "JOB-cd89878295a64d3da7989900eca32c3e",
+          "kind": "SCREEN_COHORT",
+          "status": "QUEUED",
+          "resource_id": "RUN-aaa4991f42394a46b85f3bb1357e3b0b",
+          "correlation_id": "de108b67-4892-4491-82d9-b62b45ce84df",
+          "poll_url": "/api/v1/jobs/JOB-cd89878295a64d3da7989900eca32c3e",
+          "created_at": "2026-11-15T14:19:32.485288Z"
+        },
+        "request_id": "de108b67-4892-4491-82d9-b62b45ce84df"
+      }
+    },
+    {
+      "time": 63.395,
+      "url": "http://127.0.0.1:8005/api/v1/trials/TR-PX104/patients/P-042/participation",
+      "status": 201,
+      "body": {
+        "data": {
+          "participation_id": "PART-ef9c932e6dbe4dacba39532daf922336",
+          "trial_id": "TR-PX104",
+          "patient_id": "P-042",
+          "from_status": "NOT_ENROLLED",
+          "to_status": "PARTICIPATING",
+          "source_id": "SRC-P-042-external",
+          "external_record_reference": "EXT-P-042",
+          "actor_id": "ACT-INV-01",
+          "decided_at": "2026-11-15T14:19:57.509759Z"
+        },
+        "request_id": "d74a6e63-f8a1-4944-99f1-962ff83bb086"
+      }
+    },
+    {
+      "time": 70.047,
+      "url": "http://127.0.0.1:8005/api/v1/patients/P-042/events",
+      "status": 202,
+      "body": {
+        "data": {
+          "event_id": "EVT-ae0c3854895d4661843a6d992f52b617",
+          "patient_id": "P-042",
+          "trial_id": "TR-PX104",
+          "ingested_at": "2026-11-15T14:20:04.173665Z",
+          "deduplicated": false,
+          "job": {
+            "job_id": "JOB-7da3e8e26c8148b2abceda3f4e67a12e",
+            "kind": "INGEST_EVENT",
+            "status": "QUEUED",
+            "resource_id": "EVT-ae0c3854895d4661843a6d992f52b617",
+            "correlation_id": "5ac9c689-4343-4e13-a385-de2cc88837b8",
+            "poll_url": "/api/v1/jobs/JOB-7da3e8e26c8148b2abceda3f4e67a12e",
+            "created_at": "2026-11-15T14:20:04.173665Z"
+          }
+        },
+        "request_id": "5ac9c689-4343-4e13-a385-de2cc88837b8"
+      }
+    },
+    {
+      "time": 110.892,
+      "url": "http://127.0.0.1:8005/api/v1/cases/CASE-431feaf53fc64291854fbba2a4e4dc7d",
+      "status": 200,
+      "body": {
+        "data": {
+          "case_id": "CASE-431feaf53fc64291854fbba2a4e4dc7d",
+          "trial_id": "TR-PX104",
+          "patient_id": "P-042",
+          "protocol_version_id": "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+          "criterion_id": "PX-MON-01",
+          "issue_key": "medication:SYN-CLASS-R",
+          "status": "ACKNOWLEDGED",
+          "priority": "HIGH",
+          "assigned_actor_id": "ACT-INV-01",
+          "finding_ids": [
+            "FIND-0875c5d9eda641058022bd2befb54a4c"
+          ],
+          "current_summary": "Review summary for case CASE-431feaf53fc64291854fbba2a4e4dc7d: Trigger event EVT-ae0c3854895d4661843a6d992f52b617 has been classified as RELEVANT under criterion PX-MON-01 due to confirmed restricted protocol medication use. Prior evaluation shows a transition to FAIL (assessment ASM-683061662b844d8aa97fec5470716a8a) linked to finding FIND-0875c5d9eda641058022bd2befb54a4c. Case status remains OPEN awaiting investigator review.",
+          "summary_origin": "AI_DRAFT",
+          "agent_execution_id": "EXEC-2501fa2229864b2b8a20aa913edb86f2",
+          "revision": 4,
+          "opened_at": "2026-11-15T14:20:04.547240Z",
+          "updated_at": "2026-11-15T14:20:45.014370Z",
+          "decisions": [
+            {
+              "decision_id": "DEC-674fce4cf81f41f5a964f0fc634b7aaa",
+              "actor_id": "ACT-INV-01",
+              "actor_role": "INVESTIGATOR",
+              "from_status": "OPEN",
+              "to_status": "ACKNOWLEDGED",
+              "disposition": "Review required",
+              "rationale": "Review restricted use against the cited protocol.",
+              "cited_evidence_ids": [
+                "EVT-ae0c3854895d4661843a6d992f52b617"
+              ],
+              "decided_at": "2026-11-15T14:20:45.014370Z"
+            }
+          ]
+        },
+        "request_id": "c0f5b44b-57ea-48d9-80c9-3ef8f3d90c09"
+      }
+    }
+  ],
+  "pageErrors": [],
+  "errors": [],
+  "runId": "RUN-aaa4991f42394a46b85f3bb1357e3b0b",
+  "caseId": "CASE-431feaf53fc64291854fbba2a4e4dc7d",
+  "monitoringExecution": {
+    "execution_id": "EXEC-2501fa2229864b2b8a20aa913edb86f2",
+    "role": "MONITORING_WORKFLOW",
+    "status": "SUCCEEDED",
+    "trial_id": "TR-PX104",
+    "patient_id": "P-042",
+    "protocol_version_id": "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+    "criterion_ids": [
+      "PX-MON-01"
+    ],
+    "event_id": "EVT-ae0c3854895d4661843a6d992f52b617",
+    "correlation_id": "5ac9c689-4343-4e13-a385-de2cc88837b8",
+    "evidence_refs": [
+      {
+        "evidence_id": "EVT-ae0c3854895d4661843a6d992f52b617",
+        "source_id": "SRC-MED-D18-P042",
+        "source_version": 1,
+        "evidence_type": "ADMINISTRATION",
+        "effective_at": "2026-11-19T07:30:00Z",
+        "recorded_at": "2026-11-20T09:00:00Z",
+        "page": null,
+        "span_start": null,
+        "span_end": null
+      },
+      {
+        "evidence_id": "SPAN-06628ae9b5394dfc859a76dc0903e13f",
+        "source_id": "SRC-PDF-284bb70e055c4e8caa576d345b7dc2f1",
+        "source_version": 1,
+        "evidence_type": "PDF",
+        "effective_at": null,
+        "recorded_at": "2026-11-15T14:19:00.627023Z",
+        "page": 4,
+        "span_start": 110,
+        "span_end": 598
+      }
+    ],
+    "summary": "Review summary for case CASE-431feaf53fc64291854fbba2a4e4dc7d: Trigger event EVT-ae0c3854895d4661843a6d992f52b617 has been classified as RELEVANT under criterion PX-MON-01 due to confirmed restricted protocol medication use. Prior evaluation shows a transition to FAIL (assessment ASM-683061662b844d8aa97fec5470716a8a) linked to finding FIND-0875c5d9eda641058022bd2befb54a4c. Case status remains OPEN awaiting investigator review.",
+    "unknown_reasons": [],
+    "verification_questions": [],
+    "trace": [
+      {
+        "tool_name": "get_case_status",
+        "input_reference_ids": [
+          "5ac9c689-4343-4e13-a385-de2cc88837b8",
+          "CASE-431feaf53fc64291854fbba2a4e4dc7d",
+          "EXEC-2501fa2229864b2b8a20aa913edb86f2",
+          "P-042",
+          "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "FIND-0875c5d9eda641058022bd2befb54a4c"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "classify_event_relevance",
+        "input_reference_ids": [
+          "5ac9c689-4343-4e13-a385-de2cc88837b8",
+          "EVT-ae0c3854895d4661843a6d992f52b617",
+          "EXEC-2501fa2229864b2b8a20aa913edb86f2",
+          "P-042",
+          "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "EVT-ae0c3854895d4661843a6d992f52b617",
+          "PX-MON-01",
+          "SRC-MED-D18-P042"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 15,
+        "error_code": null
+      },
+      {
+        "tool_name": "retrieve_patient_evidence",
+        "input_reference_ids": [
+          "5ac9c689-4343-4e13-a385-de2cc88837b8",
+          "EXEC-2501fa2229864b2b8a20aa913edb86f2",
+          "P-042",
+          "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+          "PX-MON-01",
+          "SNAP-84a81c0ea56b4b0ba2f461206a7efcea",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "SPAN-06628ae9b5394dfc859a76dc0903e13f",
+          "SRC-PDF-284bb70e055c4e8caa576d345b7dc2f1"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      },
+      {
+        "tool_name": "get_prior_evaluation",
+        "input_reference_ids": [
+          "5ac9c689-4343-4e13-a385-de2cc88837b8",
+          "EVT-ae0c3854895d4661843a6d992f52b617",
+          "EXEC-2501fa2229864b2b8a20aa913edb86f2",
+          "P-042",
+          "PV-6706f693fb36464b8e0dab9fe5bf1f4b",
+          "PX-MON-01",
+          "TR-PX104"
+        ],
+        "output_reference_ids": [
+          "ASM-683061662b844d8aa97fec5470716a8a",
+          "ASM-b3d8687ab5434c4f8f58f5b56293889e",
+          "EVT-ae0c3854895d4661843a6d992f52b617",
+          "PX-MON-01",
+          "SRC-MED-D18-P042"
+        ],
+        "result_code": "OK",
+        "elapsed_ms": 16,
+        "error_code": null
+      }
+    ],
+    "error_code": null,
+    "model_id": "gemini-3.8-flash",
+    "created_at": "2026-11-15T14:20:04.575469Z",
+    "finished_at": "2026-11-15T14:20:22.185499Z"
+  },
+  "video": "C:\\Users\\bitsb\\Desktop\\HackathonGenAISummit\\demo\\v2\\recordings\\take02\\page@5e0273b0c09b672de9cdeedc5d8ba9b4.webm",
+  "duration": 114.466
+}

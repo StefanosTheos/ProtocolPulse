@@ -1,0 +1,24 @@
+# Previous production intermediates stay local; the archived cut is in v1/.
+/assets/
+/recordings/
+/scripts/
+
+# Rebuildable tools, intermediate renders and isolated capture databases.
+/v2/assets/edit/
+/v2/assets/runtime/
+/v2/assets/render-tools/
+/v2/assets/brand/frames3d/
+/v2/assets/qa/*.png
+*.log
+
+# Retain the successful continuous take; omit interrupted captures.
+/v2/recordings/*
+!/v2/recordings/take02/
+
+# Selected audio is ambient.mp3 and voice-master.mp3; clicks are synthesized.
+/v2/assets/clicks.wav
+/v2/assets/music.mp3
+/v2/assets/voice.mp3
+/v2/assets/voice-final.mp3
+/v2/assets/brand/intro-preview.png
+/v2/assets/brand/outro-preview.png
