@@ -22,18 +22,15 @@ export const API_BASE_URL_LABEL = API_MODE === 'live' ? BASE_URL! : API_MODE ===
 // Named fictional actors registered by the backend seed (backend/app/seed.py).
 export interface DemoActor { actor_id: string; role: ActorRole; label: string; confirmed: boolean }
 export const DEMO_ACTORS: DemoActor[] = [
-  { actor_id: 'ACT-INV-01', role: 'INVESTIGATOR', label: 'Investigator (synthetic)', confirmed: true },
-  { actor_id: 'ACT-COORD-01', role: 'COORDINATOR', label: 'Coordinator (synthetic)', confirmed: true },
-  { actor_id: 'ACT-MON-01', role: 'MONITOR', label: 'Monitor (synthetic)', confirmed: true },
-  { actor_id: 'ACT-AUD-01', role: 'AUDITOR', label: 'Auditor (synthetic)', confirmed: true },
-  { actor_id: 'ACT-SPONSOR-01', role: 'SPONSOR_OPS', label: 'Sponsor ops (synthetic)', confirmed: true },
-  { actor_id: 'ACT-IT-01', role: 'RESEARCH_IT', label: 'Research IT (synthetic)', confirmed: true },
+  { actor_id: 'ACT-INV-01', role: 'INVESTIGATOR', label: 'Clinical Lead (synthetic)', confirmed: true },
+  { actor_id: 'ACT-COORD-01', role: 'COORDINATOR', label: 'Sponsor (synthetic)', confirmed: true },
 ];
 
 let currentActorId: string = DEMO_ACTORS[0].actor_id;
 export function setCurrentActorId(id: string) {
-  if (currentActorId !== id) {
-    currentActorId = id;
+  const next = actorById(id)?.actor_id ?? DEMO_ACTORS[0].actor_id;
+  if (currentActorId !== next) {
+    currentActorId = next;
     invalidateReads();
   }
 }

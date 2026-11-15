@@ -48,6 +48,7 @@ export default function MonitorPage() {
             <div>
               <h2 id="findings-heading" className="text-xl">Safety</h2>
               <p className="text-ink-muted">New records for participating patients are checked against the protocol. A finding is a prompt for review, not a diagnosis.</p>
+              <p className="text-ink-muted">{actor.role === 'COORDINATOR' ? 'Next: Enter a new record. The system reassesses relevant rules and routes any resulting case to the Clinical Lead.' : 'Next: Open a case, inspect its sources and record your review. Monitoring starts from recorded external participation; screening alone does not enroll anyone.'}</p>
             </div>
             <div className="flex items-center gap-3 text-xs">
               <label className="flex items-center gap-1.5"><input type="checkbox" checked={autoRefresh} onChange={(e) => setAutoRefresh(e.target.checked)} /> Auto-refresh (10s)</label>
@@ -93,7 +94,7 @@ export default function MonitorPage() {
           <EventSimulator trialId={trialId} onProcessed={() => { findings.reload(); cases.reload(); trial.reload(); }} />
           <section className="card card-pad text-xs text-ink-muted">
             <h3 className="mb-1 text-ink">Before you add a record</h3>
-            <p>Safety checks apply only to patients recorded as participating. The investigator records participation on the patient page.</p>
+            <p>Safety checks apply only to patients recorded as participating. The Clinical Lead records participation on the patient page.</p>
           </section>
         </aside>
       </div>

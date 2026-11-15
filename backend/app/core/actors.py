@@ -6,7 +6,11 @@ def actor_for(session, actor_id):
     if not actor_id:
         raise DomainError("ACTOR_REQUIRED", "X-Demo-Actor-Id is required", 401)
     actor = session.get(ClinicalActor, actor_id)
-    if not actor or not actor.active:
+    if not actor:
+        raise DomainError("ACTOR_UNKNOWN", "Unknown fictional actor", 401)
+    if actor.role not in ("INVESTIGATOR", "COORDINATOR"):
+        raise DomainError("ROLE_FORBIDDEN", "This demo actor has been retired", 403)
+    if not actor.active:
         raise DomainError("ACTOR_UNKNOWN", "Unknown fictional actor", 401)
     return actor
 

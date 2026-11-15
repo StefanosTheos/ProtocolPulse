@@ -1,0 +1,7 @@
+{"role": "EVIDENCE_INVESTIGATOR", "patient": "P-124", "status": "PARTIAL", "error": null, "tools": ["retrieve_patient_evidence", "get_lab_history", "search_notes", "get_evidence_link", "request_verification_task"]}
+{"role": "MEDICATION_SAFETY_INVESTIGATOR", "patient": "P-083", "status": "PARTIAL", "error": null, "tools": ["get_medication_timeline", "resolve_approved_terminology", "evaluate_approved_rule", "request_verification_task", "search_notes", "get_evidence_link", "retrieve_patient_evidence"]}
+{"role": "MEDICATION_SAFETY_INVESTIGATOR", "patient": "P-140", "status": "PARTIAL", "error": null, "tools": ["get_medication_timeline", "resolve_approved_terminology", "evaluate_approved_rule", "request_verification_task"]}
+{"role": "MONITORING_WORKFLOW", "patient": "P-042", "status": "PARTIAL", "error": null, "tools": ["classify_event_relevance", "get_prior_evaluation", "retrieve_patient_evidence", "get_evidence_link", "resolve_approved_terminology", "evaluate_approved_rule", "request_verification_task"]}
+{"role": "MONITORING_WORKFLOW", "patient": "P-151", "status": "SUCCEEDED", "error": null, "tools": ["classify_event_relevance"]}
+{"role": "PROTOCOL_INTELLIGENCE", "patient": null, "status": "SUCCEEDED", "error": null, "tools": ["parse_protocol", "locate_clause", "validate_rule_schema", "report_coverage"]}
+Live probes complete

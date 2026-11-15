@@ -136,6 +136,10 @@ def test_investigator_only_closure_and_audit_rollback(env, monkeypatch):
         == 403
     )
     body["next_status"] = "ACKNOWLEDGED"
+    assert env[0].patch(
+        f"/api/v1/cases/{case['case_id']}", headers=headers(revision=case["revision"]), json=body
+    ).status_code == 403
+    body["assigned_actor_id"] = "ACT-INV-01"
     from backend.app.api import routes
 
     def broken(*args, **kwargs):

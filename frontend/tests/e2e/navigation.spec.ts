@@ -41,9 +41,10 @@ test('navigation reuses shared reads and role switches fetch authorized data aga
   const protocolLists = apiRequests.filter((r) => new URL(r.url).pathname === '/api/v1/trials/TR-PX104/protocols' && new URL(r.url).searchParams.get('limit') === '50');
   expect(protocolLists).toHaveLength(1);
 
-  await page.getByLabel('Viewing as').selectOption('ACT-MON-01');
+  await page.getByRole('navigation', { name: 'Study workflow' }).getByRole('link', { name: 'Screen patients' }).click();
+  await page.getByLabel('Viewing as').selectOption('ACT-COORD-01');
   await expect(page).toHaveURL(new RegExp(`${base}$`));
-  await expect.poll(() => trialRequests('ACT-MON-01').length).toBe(1);
+  await expect.poll(() => trialRequests('ACT-COORD-01').length).toBe(1);
   await expect(page.locator('nav[aria-label="Study workflow"]')).not.toContainText('Screen patients');
   await page.getByLabel('Viewing as').selectOption('ACT-INV-01');
   await expect.poll(() => trialRequests('ACT-INV-01').length).toBe(2);

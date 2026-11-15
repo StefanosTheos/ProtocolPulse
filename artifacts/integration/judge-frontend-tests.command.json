@@ -1,0 +1,13 @@
+{
+  "command": [
+    "npm.cmd",
+    "--prefix",
+    "frontend",
+    "test",
+    "--",
+    "--configLoader",
+    "runner"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 10.005
+}

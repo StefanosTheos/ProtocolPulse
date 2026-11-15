@@ -19,6 +19,7 @@ Set-Content frontend/.env.local 'NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000/
 New-Item -ItemType Directory -Force backend/var/protocols | Out-Null
 .venv/Scripts/python.exe -m alembic -c backend/alembic.ini upgrade head
 .venv/Scripts/python.exe -m backend.app.seed --dataset px104-15
+.venv/Scripts/python.exe -m tools.add_demo_patients
 .venv/Scripts/python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 1
 ```
 
@@ -46,6 +47,7 @@ printf 'NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000/api/v1\n' > frontend/.env
 mkdir -p backend/var/protocols
 python -m alembic -c backend/alembic.ini upgrade head
 python -m backend.app.seed --dataset px104-15
+python -m tools.add_demo_patients
 python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 1
 # second terminal: npm --prefix frontend run dev -- --hostname localhost --port 3000
 ```
@@ -63,6 +65,25 @@ The Python lock captures tested package versions. POSIX commands were not execut
 
 **Reset:** stop the API first, then deliberately run `.venv/Scripts/python.exe -m backend.app.seed --dataset px104-15 --reset-demo` (POSIX: `python -m ...`). This replaces the entire local synthetic dataset, including approvals, screens, events, cases and reviews. Restart the API afterward. Ordinary restarts preserve data.
 
+## Shared additional patients (30-patient cohort)
+
+After pulling the repository and completing the normal migrations and initial
+`px104-15` seed, run from the repository root with your Python environment:
+
+```powershell
+.venv/Scripts/python.exe -m tools.add_demo_patients
+```
+
+POSIX: `python -m tools.add_demo_patients` with the virtual environment activated.
+This imports the same fifteen synthetic patients **P-301 through P-315** that were
+added to the demo, including their source-linked records and narratives. It uses
+the existing synthetic patient generator with fixed IDs and seed indices 15–29.
+Existing patients, protocols, approvals, events and screening results are preserved;
+rerunning skips existing patients. The database comes from your local `DATABASE_URL`;
+SQLite runtime files and `.env` stay outside Git. A normal fresh setup has 30 patients
+after this import. Run a **new screening** to include them; historical runs retain
+their original cohort. After a demo reset, rerun the import to restore the extra fifteen.
+
 ## AI configuration
 
 Default `LLM_ENABLED=false` needs no key. Deterministic screening/events/cases continue; agents show `UNAVAILABLE` without fabricated traces. Explicit investigations return `503 AGENT_UNAVAILABLE` when disabled/unconfigured.
@@ -72,6 +93,18 @@ Selected provider/model: `LLM_PROVIDER=gemini`, `LLM_MODEL=gemini-3.8-flash`. An
 Protocol preparation preserves actual PDF text/Unicode anchors. The model interprets clauses in two small bounded batches; code constructs the exact public drafts and the backend validates/persists them. Patient-role final outputs select verified citation registry entries. Monitoring switches to tool-free final drafting when its observed evidence is sufficient; the deterministic worker creates findings/cases independently. All roles retain the frozen eight-tool / 5s tool / 10s model / 30s execution limits. See [six-change verification](docs/AI_REMEDIATION.md) for real and mocked evidence, measured runs and limitations.
 
 Never put secrets in browser configuration, `NEXT_PUBLIC_*`, DTOs, model input, traces or Git. The only frontend variable is `NEXT_PUBLIC_API_BASE_URL`. `.env`, virtual environments and `backend/var/` are ignored. Demo actors simulate roles and provide **no production authentication**.
+
+## Demo roles and workflow
+
+The **Viewing as** dropdown contains **Sponsor** (`COORDINATOR`, `ACT-COORD-01`) first and **Clinical Lead** (`INVESTIGATOR`, `ACT-INV-01`) second. Sponsor is the display name for the existing preparation/event-entry role, not the retired `SPONSOR_OPS` identity. There are no sign-in accounts. Supporting actors cannot be selected, restored, assigned cases or used through the API; old saved selections reset to Clinical Lead. Historical audit records remain intact.
+
+Both roles land on an empty **Overview** at `/`. Select a study from the **Study** dropdown to load its current overview and enable the appropriate workflow tabs. Site time zone, planned dates, protocol state and existing attention/summary information appear only after selection. Use the dropdown on Overview to switch studies or select the blank option to clear the selection. The selected study is carried in `/trials/{trial_id}` and survives refresh; returning to `/` starts with no study selected. No trial-specific API requests are made from the unselected Overview.
+
+Study selections and tab highlights respond before navigation completes. The previous view stays hidden while the destination loads, preserving unsaved inputs if a pending change is cancelled. Up to five study routes preload their route code; tab route code and authorized reads warm only on hover/focus. The existing actor-scoped five-second data cache, mutation/role invalidation and always-fresh job polling remain in force. Fresh data still requires its normal API response; preloading never performs extraction, screening, event writes or AI calls.
+
+The Sponsor uploads the PDF and runs extraction. While proposals await approval, the overview and protocol screen show **Waiting for a Clinical Lead to approve these rules** and refresh status every five seconds. The Clinical Lead checks citations and coverage, resolves blockers, approves the rules, screens patients and records any externally confirmed participation. The Sponsor enters new events from Safety; the backend reassesses relevant rules automatically and the Clinical Lead investigates and dispositions resulting cases. A screening match never enrolls a patient.
+
+Tabs: Sponsor **Overview → Protocol → Safety**; Clinical Lead **Overview → Protocol → Screen patients → Safety**, with **Audit trail** available throughout. This site workflow supports protocol surveillance and clinical review; independent sponsor monitoring remains a separate responsibility. Wire role identifiers and clinical gates are unchanged; the active demo policy rejects the four retired roles with `403 ROLE_FORBIDDEN` even in existing databases.
 
 ## Verification
 

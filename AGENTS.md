@@ -90,3 +90,13 @@ Do not overengineer. Write the minimum code necessary to solve the actual proble
 [ ] The final response accurately summarizes the changes.
 Guiding Principle
 Think carefully. Make the smallest correct change. Verify the result. Stop when the task is complete.
+
+## Running the app
+
+When asked to run or start ProtocolPulse, include the shared 30-patient cohort.
+Use the project's working Python environment and the configured local database.
+After migrations and the initial `px104-15` seed (only if the database is empty),
+run `python -m tools.add_demo_patients` before starting or reusing the app servers.
+The import adds P-301 through P-315 and safely skips existing patients. Never reset
+an existing database to launch the app. Verify the API reports the expected cohort;
+existing screening runs need a new screening to include newly added patients.

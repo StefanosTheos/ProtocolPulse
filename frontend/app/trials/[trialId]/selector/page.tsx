@@ -157,7 +157,7 @@ function SelectorInner() {
       <div className="space-y-5">
         <div>
           <h2 className="text-xl">Screen patients</h2>
-          <p className="text-ink-muted">Each patient is checked against the approved eligibility criteria. A potential match is a candidate for formal screening by the investigator, not an enrolment.</p>
+          <p className="text-ink-muted">Next: Run screening, review each candidate’s evidence, then record the disposition and any externally confirmed participation from their patient page. Safety follows new events during recorded participation. A potential match does not enroll a patient.</p>
         </div>
 
         <section className="card card-pad space-y-3" aria-labelledby="run-heading">
@@ -186,7 +186,7 @@ function SelectorInner() {
               <Link href={`${base}/protocol`} className="mt-1 inline-block underline">Review protocol rules</Link>
             </div>
           )}
-          {!canRun && <p className="note">Screening is run by a coordinator or the investigator.</p>}
+          {!canRun && <p className="note">Screening is run by the Clinical Lead.</p>}
           <JobProgress job={screenJob.job} error={screenJob.error} running={screenJob.running} label="Screening" />
           {screenError ? <ErrorPanel error={screenError} context="Screening" /> : null}
           {run.data?.error_code && <p className="text-fail-fg">Screening did not finish. Run it again.</p>}

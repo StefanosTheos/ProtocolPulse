@@ -102,10 +102,9 @@ export function PatientActions({ trialId, patient, assessment, protocolVersionId
         </button>
         <button type="button" className="btn-secondary" disabled={!protocolVersionId || actor.role === 'AUDITOR' || busy} onClick={requestInvestigation}>Request automated summary</button>
       </div>
-      {!isInvestigator && <p className="text-xs text-ink-muted">Screening decisions and participation are recorded by the investigator.</p>}
+      {!isInvestigator && <p className="text-xs text-ink-muted">Screening decisions, dispositions and participation are recorded by the Clinical Lead.</p>}
       {isInvestigator && !assessment && <p className="text-xs text-ink-muted">Open this patient from the candidate list to record a screening decision.</p>}
       {!protocolVersionId && <p className="text-xs text-ink-muted">An automated summary needs an approved protocol.</p>}
-      {!isInvestigator && <p className="text-xs text-ink-muted">Dispositions and participation records are investigator-only.</p>}
       {!assessment && <p className="text-xs text-ink-muted">Open this patient from a screening run to record a disposition against that assessment.</p>}
 
       <ConfirmReviewDialog open={dialog === 'participation'} title={`Record external participation: ${patient.patient_id}`} confirmLabel={`Record ${nextParticipation ?? ''}`} busy={busy}
@@ -130,7 +129,7 @@ export function PatientActions({ trialId, patient, assessment, protocolVersionId
 
       <ConfirmReviewDialog open={dialog === 'disposition'} title={`Screening disposition: ${patient.patient_id}`} confirmLabel="Record disposition" busy={busy}
         confirmDisabled={!rationale.trim()} onCancel={() => setDialog(null)} onConfirm={submitDisposition}>
-        <p className="text-xs">Against assessment <span className="mono">{assessment?.assessment_id}</span>. The computed pre-screen status is unchanged; this is a separate investigator decision.</p>
+        <p className="text-xs">Against assessment <span className="mono">{assessment?.assessment_id}</span>. The computed pre-screen status is unchanged; this is a separate Clinical Lead decision.</p>
         <label className="label" htmlFor="disp">Disposition</label>
         <select id="disp" className="input" value={disposition} onChange={(e) => setDisposition(e.target.value as ScreeningDispositionCreate['disposition'])}>
           {DISPOSITIONS.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}

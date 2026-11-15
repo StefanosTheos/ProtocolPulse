@@ -3,12 +3,12 @@
 import type { ActorRole, Criterion, CriterionResult, PatientAssessment, UnknownReason } from './types';
 
 export const ROLE_LABEL: Record<ActorRole, string> = {
-  INVESTIGATOR: 'Investigator',
-  COORDINATOR: 'Coordinator',
-  MONITOR: 'Monitor',
-  AUDITOR: 'Auditor',
-  SPONSOR_OPS: 'Sponsor operations',
-  RESEARCH_IT: 'Research IT',
+  INVESTIGATOR: 'Clinical Lead',
+  COORDINATOR: 'Sponsor',
+  MONITOR: 'Historical actor',
+  AUDITOR: 'Historical actor',
+  SPONSOR_OPS: 'Historical actor',
+  RESEARCH_IT: 'Historical actor',
 };
 
 // "SOME_VALUE" -> "Some value"
@@ -84,7 +84,7 @@ export const REASON_RESOLVE: Record<UnknownReason, string> = {
   ORDER_ONLY: 'Confirm with the patient or pharmacy whether the medication was taken.',
   CONFLICTING_SOURCES: 'Compare the records with the source and mark which one is correct.',
   UNMAPPED_CODE: 'Identify the entry and confirm whether it is relevant to this criterion.',
-  UNAPPROVED_RULE: 'An investigator must approve the protocol rule.',
+  UNAPPROVED_RULE: 'The Clinical Lead must approve the protocol rule.',
   INCOMPLETE_EXTRACTION: 'Complete the protocol rule review.',
   INSUFFICIENT_ABSENCE_EVIDENCE: 'Complete a record review stating whether this applies to the patient.',
   UNIT_UNSUPPORTED: 'Record the result in the unit the protocol requires.',
@@ -156,13 +156,13 @@ export const CAN_READ: Record<'patients' | 'findings' | 'cases' | 'audit', Actor
 
 // Workflow steps and the roles that work on each. Overview is every role's starting point.
 export interface Step { key: string; label: string; href: string; paths: string[]; roles: ActorRole[] }
-const ALL_ROLES = Object.keys(ROLE_LABEL) as ActorRole[];
+const ALL_ROLES: ActorRole[] = ['INVESTIGATOR', 'COORDINATOR'];
 export const STEPS: Step[] = [
   { key: 'overview', label: 'Overview', href: '', paths: [], roles: ALL_ROLES },
-  { key: 'protocol', label: 'Protocol', href: '/protocol', paths: ['/protocol'], roles: ['INVESTIGATOR', 'COORDINATOR', 'RESEARCH_IT'] },
-  { key: 'screen', label: 'Screen patients', href: '/selector', paths: ['/selector', '/patients'], roles: ['INVESTIGATOR', 'COORDINATOR'] },
-  { key: 'safety', label: 'Safety', href: '/monitor', paths: ['/monitor', '/cases'], roles: ['INVESTIGATOR', 'COORDINATOR', 'MONITOR'] },
-  { key: 'audit', label: 'Audit trail', href: '/audit', paths: ['/audit'], roles: ['AUDITOR', 'SPONSOR_OPS'] },
+  { key: 'protocol', label: 'Protocol', href: '/protocol', paths: ['/protocol'], roles: ALL_ROLES },
+  { key: 'screen', label: 'Screen patients', href: '/selector', paths: ['/selector', '/patients'], roles: ['INVESTIGATOR'] },
+  { key: 'safety', label: 'Safety', href: '/monitor', paths: ['/monitor', '/cases'], roles: ALL_ROLES },
+  { key: 'audit', label: 'Audit trail', href: '/audit', paths: ['/audit'], roles: ['INVESTIGATOR'] },
 ];
 
 // One-line description of a case for lists, from the backend summary.

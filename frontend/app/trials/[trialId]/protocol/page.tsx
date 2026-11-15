@@ -34,7 +34,7 @@ function ProtocolPageInner() {
   const requested = search?.get('version');
   const fromList = items.find((p) => p.protocol_version_id === requested)
     ?? items.find((p) => p.state === 'ACTIVE') ?? items[0] ?? null;
-  const protocol = override && override.protocol_version_id === fromList?.protocol_version_id ? override : fromList;
+  const protocol = override && override.protocol_version_id === fromList?.protocol_version_id && override.revision > fromList.revision ? override : fromList;
   const base = `/trials/${encodeURIComponent(trialId)}`;
 
   async function refreshProtocol(versionId: string) {
@@ -68,14 +68,28 @@ function ProtocolPageInner() {
 
   const gate = screeningGate(trial.data, protocol);
   const canExtract = actor.role === 'COORDINATOR' || actor.role === 'INVESTIGATOR';
+  const awaitingApproval = !!protocol && (protocol.state === 'DRAFT' || protocol.state === 'EXTRACTION_REVIEW') && protocol.criteria.length > 0;
+
+  useEffect(() => {
+    if (!awaitingApproval || actor.role !== 'COORDINATOR') return;
+    const timer = window.setInterval(protocols.reload, 5000);
+    return () => window.clearInterval(timer);
+  }, [awaitingApproval, actor.role, protocols.reload]);
 
   return (
     <div>
       <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
         <div className="min-w-0 space-y-5">
+          {awaitingApproval && (
+            <section role="status" className="rounded-lg border border-unknown-line bg-unknown-bg p-4 text-unknown-fg">
+              <p className="font-semibold">{actor.role === 'INVESTIGATOR' ? 'Next: Review and approve these rules' : 'Waiting for a Clinical Lead to approve these rules'}</p>
+              <p>{actor.role === 'INVESTIGATOR' ? 'Check the source citations, resolve any blockers and sign coverage below. Screening becomes available after approval.' : 'These proposals await clinical review. The reviewer must resolve any blockers and approve the rules before this version can screen patients.'}</p>
+              {actor.role === 'COORDINATOR' && <p className="mt-1 text-xs">Approval status updates automatically while you wait.</p>}
+            </section>
+          )}
           {protocols.loading && !protocols.data && <LoadingSkeleton rows={4} label="Loading protocol" />}
           {protocols.error ? <ErrorPanel error={protocols.error} context="Could not load protocol versions" onRetry={protocols.reload} /> : null}
-          {protocols.data && !protocol && <EmptyState title="No protocol uploaded">Upload the protocol document to read its rules and review them.</EmptyState>}
+          {protocols.data && !protocol && <EmptyState title="No protocol uploaded">{actor.role === 'INVESTIGATOR' ? 'Waiting for the Sponsor to upload a protocol and extract its rules.' : 'Next: Upload the protocol document, then run extraction to prepare its rules for clinical review.'}</EmptyState>}
 
           {protocol && (
             <section className="card card-pad space-y-2" aria-labelledby="version-heading">
@@ -100,7 +114,7 @@ function ProtocolPageInner() {
               )}
               {(protocol.state === 'DRAFT' || protocol.state === 'EXTRACTION_REVIEW') && protocol.criteria.length > 0 && protocol.extraction_job_id === null && (
                 <p className="rounded border border-unknown-line bg-unknown-bg p-2 text-xs text-unknown-fg">
-                  No extraction job is recorded for this proposal. Treat it as a curated proposal: it does not show that a model ran, and it is unsigned until an investigator approves it.
+                  No extraction job is recorded for this proposal. Treat it as a curated proposal: it does not show that a model ran, and it is unsigned until the Clinical Lead approves it.
                 </p>
               )}
             </section>
@@ -124,7 +138,7 @@ function ProtocolPageInner() {
                   {protocol.state === 'EXTRACTION_FAILED' ? 'Retry extraction' : 'Run extraction'}
                 </button>
               )}
-              {!canExtract && <p className="text-xs text-unknown-fg">Coordinator or investigator role required to start extraction.</p>}
+              {!canExtract && <p className="text-xs text-unknown-fg">Sponsor or Clinical Lead role required to start extraction.</p>}
             </section>
           )}
 
@@ -138,8 +152,10 @@ function ProtocolPageInner() {
             <h2 id="screen-gate">Screening readiness</h2>
             {gate.allowed ? (
               <>
-                <p className="mt-1 text-pass-fg">✓ All rules are approved by the investigator. Screening is available.</p>
-                <Link href={`${base}/selector`} className="btn-primary mt-3">Next: Screen patients</Link>
+                <p className="mt-1 text-pass-fg">✓ All rules are approved by the Clinical Lead. Screening is available.</p>
+                {actor.role === 'INVESTIGATOR'
+                  ? <Link href={`${base}/selector`} className="btn-primary mt-3">Next: Screen patients</Link>
+                  : <p className="mt-3 text-ink-muted">Next: The Clinical Lead screens patients and records any externally confirmed participation. You can enter new records from Safety for ongoing review.</p>}
               </>
             ) : (
               <>
@@ -149,7 +165,7 @@ function ProtocolPageInner() {
               </>
             )}
           </section>
-          <ProtocolUpload trialId={trialId} onUploaded={(p) => { setOverride(p); protocols.reload(); router.replace(`${base}/protocol?version=${encodeURIComponent(p.protocol_version_id)}`); }} />
+          {(actor.role === 'COORDINATOR' || actor.role === 'RESEARCH_IT') && <ProtocolUpload trialId={trialId} onUploaded={(p) => { setOverride(p); protocols.reload(); router.replace(`${base}/protocol?version=${encodeURIComponent(p.protocol_version_id)}`); }} />}
         </aside>
       </div>
     </div>

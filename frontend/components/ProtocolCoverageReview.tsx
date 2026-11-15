@@ -124,7 +124,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
       const ids = protocol.criteria.map((c) => c.criterion_id);
       const res = await getApi().approveProtocol(trialId, protocol.protocol_version_id, { criterion_ids: ids, coverage_attestation: true, activate: true, decision_reason: decisionReason.trim() }, protocol.revision, approveKey);
       setApproveOpen(false);
-      setNotice(`✓ Protocol approved by the investigator on ${formatInstant(res.data.approved_at)}. ${res.data.signed_criterion_ids.length} rules are now in use, and patient screening is available.`);
+      setNotice(`✓ Protocol approved by the Clinical Lead on ${formatInstant(res.data.approved_at)}. ${res.data.signed_criterion_ids.length} rules are now in use, and patient screening is available.`);
       notifyTrialChanged();
       const refreshed = await getApi().getProtocol(trialId, protocol.protocol_version_id);
       onChanged(refreshed.data);
@@ -145,7 +145,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
           <div>
             <h2>Extracted rules <span className="font-normal text-ink-muted">({protocol.criteria.length})</span></h2>
-            <p className="text-xs text-ink-muted">Every rule cites its source page and code-point anchor. Proposals are not operational until an investigator approves them.</p>
+            <p className="text-xs text-ink-muted">Every rule cites its source page and code-point anchor. Proposals are not operational until the Clinical Lead approves them.</p>
           </div>
           {canEdit && (
             <div className="flex gap-2">
@@ -288,7 +288,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
 
       {reviewable && (
         <section className="card card-pad" aria-labelledby="approve-heading">
-          <h2 id="approve-heading">Investigator approval</h2>
+          <h2 id="approve-heading">Clinical Lead approval</h2>
           <p className="mt-1 text-ink-muted">
             Approval signs all {protocol.criteria.length} rules individually and attests to complete coverage, then activates this version.
             Zero blockers does not approve anything by itself.
@@ -315,7 +315,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNo
         open={approveOpen} title={`Approve ${protocol.criteria.length} protocol rules`} confirmLabel="Approve and activate" busy={busy}
         confirmDisabled={!attested || !decisionReason.trim()} onCancel={() => setApproveOpen(false)} onConfirm={approve}
       >
-        <p>As the investigator, you are approving protocol version {protocol.label} with these rules:</p>
+        <p>As the Clinical Lead, you are approving protocol version {protocol.label} with these rules:</p>
         <ul className="list-disc rounded bg-canvas py-2 pl-8 pr-2">{protocol.criteria.map((c) => <li key={c.criterion_id}>{criterionName(c, c.criterion_id)} ({ruleLabel(c.criterion_id)})</li>)}</ul>
         <label className="flex items-start gap-2">
           <input type="checkbox" className="mt-0.5" checked={attested} onChange={(e) => setAttested(e.target.checked)} />
