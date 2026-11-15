@@ -24,7 +24,7 @@ export function AgentExecutionView({ execution: e, timeZone }: { execution: Agen
       )}
       {e.status === 'FAILED' && (
         <p className="rounded border border-fail-line bg-fail-bg p-2 text-xs text-fail-fg">
-          The automated summary didn&apos;t finish. Screening results are still valid; nothing below was concluded by the automated summary.
+          The automated summary didn&apos;t finish. Screening results are still valid. Nothing below was concluded by the automated summary.
         </p>
       )}
       {e.status === 'PARTIAL' && <p className="rounded border border-unknown-line bg-unknown-bg p-2 text-xs text-unknown-fg">Partial result: some steps did not complete. Treat the summary as incomplete.</p>}
@@ -35,7 +35,7 @@ export function AgentExecutionView({ execution: e, timeZone }: { execution: Agen
           <p className="mt-1 text-ink">{e.summary}</p>
         </div>
       )}
-      {e.unknown_reasons.length > 0 && <p className="text-xs"><span className="text-ink-muted">Open questions:</span> {e.unknown_reasons.map((r) => REASON_LABEL[r as UnknownReason] ?? sentenceCase(r)).join('; ')}</p>}
+      {e.unknown_reasons.length > 0 && <p className="text-xs"><span className="text-ink-muted">Open questions:</span> {e.unknown_reasons.map((r) => REASON_LABEL[r as UnknownReason] ?? sentenceCase(r)).join('. ')}</p>}
       {e.verification_questions.length > 0 && (
         <div className="text-xs"><p className="text-ink-muted">Verification questions proposed for humans:</p><ul className="list-disc pl-5">{e.verification_questions.map((q) => <li key={q}>{q}</li>)}</ul></div>
       )}

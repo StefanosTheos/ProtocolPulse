@@ -105,7 +105,7 @@ export function PatientActions({ trialId, patient, assessment, onChanged }: {
 
       <ConfirmReviewDialog open={dialog === 'disposition'} title={`Screening decision: ${patient.patient_id}`} confirmLabel="Record decision" busy={busy}
         confirmDisabled={!rationale.trim()} onCancel={() => setDialog(null)} onConfirm={submitDisposition}>
-        <p className="text-xs">This is recorded against the current screening result. The screening status itself is unchanged; this is a separate Clinical Lead decision.</p>
+        <p className="text-xs">This is recorded against the current screening result. The screening status itself is unchanged. This is a separate Clinical Lead decision.</p>
         <label className="label" htmlFor="disp">Decision</label>
         <select id="disp" className="input" value={disposition} onChange={(e) => setDisposition(e.target.value as ScreeningDispositionCreate['disposition'])}>
           {DISPOSITIONS.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}

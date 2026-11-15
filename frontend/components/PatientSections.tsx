@@ -57,7 +57,7 @@ export function PatientSections({ patient: p, timeZone }: { patient: Patient360;
       </Section>
       <Section n={7} title="Medications (concomitant) and blinded study product">
         <p className="text-xs">{p.medications.length} concomitant medication evidence entr{p.medications.length === 1 ? 'y' : 'ies'} (see timeline).</p>
-        <p className="text-xs text-ink-muted">Study product is blinded: {p.study_product_exposure.exposures.length} exposure record(s); assignment {p.study_product_exposure.assignment_masked ? 'masked' : 'not recorded'}. It is never inferred.</p>
+        <p className="text-xs text-ink-muted">Study product is blinded: {p.study_product_exposure.exposures.length} exposure record(s). Assignment {p.study_product_exposure.assignment_masked ? 'masked' : 'not recorded'}. It is never inferred.</p>
       </Section>
       <Section n={8} title="Prior clinical research">
         {p.prior_clinical_research.length === 0 ? <p className="text-xs text-ink-muted">{EMPTY_NOTE}</p> : (
@@ -83,7 +83,7 @@ export function PatientSections({ patient: p, timeZone }: { patient: Patient360;
               <span className="text-ink-faint">recorded {formatInstant(n.recorded_at, timeZone)}</span>
             </div>
             <p className="whitespace-pre-line">{n.text}</p>
-            <p className="mt-1 text-2xs text-ink-faint">Narrative is a sourced claim; it does not override structured data.</p>
+            <p className="mt-1 text-2xs text-ink-faint">Narrative is a sourced claim. It does not override structured data.</p>
           </div>
         ))}
       </Section>
