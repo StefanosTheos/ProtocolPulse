@@ -15,6 +15,7 @@ import { ROLE_LABEL, plainText, sentenceCase } from '@/lib/api/labels';
 import { DEMO_ACTORS, actorById, getApi } from '@/lib/api/runtime';
 import { formatInstant } from '@/lib/api/time';
 import type { CasePatch, CaseStatus, EvidenceRef, ReviewCase } from '@/lib/api/types';
+import { notifyTrialChanged } from '@/lib/api/events';
 
 function ownerLabel(actorId: string | null): string {
   if (!actorId) return 'Unassigned';
@@ -29,8 +30,8 @@ function EvidenceLink({ trialId, evidence, timeZone }: { trialId: string; eviden
   const [open, setOpen] = useState(false);
   return (
     <li className="text-xs">
-      <button type="button" className="font-semibold text-brand underline-offset-2 hover:underline" aria-expanded={open} aria-label={`Source record ${evidence.evidence_id}`} onClick={() => setOpen((o) => !o)}>{open ? 'Hide source record' : 'Open source record'}</button>
-      <span className="ml-2 text-ink-muted">{sentenceCase(evidence.evidence_type)} · occurred {formatInstant(evidence.effective_at, timeZone)} · recorded {formatInstant(evidence.recorded_at, timeZone)} · <span className="mono">{evidence.source_id} v{evidence.source_version}</span></span>
+      <button type="button" className="font-semibold text-brand underline-offset-2 hover:underline" aria-expanded={open} aria-label={open ? 'Hide source record' : `Open ${sentenceCase(evidence.evidence_type).toLowerCase()} source record`} onClick={() => setOpen((o) => !o)}>{open ? 'Hide source record' : 'Open source record'}</button>
+      <span className="ml-2 text-ink-muted">{sentenceCase(evidence.evidence_type)} · occurred {formatInstant(evidence.effective_at, timeZone)} · recorded {formatInstant(evidence.recorded_at, timeZone)}</span>
       {open && <div className="mt-2"><SourceViewer trialId={trialId} sourceId={evidence.source_id} version={evidence.source_version} page={evidence.page} start={evidence.span_start} end={evidence.span_end} /></div>}
     </li>
   );
@@ -57,9 +58,10 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<unknown>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [attempted, setAttempted] = useState(false);
 
   if (reviewCase.loading && !reviewCase.data) return <LoadingSkeleton rows={5} label="Loading case" />;
-  if (reviewCase.error) return <ErrorPanel error={reviewCase.error} context={`Case ${caseId}`} onRetry={reviewCase.reload} />;
+  if (reviewCase.error) return <ErrorPanel error={reviewCase.error} context="Case" onRetry={reviewCase.reload} />;
   const c = reviewCase.data;
   if (!c) return null;
 
@@ -67,6 +69,7 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
   const evidence = (findings.data ?? []).flatMap((f) => f.evidence_refs);
   const effectiveAssignee = assignee ?? c.assigned_actor_id ?? '';
   const ready = !!nextStatus && !!disposition.trim() && !!rationale.trim();
+  const missing = (filled: boolean) => attempted && !filled;
   const isConflict = error instanceof ApiError && error.code === 'REVISION_CONFLICT';
 
   async function submit() {
@@ -77,8 +80,10 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
       const patch = buildCasePatch(c, { nextStatus, assignee: effectiveAssignee, disposition, rationale, cited });
       const res = await getApi().patchCase(c.case_id, patch);
       setConfirmOpen(false);
-      setNotice(`Case moved to ${res.data.status} (revision ${res.data.revision}) by ${actor.actor_id}.`);
+      setNotice(`Case moved to ${sentenceCase(res.data.status)} by the ${ROLE_LABEL[actor.role].toLowerCase()}.`);
+      notifyTrialChanged();
       setNextStatus('');
+      setAttempted(false);
       setDisposition('');
       setRationale('');
       setCited([]);
@@ -172,19 +177,21 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
         )}
       </section>
 
-      <section className="card card-pad space-y-3" aria-labelledby="transition-heading">
+      <form className="card card-pad space-y-3" aria-labelledby="transition-heading" noValidate
+        onSubmit={(e) => { e.preventDefault(); setAttempted(true); if (canPatch && ready) setConfirmOpen(true); }}>
         <h3 id="transition-heading">Record a review decision</h3>
         {!canPatch && <p className="text-xs text-unknown-fg">Cases are updated by a monitor or the investigator.</p>}
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
-            <label className="label" htmlFor="next-status">Next status</label>
+            <label className="label required" htmlFor="next-status">Next status</label>
             <select id="next-status" className="input" value={nextStatus} onChange={(e) => setNextStatus(e.target.value as CaseStatus)} disabled={!canPatch}>
               <option value="">Select…</option>
               {STATUSES.map((s) => {
                 const blocked = INVESTIGATOR_ONLY.includes(s) && actor.role !== 'INVESTIGATOR';
-                return <option key={s} value={s} disabled={blocked}>{s}{s === c.status ? ' (current)' : ''}{blocked ? ' — investigator only' : ''}</option>;
+                return <option key={s} value={s} disabled={blocked}>{sentenceCase(s)}{s === c.status ? ' (current)' : ''}{blocked ? ' — investigator only' : ''}</option>;
               })}
             </select>
+            {missing(!!nextStatus) && <p className="mt-1 text-xs text-fail-fg">Choose the next status.</p>}
           </div>
           <div>
             <label className="label" htmlFor="assignee">Owner</label>
@@ -195,35 +202,38 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
           </div>
         </div>
         <div>
-          <label className="label" htmlFor="disposition">Disposition</label>
-          <input id="disposition" className="input" value={disposition} onChange={(e) => setDisposition(e.target.value)} placeholder="e.g. REVIEW_REQUIRED" disabled={!canPatch} />
+          <label className="label required" htmlFor="disposition">Disposition</label>
+          <input id="disposition" className="input" required value={disposition} onChange={(e) => setDisposition(e.target.value)} placeholder="e.g. Review required" disabled={!canPatch} aria-invalid={missing(!!disposition.trim())} />
+          {missing(!!disposition.trim()) && <p className="mt-1 text-xs text-fail-fg">Enter a short disposition, for example &quot;Review required&quot;.</p>}
         </div>
         <div>
-          <label className="label" htmlFor="rationale">Rationale</label>
-          <textarea id="rationale" className="input" rows={3} value={rationale} onChange={(e) => setRationale(e.target.value)} disabled={!canPatch} />
+          <label className="label required" htmlFor="rationale">Rationale</label>
+          <textarea id="rationale" className="input" rows={3} required value={rationale} onChange={(e) => setRationale(e.target.value)} disabled={!canPatch} aria-invalid={missing(!!rationale.trim())} />
+          {missing(!!rationale.trim()) && <p className="mt-1 text-xs text-fail-fg">Explain the reason for this decision.</p>}
         </div>
         <fieldset>
-          <legend className="label">Cited evidence</legend>
-          {evidence.length === 0 ? <p className="text-xs text-ink-muted">No evidence references loaded.</p> : (
+          <legend className="label">Evidence to cite (optional)</legend>
+          {evidence.length === 0 ? <p className="text-xs text-ink-muted">No source records are linked to this case.</p> : (
             <div className="space-y-1">
               {evidence.map((e) => (
                 <label key={e.evidence_id} className="flex items-center gap-2 text-xs">
                   <input type="checkbox" disabled={!canPatch} checked={cited.includes(e.evidence_id)} onChange={(ev) => setCited((prev) => ev.target.checked ? [...prev, e.evidence_id] : prev.filter((x) => x !== e.evidence_id))} />
-                  <span className="mono">{e.evidence_id}</span>
+                  <span>{sentenceCase(e.evidence_type)} record, {formatInstant(e.effective_at, timeZone)} <span className="mono text-2xs text-ink-faint">{e.evidence_id}</span></span>
                 </label>
               ))}
             </div>
           )}
         </fieldset>
-        <button type="button" className="btn-primary" disabled={!canPatch || !ready} onClick={() => setConfirmOpen(true)}>Review and submit…</button>
-      </section>
+        <p className="text-xs text-ink-muted"><span aria-hidden="true" className="text-fail-fg">*</span> Required field</p>
+        <button type="submit" className="btn-primary" disabled={!canPatch || busy}>Review and submit…</button>
+      </form>
 
       <ConfirmReviewDialog open={confirmOpen} title={`Confirm decision for patient ${c.patient_id}`} confirmLabel="Submit decision" busy={busy} onCancel={() => setConfirmOpen(false)} onConfirm={submit}>
         <p>As {ROLE_LABEL[actor.role].toLowerCase()}, you are recording:</p>
         <ul className="list-disc pl-5 text-xs">
-          <li>Status {c.status} → <strong>{nextStatus}</strong></li>
+          <li>Status {sentenceCase(c.status)} → <strong>{nextStatus ? sentenceCase(nextStatus) : ''}</strong></li>
           <li>Assigned to: {ownerLabel(effectiveAssignee || null)}</li>
-          <li>Disposition: <span className="mono">{disposition}</span></li>
+          <li>Disposition: {disposition}</li>
           <li>Cited evidence: {cited.length || 'none'}</li>
         </ul>
         <p className="text-xs text-ink-muted">This records a human review decision. It does not change treatment, participation or enrollment.</p>

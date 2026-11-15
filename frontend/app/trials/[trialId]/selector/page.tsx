@@ -13,11 +13,12 @@ import { TrialHeader, useTrial } from '@/components/TrialHeader';
 import { ApiError } from '@/lib/api/client';
 import { screeningGate } from '@/lib/api/gates';
 import { useApiQuery, useIdempotencyKey, useJobRunner } from '@/lib/api/hooks';
-import { REASON_LABEL } from '@/lib/api/labels';
-import { forgetRun, getLastRun, rememberRun } from '@/lib/api/lastRun';
+import { REASON_LABEL, criteriaSummary, formatDay, plainReason, sentenceCase } from '@/lib/api/labels';
+import { forgetRun, getLastRun, rememberListUrl, rememberRun } from '@/lib/api/lastRun';
 import { getApi } from '@/lib/api/runtime';
 import { addDays, endOfScreeningDayWatermark, formatInstant } from '@/lib/api/time';
 import type { AssessmentQuery, CandidateStatus, Criterion, UnknownReason } from '@/lib/api/types';
+import { notifyTrialChanged } from '@/lib/api/events';
 
 // "Needs review" comes first and is the default: those patients are the reviewer's work.
 const TABS: { status: CandidateStatus | null; label: string }[] = [
@@ -45,7 +46,16 @@ function SelectorInner() {
   const sort = (search?.get('sort') as AssessmentQuery['sort'] | null) ?? 'patient_id';
   const [cursorStack, setCursorStack] = useState<(string | undefined)[]>([undefined]);
   const cursor = cursorStack[cursorStack.length - 1];
-  const [query, setQuery] = useState('');
+  // Typing stays local; the search is written to the address after a short pause so it survives a refresh.
+  const urlQuery = search?.get('q') ?? '';
+  const [query, setQuery] = useState(urlQuery);
+  useEffect(() => {
+    if (query === urlQuery) return;
+    const t = setTimeout(() => setParams({ q: query || null }), 300);
+    return () => clearTimeout(t);
+    // setParams changes on every render; only the typed text should restart the timer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
   const [justRan, setJustRan] = useState(false);
 
   const base = `/trials/${encodeURIComponent(trialId)}`;
@@ -70,6 +80,10 @@ function SelectorInner() {
   useEffect(() => {
     if (runId && runComplete) rememberRun(trialId, runId);
   }, [runId, runComplete, trialId]);
+  const listQuery = search?.toString() ?? '';
+  useEffect(() => {
+    if (runId) rememberListUrl(trialId, `${base}/selector?${listQuery}`);
+  }, [runId, listQuery, trialId, base]);
   useEffect(() => {
     // A remembered run the backend no longer has (for example after a reset) is dropped.
     if (runId && run.error instanceof ApiError && run.error.status === 404) {
@@ -113,6 +127,7 @@ function SelectorInner() {
       }
       screenKey.reset();
       setJustRan(true);
+      notifyTrialChanged();
       setParams({ run: newRunId, status: null, reason: null });
     } catch (e) {
       setScreenError(e);
@@ -124,6 +139,18 @@ function SelectorInner() {
     const q = query.trim().toLowerCase();
     return q ? items.filter((a) => a.patient_id.toLowerCase().includes(q)) : items;
   }, [assessments.data, query]);
+
+  function exportCsv() {
+    const quote = (v: string) => `"${v.replace(/"/g, '""')}"`;
+    const header = ['Patient', 'Result', 'Why', 'Criteria', 'Screening date'];
+    const rows = visible.map((a) => [a.patient_id, a.candidate_status ? CANDIDATE_LABEL[a.candidate_status] : 'Could not be evaluated', plainReason(a, criteriaById), criteriaSummary(a.criteria), a.screening_date ? formatDay(a.screening_date) : '']);
+    const url = URL.createObjectURL(new Blob([[header, ...rows].map((r) => r.map(quote).join(',')).join('\n')], { type: 'text/csv' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `candidates-${(status ?? 'all').toLowerCase()}-${run.data?.screening_date ?? ''}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div>
@@ -138,7 +165,7 @@ function SelectorInner() {
             <div className="min-w-0">
               <h3 id="run-heading" className="text-base">Baseline screening</h3>
               {run.data
-                ? <p className="text-ink-muted">{run.data.patient_count} patients screened for {run.data.screening_date}{run.data.completed_at ? ` · Completed ${formatInstant(run.data.completed_at, tz)}` : ''}{run.data.stale && <> <Pill tone="unknown">Out of date</Pill></>}</p>
+                ? <p className="text-ink-muted">{run.data.patient_count} patients screened for {formatDay(run.data.screening_date)}{run.data.completed_at ? ` · Completed ${formatInstant(run.data.completed_at, tz)}` : ''}{run.data.stale && <> <Pill tone="unknown">Out of date</Pill></>}</p>
                 : <p className="text-ink-muted">Uses records available up to the end of the screening day.</p>}
             </div>
             <div className="flex flex-wrap items-end gap-3">
@@ -168,7 +195,7 @@ function SelectorInner() {
               <summary className="font-semibold text-ink-muted">Technical details</summary>
               <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
                 <dt className="text-ink-muted">Run</dt><dd className="mono break-all">{run.data.run_id}</dd>
-                <dt className="text-ink-muted">Status</dt><dd>{run.data.status}</dd>
+                <dt className="text-ink-muted">Status</dt><dd>{sentenceCase(run.data.status)}</dd>
                 <dt className="text-ink-muted">Records up to</dt><dd>{formatInstant(run.data.evidence_cutoff_at, tz)}</dd>
                 <dt className="text-ink-muted">Protocol</dt><dd className="mono break-all">{run.data.protocol_version_id}</dd>
                 <dt className="text-ink-muted">Rule-set hash</dt><dd className="mono break-all">{run.data.approved_set_hash}</dd>
@@ -231,6 +258,7 @@ function SelectorInner() {
                     <option value="-evidence_completeness_percent">Most complete record first</option>
                   </select>
                 </div>
+                <button type="button" className="btn-secondary" disabled={visible.length === 0} onClick={exportCsv} title={visible.length === 0 ? 'Nothing to export in this view' : undefined}>Export CSV</button>
               </div>
               {assessments.loading && <LoadingSkeleton rows={5} label="Loading patients" />}
               {assessments.error ? <ErrorPanel error={assessments.error} context="Patients" onRetry={assessments.reload} /> : null}

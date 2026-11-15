@@ -23,17 +23,43 @@ export function displayTitle(title: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-// Seed data uses placeholder codes (SYN-…) inside free text; show what they stand for.
+// Turns backend free text into plain wording for display: placeholder codes (SYN-…), rule IDs,
+// source IDs, ENUM_WORDS and ISO dates. Display only; the stored text is unchanged.
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export function formatDay(isoDate: string): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(isoDate);
+  if (!m) return isoDate;
+  return `${Number(m[3])} ${MONTHS[Number(m[2]) - 1] ?? m[2]} ${m[1]}`;
+}
+
+const RULE_KIND: Record<string, string> = { INC: 'inclusion rule', EXC: 'exclusion rule', MON: 'safety rule' };
+export function ruleLabel(criterionId: string): string {
+  const m = /^[A-Z0-9]+-(INC|EXC|MON)-0*(\d+)$/.exec(criterionId);
+  return m ? `${RULE_KIND[m[1]]} ${m[2]}` : criterionId;
+}
+
 const PLACEHOLDERS: [RegExp, string][] = [
   [/SYN-EXCLUDED-CONDITION/g, 'the excluded condition'],
-  [/SYN-CONDITION-A/g, 'study condition'],
+  [/SYN-CONDITION-A condition/g, 'study condition'],
+  [/SYN-CONDITION-A/g, 'the study condition'],
   [/SYN-CLASS-R/g, 'the restricted medication class'],
+  [/SYN-MED-R\d*/g, 'a restricted medication'],
   [/SYN-EGFR/g, 'eGFR'],
+  [/\bSYN-([A-Z0-9-]+)/g, '$1'],
+  [/\bSRC-PROTOCOL-[A-Z0-9-]+/g, 'the protocol document'],
   [/\bsynthetic\s+/gi, ''],
   [/\bfictional\s+/gi, ''],
 ];
 export function plainText(text: string): string {
-  const out = PLACEHOLDERS.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), text);
+  let out = PLACEHOLDERS.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), text);
+  // Dates and times: 2026-11-19T09:30:00+02:00 → 19 Nov 2026, 09:30; 2026-10-31 → 31 Oct 2026
+  out = out.replace(/\b(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2})?/g, (_m, d, h, mi) => `${formatDay(d)}, ${h}:${mi}`);
+  out = out.replace(/\b\d{4}-\d{2}-\d{2}\b/g, (d) => formatDay(d));
+  // Rule IDs and ENUM_WORDS
+  out = out.replace(/\b[A-Z0-9]+-(?:INC|EXC|MON)-\d+\b/g, (id) => ruleLabel(id));
+  out = out.replace(/\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b/g, (w) => w.replace(/_/g, ' ').toLowerCase());
+  // Single shouted words such as ADMINISTRATION (acronyms of four letters or fewer are kept)
+  out = out.replace(/\b[A-Z]{5,}\b/g, (w) => w.toLowerCase());
   return out.charAt(0).toUpperCase() + out.slice(1);
 }
 
@@ -139,8 +165,37 @@ export const STEPS: Step[] = [
   { key: 'audit', label: 'Audit trail', href: '/audit', paths: ['/audit'], roles: ['AUDITOR', 'SPONSOR_OPS'] },
 ];
 
-// Case summaries written as system codes are replaced by a plain description.
+// One-line description of a case for lists, from the backend summary.
 export function caseIssue(summary: string | null): string {
-  if (!summary || /[A-Z]{2,}_[A-Z]{2,}/.test(summary)) return 'Protocol finding during participation';
-  return plainText(summary);
+  if (!summary) return 'Protocol finding during participation';
+  const first = plainText(summary).split(/(?<=\.)\s/)[0];
+  return first.replace(/\.$/, '');
+}
+
+// Wording for protocol rule fields.
+const OPERATOR_TEXT: Record<string, string> = {
+  AGE_RANGE_INCLUSIVE: 'Age within range',
+  CODE_CONFIRMED: 'Confirmed diagnosis',
+  LAB_GTE: 'Lab result at or above',
+  ABSENCE_CONFIRMED_ACTIVE: 'Confirmed not present',
+  NO_RESTRICTED_USE: 'No restricted medication use',
+  EVENT_RESTRICTED_USE: 'Restricted medication given',
+  EVENT_ORDER_ONLY: 'Restricted medication ordered, use not confirmed',
+  EVENT_LAB_LT: 'Lab result falls below',
+};
+export function operatorText(operator: string): string {
+  return OPERATOR_TEXT[operator] ?? sentenceCase(operator);
+}
+export const COVERAGE_LABEL: Record<'MAPPED' | 'INFORMATIONAL' | 'BLOCKING', string> = {
+  MAPPED: 'Covered by a rule',
+  INFORMATIONAL: 'Background only',
+  BLOCKING: 'Blocking',
+};
+export const MISSING_DATA_TEXT: Record<string, string> = {
+  UNKNOWN_UNLESS_RECONCILED: 'If data is missing, the result is "unclear" until a person reconciles it',
+};
+export function actorRoleLabel(actorId: string | null | undefined, roleOf: (id: string) => ActorRole | undefined): string {
+  if (!actorId) return '—';
+  const role = roleOf(actorId);
+  return role ? `the ${ROLE_LABEL[role].toLowerCase()}` : 'a reviewer';
 }

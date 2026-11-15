@@ -9,6 +9,7 @@ import { Pill } from './StatusPill';
 import { useJobRunner } from '@/lib/api/hooks';
 import { getApi } from '@/lib/api/runtime';
 import type { EventCreate, EventReceipt, JobDetail } from '@/lib/api/types';
+import { notifyTrialChanged } from '@/lib/api/events';
 
 interface Preset { id: string; label: string; patientId: string; description: string; body: EventCreate }
 
@@ -71,7 +72,7 @@ export function EventSimulator({ trialId, onProcessed }: { trialId: string; onPr
       setReceipt(res.data);
       setOpen(false);
       const finished = await job.run(res.data.job.job_id);
-      if (finished) onProcessed(finished, res.data);
+      if (finished) { onProcessed(finished, res.data); notifyTrialChanged(); }
     } catch (e) {
       setError(e);
     } finally {
@@ -81,10 +82,10 @@ export function EventSimulator({ trialId, onProcessed }: { trialId: string; onPr
 
   return (
     <section className="card card-pad space-y-3" aria-labelledby="sim-heading">
-      <h2 id="sim-heading">Simulate new record</h2>
-      <p className="text-xs text-ink-muted">Adds a source record for a participating patient. Findings appear only after the backend re-evaluates and the job SUCCEEDED; nothing is counted locally.</p>
+      <h2 id="sim-heading">Demo: add a clinical record</h2>
+      <p className="text-xs text-ink-muted">For demonstrations: adds a medication or lab record for a participating patient, as if it arrived from the hospital system. The safety check runs on it automatically.</p>
       <button type="button" className="btn-primary" disabled={!allowed || busy || job.running} onClick={() => { setError(null); setOpen(true); }}>Simulate new record…</button>
-      {!allowed && <p className="text-xs text-unknown-fg">Coordinator or research IT role required to post events.</p>}
+      {!allowed && <p className="text-xs text-unknown-fg">Records are added by a coordinator or research IT.</p>}
       {receipt && (
         <div className="space-y-1 rounded border border-line bg-canvas p-3 text-xs" aria-live="polite">
           <div className="flex flex-wrap items-center gap-2">

@@ -1,32 +1,26 @@
 'use client';
 
 import { Component, type ReactNode } from 'react';
-import { ApiError, describeError } from '@/lib/api/client';
+import { ApiError } from '@/lib/api/client';
+import { friendlyError, isNotFound } from '@/lib/api/errors';
 
 export function ErrorPanel({ error, onRetry, context }: { error: unknown; onRetry?: () => void; context?: string }) {
-  const e = describeError(error);
-  // A permission refusal is not a fault: say so plainly and keep the technical text out of the way.
-  if (error instanceof ApiError && error.status === 403) {
-    return (
-      <div role="status" className="rounded-lg border border-line bg-canvas p-3 text-ink-muted">
-        <p className="font-semibold text-ink">{context ? `${context}: ` : ''}not available for your role</p>
-        <p className="mt-1">Switch to a role that works on this to see it.</p>
-        <details className="mt-1 text-xs"><summary>Technical details</summary><p className="mono mt-1">{e.title} · {e.message}{e.requestId ? ` · ${e.requestId}` : ''}</p></details>
-      </div>
-    );
-  }
+  const e = friendlyError(error);
+  // A permission refusal is not a fault, so it is shown in neutral colours.
+  const neutral = error instanceof ApiError && (error.status === 403 || error.code === 'CANCELLED');
   return (
-    <div role="alert" className="rounded-md border border-fail-line bg-fail-bg p-3 text-fail-fg">
+    <div role={neutral ? 'status' : 'alert'} className={`rounded-lg border p-3 ${neutral ? 'border-line bg-canvas text-ink-muted' : 'border-fail-line bg-fail-bg text-fail-fg'}`}>
       <p className="font-semibold">{context ? `${context}: ` : ''}{e.title}</p>
       <p className="mt-1 text-ink">{e.message}</p>
-      {e.details.length > 0 && (
-        <ul className="mt-2 list-disc pl-5 text-xs text-ink">
-          {e.details.map((d, i) => <li key={i}><span className="mono">{d.field}</span>: {d.reason}</li>)}
-        </ul>
+      {e.fieldMessages.length > 0 && (
+        <ul className="mt-2 list-disc pl-5 text-ink">{e.fieldMessages.map((m) => <li key={m}>{m}</li>)}</ul>
       )}
       <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-ink-muted">
-        {e.requestId && <span>Request ID <span className="mono">{e.requestId}</span></span>}
-        {onRetry && <button type="button" className="btn-secondary" onClick={onRetry}>Retry</button>}
+        {onRetry && !isNotFound(error) && <button type="button" className="btn-secondary" onClick={onRetry}>Try again</button>}
+        <details>
+          <summary>Technical details</summary>
+          <p className="mono mt-1 break-all">{e.technical}{e.requestId ? ` · Request ID ${e.requestId}` : ''}</p>
+        </details>
       </div>
     </div>
   );

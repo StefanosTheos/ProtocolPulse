@@ -6,6 +6,7 @@ import { LoadingSkeleton } from './LoadingSkeleton';
 import { useApiQuery } from '@/lib/api/hooks';
 import { getApi } from '@/lib/api/runtime';
 import { splitAtCodePointSpan } from '@/lib/api/text';
+import { sentenceCase } from '@/lib/api/labels';
 
 // Fetches a source through the authorised evidence endpoint and highlights a code-point span.
 export function SourceViewer({ trialId, sourceId, version, page, start, end }: {
@@ -23,7 +24,7 @@ export function SourceViewer({ trialId, sourceId, version, page, start, end }: {
   return (
     <div className="space-y-2">
       <p className="text-xs text-ink-muted">
-        <span className="mono">{source.data.source_id}</span> v{source.data.source_version} · {source.data.filename} · {source.data.kind}
+        {source.data.filename} · {sentenceCase(source.data.kind)}
         {source.data.page_count !== null && <> · {source.data.page_count} pages</>}
       </p>
       {spans.map((s, i) => {
@@ -52,8 +53,6 @@ export function ProtocolCitation({ trialId, sourceId, page, start, end, quote, l
       <figcaption className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
         {label && <span className="font-medium text-ink">{label}</span>}
         <span>Page {page}</span>
-        <span className="mono" title="Zero-based, end-exclusive Unicode code-point offsets in the extracted page text">[{start}, {end})</span>
-        <span className="mono">{sourceId}</span>
         <button type="button" className="btn-ghost px-1.5 py-0.5 text-xs" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
           {open ? 'Hide source page' : 'Show in source page'}
         </button>

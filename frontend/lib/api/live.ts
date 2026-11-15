@@ -27,6 +27,9 @@ function xhrUpload(url: string, req: ApiRequest): Promise<ApiResponse> {
       if (e.lengthComputable) req.onUploadProgress?.(e.loaded / e.total);
     };
     xhr.onerror = () => reject(new TypeError('Network request failed'));
+    xhr.onabort = () => reject(new DOMException('Upload cancelled', 'AbortError'));
+    if (req.signal?.aborted) { reject(new DOMException('Upload cancelled', 'AbortError')); return; }
+    req.signal?.addEventListener('abort', () => xhr.abort(), { once: true });
     xhr.onload = async () => {
       resolve({
         status: xhr.status,
@@ -49,6 +52,7 @@ export function createLiveTransport(baseUrl: string): Transport {
       headers,
       body: req.body === undefined ? undefined : JSON.stringify(req.body),
       cache: 'no-store',
+      signal: req.signal,
     });
     return {
       status: res.status,

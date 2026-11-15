@@ -3,10 +3,11 @@
 import { ErrorPanel } from './ErrorBoundary';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import { AgentStatusPill, Pill } from './StatusPill';
+import { REASON_LABEL, sentenceCase } from '@/lib/api/labels';
 import { useApiQuery } from '@/lib/api/hooks';
 import { getApi } from '@/lib/api/runtime';
 import { formatInstant } from '@/lib/api/time';
-import type { AgentExecution } from '@/lib/api/types';
+import type { AgentExecution, UnknownReason } from '@/lib/api/types';
 
 // Shows only the backend-recorded summarised tool trace: tool name, reference IDs, result
 // code and elapsed time. There is no model reasoning to show and none is fabricated.
@@ -15,36 +16,38 @@ export function AgentExecutionView({ execution: e, timeZone }: { execution: Agen
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2">
         <AgentStatusPill status={e.status} />
-        <span className="mono">{e.execution_id}</span>
-        <Pill tone="neutral">{e.role}</Pill>
-        <span className="text-xs text-ink-muted">model {e.model_id ?? 'none'}</span>
+        <span className="text-xs text-ink-muted">{sentenceCase(e.role)}</span>
       </div>
       {e.status === 'UNAVAILABLE' && (
         <p className="rounded border border-line bg-canvas p-2 text-xs">
-          Agent capability unavailable{e.error_code ? <> (<span className="mono">{e.error_code}</span>)</> : null}. No model ran and no tool trace exists. Deterministic screening, monitoring and case workflow are unaffected.
+          Automated summary unavailable{e.error_code ? <> <span className="mono text-2xs text-ink-faint">({e.error_code})</span></> : null}. No model ran, so there is nothing to show. Screening, safety checks and case review work as normal.
         </p>
       )}
       {e.status === 'FAILED' && (
         <p className="rounded border border-fail-line bg-fail-bg p-2 text-xs text-fail-fg">
-          Agent execution failed{e.error_code ? <> with <span className="mono">{e.error_code}</span></> : null}. Any deterministic assessment remains valid; nothing below was concluded by the agent.
+          The automated summary didn&apos;t finish{e.error_code ? <> <span className="mono text-2xs">({e.error_code})</span></> : null}. Screening results are still valid; nothing below was concluded by the automated summary.
         </p>
       )}
       {e.status === 'PARTIAL' && <p className="rounded border border-unknown-line bg-unknown-bg p-2 text-xs text-unknown-fg">Partial result: some tools did not complete. Treat the summary as incomplete.</p>}
-      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 text-xs">
-        <dt className="text-ink-muted">Patient</dt><dd className="mono">{e.patient_id ?? '—'}</dd>
-        <dt className="text-ink-muted">Rules</dt><dd className="mono">{e.criterion_ids.join(', ') || '—'}</dd>
-        <dt className="text-ink-muted">Event</dt><dd className="mono">{e.event_id ?? '—'}</dd>
-        <dt className="text-ink-muted">Correlation</dt><dd className="mono">{e.correlation_id}</dd>
-        <dt className="text-ink-muted">Started</dt><dd>{formatInstant(e.created_at, timeZone)}</dd>
-        <dt className="text-ink-muted">Finished</dt><dd>{formatInstant(e.finished_at, timeZone)}</dd>
-      </dl>
+      <p className="text-xs text-ink-muted">Ran {formatInstant(e.created_at, timeZone)}{e.patient_id ? ` for patient ${e.patient_id}` : ''}.</p>
+      <details className="text-xs">
+        <summary className="text-ink-muted">Technical details</summary>
+        <dl className="mt-1 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5">
+          <dt className="text-ink-muted">Run</dt><dd className="mono break-all">{e.execution_id}</dd>
+          <dt className="text-ink-muted">Model</dt><dd className="mono">{e.model_id ?? 'none'}</dd>
+          <dt className="text-ink-muted">Rules</dt><dd className="mono">{e.criterion_ids.join(', ') || '—'}</dd>
+          <dt className="text-ink-muted">Event</dt><dd className="mono">{e.event_id ?? '—'}</dd>
+          <dt className="text-ink-muted">Correlation</dt><dd className="mono break-all">{e.correlation_id}</dd>
+          <dt className="text-ink-muted">Finished</dt><dd>{formatInstant(e.finished_at, timeZone)}</dd>
+        </dl>
+      </details>
       {e.summary && (
         <div className="rounded border border-info-line bg-info-bg p-2 text-xs">
           <p className="font-semibold text-info-fg">AI-drafted summary (not a clinical decision)</p>
           <p className="mt-1 text-ink">{e.summary}</p>
         </div>
       )}
-      {e.unknown_reasons.length > 0 && <p className="text-xs"><span className="text-ink-muted">Unknown reasons:</span> <span className="mono">{e.unknown_reasons.join(', ')}</span></p>}
+      {e.unknown_reasons.length > 0 && <p className="text-xs"><span className="text-ink-muted">Open questions:</span> {e.unknown_reasons.map((r) => REASON_LABEL[r as UnknownReason] ?? sentenceCase(r)).join('; ')}</p>}
       {e.verification_questions.length > 0 && (
         <div className="text-xs"><p className="text-ink-muted">Verification questions proposed for humans:</p><ul className="list-disc pl-5">{e.verification_questions.map((q) => <li key={q}>{q}</li>)}</ul></div>
       )}
