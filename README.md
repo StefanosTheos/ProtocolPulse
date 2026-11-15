@@ -1,153 +1,81 @@
 # ProtocolPulse
 
-Protocol-grounded recruitment and monitoring on **15 synthetic patients** and fictional PX-104. Investigator-approved rules drive deterministic screening and event-triggered review cases. No automatic enrollment, treatment action, pharmacological inference or real health data.
+### Clinical trial monitoring that follows the evidence.
 
-Contract `PP-S2-CF-20261114-01 / 1.0.0-rc2`; fixture `px104-protocol-v1`. Read [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md), [API_CONTRACTS.md](docs/API_CONTRACTS.md) and [INTEGRATION_REPORT.md](INTEGRATION_REPORT.md). Design approval and software tests are not clinical validation.
+Turn protocol requirements into reviewed rules. Screen patients, follow new medical events and bring source-backed cases to a Clinical Lead in one connected workspace.
 
-## Prerequisites
+**AI investigates. Approved rules drive evaluation. People make clinical decisions.**
 
-Python **3.12**, Node.js **24**, npm. QA used Python 3.12.14, Node 24.16.0 and npm 11.13.0 on Windows. Run backend commands from repository root. Use one Uvicorn worker and persistent local SQLite.
+[Run locally](docs/GETTING_STARTED.md) · [Explore the workflow](docs/WORKFLOW.md) · [Inspect the evidence](docs/verification/README.md)
 
-## PowerShell setup
+![Clinical Lead screening workspace showing patient outcomes, reasons and participation](docs/media/screening.png)
 
-```powershell
-Copy-Item .env.example .env  # first setup only; preserve an existing local configuration
-python3.12 -m venv .venv
-.venv/Scripts/python.exe -m pip install -r requirements-dev.lock
-npm ci --prefix frontend
-Set-Content frontend/.env.local 'NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000/api/v1'
-New-Item -ItemType Directory -Force backend/var/protocols | Out-Null
-.venv/Scripts/python.exe -m alembic -c backend/alembic.ini upgrade head
-.venv/Scripts/python.exe -m backend.app.seed --dataset px104-15
-.venv/Scripts/python.exe -m tools.add_demo_patients
-.venv/Scripts/python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 1
+*One cohort, three clear outcomes: potential match, needs review or protocol conflict. Every result opens into its evidence.*
+
+## From protocol to action
+
+### Review the rule. Read the source.
+
+Extracted criteria retain their source quotes and page references. The Clinical Lead reviews the rules and coverage before they can drive screening.
+
+![Approved protocol rules with the original medication restriction expanded](docs/media/protocol.png)
+
+### Keep uncertainty visible
+
+A medication order does not establish use. The patient workspace puts the approved clause, clinical dates and source record together so the reviewer can see what remains unresolved.
+
+![Patient evidence showing an order-only medication record, uncertainty and the protocol clause](docs/media/patient-evidence.png)
+
+### See why the agent took its next step
+
+For P-124, a saved Gemini investigation inspected laboratory history and notes, found no qualifying current result and requested human verification.
+
+![Saved Gemini investigation showing an incomplete result, cited summary and verification question](docs/media/investigation.png)
+
+Different evidence leads to different investigation paths:
+
+| Situation | Observed agent response |
+|---|---|
+| Missing or stale lab | Inspect labs and notes; request a qualifying result. |
+| Medication order without confirmed use | Check terminology and medication evidence; request verification. |
+| Irrelevant event | Stop after relevance classification. |
+
+[Recorded Gemini executions](docs/verification/evidence/live-investigations.json) show the actual tool choices. The investigation pictured above is a [saved provider execution](docs/verification/evidence/showcase-investigation.json), displayed without running new inference.
+
+<details>
+<summary>Inspect the tool sequence behind the lab investigation</summary>
+
+```text
+get_lab_history
+  → retrieve_patient_evidence
+  → search_notes
+  → get_evidence_link
+  → request_verification_task
 ```
 
-In another terminal at repository root:
+The result remains **PARTIAL** because evidence is unresolved. The backend owns rule results; the agent cannot approve rules, enroll patients or change treatment.
 
-```powershell
-npm --prefix frontend run dev -- --hostname localhost --port 3000
-```
+</details>
 
-Open **http://localhost:3000**. Health: **http://127.0.0.1:8000/api/v1/health**. API documentation: **http://127.0.0.1:8000/docs**. Browser origin must match `FRONTEND_ORIGIN=http://localhost:3000` for CORS.
+### Turn new evidence into accountable review
 
-For production frontend: stop the dev server, run `npm --prefix frontend run build`, then `npm --prefix frontend run start -- --hostname localhost --port 3000`.
+New records trigger targeted monitoring against approved rules. Cases bring together findings, source evidence, review history and a human decision. Historical screening results remain intact.
 
-Use this production frontend for the live demo: development mode compiles screens on first visit. The browser shares trial metadata across tabs and deduplicates identical in-flight reads. Completed read responses are cached in memory for at most five seconds, separately per actor and request parameters; operational job/run/execution and health reads are never served from a completed-response cache. Updates, job completion, Refresh and returning to the browser window invalidate reads. Role switches hide previous-role query data immediately and fetch under the new actor. No clinical data is stored in localStorage by this cache.
+![Clinical review case with source-linked findings and human disposition controls](docs/media/case-review.png)
 
-## POSIX setup
+<details>
+<summary>The Sponsor workspace: follow participation without patient-level records</summary>
 
-```sh
-cp .env.example .env  # first setup only
-python3.12 -m venv .venv
-. .venv/bin/activate
-python -m pip install -r requirements-dev.lock
-npm ci --prefix frontend
-printf 'NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000/api/v1\n' > frontend/.env.local
-mkdir -p backend/var/protocols
-python -m alembic -c backend/alembic.ini upgrade head
-python -m backend.app.seed --dataset px104-15
-python -m tools.add_demo_patients
-python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 1
-# second terminal: npm --prefix frontend run dev -- --hostname localhost --port 3000
-```
+Sponsor prepares the protocol and follows aggregate participation. Clinical Lead owns approval, screening, patient evidence and Safety review.
 
-The Python lock captures tested package versions. POSIX commands were not executed during Windows QA. Ordinary startup never migrates, seeds or clears data; missing migrations/worker make health degraded.
+![Sponsor participation view showing cohort and participation totals across studies](docs/media/participation.png)
 
-## Synthetic walkthrough and reset
+</details>
 
-1. Load PX-104 and Trial setup. Seed rules are **unapproved**. To demonstrate upload/extraction, use `fixtures/protocols/px104-v1/PX-104-v1.0-fictional.pdf` and a new version label before activating another version.
-2. As coordinator `ACT-COORD-01`, upload and extract. With the default `LLM_ENABLED=false`, extraction loads a **labeled curated fixture**. When enabled and configured, it runs Gemini through the scoped gateway and persists validated, unapproved model proposals. An enabled-model failure is explicit and never replaced by curated answers. The synthetic-source allowlist rejects other PDF bytes.
-3. Switch to `ACT-INV-01`, review/edit proposals and all citations, attest twelve coverage sections and approve eight rules. A second active version is intentionally blocked in v1.
-4. Screen for `2026-10-31`. Wait for job `SUCCEEDED` and run `COMPLETE`. Inspect P-042, P-175, P-124, P-117/P-118, P-083 and P-140. Counts come from fifteen actual assessments.
-5. On P-042, record external participation using `SRC-P-042-external` and `EXT-P-042`. This mirrors a registered synthetic external record; screening does not enroll anyone.
-6. As coordinator, post day-18 administration in Safety monitor. Wait for the backend case. Replay the preset to verify deduplication. A monitor/investigator records assignment and a review decision with **cited evidence**, rationale and disposition. Inspect audit.
+## Try the complete workflow
 
-**Reset:** stop the API first, then deliberately run `.venv/Scripts/python.exe -m backend.app.seed --dataset px104-15 --reset-demo` (POSIX: `python -m ...`). This replaces the entire local synthetic dataset, including approvals, screens, events, cases and reviews. Restart the API afterward. Ordinary restarts preserve data.
+Follow the [setup guide](docs/GETTING_STARTED.md), then walk through [protocol → approval → screening → participation → monitoring → review](docs/WORKFLOW.md). Requires **Python 3.12** and **Node.js 24**. Gemini is optional; deterministic screening and monitoring continue with AI disabled.
 
-## Shared additional patients (30-patient cohort)
+Built with **Next.js, React, FastAPI, SQLite and Gemini**. [Architecture](docs/SYSTEM_ARCHITECTURE.md) · [AI implementation](docs/AI_IMPLEMENTATION.md) · [Verification](docs/verification/README.md)
 
-After pulling the repository and completing the normal migrations and initial
-`px104-15` seed, run from the repository root with your Python environment:
-
-```powershell
-.venv/Scripts/python.exe -m tools.add_demo_patients
-```
-
-POSIX: `python -m tools.add_demo_patients` with the virtual environment activated.
-This imports the same fifteen synthetic patients **P-301 through P-315** that were
-added to the demo, including their source-linked records and narratives. It uses
-the existing synthetic patient generator with fixed IDs and seed indices 15–29.
-Existing patients, protocols, approvals, events and screening results are preserved;
-rerunning skips existing patients. The database comes from your local `DATABASE_URL`;
-SQLite runtime files and `.env` stay outside Git. A normal fresh setup has 30 patients
-after this import. Run a **new screening** to include them; historical runs retain
-their original cohort. After a demo reset, rerun the import to restore the extra fifteen.
-
-A study created in the app starts with no patients, so it cannot be screened. To give it
-the same fifteen synthetic profiles, pass its study ID (shown in the study's URL):
-
-```powershell
-.venv/Scripts/python.exe -m tools.add_demo_patients --trial TR-<study-id>
-```
-
-Because patient IDs are global, those patients get study-specific IDs such as
-`P-272e70-301` to `P-272e70-315`. Rerunning skips existing patients.
-
-## AI configuration
-
-Default `LLM_ENABLED=false` needs no key. Deterministic screening/events/cases continue; agents show `UNAVAILABLE` without fabricated traces. Explicit investigations return `503 AGENT_UNAVAILABLE` when disabled/unconfigured.
-
-Selected provider/model: `LLM_PROVIDER=gemini`, `LLM_MODEL=gemini-3.8-flash`. An authorized synthetic smoke may set `LLM_ENABLED=true` and server-side `LLM_API_KEY` in root `.env`, then restart the API. Backend loads root `.env` into the server process used by the AI entrypoint. Account access, quota, latency and live inference require an actual configured run; mocked SDK/model tests do not prove them.
-
-Protocol preparation preserves actual PDF text/Unicode anchors. The model interprets clauses in two small bounded batches; code constructs the exact public drafts and the backend validates/persists them. Patient-role final outputs select verified citation registry entries. Monitoring switches to tool-free final drafting when its observed evidence is sufficient; the deterministic worker creates findings/cases independently. All roles retain the frozen eight-tool / 5s tool / 10s model / 30s execution limits. See [six-change verification](docs/AI_REMEDIATION.md) for real and mocked evidence, measured runs and limitations.
-
-Never put secrets in browser configuration, `NEXT_PUBLIC_*`, DTOs, model input, traces or Git. The only frontend variable is `NEXT_PUBLIC_API_BASE_URL`. `.env`, virtual environments and `backend/var/` are ignored. Demo actors simulate roles and provide **no production authentication**.
-
-## Demo roles and workflow
-
-The **Viewing as** dropdown contains **Sponsor** (`COORDINATOR`, `ACT-COORD-01`) first and **Clinical Lead** (`INVESTIGATOR`, `ACT-INV-01`) second. Sponsor is the display name for the existing preparation/event-entry role, not the retired `SPONSOR_OPS` identity. There are no sign-in accounts. Supporting actors cannot be selected, restored, assigned cases or used through the API; old saved selections reset to Clinical Lead. Historical audit records remain intact.
-
-Both roles land on an empty **Overview** at `/`. Select a study from the **Study** dropdown to load its current overview and enable the appropriate workflow tabs. Site time zone, planned dates, protocol state and existing attention/summary information appear only after selection. Use the dropdown on Overview to switch studies or select the blank option to clear the selection. The selected study is carried in `/trials/{trial_id}` and survives refresh; returning to `/` starts with no study selected. No trial-specific API requests are made from the unselected Overview.
-
-Study selections and tab highlights respond before navigation completes. The previous view stays hidden while the destination loads, preserving unsaved inputs if a pending change is cancelled. Up to five study routes preload their route code; tab route code and authorized reads warm only on hover/focus. The existing actor-scoped five-second data cache, mutation/role invalidation and always-fresh job polling remain in force. Fresh data still requires its normal API response; preloading never performs extraction, screening, event writes or AI calls.
-
-The Sponsor uploads the PDF and runs extraction. While proposals await approval, the overview and protocol screen show **Waiting for a Clinical Lead to approve these rules** and refresh status every five seconds. The Clinical Lead checks citations and coverage, resolves blockers, approves the rules, screens patients and records any externally confirmed participation. The Sponsor enters new events from Safety; the backend reassesses relevant rules automatically and the Clinical Lead investigates and dispositions resulting cases. A screening match never enrolls a patient.
-
-Tabs: Sponsor **Overview → Protocol → Safety**; Clinical Lead **Overview → Protocol → Screen patients → Safety**, with **Audit trail** available throughout. This site workflow supports protocol surveillance and clinical review; independent sponsor monitoring remains a separate responsibility. Wire role identifiers and clinical gates are unchanged; the active demo policy rejects the four retired roles with `403 ROLE_FORBIDDEN` even in existing databases.
-
-## Verification
-
-```powershell
-.venv/Scripts/python.exe tools/protocol_fixture.py --check
-.venv/Scripts/python.exe -m pytest backend/tests ai/tests -q
-.venv/Scripts/python.exe -m ai.evals.run_evals --live
-npm --prefix frontend run lint
-npm --prefix frontend run typecheck
-npm --prefix frontend test
-npm --prefix frontend run build
-```
-
-Python tests use isolated migrated/seeded SQLite databases. Frontend unit tests use labeled mocks and skip the opt-in live suite. Agent `--live` skips inference without credentials; even its enabled smoke uses a synthetic test gateway.
-
-For live frontend **client** tests, reset/start the API first:
-
-```powershell
-$env:PP_LIVE_API_BASE_URL='http://127.0.0.1:8000/api/v1'
-npm --prefix frontend test -- tests/live.test.ts
-Remove-Item Env:PP_LIVE_API_BASE_URL
-```
-
-For real Chromium E2E, reset/start the API **again**, build/start the live frontend, then:
-
-```powershell
-frontend/node_modules/.bin/playwright.cmd install chromium
-npm --prefix frontend run test:e2e
-.venv/Scripts/python.exe tools/integration/live_checks.py
-node tools/integration/contracts.cjs
-.venv/Scripts/python.exe tools/integration/contracts.py
-```
-
-POSIX uses `frontend/node_modules/.bin/playwright install chromium`. E2E intentionally mutates the synthetic database; run once per reset. Additional live checks follow the browser test. Evidence, route audit, traces and screenshots are saved to `artifacts/integration/`; runtime browser files and SQLite are ignored. `tools/integration/record.py LABEL EXECUTABLE ARGS...` records actual command output/exit codes.
-
-See the integration report for observed results, remaining defects, severity assignments and the required Prompt E follow-up. No clinical, production-security or complete accessibility certification is claimed.
+*Current scope: fictional PX-104, eight supported rules and 30 synthetic patient profiles. Interface captures use the real API on an isolated dataset; saved AI results are identified above. The role dropdown simulates permissions. Production identity, unrestricted protocol ingestion and clinical validation remain outside this release.*

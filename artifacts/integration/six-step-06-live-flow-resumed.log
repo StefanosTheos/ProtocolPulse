@@ -1,7 +1,0 @@
-{"step": "monitoring_core", "status": "SUCCEEDED"}
-{"step": "monitoring_agent", "status": "SUCCEEDED"}
-{"step": "review_case", "status": "OPEN"}
-{"step": "P-151-MONITORING_WORKFLOW", "status": "SUCCEEDED"}
-{"step": "P-083-MEDICATION_SAFETY_INVESTIGATOR", "status": "PARTIAL"}
-{"step": "P-124-EVIDENCE_INVESTIGATOR", "status": "PARTIAL"}
-{"step": "P-140-MEDICATION_SAFETY_INVESTIGATOR", "status": "PARTIAL"}

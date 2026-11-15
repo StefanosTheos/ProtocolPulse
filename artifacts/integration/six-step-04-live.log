@@ -1,1 +1,0 @@
-{"case": "monitoring", "status": "SUCCEEDED", "error_code": null, "model_id": "gemini-3.8-flash", "elapsed_seconds": 17.54, "tools": ["get_case_status", "classify_event_relevance", "get_prior_evaluation", "retrieve_patient_evidence"]}

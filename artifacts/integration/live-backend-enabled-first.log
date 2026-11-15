@@ -1,1 +1,0 @@
-{"case": "medication", "status": "PARTIAL", "error_code": null, "model_id": "gemini-3.8-flash", "elapsed_seconds": 22.321, "tools": ["retrieve_patient_evidence", "get_medication_timeline", "resolve_approved_terminology", "search_notes", "request_med_reconciliation", "request_verification_task", "get_evidence_link", "get_evidence_link"]}

@@ -1,1 +1,0 @@
-{"case": "protocol", "status": "SUCCEEDED", "error_code": null, "model_id": "gemini-3.8-flash", "elapsed_seconds": 5.98, "tools": ["parse_protocol", "locate_clause", "validate_rule_schema", "report_coverage"]}

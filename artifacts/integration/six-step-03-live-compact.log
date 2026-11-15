@@ -1,1 +1,0 @@
-{"case": "protocol", "status": "FAILED", "error_code": "PROVIDER_HTTP_504", "model_id": "gemini-3.8-flash", "elapsed_seconds": 9.066, "tools": ["parse_protocol", "locate_clause"]}

@@ -10,4 +10,14 @@ node_modules/
 frontend/.next/
 frontend/.env.local
 backend/var/
-artifacts/integration/runtime/
+# Generated verification output; curated evidence lives in docs/verification/.
+/artifacts/integration/
+/frontend/playwright-report/
+/frontend/test-results/
+/frontend/blob-report/
+/frontend/coverage/
+/htmlcov/
+.coverage
+.coverage.*
+.DS_Store
+Thumbs.db

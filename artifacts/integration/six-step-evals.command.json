@@ -1,9 +1,0 @@
-{
-  "command": [
-    ".venv/Scripts/python.exe",
-    "-m",
-    "ai.evals.run_evals"
-  ],
-  "exit_code": 0,
-  "elapsed_seconds": 0.328
-}

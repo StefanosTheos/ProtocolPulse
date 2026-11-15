@@ -1,0 +1,173 @@
+{
+  "checked_at": "2026-11-15T13:05:45.427000+00:00",
+  "source_baseline_commit": "3cec7371a146fdd59011c58bccd5f12aadfecda3",
+  "working_tree": "Documentation and repository presentation cleanup; application source/manifests/contracts/fixtures unchanged.",
+  "python_version": "3.12.14",
+  "checks": [
+    {
+      "name": "python",
+      "command": [
+        ".venv/Scripts/python.exe",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "ai/tests",
+        "-q",
+        "--tb=short",
+        "--basetemp=backend/var/qa-<unique>"
+      ],
+      "exit_code": 0,
+      "summary": "183 passed; one existing Starlette/AnyIO deprecation warning; isolated SQLite"
+    },
+    {
+      "name": "frontend",
+      "command": [
+        "npm.cmd",
+        "--prefix",
+        "frontend",
+        "test"
+      ],
+      "exit_code": 0,
+      "summary": "82 passed, 10 opt-in live-client tests skipped; mocked transport"
+    },
+    {
+      "name": "agent-evals",
+      "command": [
+        ".venv/Scripts/python.exe",
+        "-m",
+        "ai.evals.run_evals"
+      ],
+      "exit_code": 0,
+      "summary": "12 reproducible mocked/disabled scenario evaluations passed; no live inference"
+    },
+    {
+      "name": "fixture",
+      "command": [
+        ".venv/Scripts/python.exe",
+        "tools/protocol_fixture.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "summary": "5 pages, 8 rules, 12 coverage sections, 11 negative mutations; hashes/spans pass"
+    },
+    {
+      "name": "typescript-contract",
+      "command": [
+        "node",
+        "tools/integration/contracts.cjs"
+      ],
+      "exit_code": 0,
+      "summary": "74 declarations, zero mismatches"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm.cmd",
+        "--prefix",
+        "frontend",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "summary": "Frontend ESLint exit 0"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm.cmd",
+        "--prefix",
+        "frontend",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "summary": "Frontend TypeScript exit 0"
+    }
+  ],
+  "api_contract_audit": {
+    "command": "tools/integration/contracts.py with httpx.get redirected from port 8000 to the isolated current API on 8017",
+    "exit_code": 0,
+    "routes": 27,
+    "issues": []
+  },
+  "not_run": [
+    "New live-provider inference",
+    "Fresh full upload/approval/event/review end-to-end journey",
+    "Production build/deployment"
+  ],
+  "historical_evidence": "Retained separately under evidence/ with original provenance. Not counted as current tests.",
+  "current_browser_capture": {
+    "screenshots": 4,
+    "cohort": 30,
+    "new_screening_status": "COMPLETE",
+    "browser_errors": [],
+    "api_errors": [],
+    "model_execution": "Disabled; no new inference",
+    "preview_servers": "Stopped; original live servers left running."
+  },
+  "documentation_checks": {
+    "markdown_files": 17,
+    "local_links_and_heading_anchors_checked": 130,
+    "broken_links": []
+  },
+  "credential_check": {
+    "text_files_scanned": 226,
+    "exact_local_provider_key_and_credential_patterns": "No matches. Not an exhaustive secret-detection guarantee."
+  },
+  "readme_showcase_refresh": {
+    "captured_at": "2026-11-15T13:18:37.214Z",
+    "screenshots": 7,
+    "read_only": true,
+    "new_model_calls": false,
+    "new_screenings": false,
+    "browser_errors": [],
+    "api_errors": [],
+    "note": "Real UI/API over the same isolated synthetic copy. Application source unchanged; prior unit-test results were not rerun for this documentation-only refresh.",
+    "readme_images": 6,
+    "screenshot_hashes_verified": 7,
+    "saved_execution_trace_verified": true,
+    "preview_servers": "Stopped; original live servers unchanged."
+  },
+  "pre_publication_sync": {
+    "checked_at": "2026-11-15T13:27:18.766655+00:00",
+    "merge_commit": "d130afbed57cb429eefeabf3df47fb722da6cdc2",
+    "remote_commit": "651948b16f2689e575dbd080bc510bab60e19b51",
+    "incoming_changes": "Frontend UI punctuation and matching test expectations only. Both histories preserved.",
+    "checks": [
+      {
+        "command": [
+          "npm.cmd",
+          "--prefix",
+          "frontend",
+          "test"
+        ],
+        "exit_code": 0,
+        "summary": "82 passed, 10 opt-in live-client tests skipped"
+      },
+      {
+        "command": [
+          "npm.cmd",
+          "--prefix",
+          "frontend",
+          "run",
+          "lint"
+        ],
+        "exit_code": 0,
+        "summary": "Passed"
+      },
+      {
+        "command": [
+          "npm.cmd",
+          "--prefix",
+          "frontend",
+          "run",
+          "typecheck"
+        ],
+        "exit_code": 0,
+        "summary": "Passed"
+      }
+    ],
+    "backend_ai_tests": "Not rerun; backend/AI runtime source and fixture contents match the earlier tested baseline.",
+    "screenshots": "Pinned to their recorded capture revision; incoming changes only alter UI punctuation."
+  }
+}

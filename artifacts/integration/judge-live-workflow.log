@@ -1,2 +1,0 @@
-{"automatic_status": "SUCCEEDED", "error": null, "tools": ["get_case_status", "classify_event_relevance", "get_prior_evaluation", "retrieve_patient_evidence"]}
-Live probes complete

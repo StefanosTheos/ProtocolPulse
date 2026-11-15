@@ -1,0 +1,113 @@
+{
+  "source_commit": "3cec7371a146fdd59011c58bccd5f12aadfecda3",
+  "captured_at": "2026-11-15T13:18:37.214Z",
+  "mode": "REAL_NEXT_DEVELOPMENT_SERVER_FASTAPI_SQLITE",
+  "environment": "Isolated copy of the existing synthetic database; extension imported only in the copy.",
+  "ai_mode": "DISABLED; no new model execution claimed. Existing cases/traces are copied historical data.",
+  "cohort_count": 30,
+  "mutations": [
+    "One new deterministic screening in the isolated database only."
+  ],
+  "screenshots": [
+    {
+      "file": "screening.png",
+      "role": "Clinical Lead",
+      "route": "/trials/TR-PX104/selector?run=RUN-b4d5cdd33b31452ea71bfd470b213b80&status=ALL",
+      "description": "Completed thirty-patient screening; backend results and current participation.",
+      "sha256": "aaa2fa9485a81cadc27d34146328d327b90b4f3bbdd09445c2608d65757d5f5c"
+    },
+    {
+      "file": "protocol.png",
+      "role": "Clinical Lead",
+      "route": "/trials/TR-PX104/protocol",
+      "description": "Approved rules with the restricted-medication source quote expanded.",
+      "sha256": "a52316a222568735e5a20463efee5154819bca0ae92f4cdec7f4f55a3173faae"
+    },
+    {
+      "file": "patient-evidence.png",
+      "role": "Clinical Lead",
+      "route": "/trials/TR-PX104/patients/P-083?run=RUN-b4d5cdd33b31452ea71bfd470b213b80",
+      "description": "Order-only medication evidence remains unclear; dates, protocol clause and source record.",
+      "sha256": "f6d95718de1b75cb6db0a2617937c8977480e410e3082a72128607b374137e76"
+    },
+    {
+      "file": "investigation.png",
+      "role": "Clinical Lead",
+      "route": "/trials/TR-PX104/audit",
+      "description": "Saved Gemini investigation of P-124: missing/stale lab evidence, cited summary and a human verification question.",
+      "sha256": "91b37ede4d43255489448f0ff35ea81ba52c5f4533e36cdc415d48fb296d4a10"
+    },
+    {
+      "file": "case-review.png",
+      "role": "Clinical Lead",
+      "route": "/trials/TR-PX104/cases?case=CASE-d024a48b55df4026bf6c72af6f067a22",
+      "description": "Persisted P-083 review case with source evidence, uncertainty and human disposition controls.",
+      "sha256": "9a79dfe3f629089e807f3a80a4acf31dc74a038b8d9b691960f88ee19c071988"
+    },
+    {
+      "file": "safety.png",
+      "role": "Clinical Lead",
+      "route": "/trials/TR-PX104/monitor",
+      "description": "Existing monitoring findings from the synthetic database copy.",
+      "sha256": "40c61851cc8d8cd414b56a785b4a1c2bca6465be79bcb2710ae9aa48356abc11"
+    },
+    {
+      "file": "participation.png",
+      "role": "Sponsor",
+      "route": "/trials/TR-PX104/participation",
+      "description": "Aggregate participation without patient-level records.",
+      "sha256": "0af9c6d63e033e3bda97553b42216e6e09fb0485d53cb713927ac4fb033d19c2"
+    }
+  ],
+  "errors": [],
+  "api_errors": [],
+  "screening_run": {
+    "run_id": "RUN-b4d5cdd33b31452ea71bfd470b213b80",
+    "trial_id": "TR-PX104",
+    "protocol_version_id": "PV-49f53ecfbfb749e7859418d2d7c61048",
+    "approved_set_hash": "99df3e1249bce345f91888ba500ff85a91420ff320f1b29baa3773577c66475f",
+    "screening_date": "2026-10-31",
+    "evidence_cutoff_at": "2026-10-31T22:00:00Z",
+    "evidence_snapshot_id": "SNAP-0647a5824c194c2a8a8f2ca486cfbf51",
+    "engine_version": "px104-eval-v1",
+    "terminology_map_version": "px104-terminology-v1",
+    "status": "COMPLETE",
+    "job_id": "JOB-f9b4722aca71401b86746a3c0e85695d",
+    "patient_count": 30,
+    "counts": {
+      "POTENTIAL_MATCH": 18,
+      "NEEDS_REVIEW": 6,
+      "PROTOCOL_CONFLICT": 6,
+      "EVALUATION_ERROR": 0
+    },
+    "created_at": "2026-11-15T13:01:31.987904Z",
+    "completed_at": "2026-11-15T13:01:39.817414Z",
+    "stale": false,
+    "error_code": null
+  },
+  "capture_runner_note": "Initial capture attempts used outdated accessible labels/API lookup; corrected runner reused the same completed screening. No additional screening or model run was needed.",
+  "showcase_capture": {
+    "captured_at": "2026-11-15T13:17:02.790Z",
+    "completed_at": "2026-11-15T13:18:37.214Z",
+    "mode": "REAL_INTERFACE_READ_ONLY_ISOLATED_SYNTHETIC_API",
+    "read_only": true,
+    "new_model_calls": false,
+    "new_screenings": false,
+    "preview_only_configuration": "Next.js development tooling indicator disabled; application UI/data unchanged."
+  },
+  "saved_investigation": {
+    "execution_id": "EXEC-f60027fb64d6456ebc7360cee0a787bc",
+    "patient_id": "P-124",
+    "model_id": "gemini-3.8-flash",
+    "status": "PARTIAL",
+    "created_at": "2026-11-14T22:11:00.660316Z",
+    "tools": [
+      "get_lab_history",
+      "retrieve_patient_evidence",
+      "search_notes",
+      "get_evidence_link",
+      "request_verification_task"
+    ]
+  },
+  "initial_capture_at": "2026-11-15T13:06:26.780Z"
+}

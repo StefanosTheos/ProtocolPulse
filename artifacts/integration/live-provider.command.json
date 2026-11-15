@@ -1,8 +1,0 @@
-{
-  "command": [
-    ".venv/Scripts/python.exe",
-    "tools/integration/live_provider.py"
-  ],
-  "exit_code": 1,
-  "elapsed_seconds": 20.27
-}

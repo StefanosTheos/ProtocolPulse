@@ -1,4 +1,0 @@
-{"case": "medication", "status": "PARTIAL", "error_code": null, "model_id": "gemini-3.8-flash", "elapsed_seconds": 14.188, "tools": ["get_medication_timeline", "resolve_approved_terminology", "evaluate_approved_rule", "request_verification_task"]}
-{"case": "lab", "status": "PARTIAL", "error_code": null, "model_id": "gemini-3.8-flash", "elapsed_seconds": 17.934, "tools": ["get_lab_history", "retrieve_patient_evidence", "search_notes", "get_evidence_link", "request_verification_task"]}
-{"case": "conflict", "status": "PARTIAL", "error_code": null, "model_id": "gemini-3.8-flash", "elapsed_seconds": 20.059, "tools": ["retrieve_patient_evidence", "search_notes", "get_evidence_link", "get_evidence_link", "request_verification_task", "evaluate_approved_rule"]}
-{"case": "protocol", "status": "FAILED", "error_code": "PROVIDER_HTTP_504", "model_id": "gemini-3.8-flash", "elapsed_seconds": 14.461, "tools": ["parse_protocol", "locate_clause", "report_coverage"]}

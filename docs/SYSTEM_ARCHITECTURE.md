@@ -1,5 +1,7 @@
 # ProtocolPulse — System Architecture
 
+> This document preserves the approved design contract. Current workspace behavior is described in [WORKFLOW](WORKFLOW.md), and observed runtime checks in [verification](verification/README.md). The frozen acceptance fixture contains fifteen patients; normal setup adds fifteen profiles for thirty total.
+
 **Contract freeze:** `PP-S2-CF-20261114-01` · **Version:** `1.0.0-rc2` · **Status:** APPROVED documentation design.
 **Authority:** [PRODUCT_SPECIFICATION.md](../PRODUCT_SPECIFICATION.md) v1.1, especially §§4–10, 14–16. Exactly **15** fictional demo patients; the product revision incorporates the cohort-size amendment. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) records the user-authorized reconciliation and serves as the Stage 2.1 freeze manifest. Approval covers the design; implementation, tests and engineering handoffs remain pending.
 
@@ -66,7 +68,7 @@
 
 ## 4. Protocol pipeline and approval gate
 
-Prepared source: [PROTOCOL_BLUEPRINT](PROTOCOL_BLUEPRINT.md) and `fixtures/protocols/px104-v1/PX-104-v1.0-fictional.pdf`. The adjacent manifest, actual extracted pages and expected request/review JSONs are IC-owned fixture release `px104-protocol-v1`; engineers consume them under [prompt addenda](PARALLEL_ENGINEER_PROMPT_UPDATES.md). Reference extraction tools are separate from backend runtime dependencies. Baseline/approval semantics and wire schema remain unchanged.
+Prepared source: [PROTOCOL_BLUEPRINT](PROTOCOL_BLUEPRINT.md) and `fixtures/protocols/px104-v1/PX-104-v1.0-fictional.pdf`. The adjacent manifest, actual extracted pages and expected request/review JSONs are IC-owned fixture release `px104-protocol-v1`; engineers consume them under the [shared ownership rules](TEAM_OWNERSHIP.md). Reference extraction tools are separate from backend runtime dependencies. Baseline/approval semantics and wire schema remain unchanged.
 
 1. `POST /api/v1/trials/{trial_id}/protocols` accepts `multipart/form-data` (`file` and `version_label`) up to `MAX_PDF_MB`, validates PDF signature, text-extraction eligibility, synthetic-demo allowlist (no unrestricted clinical upload), stores SHA-256 and original immutable file; creates version `DRAFT`.
 2. `POST .../extract` queues a job. Backend PDF parser reads pages and offset spans; agent can choose reinspection and propose `Criterion` objects with `source_quote`, page and stable span anchor, but **cannot approve**. Spans are zero-based `[start,end)` Unicode code-point offsets into the persisted page text (PDF) or complete note text; original file hashes remain byte-based. Scanned/encrypted/incomplete PDFs mark `EXTRACTION_FAILED` or coverage blockers, not fabricated anchors; prepared bundled mock text/PDF is a *clearly labeled alternative input*, not a claim that AI extracted a broken PDF.
@@ -135,7 +137,7 @@ Threat boundary: uploaded protocol pages and patient narratives are untrusted *d
 
 ## 10. Contract scope and cross-references
 
-API types, operation IDs and all extra necessary paths: [API_CONTRACTS.md](API_CONTRACTS.md). Persistence and 12-section history mapping: [DATA_MODEL.md](DATA_MODEL.md). Tool specs/LLM OFF truthfulness: [AGENT_DESIGN.md](AGENT_DESIGN.md). Ownership: [TEAM_OWNERSHIP.md](TEAM_OWNERSHIP.md). Time gates: [DEVELOPMENT_PLAN.md](DEVELOPMENT_PLAN.md). [Configuration](../.env.example) is the sole variable-name authority. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) is synchronized to this freeze. API_CONTRACTS, DATA_MODEL and TEAM_OWNERSHIP govern their respective domains; any disagreement requires IC review and a versioned revision.
+API types, operation IDs and all extra necessary paths: [API_CONTRACTS.md](API_CONTRACTS.md). Persistence and 12-section history mapping: [DATA_MODEL.md](DATA_MODEL.md). Tool specs/LLM OFF truthfulness: [AGENT_DESIGN.md](AGENT_DESIGN.md). Ownership: [TEAM_OWNERSHIP.md](TEAM_OWNERSHIP.md). Release gates: [DEVELOPMENT_PLAN.md](DEVELOPMENT_PLAN.md). [Configuration](../.env.example) is the sole variable-name authority. [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md) is synchronized to this freeze. API_CONTRACTS, DATA_MODEL and TEAM_OWNERSHIP govern their respective domains; any disagreement requires IC review and a versioned revision.
 
 ## 11. Architecture decision register — approved at 1.0.0-rc2
 

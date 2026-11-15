@@ -91,4 +91,4 @@ python tools/protocol_fixture.py --check --preview
 
 `--check` reads only. It verifies artifact hashes, reproducible PDF bytes, text on all five pages, quote/coverage spans, eight-rule inventory, twelve-section coverage, proposal schema/API field presence, unchanged generated outputs and all eleven negative mutations. Diagnostics in `extraction_checks.json` are fixture-validator labels only. This does **not** execute a model, prove backend rule evaluation, generate patient records, exercise HTTP approval or satisfy AC-12/17 runtime extraction/security tests. Those remain engineer obligations.
 
-Handoff to E1/E2/E3: read [parallel engineer prompt updates](PARALLEL_ENGINEER_PROMPT_UPDATES.md), keep these shared artifacts read-only, and use only assigned implementation paths.
+Handoff to E1/E2/E3: read the [maintained workflow](WORKFLOW.md) and [AI implementation](AI_IMPLEMENTATION.md), keep these shared artifacts read-only, and use only assigned implementation paths.

@@ -1,3 +1,5 @@
 # Preserve byte hashes in the committed protocol fixture manifest.
 fixtures/protocols/px104-v1/*.json text eol=lf
 fixtures/protocols/px104-v1/*.pdf binary
+# Keep curated evidence checksums stable across Windows and POSIX checkouts.
+docs/verification/evidence/*.json text eol=lf

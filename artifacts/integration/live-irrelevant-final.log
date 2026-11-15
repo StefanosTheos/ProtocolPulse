@@ -1,1 +1,0 @@
-{"case": "irrelevant", "status": "SUCCEEDED", "error_code": null, "model_id": "gemini-3.8-flash", "elapsed_seconds": 3.548, "tools": ["classify_event_relevance"]}

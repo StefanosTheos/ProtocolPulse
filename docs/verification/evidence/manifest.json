@@ -1,0 +1,37 @@
+{
+  "archived_from_commit": "3cec7371a146fdd59011c58bccd5f12aadfecda3",
+  "note": "Historical observed executions, not tests rerun during documentation cleanup. Each source manifest identifies the earlier implementation under test.",
+  "files": [
+    {
+      "file": "live-workflow.json",
+      "original_path": "artifacts/integration/judge/live-workflow.json",
+      "sha256": "0474191636bf8d4ff60ec58ea2b083a1ddcdcc8faadf4f81a847585cb5e2a09a",
+      "original_sha256": "9576cff20efe322915933f666d59db0c575c29d1eb591b1df865dc2d6b056933"
+    },
+    {
+      "file": "live-investigations.json",
+      "original_path": "artifacts/integration/judge/live-probe.json",
+      "sha256": "b2ecc38328caa8d46bed513360686844b37578c680bfdff2c06d002ea90f74a8",
+      "original_sha256": "7c5fc0dff85d690e3032abde51fc97c949b645def37dd29caf9b4c5663d792e5"
+    },
+    {
+      "file": "core-workflow.json",
+      "original_path": "artifacts/integration/judge/http-probe.json",
+      "sha256": "8bc9ef4a302239ca541ef4812a6f3af29c8d6c811a20f9c6b3557e02fca2cc55",
+      "original_sha256": "a96749f3b0439860daac7952eadb525eac002337f3986a41cf5fdc1c84edd2ff"
+    },
+    {
+      "file": "historical-source-manifest.json",
+      "original_path": "artifacts/integration/judge/manifest.json",
+      "sha256": "03e5af233a6157788c90b5c06cb1255d31c73b2ba761d760f9ba47b19356bfb6",
+      "original_sha256": "cd1375a1480739ac4e47aef9520685770b9998ab1d306ace13684825252a91ac"
+    },
+    {
+      "file": "restart-comparison.json",
+      "original_path": "artifacts/integration/six-step-persistence.json",
+      "sha256": "c1cf27efdf27e58968e885c3160aad06a62960335cbf76da1015a846db215a10",
+      "original_sha256": "d95d66df7c4428c001ee552edd7e485a3b453293b42e1327095107c8bbc8f5f8"
+    }
+  ],
+  "text_normalization": "Evidence JSON uses LF line endings for portable checkouts. original_sha256 preserves checksums of the archived working-tree bytes; sha256 verifies the curated file."
+}
