@@ -107,7 +107,7 @@ function PatientInner() {
               </p>
               {!assessment.data && <p className="text-ink-muted">{runId ? 'Loading screening result…' : 'Open this patient from the candidate list to see the screening result.'}</p>}
             </section>
-            <PatientActions trialId={trialId} patient={patient.data} assessment={assessment.data ?? null} protocolVersionId={activeId} onChanged={patient.reload} />
+            <PatientActions trialId={trialId} patient={patient.data} assessment={assessment.data ?? null} onChanged={patient.reload} />
           </div>
 
           <section className="card" aria-labelledby="criteria-heading">

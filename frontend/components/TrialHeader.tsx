@@ -65,12 +65,13 @@ export function TrialHeader({ trialId, children }: { trialId?: string; children?
   }
   const steps = STEPS.filter((s) => s.roles.includes(actor.role));
   // A patient page is reached from screening or from a safety case, so it belongs to whichever
-  // of those steps the current role has; it is never off-role.
+  // of those steps the current role has. A role with neither (the Sponsor) cannot see patient pages.
   const onPatient = targetPath.startsWith(`${base}/patients`);
+  const patientStep = steps.find((s) => s.key === 'screen') ?? steps.find((s) => s.key === 'safety');
   const current = onPatient
-    ? steps.find((s) => s.key === 'screen') ?? steps.find((s) => s.key === 'safety') ?? STEPS[0]
+    ? patientStep ?? STEPS[0]
     : STEPS.find((s) => s.paths.some((p) => targetPath.startsWith(base + p))) ?? STEPS[0];
-  const offRole = !onPatient && !current.roles.includes(actor.role);
+  const offRole = onPatient ? !patientStep : !current.roles.includes(actor.role);
 
   // Switching role while on a screen the new role does not use goes to the overview.
   const previousRole = useRef(actor.role);
@@ -139,7 +140,8 @@ export function TrialHeader({ trialId, children }: { trialId?: string; children?
       )}
     </div>
     {pending && <LoadingSkeleton rows={5} label="Opening view" />}
-    <div hidden={pending}>{children}</div>
+    {/* Off-role screens are not rendered at all, so their data is never requested. */}
+    {!offRole && <div hidden={pending}>{children}</div>}
     </>
   );
 }

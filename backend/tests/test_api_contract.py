@@ -18,7 +18,7 @@ def test_exact_route_inventory(env):
 
     text = Path("docs/API_CONTRACTS.md").read_text("utf-8")
     expected = set(re.findall(r"`(GET|POST|PUT|PATCH) (/api/v1/[^`]+)`", text))
-    assert len(actual) == 26
+    assert len(actual) == 27
     assert actual == expected
     assert app.openapi()["openapi"].startswith("3.1")
     Path("backend/var/openapi.json").write_text(json.dumps(app.openapi(), indent=2), "utf-8")

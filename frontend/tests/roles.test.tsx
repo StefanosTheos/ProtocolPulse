@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import type { ReactNode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import OverviewPage from '@/app/trials/[trialId]/page';
+import ParticipationPage from '@/app/trials/[trialId]/participation/page';
 import ProtocolPage from '@/app/trials/[trialId]/protocol/page';
 import { ActorProvider } from '@/components/ActorContext';
 import { AppHeader } from '@/components/AppHeader';
@@ -54,17 +55,41 @@ describe('two demo roles', () => {
   });
 
   it.each([
-    ['ACT-COORD-01', ['Overview', 'Protocol', 'Safety']],
+    ['ACT-COORD-01', ['Overview', 'Protocol', 'Participation']],
     ['ACT-INV-01', ['Overview', 'Protocol', 'Screen patients', 'Safety', 'Audit trail']],
   ] as const)('%s sees its workflow tabs', async (actor, tabs) => {
     setup(actor, <TrialHeader trialId="TR-PX104" />, undefined, actor === 'ACT-COORD-01' ? '/trials/TR-PX104/protocol' : '/trials/TR-PX104/audit');
     await waitFor(() => expect(screen.queryByText('Loading trial')).not.toBeInTheDocument());
     const nav = screen.getByRole('navigation', { name: 'Study workflow' });
-    for (const label of ['Overview', 'Protocol', 'Screen patients', 'Safety', 'Audit trail']) {
+    for (const label of ['Overview', 'Protocol', 'Screen patients', 'Participation', 'Safety', 'Audit trail']) {
       if ((tabs as readonly string[]).includes(label)) expect(within(nav).getByRole('link', { name: label })).toBeInTheDocument();
       else expect(within(nav).queryByRole('link', { name: label })).not.toBeInTheDocument();
     }
     expect(screen.queryByText(/This screen is not part of/)).not.toBeInTheDocument();
+  });
+});
+
+describe('Sponsor anonymity', () => {
+  it('shows participation counts per study without patient identifiers', async () => {
+    const server = createMockTransport({ pollsUntilDone: 1 });
+    const inv = createApi(server, () => 'ACT-INV-01');
+    await inv.approveProtocol('TR-PX104', 'PV-PX104-1.0', { criterion_ids: (protocolFixture as ProtocolDetail).criteria.map((c) => c.criterion_id), coverage_attestation: true, activate: true, decision_reason: 'r' }, 1, 'k-a');
+    await inv.recordParticipation('TR-PX104', 'P-042', { next_status: 'PARTICIPATING', external_record_source_id: 'SRC-P-042-PARTICIPATION', external_record_reference: 'EXT-1', rationale: 'r' }, 'k-p');
+    setApiForTesting(createApi(server));
+    setCurrentActorId('ACT-COORD-01');
+    navigation.params = { trialId: 'TR-PX104' };
+    navigation.pathname = '/trials/TR-PX104/participation';
+    render(<ActorProvider initialActorId="ACT-COORD-01"><ParticipationPage /></ActorProvider>);
+    const table = await screen.findByRole('table');
+    const row = within(table).getByRole('row', { current: true });
+    expect(within(row).getAllByRole('cell').map((c) => c.textContent)).toEqual([expect.stringContaining('(this study)'), '15', '1', '0']);
+    expect(within(table).queryByText(/P-\d{3}/)).not.toBeInTheDocument();
+  });
+
+  it('keeps patient pages off-limits to the Sponsor', async () => {
+    setup('ACT-COORD-01', <TrialHeader trialId="TR-PX104"><p>Patient record content</p></TrialHeader>, undefined, '/trials/TR-PX104/patients/P-042');
+    expect(await screen.findByText(/This screen is not part of the sponsor role/)).toBeInTheDocument();
+    expect(screen.queryByText('Patient record content')).not.toBeInTheDocument();
   });
 });
 

@@ -279,6 +279,31 @@ def trial_detail(trial_id: str, request: Request, session: Session, actor: Actor
 
 
 @router.get(
+    "/trials/{trial_id}/participation-summary",
+    response_model=Envelope[d.ParticipationSummary],
+    operation_id="getParticipationSummary",
+)
+def participation_summary(trial_id: str, request: Request, session: Session, actor: Actor):
+    scoped_trial(session, actor, trial_id)
+    counts = dict(
+        session.execute(
+            select(m.Patient.participation_status, func.count())
+            .where(m.Patient.trial_id == trial_id)
+            .group_by(m.Patient.participation_status)
+        ).all()
+    )
+    return envelope(
+        request,
+        d.ParticipationSummary(
+            trial_id=trial_id,
+            cohort_count=sum(counts.values()),
+            participating_count=counts.get("PARTICIPATING", 0),
+            ended_count=counts.get("ENDED", 0),
+        ),
+    )
+
+
+@router.get(
     "/trials/{trial_id}/protocols",
     response_model=Envelope[Page[d.ProtocolDetail]],
     operation_id="listProtocols",
@@ -686,7 +711,7 @@ def get_patient(
 def create_event(
     patient_id: str, body: d.EventCreate, request: Request, response: Response, session: Session, actor: Actor
 ):
-    require_role(actor, "COORDINATOR", "RESEARCH_IT")
+    require_role(actor, "INVESTIGATOR", "COORDINATOR", "RESEARCH_IT")
     patient = patient_for(session, actor, body.trial_id, patient_id)
     payload = body.model_dump(mode="json")
 

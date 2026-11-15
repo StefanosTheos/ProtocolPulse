@@ -56,7 +56,8 @@ export function EventSimulator({ trialId, onProcessed }: { trialId: string; onPr
   const [error, setError] = useState<unknown>(null);
   const [receipt, setReceipt] = useState<EventReceipt | null>(null);
   const job = useJobRunner({ intervalMs: 750, timeoutMs: 60_000 });
-  const allowed = actor.role === 'COORDINATOR' || actor.role === 'RESEARCH_IT';
+  // Simulated records carry patient data, so only the Clinical Lead adds them.
+  const allowed = actor.role === 'INVESTIGATOR';
   const preset = presets.find((p) => p.id === presetId)!;
 
   function choose(id: string) {
@@ -95,7 +96,7 @@ export function EventSimulator({ trialId, onProcessed }: { trialId: string; onPr
         </div>
         <button type="button" className="btn-primary px-5 py-2.5 text-[15px]" disabled={!allowed || busy || job.running} onClick={() => { setError(null); setOpen(true); }}>Simulate new record</button>
       </div>
-      {!allowed && <p className="text-xs text-unknown-fg">Records are added by the Sponsor.</p>}
+      {!allowed && <p className="text-xs text-unknown-fg">Records are added by the Clinical Lead.</p>}
       {receipt && (
         <div className="space-y-1 rounded-lg border border-line bg-canvas p-3 text-xs" aria-live="polite">
           <div className="flex flex-wrap items-center gap-2">

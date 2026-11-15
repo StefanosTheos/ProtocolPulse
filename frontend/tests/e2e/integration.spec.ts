@@ -89,16 +89,13 @@ test('real protocol → screening → evidence → dated event → human case �
     await page.getByRole('link', { name: 'P-042', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Record sections', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Evidence timeline', exact: true })).toBeVisible();
-    await page.getByRole('button', { name: 'Record external participation', exact: true }).click();
-    await page.getByLabel('Registered external participation source').selectOption('SRC-P-042-external');
-    await page.getByLabel('External record reference').fill('EXT-P-042');
-    await page.getByLabel('Rationale', { exact: true }).fill('Record the independently registered synthetic external participation evidence.');
-    await page.getByRole('button', { name: 'Record participation', exact: true }).click();
+    await page.getByRole('button', { name: 'Approve', exact: true }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'Confirm approval', exact: true }).click();
     await expect.poll(async () => (await get('/trials/TR-PX104/patients/P-042')).participation_status).toBe('PARTICIPATING');
     await shot('03-patient-evidence');
 
     await page.goto(trial + '/monitor');
-    await actor('ACT-COORD-01');
+    await actor('ACT-INV-01');
     const postEvent = async () => {
       await page.getByRole('button', { name: 'Simulate new record', exact: true }).click();
       const pending = page.waitForResponse(r => r.request().method() === 'POST' && /\/patients\/P-042\/events$/.test(r.url()));

@@ -165,6 +165,11 @@ export function createMockTransport(options: { pollsUntilDone?: number } = {}): 
       if (m[1] !== trial.trial_id) throw new HttpError(404, 'TRIAL_NOT_FOUND', `Trial ${m[1]} not found.`);
       return { status: 200, data: { ...trial, protocol_version_ids: [...protocols.keys()], finding_count: findings.length } };
     } },
+    { method: 'GET', pattern: /^\/trials\/([^/]+)\/participation-summary$/, handler: (_r, m) => {
+      if (m[1] !== trial.trial_id) throw new HttpError(404, 'TRIAL_NOT_FOUND', `Trial ${m[1]} not found.`);
+      const statuses = [...participation.values()];
+      return { status: 200, data: { trial_id: m[1], cohort_count: statuses.length, participating_count: statuses.filter((s) => s === 'PARTICIPATING').length, ended_count: statuses.filter((s) => s === 'ENDED').length } };
+    } },
     { method: 'GET', pattern: /^\/trials\/([^/]+)\/protocols$/, handler: (req, m) => {
       if (m[1] !== trial.trial_id) throw new HttpError(404, 'TRIAL_NOT_FOUND', `Trial ${m[1]} not found.`);
       return { status: 200, data: paginate([...protocols.values()], req.query) };
@@ -326,7 +331,7 @@ export function createMockTransport(options: { pollsUntilDone?: number } = {}): 
       const current = latestRunId ? `ASM-${latestRunId}-${m[2]}` : null;
       return { status: 200, data: mockPatient360(m[2], participation.get(m[2])!, current) };
     } },
-    { method: 'POST', pattern: /^\/patients\/([^/]+)\/events$/, roles: ['COORDINATOR', 'RESEARCH_IT'], handler: (req, m, actorId, requestId) => {
+    { method: 'POST', pattern: /^\/patients\/([^/]+)\/events$/, roles: ['INVESTIGATOR', 'COORDINATOR', 'RESEARCH_IT'], handler: (req, m, actorId, requestId) => {
       const pid = m[1];
       if (!participation.has(pid)) throw new HttpError(404, 'PATIENT_NOT_FOUND', `Patient ${pid} not found.`);
       const body = req.body as EventCreate;
