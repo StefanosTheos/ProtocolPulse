@@ -1,0 +1,36 @@
+{
+  "baseline_commit": "127f01da682d9d8bfdaa51289bb37539a8551e5f",
+  "worktree_changes_under_test": true,
+  "frontend_mode": "next start production",
+  "captured_at": "2026-11-15T08:22:22.031107+00:00",
+  "unit_tests": {
+    "passed": 55,
+    "skipped_opt_in_destructive_live_client": 10
+  },
+  "browser_test_passed": true,
+  "typecheck_exit_code": 0,
+  "lint_exit_code": 0,
+  "build_exit_code": 0,
+  "cache_lifetime_ms": 5000,
+  "cache_max_entries_per_client": 100,
+  "backend_health": {
+    "status": "ok",
+    "database": "ok",
+    "migrations": "current",
+    "worker": "running",
+    "llm": "enabled",
+    "synthetic_only": true,
+    "api_version": "v1",
+    "contract_version": "1.0.0-rc2"
+  },
+  "credential_scan_hits": [],
+  "source_sha256": {
+    "frontend/lib/api/cache.ts": "e7c6448d05cc12fa30e058f6fac85a5c9f0b03af319d6e2eb3593815e36ebf0a",
+    "frontend/lib/api/client.ts": "86fd9ebdb90f3fbe0fffe836230c9b3c08ad2a2932d1cf19505be536d742a4b3",
+    "frontend/lib/api/hooks.ts": "8b7fd02fb04398a6bf574506f2bdc20dcaac6c98c257e71bb23ec67d0793a28f",
+    "frontend/lib/api/runtime.ts": "ab7d1ed3d7060c8994d58a2b6e9f1a2d5ad877aaeccdba88ef51fefc2a0b23e9",
+    "frontend/components/ActorContext.tsx": "f9442dde1321d92229e7e8242d62131849bb8b4e99c9b8b28de24abc7e8b619f",
+    "frontend/components/TrialHeader.tsx": "4c317b6ee951202152089a1a2712c98a8a76a9f641e94e851e2c47d3da055a78",
+    "frontend/app/trials/[trialId]/layout.tsx": "4b08df22b52ed3efa4418a51059f3b5f73c1307059a778521ed5109392256c7e"
+  }
+}
