@@ -59,7 +59,7 @@ describe('J-01 protocol review and approval', () => {
     useMock();
     renderAs('ACT-COORD-01', <ProtocolCoverageReview trialId="TR-PX104" protocol={fixture} onChanged={() => {}} />);
     expect(screen.getByRole('button', { name: /Approve criteria/ })).toBeDisabled();
-    expect(screen.getByText(/Only an investigator can approve/)).toBeInTheDocument();
+    expect(screen.getByText(/Only the Clinical Lead can approve/)).toBeInTheDocument();
   });
 
   it('coverage blockers disable approval', () => {
@@ -143,7 +143,7 @@ describe('J-02 screening gate', () => {
     navigation.pathname = '/trials/TR-PX104/selector';
     renderAs('ACT-COORD-01', <SelectorPage />);
     expect(await screen.findByText('Screening disabled')).toBeInTheDocument();
-    expect(screen.getByText(/no investigator-approved active protocol/)).toBeInTheDocument();
+    expect(screen.getByText(/no Clinical Lead-approved active protocol/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Run screening' })).toBeDisabled();
   });
 });
@@ -244,10 +244,11 @@ describe('J-05 review update', () => {
     const caseId = await seedCase(transport);
     const onUpdated = vi.fn();
     const user = userEvent.setup();
-    renderAs('ACT-MON-01', <CaseReviewPanel trialId="TR-PX104" caseId={caseId} onUpdated={onUpdated} />);
+    renderAs('ACT-INV-01', <CaseReviewPanel trialId="TR-PX104" caseId={caseId} onUpdated={onUpdated} />);
     const statusSelect = await screen.findByLabelText('Next status');
-    expect(within(statusSelect).getByRole('option', { name: /RESOLVED — investigator only/ })).toBeDisabled();
-    expect(within(statusSelect).getByRole('option', { name: /CLOSED — investigator only/ })).toBeDisabled();
+    expect(within(statusSelect).getByRole('option', { name: 'RESOLVED' })).toBeEnabled();
+    expect(within(statusSelect).getByRole('option', { name: 'CLOSED' })).toBeEnabled();
+    expect(within(screen.getByLabelText('Owner')).getAllByRole('option').map((o) => o.textContent)).toEqual(['Unassigned', 'Clinical Lead']);
     expect(screen.getByText('System-generated deterministic summary')).toBeInTheDocument();
 
     await user.selectOptions(statusSelect, 'ACKNOWLEDGED');

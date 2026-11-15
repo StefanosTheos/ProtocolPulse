@@ -64,7 +64,7 @@ export function ProtocolUpload({ trialId, onUploaded }: { trialId: string; onUpl
         <h2 id="upload-heading">Upload protocol PDF</h2>
         <p className="text-xs text-ink-muted">Registers an immutable source version. Extraction is a separate, explicit step.</p>
       </div>
-      {!allowed && <p className="text-unknown-fg">Switch to a coordinator or research IT actor to upload.</p>}
+      {!allowed && <p className="text-unknown-fg">Switch to Sponsor to upload.</p>}
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
           <label className="label" htmlFor="pdf-file">PDF file (max {MAX_PDF_MB} MB)</label>

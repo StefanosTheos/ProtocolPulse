@@ -1,0 +1,828 @@
+{
+  "mode": "REAL_PRODUCTION_BROWSER_API_READ_ONLY",
+  "measurement": "single local samples; input action to visible destination marker, not completed data loading or latency percentiles",
+  "comparisons": [
+    {
+      "name": "first_study",
+      "before_single_ms": 193,
+      "after_three_samples_ms": [
+        46,
+        56,
+        92
+      ],
+      "after_median_ms": 56
+    },
+    {
+      "name": "tab_/protocol",
+      "before_single_ms": 140,
+      "after_three_samples_ms": [
+        93,
+        139,
+        982
+      ],
+      "after_median_ms": 139
+    },
+    {
+      "name": "tab_/selector",
+      "before_single_ms": 97,
+      "after_three_samples_ms": [
+        54,
+        56,
+        67
+      ],
+      "after_median_ms": 56
+    },
+    {
+      "name": "tab_/monitor",
+      "before_single_ms": 72,
+      "after_three_samples_ms": [
+        51,
+        60,
+        64
+      ],
+      "after_median_ms": 60
+    },
+    {
+      "name": "tab_/audit",
+      "before_single_ms": 61,
+      "after_three_samples_ms": [
+        63,
+        69,
+        94
+      ],
+      "after_median_ms": 69
+    },
+    {
+      "name": "tab_overview",
+      "before_single_ms": 55,
+      "after_three_samples_ms": [
+        62,
+        62,
+        65
+      ],
+      "after_median_ms": 62
+    },
+    {
+      "name": "tab_/protocol",
+      "before_single_ms": 76,
+      "after_three_samples_ms": [
+        52,
+        54,
+        71
+      ],
+      "after_median_ms": 54
+    },
+    {
+      "name": "role_sponsor",
+      "before_single_ms": 35,
+      "after_three_samples_ms": [
+        45,
+        48,
+        110
+      ],
+      "after_median_ms": 48
+    }
+  ],
+  "before": [
+    {
+      "name": "first_study",
+      "ready_ms": 193,
+      "requests": [
+        {
+          "url": "http://localhost:3000/trials/TR-PX104?_rsc=ZmCQ44b92m4mXe_R",
+          "duration_ms": 27
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=REOPENED&limit=5",
+          "duration_ms": 27,
+          "actor": "ACT-INV-01"
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104?_rsc=q-KfOrQZ_AELBiXB",
+          "duration_ms": 25
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/protocol?_rsc=q-KfOrQZ_AELBiXB",
+          "duration_ms": 25
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/selector?_rsc=q-KfOrQZ_AELBiXB",
+          "duration_ms": 26
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=OPEN&sort=-updated_at&limit=5",
+          "duration_ms": 36,
+          "actor": "ACT-INV-01"
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/monitor?_rsc=q-KfOrQZ_AELBiXB",
+          "duration_ms": 26
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/audit?_rsc=q-KfOrQZ_AELBiXB",
+          "duration_ms": 26
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+          "duration_ms": 36,
+          "actor": "ACT-INV-01"
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=10",
+          "duration_ms": 51,
+          "actor": "ACT-INV-01"
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/cases?case=CASE-a57a7681fdca43ef9c949666189a30fd&_rsc=q-KfOrQZ_AELBiXB",
+          "duration_ms": 13
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/patients/P-203?_rsc=q-KfOrQZ_AELBiXB",
+          "duration_ms": 13
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/patients/P-083?_rsc=q-KfOrQZ_AELBiXB",
+          "duration_ms": 13
+        }
+      ]
+    },
+    {
+      "name": "tab_/protocol",
+      "ready_ms": 140,
+      "requests": [
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/protocol?_rsc=3yp1Kg9a90WD2Jmu",
+          "duration_ms": 11
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+          "duration_ms": 32,
+          "actor": "ACT-INV-01"
+        }
+      ]
+    },
+    {
+      "name": "tab_/selector",
+      "ready_ms": 97,
+      "requests": [
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/selector?_rsc=qnG0ZqqaIkWc0OwW",
+          "duration_ms": 15
+        }
+      ]
+    },
+    {
+      "name": "tab_/monitor",
+      "ready_ms": 72,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols/PV-49f53ecfbfb749e7859418d2d7c61048",
+          "duration_ms": 58,
+          "actor": "ACT-INV-01"
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/monitor?_rsc=5C1kaA4S_6BY0xwx",
+          "duration_ms": 17
+        }
+      ]
+    },
+    {
+      "name": "tab_/audit",
+      "ready_ms": 61,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/findings?sort=-created_at&limit=50",
+          "duration_ms": 30,
+          "actor": "ACT-INV-01"
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=20",
+          "duration_ms": 34,
+          "actor": "ACT-INV-01"
+        },
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/audit?_rsc=XWg8LwWgz6-iGgt8",
+          "duration_ms": 8
+        }
+      ]
+    },
+    {
+      "name": "tab_overview",
+      "ready_ms": 55,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:8000/api/v1/health",
+          "duration_ms": 14
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?limit=100",
+          "duration_ms": 34,
+          "actor": "ACT-INV-01"
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/audit?sort=-occurred_at&limit=50",
+          "duration_ms": 35,
+          "actor": "ACT-INV-01"
+        }
+      ]
+    },
+    {
+      "name": "tab_/protocol",
+      "ready_ms": 76,
+      "requests": [
+        {
+          "url": "http://localhost:3000/trials/TR-PX104/protocol?_rsc=NVbyBapQVVcoIPET",
+          "duration_ms": 5
+        }
+      ]
+    },
+    {
+      "name": "role_sponsor",
+      "ready_ms": 35,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:8000/api/v1/health",
+          "duration_ms": 14
+        },
+        {
+          "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+          "duration_ms": 22,
+          "actor": "ACT-COORD-01"
+        }
+      ]
+    }
+  ],
+  "previous_full_preload_attempt": {
+    "comparisons": [
+      {
+        "name": "first_study",
+        "before_ms": 193,
+        "after_ms": 120
+      },
+      {
+        "name": "tab_/protocol",
+        "before_ms": 140,
+        "after_ms": 927
+      },
+      {
+        "name": "tab_/selector",
+        "before_ms": 97,
+        "after_ms": 49
+      },
+      {
+        "name": "tab_/monitor",
+        "before_ms": 72,
+        "after_ms": 50
+      },
+      {
+        "name": "tab_/audit",
+        "before_ms": 61,
+        "after_ms": 64
+      },
+      {
+        "name": "tab_overview",
+        "before_ms": 55,
+        "after_ms": 79
+      },
+      {
+        "name": "tab_/protocol",
+        "before_ms": 76,
+        "after_ms": 53
+      },
+      {
+        "name": "role_sponsor",
+        "before_ms": 35,
+        "after_ms": 48
+      }
+    ],
+    "after": [
+      {
+        "name": "first_study",
+        "ready_ms": 120,
+        "requests": [
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=REOPENED&limit=5",
+            "duration_ms": 18,
+            "actor": "ACT-INV-01"
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=OPEN&sort=-updated_at&limit=5",
+            "duration_ms": 20,
+            "actor": "ACT-INV-01"
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+            "duration_ms": 22,
+            "actor": "ACT-INV-01"
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=10",
+            "duration_ms": 37,
+            "actor": "ACT-INV-01"
+          }
+        ]
+      },
+      {
+        "name": "tab_/protocol",
+        "ready_ms": 927,
+        "requests": [
+          {
+            "url": "http://localhost:3000/trials/TR-PX104/cases?case=CASE-a57a7681fdca43ef9c949666189a30fd&_rsc=q-KfOrQZ_AELBiXB",
+            "duration_ms": 19
+          },
+          {
+            "url": "http://localhost:3000/trials/TR-PX104/protocol?_rsc=JUJplWMkiP5skc3x",
+            "duration_ms": 23
+          },
+          {
+            "url": "http://localhost:3000/trials/TR-PX104/selector?_rsc=JUJplWMkiP5skc3x",
+            "duration_ms": 23
+          },
+          {
+            "url": "http://localhost:3000/trials/TR-PX104/audit?_rsc=JUJplWMkiP5skc3x",
+            "duration_ms": 23
+          },
+          {
+            "url": "http://localhost:3000/trials/TR-PX104/monitor?_rsc=JUJplWMkiP5skc3x",
+            "duration_ms": 24
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+            "duration_ms": 26,
+            "actor": "ACT-INV-01"
+          }
+        ]
+      },
+      {
+        "name": "tab_/selector",
+        "ready_ms": 49,
+        "requests": [
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols/PV-49f53ecfbfb749e7859418d2d7c61048",
+            "duration_ms": 11,
+            "actor": "ACT-INV-01"
+          }
+        ]
+      },
+      {
+        "name": "tab_/monitor",
+        "ready_ms": 50,
+        "requests": [
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=20",
+            "duration_ms": 22,
+            "actor": "ACT-INV-01"
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/findings?sort=-created_at&limit=50",
+            "duration_ms": 24,
+            "actor": "ACT-INV-01"
+          }
+        ]
+      },
+      {
+        "name": "tab_/audit",
+        "ready_ms": 64,
+        "requests": [
+          {
+            "url": "http://localhost:3000/trials/TR-PX104/patients/P-042?_rsc=v5YaGZ-6nbOf9oH3",
+            "duration_ms": 4
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?limit=100",
+            "duration_ms": 12,
+            "actor": "ACT-INV-01"
+          }
+        ]
+      },
+      {
+        "name": "tab_overview",
+        "ready_ms": 79,
+        "requests": [
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/audit?sort=-occurred_at&limit=50",
+            "duration_ms": 20,
+            "actor": "ACT-INV-01"
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/health",
+            "duration_ms": 4
+          }
+        ]
+      },
+      {
+        "name": "tab_/protocol",
+        "ready_ms": 53,
+        "requests": []
+      },
+      {
+        "name": "role_sponsor",
+        "ready_ms": 48,
+        "requests": [
+          {
+            "url": "http://127.0.0.1:8000/api/v1/health",
+            "duration_ms": 8
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+            "duration_ms": 16,
+            "actor": "ACT-COORD-01"
+          },
+          {
+            "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+            "duration_ms": 25,
+            "actor": "ACT-COORD-01"
+          }
+        ]
+      }
+    ],
+    "runs": [
+      {
+        "note": "Initial after run overlapped a frontend test process; retained as observed.",
+        "timings": [
+          {
+            "name": "first_study",
+            "ready_ms": 120,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=REOPENED&limit=5",
+                "duration_ms": 18,
+                "actor": "ACT-INV-01"
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?status=OPEN&sort=-updated_at&limit=5",
+                "duration_ms": 20,
+                "actor": "ACT-INV-01"
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+                "duration_ms": 22,
+                "actor": "ACT-INV-01"
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=10",
+                "duration_ms": 37,
+                "actor": "ACT-INV-01"
+              }
+            ]
+          },
+          {
+            "name": "tab_/protocol",
+            "ready_ms": 927,
+            "requests": [
+              {
+                "url": "http://localhost:3000/trials/TR-PX104/cases?case=CASE-a57a7681fdca43ef9c949666189a30fd&_rsc=q-KfOrQZ_AELBiXB",
+                "duration_ms": 19
+              },
+              {
+                "url": "http://localhost:3000/trials/TR-PX104/protocol?_rsc=JUJplWMkiP5skc3x",
+                "duration_ms": 23
+              },
+              {
+                "url": "http://localhost:3000/trials/TR-PX104/selector?_rsc=JUJplWMkiP5skc3x",
+                "duration_ms": 23
+              },
+              {
+                "url": "http://localhost:3000/trials/TR-PX104/audit?_rsc=JUJplWMkiP5skc3x",
+                "duration_ms": 23
+              },
+              {
+                "url": "http://localhost:3000/trials/TR-PX104/monitor?_rsc=JUJplWMkiP5skc3x",
+                "duration_ms": 24
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+                "duration_ms": 26,
+                "actor": "ACT-INV-01"
+              }
+            ]
+          },
+          {
+            "name": "tab_/selector",
+            "ready_ms": 49,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols/PV-49f53ecfbfb749e7859418d2d7c61048",
+                "duration_ms": 11,
+                "actor": "ACT-INV-01"
+              }
+            ]
+          },
+          {
+            "name": "tab_/monitor",
+            "ready_ms": 50,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=20",
+                "duration_ms": 22,
+                "actor": "ACT-INV-01"
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/findings?sort=-created_at&limit=50",
+                "duration_ms": 24,
+                "actor": "ACT-INV-01"
+              }
+            ]
+          },
+          {
+            "name": "tab_/audit",
+            "ready_ms": 64,
+            "requests": [
+              {
+                "url": "http://localhost:3000/trials/TR-PX104/patients/P-042?_rsc=v5YaGZ-6nbOf9oH3",
+                "duration_ms": 4
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/cases?limit=100",
+                "duration_ms": 12,
+                "actor": "ACT-INV-01"
+              }
+            ]
+          },
+          {
+            "name": "tab_overview",
+            "ready_ms": 79,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/audit?sort=-occurred_at&limit=50",
+                "duration_ms": 20,
+                "actor": "ACT-INV-01"
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/health",
+                "duration_ms": 4
+              }
+            ]
+          },
+          {
+            "name": "tab_/protocol",
+            "ready_ms": 53,
+            "requests": []
+          },
+          {
+            "name": "role_sponsor",
+            "ready_ms": 48,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8000/api/v1/health",
+                "duration_ms": 8
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104",
+                "duration_ms": 16,
+                "actor": "ACT-COORD-01"
+              },
+              {
+                "url": "http://127.0.0.1:8000/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+                "duration_ms": 25,
+                "actor": "ACT-COORD-01"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Quiet repeat 1",
+        "timings": [
+          {
+            "name": "first_study",
+            "ready_ms": 126
+          },
+          {
+            "name": "tab_/protocol",
+            "ready_ms": 806
+          },
+          {
+            "name": "tab_/selector",
+            "ready_ms": 56
+          },
+          {
+            "name": "tab_/monitor",
+            "ready_ms": 50
+          },
+          {
+            "name": "tab_/audit",
+            "ready_ms": 46
+          },
+          {
+            "name": "tab_overview",
+            "ready_ms": 48
+          },
+          {
+            "name": "tab_/protocol",
+            "ready_ms": 53
+          },
+          {
+            "name": "role_sponsor",
+            "ready_ms": 38
+          }
+        ]
+      },
+      {
+        "note": "Quiet repeat 2",
+        "timings": [
+          {
+            "name": "first_study",
+            "ready_ms": 88
+          },
+          {
+            "name": "tab_/protocol",
+            "ready_ms": 135
+          },
+          {
+            "name": "tab_/selector",
+            "ready_ms": 89
+          },
+          {
+            "name": "tab_/monitor",
+            "ready_ms": 52
+          },
+          {
+            "name": "tab_/audit",
+            "ready_ms": 75
+          },
+          {
+            "name": "tab_overview",
+            "ready_ms": 57
+          },
+          {
+            "name": "tab_/protocol",
+            "ready_ms": 52
+          },
+          {
+            "name": "role_sponsor",
+            "ready_ms": 43
+          }
+        ]
+      },
+      {
+        "note": "Quiet repeat 3",
+        "timings": [
+          {
+            "name": "first_study",
+            "ready_ms": 106
+          },
+          {
+            "name": "tab_/protocol",
+            "ready_ms": 109
+          },
+          {
+            "name": "tab_/selector",
+            "ready_ms": 42
+          },
+          {
+            "name": "tab_/monitor",
+            "ready_ms": 52
+          },
+          {
+            "name": "tab_/audit",
+            "ready_ms": 64
+          },
+          {
+            "name": "tab_overview",
+            "ready_ms": 49
+          },
+          {
+            "name": "tab_/protocol",
+            "ready_ms": 57
+          },
+          {
+            "name": "role_sponsor",
+            "ready_ms": 117
+          }
+        ]
+      }
+    ]
+  },
+  "final_strategy": "Optimistic local route selection; tab route and authorized GET preloading only on hover/focus; bounded five-study route-code preload; five-second data cache unchanged.",
+  "final_runs": [
+    {
+      "round": 1,
+      "timings": [
+        {
+          "name": "first_study",
+          "ready_ms": 56
+        },
+        {
+          "name": "tab_/protocol",
+          "ready_ms": 982
+        },
+        {
+          "name": "tab_/selector",
+          "ready_ms": 56
+        },
+        {
+          "name": "tab_/monitor",
+          "ready_ms": 51
+        },
+        {
+          "name": "tab_/audit",
+          "ready_ms": 63
+        },
+        {
+          "name": "tab_overview",
+          "ready_ms": 62
+        },
+        {
+          "name": "tab_/protocol",
+          "ready_ms": 54
+        },
+        {
+          "name": "role_sponsor",
+          "ready_ms": 48
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "timings": [
+        {
+          "name": "first_study",
+          "ready_ms": 46
+        },
+        {
+          "name": "tab_/protocol",
+          "ready_ms": 93
+        },
+        {
+          "name": "tab_/selector",
+          "ready_ms": 67
+        },
+        {
+          "name": "tab_/monitor",
+          "ready_ms": 60
+        },
+        {
+          "name": "tab_/audit",
+          "ready_ms": 94
+        },
+        {
+          "name": "tab_overview",
+          "ready_ms": 65
+        },
+        {
+          "name": "tab_/protocol",
+          "ready_ms": 71
+        },
+        {
+          "name": "role_sponsor",
+          "ready_ms": 110
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "timings": [
+        {
+          "name": "first_study",
+          "ready_ms": 92
+        },
+        {
+          "name": "tab_/protocol",
+          "ready_ms": 139
+        },
+        {
+          "name": "tab_/selector",
+          "ready_ms": 54
+        },
+        {
+          "name": "tab_/monitor",
+          "ready_ms": 64
+        },
+        {
+          "name": "tab_/audit",
+          "ready_ms": 69
+        },
+        {
+          "name": "tab_overview",
+          "ready_ms": 62
+        },
+        {
+          "name": "tab_/protocol",
+          "ready_ms": 52
+        },
+        {
+          "name": "role_sponsor",
+          "ready_ms": 45
+        }
+      ]
+    }
+  ],
+  "sampled_at": "2026-11-15T09:57:54.101Z",
+  "automation_wait_investigation": {
+    "method": "Click event and protocol-heading mutation timestamps from performance.now() in two fresh Chromium processes",
+    "playwright": {
+      "measurement_start_ms": 285.80000001192093,
+      "click_event_ms": 1177.699999988079,
+      "heading_mutation_ms": 1212.5999999642372,
+      "action_returned_ms": 895,
+      "total_action_to_marker_ms": 973
+    },
+    "direct_dom_click": {
+      "measurement_start_ms": 293.2000000476837,
+      "click_event_ms": 293.4000000357628,
+      "heading_mutation_ms": 323.80000001192093
+    },
+    "interpretation": "The roughly 0.9s outlier occurred before Playwright dispatched the click. Observed click-event-to-heading times were approximately 35ms and 30ms; destination-marker samples include test-driver actionability waits."
+  }
+}

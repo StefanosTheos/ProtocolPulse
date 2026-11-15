@@ -415,6 +415,7 @@ export function createMockTransport(options: { pollsUntilDone?: number } = {}): 
       requireIfMatch(req, c.revision);
       const body = req.body as CasePatch;
       if (body.expected_revision !== c.revision) throw new HttpError(409, 'REVISION_CONFLICT', 'expected_revision does not match.');
+      if (body.assigned_actor_id && body.assigned_actor_id !== 'ACT-INV-01') throw new HttpError(403, 'ROLE_FORBIDDEN', 'Only the Clinical Lead can own a review case.');
       const investigatorOnly: CaseStatus[] = ['RESOLVED', 'CLOSED'];
       if (investigatorOnly.includes(body.next_status) && MOCK_ACTORS[actorId] !== 'INVESTIGATOR') {
         throw new HttpError(403, 'ROLE_FORBIDDEN', 'RESOLVED and CLOSED are investigator-only.');
@@ -498,6 +499,7 @@ export function createMockTransport(options: { pollsUntilDone?: number } = {}): 
       if (req.path !== '/health') {
         if (!actorId) throw new HttpError(401, 'ACTOR_REQUIRED', 'X-Demo-Actor-Id header is required.');
         if (!MOCK_ACTORS[actorId]) throw new HttpError(401, 'ACTOR_UNKNOWN', `Unknown demo actor ${actorId}.`);
+        if (!['INVESTIGATOR', 'COORDINATOR'].includes(MOCK_ACTORS[actorId])) throw new HttpError(403, 'ROLE_FORBIDDEN', 'This demo actor has been retired.');
       }
       if (route.roles) requireRole(actorId, route.roles);
       if (req.method === 'POST') {

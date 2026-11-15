@@ -10,7 +10,7 @@ interface ActorContextValue { actor: DemoActor; setActorId: (id: string) => void
 const ActorContext = createContext<ActorContextValue | null>(null);
 
 export function ActorProvider({ children, initialActorId }: { children: ReactNode; initialActorId?: string }) {
-  const [actorId, setActorIdState] = useState(initialActorId ?? getCurrentActorId());
+  const [actorId, setActorIdState] = useState(actorById(initialActorId ?? getCurrentActorId())?.actor_id ?? DEMO_ACTORS[0].actor_id);
   // The saved role is only readable in the browser. Until it has been read, nothing role-dependent
   // renders or fetches, so a page load never shows (or requests data as) the default role first.
   const [ready, setReady] = useState(Boolean(initialActorId));
@@ -19,9 +19,11 @@ export function ActorProvider({ children, initialActorId }: { children: ReactNod
     if (initialActorId) return;
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored && actorById(stored)) {
-        setCurrentActorId(stored);
-        setActorIdState(stored);
+      if (stored) {
+        const restored = actorById(stored)?.actor_id ?? DEMO_ACTORS[0].actor_id;
+        setCurrentActorId(restored);
+        setActorIdState(restored);
+        if (restored !== stored) window.localStorage.setItem(STORAGE_KEY, restored);
       }
     } catch { /* storage unavailable: keep default */ }
     setReady(true);
@@ -40,9 +42,10 @@ export function ActorProvider({ children, initialActorId }: { children: ReactNod
   }, []);
 
   const setActorId = useCallback((id: string) => {
-    setCurrentActorId(id);
-    setActorIdState(id);
-    try { window.localStorage.setItem(STORAGE_KEY, id); } catch { /* ignore */ }
+    const next = actorById(id)?.actor_id ?? DEMO_ACTORS[0].actor_id;
+    setCurrentActorId(next);
+    setActorIdState(next);
+    try { window.localStorage.setItem(STORAGE_KEY, next); } catch { /* ignore */ }
   }, []);
 
   const value = useMemo(() => ({ actor: actorById(actorId) ?? DEMO_ACTORS[0], setActorId }), [actorId, setActorId]);

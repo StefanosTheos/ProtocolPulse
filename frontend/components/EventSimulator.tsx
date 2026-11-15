@@ -84,7 +84,7 @@ export function EventSimulator({ trialId, onProcessed }: { trialId: string; onPr
       <h2 id="sim-heading">Simulate new record</h2>
       <p className="text-xs text-ink-muted">Adds a source record for a participating patient. Findings appear only after the backend re-evaluates and the job SUCCEEDED; nothing is counted locally.</p>
       <button type="button" className="btn-primary" disabled={!allowed || busy || job.running} onClick={() => { setError(null); setOpen(true); }}>Simulate new record…</button>
-      {!allowed && <p className="text-xs text-unknown-fg">Coordinator or research IT role required to post events.</p>}
+      {!allowed && <p className="text-xs text-unknown-fg">Sponsor role required to post events.</p>}
       {receipt && (
         <div className="space-y-1 rounded border border-line bg-canvas p-3 text-xs" aria-live="polite">
           <div className="flex flex-wrap items-center gap-2">

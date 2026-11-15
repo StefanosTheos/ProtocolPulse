@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <ErrorBoundary>{children}</ErrorBoundary>
           </main>
           <footer className="mx-auto max-w-7xl px-4 pb-8 text-xs text-ink-muted">
-            Decision support only. Final eligibility and clinical decisions rest with the investigator.
+            Decision support only. Final eligibility and clinical decisions rest with the Clinical Lead.
           </footer>
         </ActorProvider>
       </body>

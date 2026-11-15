@@ -3,12 +3,12 @@
 import type { ActorRole, Criterion, CriterionResult, PatientAssessment, UnknownReason } from './types';
 
 export const ROLE_LABEL: Record<ActorRole, string> = {
-  INVESTIGATOR: 'Investigator',
-  COORDINATOR: 'Coordinator',
-  MONITOR: 'Monitor',
-  AUDITOR: 'Auditor',
-  SPONSOR_OPS: 'Sponsor operations',
-  RESEARCH_IT: 'Research IT',
+  INVESTIGATOR: 'Clinical Lead',
+  COORDINATOR: 'Sponsor',
+  MONITOR: 'Historical actor',
+  AUDITOR: 'Historical actor',
+  SPONSOR_OPS: 'Historical actor',
+  RESEARCH_IT: 'Historical actor',
 };
 
 // "SOME_VALUE" -> "Some value"
@@ -130,13 +130,13 @@ export const CAN_READ: Record<'patients' | 'findings' | 'cases' | 'audit', Actor
 
 // Workflow steps and the roles that work on each. Overview is every role's starting point.
 export interface Step { key: string; label: string; href: string; paths: string[]; roles: ActorRole[] }
-const ALL_ROLES = Object.keys(ROLE_LABEL) as ActorRole[];
+const ALL_ROLES: ActorRole[] = ['INVESTIGATOR', 'COORDINATOR'];
 export const STEPS: Step[] = [
   { key: 'overview', label: 'Overview', href: '', paths: [], roles: ALL_ROLES },
-  { key: 'protocol', label: 'Protocol', href: '/protocol', paths: ['/protocol'], roles: ['INVESTIGATOR', 'COORDINATOR', 'RESEARCH_IT'] },
-  { key: 'screen', label: 'Screen patients', href: '/selector', paths: ['/selector', '/patients'], roles: ['INVESTIGATOR', 'COORDINATOR'] },
-  { key: 'safety', label: 'Safety', href: '/monitor', paths: ['/monitor', '/cases'], roles: ['INVESTIGATOR', 'COORDINATOR', 'MONITOR'] },
-  { key: 'audit', label: 'Audit trail', href: '/audit', paths: ['/audit'], roles: ['AUDITOR', 'SPONSOR_OPS'] },
+  { key: 'protocol', label: 'Protocol', href: '/protocol', paths: ['/protocol'], roles: ALL_ROLES },
+  { key: 'screen', label: 'Screen patients', href: '/selector', paths: ['/selector', '/patients'], roles: ['INVESTIGATOR'] },
+  { key: 'safety', label: 'Safety', href: '/monitor', paths: ['/monitor', '/cases'], roles: ALL_ROLES },
+  { key: 'audit', label: 'Audit trail', href: '/audit', paths: ['/audit'], roles: ['INVESTIGATOR'] },
 ];
 
 // Case summaries written as system codes are replaced by a plain description.

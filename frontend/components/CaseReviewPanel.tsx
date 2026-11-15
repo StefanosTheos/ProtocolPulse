@@ -63,9 +63,9 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
   const c = reviewCase.data;
   if (!c) return null;
 
-  const canPatch = actor.role === 'MONITOR' || actor.role === 'INVESTIGATOR';
+  const canPatch = actor.role === 'INVESTIGATOR';
   const evidence = (findings.data ?? []).flatMap((f) => f.evidence_refs);
-  const effectiveAssignee = assignee ?? c.assigned_actor_id ?? '';
+  const effectiveAssignee = assignee ?? (DEMO_ACTORS.some((a) => a.actor_id === c.assigned_actor_id && a.role === 'INVESTIGATOR') ? c.assigned_actor_id : '') ?? '';
   const ready = !!nextStatus && !!disposition.trim() && !!rationale.trim();
   const isConflict = error instanceof ApiError && error.code === 'REVISION_CONFLICT';
 
@@ -174,7 +174,7 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
 
       <section className="card card-pad space-y-3" aria-labelledby="transition-heading">
         <h3 id="transition-heading">Record a review decision</h3>
-        {!canPatch && <p className="text-xs text-unknown-fg">Cases are updated by a monitor or the investigator.</p>}
+        {!canPatch && <p className="text-xs text-unknown-fg">Cases are updated by the Clinical Lead.</p>}
         <div className="grid gap-3 sm:grid-cols-2">
           <div>
             <label className="label" htmlFor="next-status">Next status</label>
@@ -190,7 +190,7 @@ export function CaseReviewPanel({ trialId, caseId, timeZone, onUpdated }: { tria
             <label className="label" htmlFor="assignee">Owner</label>
             <select id="assignee" className="input" value={effectiveAssignee} onChange={(e) => setAssignee(e.target.value)} disabled={!canPatch}>
               <option value="">Unassigned</option>
-              {DEMO_ACTORS.filter((a) => a.role === 'MONITOR' || a.role === 'INVESTIGATOR').map((a) => <option key={a.actor_id} value={a.actor_id}>{ROLE_LABEL[a.role]}</option>)}
+              {DEMO_ACTORS.filter((a) => a.role === 'INVESTIGATOR').map((a) => <option key={a.actor_id} value={a.actor_id}>{ROLE_LABEL[a.role]}</option>)}
             </select>
           </div>
         </div>
