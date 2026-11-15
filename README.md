@@ -1,81 +1,114 @@
+<div align="center">
+
+<img src="demo/v2/assets/brand/symbol.png" alt="ProtocolPulse emerald protocol and pulse mark" width="100" />
+
 # ProtocolPulse
 
-### Clinical trial monitoring that follows the evidence.
+### From protocol. To progress.
 
-Turn protocol requirements into reviewed rules. Screen patients, follow new medical events and bring source-backed cases to a Clinical Lead in one connected workspace.
+**AI-assisted clinical trial screening and monitoring, with evidence at every step.**
 
-**AI investigates. Approved rules drive evaluation. People make clinical decisions.**
+[Watch the 60-second demo](demo/final_demo.mp4) · [Run locally](docs/GETTING_STARTED.md) · [Explore the workflow](docs/WORKFLOW.md)
 
-[Run locally](docs/GETTING_STARTED.md) · [Explore the workflow](docs/WORKFLOW.md) · [Inspect the evidence](docs/verification/README.md)
+</div>
 
-![Clinical Lead screening workspace showing patient outcomes, reasons and participation](docs/media/screening.png)
+[![Watch ProtocolPulse: Keep the trial moving](demo/v2/assets/brand/intro-3d.png)](demo/final_demo.mp4)
 
-*One cohort, three clear outcomes: potential match, needs review or protocol conflict. Every result opens into its evidence.*
+## Promising medicines need rigorous trials. Patients are waiting.
 
-## From protocol to action
+Between a trial protocol and a clinical decision sits a demanding chain of work: interpret eligibility criteria, check patient records, resolve missing evidence and review changes as they happen.
 
-### Review the rule. Read the source.
+**ProtocolPulse connects that work in one evidence-led workspace.** AI turns supported protocol clauses into source-linked rule proposals and investigates patient evidence. Approved rules drive screening and monitoring. Clinical teams keep control of approvals and decisions.
 
-Extracted criteria retain their source quotes and page references. The Clinical Lead reviews the rules and coverage before they can drive screening.
+The ambition is simple: spend less time reconstructing the evidence and more time moving research forward. More efficient trials could help new medicines reach the patients who need them sooner.
 
-![Approved protocol rules with the original medication restriction expanded](docs/media/protocol.png)
+> **AI assists. Clinical teams decide. Keep the trial moving.**
 
-### Keep uncertainty visible
+## One protocol. One connected journey.
 
-A medication order does not establish use. The patient workspace puts the approved clause, clinical dates and source record together so the reviewer can see what remains unresolved.
+The [demo](demo/final_demo.mp4) follows the real application from a protocol PDF to a documented human review, using actual backend results and Gemini execution.
 
-![Patient evidence showing an order-only medication record, uncertainty and the protocol clause](docs/media/patient-evidence.png)
+| Step | What ProtocolPulse does | Why it matters |
+|---|---|---|
+| **1. Interpret** | Extracts inclusion and exclusion criteria into proposed rules, linked to source quotes and pages. | Reviewers can trace a rule back to the protocol that defines it. |
+| **2. Approve** | Gives the Clinical Lead the rules, source clauses and coverage to review before activation. | Human approval determines what drives evaluation. |
+| **3. Match** | Screens the cohort for potential matches, protocol conflicts and evidence that needs review. | Teams can see where to focus and what information is still missing. |
+| **4. Follow** | Records externally confirmed participation and evaluates new clinical records against approved monitoring rules. | Review continues as patient evidence changes. |
+| **5. Investigate** | Brings findings into a review case; AI retrieves evidence and drafts a cited summary. | Reviewers get the context needed to assess the finding. |
+| **6. Decide** | Lets the Clinical Lead record a rationale, cite evidence and acknowledge the case. | The next step has a named reviewer and a review history. |
 
-### See why the agent took its next step
+## The difference is in the evidence
 
-For P-124, a saved Gemini investigation inspected laboratory history and notes, found no qualifying current result and requested human verification.
+### A match is only useful when you can explain it
 
-![Saved Gemini investigation showing an incomplete result, cited summary and verification question](docs/media/investigation.png)
+Screening brings patient outcomes and their reasons into view. Open a patient to inspect the approved criterion, clinical dates and underlying source records.
 
-Different evidence leads to different investigation paths:
+![Clinical Lead screening workspace with patient outcomes and reasons](docs/media/screening.png)
 
-| Situation | Observed agent response |
+### Missing evidence stays visible
+
+In the film, **P-083 has a medication order without confirmed use**. ProtocolPulse keeps that uncertainty visible for review. An order alone does not establish that a patient took the medication.
+
+That distinction is central to the product: help teams identify what they know, what conflicts with the protocol and what still needs verification.
+
+![Patient evidence showing an order-only medication record and the relevant protocol clause](docs/media/patient-evidence.png)
+
+### Screening is the beginning of the story
+
+The demo then follows **P-042**: a Clinical Lead confirms external participation, a new medication record triggers a protocol conflict, and AI investigates. The reviewer examines the evidence and records a cited acknowledgement.
+
+Historical screening results remain intact while new evidence creates a new reason to review.
+
+![Clinical review case with source evidence and human decision controls](docs/media/case-review.png)
+
+## Built to give clinical teams time back
+
+| For | The value |
 |---|---|
-| Missing or stale lab | Inspect labs and notes; request a qualifying result. |
-| Medication order without confirmed use | Check terminology and medication evidence; request verification. |
-| Irrelevant event | Stop after relevance classification. |
+| **Clinical Leads** | A connected path from protocol clauses to patient evidence and documented review, designed to reduce repetitive checking. |
+| **Trial sponsors** | Protocol preparation and aggregate participation visibility, while patient-level review stays in the Clinical Lead workspace. |
+| **Research teams** | Traceable rules, explicit uncertainty and review history that make it easier to understand why a case needs attention. |
+| **Patients, ultimately** | The potential benefit of more efficient trial operations: helping promising research progress toward the people who need it. |
 
-[Recorded Gemini executions](docs/verification/evidence/live-investigations.json) show the actual tool choices. The investigation pictured above is a [saved provider execution](docs/verification/evidence/showcase-investigation.json), displayed without running new inference.
+These are the intended benefits. The prototype demonstrates the workflow; it does not establish measured time savings or earlier medicine availability.
 
-<details>
-<summary>Inspect the tool sequence behind the lab investigation</summary>
+## AI with a clear role
 
-```text
-get_lab_history
-  → retrieve_patient_evidence
-  → search_notes
-  → get_evidence_link
-  → request_verification_task
-```
+**Gemini proposes and investigates. The backend evaluates approved rules. People approve and decide.**
 
-The result remains **PARTIAL** because evidence is unresolved. The backend owns rule results; the agent cannot approve rules, enroll patients or change treatment.
+- **Traceable proposals:** extracted criteria retain source quotes and page references for human review.
+- **Evidence-driven investigation:** the agent can inspect labs, medications and notes, retrieve source references and request verification when evidence is incomplete.
+- **Explicit uncertainty:** missing evidence and failed or partial investigations remain visible.
+- **Human authority:** AI cannot approve rules, enroll patients, change treatment or determine the clinical disposition.
+- **Independent monitoring:** deterministic screening and monitoring remain available with AI disabled. The offline extraction path uses a clearly labeled curated fixture.
 
-</details>
+Read the [AI implementation](docs/AI_IMPLEMENTATION.md) or inspect the [recorded executions and verification evidence](docs/verification/README.md).
 
-### Turn new evidence into accountable review
+## Try ProtocolPulse
 
-New records trigger targeted monitoring against approved rules. Cases bring together findings, source evidence, review history and a human decision. Historical screening results remain intact.
+Follow the **[local setup guide](docs/GETTING_STARTED.md)**, then walk through the **[complete demo workflow](docs/WORKFLOW.md)**.
 
-![Clinical review case with source-linked findings and human disposition controls](docs/media/case-review.png)
+Requires **Python 3.12** and **Node.js 24**. The standard setup includes the shared **30-patient synthetic cohort**. For an existing installation, preserve its database, apply migrations and run `python -m tools.add_demo_patients` in the project's working environment before starting or reusing the servers. Start a new screening to include newly imported patients.
 
-<details>
-<summary>The Sponsor workspace: follow participation without patient-level records</summary>
+| Layer | Technology |
+|---|---|
+| Clinical workspace | Next.js and React |
+| API and evaluation | FastAPI and Python |
+| Persistence and background work | SQLite-backed storage and worker |
+| Protocol interpretation and investigation | Gemini through a scoped tool gateway |
 
-Sponsor prepares the protocol and follows aggregate participation. Clinical Lead owns approval, screening, patient evidence and Safety review.
+[System architecture](docs/SYSTEM_ARCHITECTURE.md) · [Workflow guide](docs/WORKFLOW.md) · [Verification](docs/verification/README.md) · [Demo production and provenance](demo/v2/README.md)
 
-![Sponsor participation view showing cohort and participation totals across studies](docs/media/participation.png)
+### Current scope
 
-</details>
+This is a prototype built around the fictional **PX-104** protocol, **eight supported rules** and **30 synthetic patient profiles**. The role selector simulates identities. Production identity, unrestricted protocol ingestion and clinical validation remain outside this release. Monitoring flags cases for review; it does not diagnose patients or predict drug interactions.
 
-## Try the complete workflow
+---
 
-Follow the [setup guide](docs/GETTING_STARTED.md), then walk through [protocol → approval → screening → participation → monitoring → review](docs/WORKFLOW.md). Requires **Python 3.12** and **Node.js 24**. Gemini is optional; deterministic screening and monitoring continue with AI disabled.
+<div align="center">
 
-Built with **Next.js, React, FastAPI, SQLite and Gemini**. [Architecture](docs/SYSTEM_ARCHITECTURE.md) · [AI implementation](docs/AI_IMPLEMENTATION.md) · [Verification](docs/verification/README.md)
+**ProtocolPulse · Keep the trial moving.**
 
-*Current scope: fictional PX-104, eight supported rules and 30 synthetic patient profiles. Interface captures use the real API on an isolated dataset; saved AI results are identified above. The role dropdown simulates permissions. Production identity, unrestricted protocol ingestion and clinical validation remain outside this release.*
+Bring tomorrow's medicines closer, one evidence-backed review at a time.
+
+</div>
