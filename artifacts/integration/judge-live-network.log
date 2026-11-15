@@ -1,0 +1,7 @@
+{"role": "EVIDENCE_INVESTIGATOR", "patient": "P-124", "status": "PARTIAL", "error": null, "tools": ["retrieve_patient_evidence", "get_lab_history", "search_notes", "get_evidence_link", "get_evidence_link", "request_verification_task"]}
+{"role": "MEDICATION_SAFETY_INVESTIGATOR", "patient": "P-083", "status": "UNAVAILABLE", "error": "TEST_ADAPTER", "tools": []}
+{"role": "MEDICATION_SAFETY_INVESTIGATOR", "patient": "P-140", "status": "UNAVAILABLE", "error": "TEST_ADAPTER", "tools": []}
+{"role": "MONITORING_WORKFLOW", "patient": "P-042", "status": "UNAVAILABLE", "error": "TEST_ADAPTER", "tools": []}
+{"role": "MONITORING_WORKFLOW", "patient": "P-151", "status": "UNAVAILABLE", "error": "TEST_ADAPTER", "tools": []}
+{"role": "PROTOCOL_INTELLIGENCE", "patient": null, "status": "SUCCEEDED", "error": null, "tools": ["parse_protocol", "locate_clause", "validate_rule_schema", "report_coverage"]}
+Live probes complete

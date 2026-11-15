@@ -1,0 +1,461 @@
+{
+  "mode": "INDEPENDENT_REAL_CHROMIUM_NEXT_API",
+  "pages": [
+    {
+      "name": "protocol",
+      "route": "/protocol",
+      "text": "Skip to content\nProtocolPulse\nViewing as\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nPX-104 study\nProtocol approved\nOverview\n✓\nProtocol\n2\nScreen patients\n3\nSafety\nFindings to review\nProtocol 1.0\nActive\nTechnical details\nExtracted rules (8)\n\nEvery rule cites its source page and code-point anchor. Proposals are not operational until an investigator approves them.\n\nRule\tSubject / operator\tThreshold\tWindow\tEvidence requirement\tStatus\tSource\n\nPX-EXC-01\nEXCLUSION\n\t\ncondition\nABSENCE_CONFIRMED_ACTIVE\n\tSYN-EXCLUDED-CONDITION\tAs of screening date · Europe/Athens\tVerified active condition or reviewed record-completeness declaration for its absence.\nMissing data: UNKNOWN_UNLESS_RECONCILED\n\t\nAPPROVED\nby ACT-INV-01\n15 Nov 2026, 08:24 UTC\n\tp. 3\n[138, 563)\n\n\nSource quote for PX-EXC-01\n\n\nPX-EXC-02\nEXCLUSION\n\t\nmedication\nNO_RESTRICTED_USE\n\tSYN-CLASS-R\t[D-30, D) from screening date · Europe/Athens\tDated verified administration/reliable reported use, or reviewed no-use reconciliation covering the full window.\nMissing data: UNKNOWN_UNLESS_RECONCILED\n\t\nAPPROVED\nby ACT-INV-01\n15 Nov 2026, 08:24 UTC\n\tp. 3\n[610, 1166)\n\n\nSource quote for PX-EXC-02\n\n\nPX-INC-01\nINCLUSION\n\t\nage\nAGE_RANGE_INCLUSIVE\n\t40–70 years\tAs of screening date · Europe/Athens\tSourced birth date with sufficient precision for age at screening.\nMissing data: UNKNOWN_UNLESS_RECONCILED\n\t\nAPPROVED\nby ACT-INV-01\n15 Nov 2026, 08:24 UTC\n\tp. 2\n[129, 418)\n\n\nSource quote for PX-INC-01\n\n\nPX-INC-02\nINCLUSION\n\t\ndiagnosis\nCODE_CONFIRMED\n\tSYN-CONDITION-A\tAs of screening date · Europe/Athens\tVerified condition code or synthetic adjudicated diagnosis note as of screening.\nMissing data: UNKNOWN_UNLESS_RECONCILED\n\t\nAPPROVED\nby ACT-INV-01\n15 Nov 2026, 08:24 UTC\n\tp. 2\n[459, 803)\n\n\nSource quote for PX-INC-02\n\n\nPX-INC-03\nINCLUSION\n\t\negfr\nLAB_GTE\n\t60 mL/min/1.73m²\t[D-30, D] from screening date · Europe/Athens\tLatest relevant numeric eGFR with valid specimen date, provenance and reviewed unit.\nMissing data: UNKNOWN_UNLESS_RECONCILED\n\t\nAPPROVED\nby ACT-INV-01\n15 Nov 2026, 08:24 UTC\n\tp. 2\n[837, 1266)\n\n\nSource quote for PX-INC-03\n\n\nPX-MON-01\nMONITORING\n\t\nmedication\nEVENT_RESTRICTED_USE\n\tSYN-CLASS-R\tDuring recorded participation [start, end) · Europe/Athens\tConfirmed dated administration or reliable documented use during participation.\nMissing data: UNKNOWN_UNLESS_RECONCILED\n\t\nAPPROVED\nby ACT-INV-01\n15 Nov 2026, 08:24 UTC\n\tp. 4\n[150, 598)\n\n\nSource quote for PX-MON-01\n\n\nPX-MON-02\nMONITORING\n\t\nmedication\nEVENT_ORDER_ONLY\n\tSYN-CLASS-R\tDuring recorded participation [start, end) · Europe/Athens\tDated restricted-class order/dispense with no confirmed use, requiring human reconciliation.\nMissing data: UNKNOWN_UNLESS_RECONCILED\n\t\nAPPROVED\nby ACT-INV-01\n15 Nov 2026, 08:24 UTC\n\tp. 4\n[643, 1076)\n\n\nSource quote for PX-MON-02\n\n\nPX-MON-03\nMONITORING\n\t\negfr\nEVENT_LAB_LT\n\t60 mL/min/1.73m²\tDuring recorded participation [start, end) · Europe/Athens\tNew synthetic numeric eGFR below the fictional threshold during participation, with valid units and specimen/effective time.\nMissing data: UNKNOWN_UNLESS_RECONCILED\n\t\nAPPROVED\nby ACT-INV-01\n15 Nov 2026, 08:24 UTC\n\tp. 4\n[1105, 1523)\n\n\nSource quote for PX-MON-03\nExtraction coverage (12 sections)\n\n8 mapped · 4 informational · 0 blocking. Every numbered protocol section must be accounted for before approval. Informational sections explain the rules but create no executable criteria.\n\nSection\tCoverage\tMapped rules\tPage / span\tReview note\nPX-INFO-CALENDAR\tINFORMATIONAL\tnone\tp. 1 [567, 1146)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-INFO-EVIDENCE\tINFORMATIONAL\tnone\tp. 5 [123, 717)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-INFO-IDENTITY\tINFORMATIONAL\tnone\tp. 1 [106, 567)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-INFO-REVIEW\tINFORMATIONAL\tnone\tp. 5 [717, 1491)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-SECTION-EXC-01\tMAPPED\tPX-EXC-01\tp. 3 [97, 563)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-SECTION-EXC-02\tMAPPED\tPX-EXC-02\tp. 3 [563, 1166)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-SECTION-INC-01\tMAPPED\tPX-INC-01\tp. 2 [97, 418)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-SECTION-INC-02\tMAPPED\tPX-INC-02\tp. 2 [418, 803)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-SECTION-INC-03\tMAPPED\tPX-INC-03\tp. 2 [803, 1266)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-SECTION-MON-01\tMAPPED\tPX-MON-01\tp. 4 [110, 598)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-SECTION-MON-02\tMAPPED\tPX-MON-02\tp. 4 [598, 1076)\tCurated fixture proposal; not AI-generated; investigator review required.\nPX-SECTION-MON-03\tMAPPED\tPX-MON-03\tp. 4 [1076, 1523)\tCurated fixture proposal; not AI-generated; investigator review required.\nCoverage signed: ACT-INV-01 at 15 Nov 2026, 08:24 UTC\nScreening readiness\n\n✓ All rules are approved by the investigator. Screening is available.\n\nNext: Screen patients\nUpload protocol PDF\n\nRegisters an immutable source version. Extraction is a separate, explicit step.\n\nSwitch to a coordinator or research IT actor to upload.\n\nPDF file (max 12 MB)\nVersion label\nThis document contains no real patient or sponsor data.\nUpload PDF\nDecision support only. Final eligibility and clinical decisions rest with the investigator.",
+      "violations": []
+    },
+    {
+      "name": "selector",
+      "route": "/selector?run=RUN-d4ef79000aaa48d49b5844a068a267dc&status=ALL",
+      "text": "Skip to content\nProtocolPulse\nViewing as\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nPX-104 study\nProtocol approved\nOverview\n✓\nProtocol\n2\nScreen patients\n3\nSafety\nFindings to review\nScreen patients\n\nEach patient is checked against the approved eligibility criteria. A potential match is a candidate for formal screening by the investigator, not an enrolment.\n\nBaseline screening\n\n15 patients screened for 2026-10-31 · Completed 15 Nov 2026, 10:24 EET\n\nScreening date\nRun screening\nTechnical details\nCandidates\n6\nNeeds review\n3\nPotential match\n6\nProtocol conflict\n15\nAll patients\nFind a patient (this page)\nReason\nAny reason\nNo lab result on record\nLab result is out of date\nA date in the record is unclear\nMedication was ordered; use is not confirmed\nRecords disagree with each other\nAn entry could not be identified\nThe rule is not approved yet\nThe protocol rule is incomplete\nNot enough evidence to rule this out\nResult uses an unsupported unit\nThe source record is unavailable\nSort\nPatient ID\nMost complete record first\nPatient\tResult\tWhy\tCriteria\nP-042\tPotential match\tMeets all eligibility criteria\t5 of 5 met\nP-083\tNeeds review\tRestricted medication: Medication was ordered; use is not confirmed\t4 met · 1 unclear\nP-117\tProtocol conflict\tRestricted medication not met\t4 met · 1 not met\nP-118\tPotential match\tMeets all eligibility criteria\t5 of 5 met\nP-124\tNeeds review\tKidney function (eGFR): Lab result is out of date\t4 met · 1 unclear\nP-140\tNeeds review\tRestricted medication: Records disagree with each other\t4 met · 1 unclear\nP-151\tPotential match\tMeets all eligibility criteria\t5 of 5 met\nP-161\tProtocol conflict\tKidney function (eGFR) not met\t4 met · 1 not met\nP-175\tProtocol conflict\tExcluded condition not met\t4 met · 1 not met\nP-201\tProtocol conflict\tAge not met\t4 met · 1 not met\nP-202\tProtocol conflict\tAge not met\t4 met · 1 not met\nP-203\tNeeds review\tRestricted medication: An entry could not be identified\t4 met · 1 unclear\nP-204\tNeeds review\tRestricted medication: A date in the record is unclear\t4 met · 1 unclear\nP-205\tNeeds review\tExcluded condition: Not enough evidence to rule this out\t4 met · 1 unclear\nP-206\tProtocol conflict\tKidney function (eGFR) not met\t4 met · 1 not met\nPage 1 · 15 patients\nPrevious\nNext\nDecision support only. Final eligibility and clinical decisions rest with the investigator.",
+      "violations": [],
+      "after_refresh": "Skip to content\nProtocolPulse\nViewing as\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nPX-104 study\nProtocol approved\nOverview\n✓\nProtocol\n2\nScreen patients\n3\nSafety\nFindings to review\nScreen patients\n\nEach patient is checked against the approved eligibility criteria. A potential match is a candidate for formal screening by the investigator, not an enrolment.\n\nBaseline screening\n\n15 patients screened for 2026-10-31 · Completed 15 Nov 2026, 10:24 EET\n\nScreening date\nRun screening\nTechnical details\nCandidates\n6\nNeeds review\n3\nPotential match\n6\nProtocol conflict\n15\nAll patients\nFind a patient (this page)\nReason\nAny reason\nNo lab result on record\nLab result is out of date\nA date in the record is unclear\nMedication was ordered; use is not confirmed\nRecords disagree with each other\nAn entry could not be identified\nThe rule is not approved yet\nThe protocol rule is incomplete\nNot enough evidence to rule this out\nResult uses an unsupported unit\nThe source record is unavailable\nSort\nPatient ID\nMost complete record first\nPatient\tResult\tWhy\tCriteria\nP-042\tPotential match\tMeets all eligibility criteria\t5 of 5 met\nP-083\tNeeds review\tRestricted medication: Medication was ordered; use is not confirmed\t4 met · 1 unclear\nP-117\tProtocol conflict\tRestricted medication not met\t4 met · 1 not met\nP-118\tPotential match\tMeets all eligibility criteria\t5 of 5 met\nP-124\tNeeds review\tKidney function (eGFR): Lab result is out of date\t4 met · 1 unclear\nP-140\tNeeds review\tRestricted medication: Records disagree with each other\t4 met · 1 unclear\nP-151\tPotential match\tMeets all eligibility criteria\t5 of 5 met\nP-161\tProtocol conflict\tKidney function (eGFR) not met\t4 met · 1 not met\nP-175\tProtocol conflict\tExcluded condition not met\t4 met · 1 not met\nP-201\tProtocol conflict\tAge not met\t4 met · 1 not met\nP-202\tProtocol conflict\tAge not met\t4 met · 1 not met\nP-203\tNeeds review\tRestricted medication: An entry could not be identified\t4 met · 1 unclear\nP-204\tNeeds review\tRestricted medication: A date in the record is unclear\t4 met · 1 unclear\nP-205\tNeeds review\tExcluded condition: Not enough evidence to rule this out\t4 met · 1 unclear\nP-206\tProtocol conflict\tKidney function (eGFR) not met\t4 met · 1 not met\nPage 1 · 15 patients\nPrevious\nNext\nDecision support only. Final eligibility and clinical decisions rest with the investigator."
+    },
+    {
+      "name": "patient",
+      "route": "/patients/P-083?run=RUN-d4ef79000aaa48d49b5844a068a267dc",
+      "text": "Skip to content\nProtocolPulse\nViewing as\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nPX-104 study\nProtocol approved\nOverview\n✓\nProtocol\n2\nScreen patients\n3\nSafety\nFindings to review\n← All candidates\nPatient 1 of 6 · needs review\nPrevious patient\nNext patient\nPatient P-083\nNeeds review\n\nRestricted medication: Medication was ordered; use is not confirmed. 4 met · 1 unclear.\n\nScreened for 2026-10-31 · Not enrolled\n\nNext step\nRecord screening disposition…\nRecord external participation…\nRequest agent investigation\nEligibility criteria\n\nCriteria that are not met or unclear are listed first. Select a source to see the evidence.\n\nCriterion\tResult\tWhy\tPeriod considered\tEvidence\nRestricted medication\t\n?\nUnclear\tMedication evidence unresolved\nMedication was ordered; use is not confirmed. To resolve: Confirm with the patient or pharmacy whether the medication was taken.\n\t30 Sept 2026, 21:00 UTC\n→ 30 Oct 2026, 22:00 UTC\t1 source\nExcluded condition\t\n✓\nMet\tReviewed explicit condition absence\tOn the screening date\t1 source\nAge\t\n✓\nMet\tAge 50 within inclusive (40.0, 70.0)\tOn the screening date\t1 source\nStudy diagnosis\t\n✓\nMet\tVerified active condition at screening\tOn the screening date\t1 source\nKidney function (eGFR)\t\n✓\nMet\tLatest specimen 2026-10-20: 78.0 mL/min/1.73m²; minimum 60.0\t30 Sept 2026, 21:00 UTC\n→ 31 Oct 2026, 22:00 UTC\t1 source\nEvidence: Restricted medication\n?\nUnclear\nMedication was ordered; use is not confirmed\n\nMedication evidence unresolved\n\nChecked 15 Nov 2026, 10:24 EET against the approved protocol rule.\n\nPROTOCOL CLAUSE\n\nThe restricted medication class · [D-30, D) from screening date · Europe/Athens\n\nThe patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\nPage 3\n[610, 1166)\nSRC-PROTOCOL-PX104-V1\nShow in source page\nSOURCE RECORDS (1)\nOrder\nClinical date\n15 Oct 2026, 00:00 EEST\nRecorded\n30 Oct 2026, 12:00 EET\nSYN-MED-R1 ORDER\nSYN-MED-R1\nPositive (documented)\nVerified\nHigh quality\nSYN-MED-R1 dose\n1 synthetic-unit\nPositive (documented)\nVerified\nHigh quality\nSYN-MED-R1 route\nORAL\nPositive (documented)\nVerified\nHigh quality\nOpen source record\nEvidence timeline\nMedications\nRecord sections\nDecision support only. Final eligibility and clinical decisions rest with the investigator.",
+      "violations": []
+    },
+    {
+      "name": "monitor",
+      "route": "/monitor",
+      "text": "Skip to content\nProtocolPulse\nViewing as\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nPX-104 study\nProtocol approved\nOverview\n✓\nProtocol\n2\nScreen patients\n3\nSafety\nFindings to review\nSafety\n\nNew records for participating patients are checked against the protocol. A finding is a prompt for review, not a diagnosis.\n\nAuto-refresh (10s)\nRefresh\nFinding type\nAll findings\nConfirmed protocol conflict\nPotential safety review\nData quality discrepancy\nPossible protocol deviation\nPriority\nAny priority\nHigh\nMedium\nLow\nPatient\n\nUpdated 15 Nov 2026, 10:30 EET\n\nConfirmed protocol conflict\nHigh priority\nPatient P-042\n\nOccurred 19 Nov 2026, 09:30 EET · Recorded 20 Nov 2026, 11:00 EET · Found 15 Nov 2026, 10:24 EET · 1 supporting record\n\nOpen case\nReview cases\nPatient\tIssue\tStatus\tPriority\tAssigned to\tUpdated\t\nOpen\n\nP-042\tConfirmed restricted use during participation\tClosed\tHigh priority\tInvestigator\t15 Nov 2026, 08:24 UTC\tReview\nSimulate new record\n\nAdds a source record for a participating patient. Findings appear only after the backend re-evaluates and the job SUCCEEDED; nothing is counted locally.\n\nSimulate new record…\n\nCoordinator or research IT role required to post events.\n\nBefore you add a record\n\nSafety checks apply only to patients recorded as participating. The investigator records participation on the patient page.\n\nDecision support only. Final eligibility and clinical decisions rest with the investigator.",
+      "violations": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2a",
+            "wcag141",
+            "TTv5",
+            "TT13.a",
+            "EN-301-549",
+            "EN-9.1.4.1",
+            "RGAAv4",
+            "RGAA-10.6.1"
+          ],
+          "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
+          "help": "Links must be distinguishable without relying on color",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/link-in-text-block?application=playwright",
+          "nodes": [
+            {
+              "any": [
+                {
+                  "id": "link-in-text-block",
+                  "data": {
+                    "messageKey": "fgContrast",
+                    "contrastRatio": 1.59,
+                    "requiredContrastRatio": 3,
+                    "nodeColor": "#14523c",
+                    "parentColor": "#1a2d25"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<h3 class=\"text-base\">Patient <a class=\"text-brand underline-offset-2 hover:underline\" href=\"/trials/TR-PX104/patients/P-042\">P-042</a></h3>",
+                      "target": [
+                        ".text-base"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "The link has insufficient color contrast of 1.59:1 with the surrounding text. (Minimum contrast is 3:1, link text: #14523c, surrounding text: #1a2d25)"
+                },
+                {
+                  "id": "link-in-text-block-style",
+                  "data": null,
+                  "relatedNodes": [
+                    {
+                      "html": "<h3 class=\"text-base\">Patient <a class=\"text-brand underline-offset-2 hover:underline\" href=\"/trials/TR-PX104/patients/P-042\">P-042</a></h3>",
+                      "target": [
+                        ".text-base"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "The link has no styling (such as underline) to distinguish it from the surrounding text"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<a class=\"text-brand underline-offset-2 hover:underline\" href=\"/trials/TR-PX104/patients/P-042\">P-042</a>",
+              "target": [
+                ".text-base > .underline-offset-2.hover\\:underline.text-brand"
+              ],
+              "failureSummary": "Fix any of the following:\n  The link has insufficient color contrast of 1.59:1 with the surrounding text. (Minimum contrast is 3:1, link text: #14523c, surrounding text: #1a2d25)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "case",
+      "route": "/cases?case=CASE-becdb38ec477449290178a8ac6a41844",
+      "text": "Skip to content\nProtocolPulse\nViewing as\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nPX-104 study\nProtocol approved\nOverview\n✓\nProtocol\n2\nScreen patients\n3\nSafety\nFindings to review\n← Safety\nReview cases\n\nSafety findings that need a decision from a person. Monitors acknowledge and comment; the investigator resolves and closes.\n\nStatus\nAll statuses\nOpen\nAcknowledged\nInvestigating\nReopened\nResolved\nClosed\nAssigned to me\nRefresh\nPatient\tIssue\tStatus\tPriority\tAssigned to\tUpdated\t\nOpen\n\nP-042\tConfirmed restricted use during participation\tClosed\tHigh priority\tInvestigator\t15 Nov 2026, 08:24 UTC\tReview\nPatient P-042\nClosed\nHigh priority\nPatient\nP-042\nAssigned to\nInvestigator\nOpened\n15 Nov 2026, 10:24 EET\nUpdated\n15 Nov 2026, 10:24 EET\nTechnical details\nFindings and evidence\nConfirmed protocol conflict\nFound 15 Nov 2026, 10:24 EET\nOpen source recordMedication · occurred 19 Nov 2026, 09:30 EET · recorded 20 Nov 2026, 11:00 EET · SRC-JUDGE-efc3fa63c3b7447288df2e5f3a044b67 v1\nCase summary\n\nSystem-generated deterministic summary\n\nConfirmed restricted use during participation\n\nAutomated summary\nAgent unavailable\nEXEC-0fbad83391814ef4ae967151b6b2b64e\nMONITORING_WORKFLOW\nmodel none\n\nAgent capability unavailable (AGENT_UNAVAILABLE). No model ran and no tool trace exists. Deterministic screening, monitoring and case workflow are unaffected.\n\nPatient\nP-042\nRules\nPX-MON-01\nEvent\nEVT-a6e1b312226f437cadf6740fd2bc715e\nCorrelation\n167508ef-968b-4259-bf43-b1e8146111b1\nStarted\n15 Nov 2026, 10:24 EET\nFinished\n15 Nov 2026, 10:24 EET\nHuman review decisions (4)\nInvestigator\nOpen → Acknowledged\n15 Nov 2026, 10:24 EET\n\nDisposition: Reviewed\n\nRationale: Independent synthetic QA\n\n1 evidence record cited\n\nInvestigator\nAcknowledged → Investigating\n15 Nov 2026, 10:24 EET\n\nDisposition: Reviewed\n\nRationale: Independent synthetic QA\n\n1 evidence record cited\n\nInvestigator\nInvestigating → Resolved\n15 Nov 2026, 10:24 EET\n\nDisposition: Reviewed\n\nRationale: Independent synthetic QA\n\n1 evidence record cited\n\nInvestigator\nResolved → Closed\n15 Nov 2026, 10:24 EET\n\nDisposition: Reviewed\n\nRationale: Independent synthetic QA\n\n1 evidence record cited\n\nRecord a review decision\nNext status\nSelect…\nOPEN\nACKNOWLEDGED\nINVESTIGATING\nRESOLVED\nCLOSED (current)\nREOPENED\nOwner\nUnassigned\nInvestigator\nMonitor\nDisposition\nRationale\nCited evidence\nEVT-a6e1b312226f437cadf6740fd2bc715e\nReview and submit…\nDecision support only. Final eligibility and clinical decisions rest with the investigator.",
+      "violations": [],
+      "after_refresh": "Skip to content\nProtocolPulse\nViewing as\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nPX-104 study\nProtocol approved\nOverview\n✓\nProtocol\n2\nScreen patients\n3\nSafety\nFindings to review\n← Safety\nReview cases\n\nSafety findings that need a decision from a person. Monitors acknowledge and comment; the investigator resolves and closes.\n\nStatus\nAll statuses\nOpen\nAcknowledged\nInvestigating\nReopened\nResolved\nClosed\nAssigned to me\nRefresh\nPatient\tIssue\tStatus\tPriority\tAssigned to\tUpdated\t\nOpen\n\nP-042\tConfirmed restricted use during participation\tClosed\tHigh priority\tInvestigator\t15 Nov 2026, 08:24 UTC\tReview\nPatient P-042\nClosed\nHigh priority\nPatient\nP-042\nAssigned to\nInvestigator\nOpened\n15 Nov 2026, 10:24 EET\nUpdated\n15 Nov 2026, 10:24 EET\nTechnical details\nFindings and evidence\nConfirmed protocol conflict\nFound 15 Nov 2026, 10:24 EET\nOpen source recordMedication · occurred 19 Nov 2026, 09:30 EET · recorded 20 Nov 2026, 11:00 EET · SRC-JUDGE-efc3fa63c3b7447288df2e5f3a044b67 v1\nCase summary\n\nSystem-generated deterministic summary\n\nConfirmed restricted use during participation\n\nAutomated summary\nAgent unavailable\nEXEC-0fbad83391814ef4ae967151b6b2b64e\nMONITORING_WORKFLOW\nmodel none\n\nAgent capability unavailable (AGENT_UNAVAILABLE). No model ran and no tool trace exists. Deterministic screening, monitoring and case workflow are unaffected.\n\nPatient\nP-042\nRules\nPX-MON-01\nEvent\nEVT-a6e1b312226f437cadf6740fd2bc715e\nCorrelation\n167508ef-968b-4259-bf43-b1e8146111b1\nStarted\n15 Nov 2026, 10:24 EET\nFinished\n15 Nov 2026, 10:24 EET\nHuman review decisions (4)\nInvestigator\nOpen → Acknowledged\n15 Nov 2026, 10:24 EET\n\nDisposition: Reviewed\n\nRationale: Independent synthetic QA\n\n1 evidence record cited\n\nInvestigator\nAcknowledged → Investigating\n15 Nov 2026, 10:24 EET\n\nDisposition: Reviewed\n\nRationale: Independent synthetic QA\n\n1 evidence record cited\n\nInvestigator\nInvestigating → Resolved\n15 Nov 2026, 10:24 EET\n\nDisposition: Reviewed\n\nRationale: Independent synthetic QA\n\n1 evidence record cited\n\nInvestigator\nResolved → Closed\n15 Nov 2026, 10:24 EET\n\nDisposition: Reviewed\n\nRationale: Independent synthetic QA\n\n1 evidence record cited\n\nRecord a review decision\nNext status\nSelect…\nOPEN\nACKNOWLEDGED\nINVESTIGATING\nRESOLVED\nCLOSED (current)\nREOPENED\nOwner\nUnassigned\nInvestigator\nMonitor\nDisposition\nRationale\nCited evidence\nEVT-a6e1b312226f437cadf6740fd2bc715e\nReview and submit…\nDecision support only. Final eligibility and clinical decisions rest with the investigator."
+    },
+    {
+      "name": "audit",
+      "route": "/audit",
+      "text": "Skip to content\nProtocolPulse\nViewing as\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nPX-104 study\nProtocol approved\nOverview\n✓\nProtocol\n2\nScreen patients\n3\nSafety\nFindings to review\n\nThis screen is not part of the investigator role.\n\nGo to overview\nAudit trail\n\nA permanent record of who did what and when. Entries cannot be edited or removed.\n\nRefresh\nExport CSV\nWho\nEveryone\nInvestigator\nCoordinator\nMonitor\nAuditor\nSponsor operations\nResearch IT\nActivity\nAll activity\nUploaded a protocol document\nStarted reading rules from the protocol\nRegistered proposed protocol rules\nLoaded proposed protocol rules\nEdited proposed protocol rules\nApproved the protocol\nStarted patient screening\nPatient screening completed\nRecorded patient participation\nAdded a clinical record\nSafety check run on a new record\nAutomated case summary was not available\nReviewed a safety case\n15 Nov 2026 · 50 entries\nTime\tWho\tWhat happened\tTechnical details\n10:28 EET\tInvestigator\tAgent finished · Succeeded\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tInvestigation queued\t\nShow\n\n10:28 EET\tInvestigator\tAgent finished · Succeeded\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tInvestigation queued\t\nShow\n\n10:28 EET\tInvestigator\tAgent finished · Partial\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tInvestigation queued\t\nShow\n\n10:28 EET\tInvestigator\tAgent finished · Partial\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:28 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tInvestigation queued\t\nShow\n\n10:27 EET\tInvestigator\tAgent finished · Partial\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tInvestigation queued\t\nShow\n\n10:27 EET\tInvestigator\tAgent finished · Partial\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tAgent tool\t\nShow\n\n10:27 EET\tInvestigator\tInvestigation queued\t\nShow\n\n10:26 EET\tInvestigator\tAgent finished · Succeeded\t\nShow\n\n10:26 EET\tInvestigator\tAgent tool\t\nShow\n\n10:26 EET\tInvestigator\tAgent tool\t\nShow\n\n10:26 EET\tInvestigator\tAgent tool\t\nShow\n\n10:26 EET\tInvestigator\tAgent tool\t\nShow\n\n10:26 EET\tInvestigator\tInvestigation queued\t\nShow\n\n10:26 EET\tInvestigator\tAgent finished · Unavailable\t\nShow\n\n10:26 EET\tInvestigator\tInvestigation queued\t\nShow\n\n10:26 EET\tInvestigator\tAgent finished · Unavailable\t\nShow\n\n10:26 EET\tInvestigator\tInvestigation queued\t\nShow\nPage 1\nPrevious\nNext\nTechnical details: automated case summaries\nDecision support only. Final eligibility and clinical decisions rest with the investigator.",
+      "violations": []
+    }
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/protocols?sort=-created_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/screenings/RUN-d4ef79000aaa48d49b5844a068a267dc",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/screenings/RUN-d4ef79000aaa48d49b5844a068a267dc",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/protocols/PV-PX104-1.0",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/screenings/RUN-d4ef79000aaa48d49b5844a068a267dc/assessments?sort=patient_id&limit=25",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/screenings/RUN-d4ef79000aaa48d49b5844a068a267dc",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/screenings/RUN-d4ef79000aaa48d49b5844a068a267dc",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/protocols/PV-PX104-1.0",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/screenings/RUN-d4ef79000aaa48d49b5844a068a267dc/assessments?sort=patient_id&limit=25",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/protocols/PV-PX104-1.0",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/patients/P-083",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/patients/P-083",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/screenings/RUN-d4ef79000aaa48d49b5844a068a267dc/assessments?limit=100",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/screenings/RUN-d4ef79000aaa48d49b5844a068a267dc/assessments?limit=100",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/findings?sort=-created_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=20",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/findings?sort=-created_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=20",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/cases/CASE-becdb38ec477449290178a8ac6a41844",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/cases/CASE-becdb38ec477449290178a8ac6a41844",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/agent-executions/EXEC-0fbad83391814ef4ae967151b6b2b64e",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/findings?patient_id=P-042&limit=100",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/agent-executions/EXEC-0fbad83391814ef4ae967151b6b2b64e",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/cases/CASE-becdb38ec477449290178a8ac6a41844",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/cases/CASE-becdb38ec477449290178a8ac6a41844",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/cases?sort=-updated_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/findings?patient_id=P-042&limit=100",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/agent-executions/EXEC-0fbad83391814ef4ae967151b6b2b64e",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/agent-executions/EXEC-0fbad83391814ef4ae967151b6b2b64e",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/audit?sort=-occurred_at&limit=50",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/cases?limit=100",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/cases?limit=100",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8016/api/v1/trials/TR-PX104/audit?sort=-occurred_at&limit=50",
+      "status": 200
+    }
+  ]
+}
