@@ -24,18 +24,18 @@ test('real protocol → screening → evidence → dated event → human case �
     expect(res.status()).toBe(200);
     return (await res.json()).data;
   };
-  const actor = (id: string) => page.getByLabel(/Simulated actor/).selectOption(id);
+  const actor = (id: string) => page.getByLabel(/Viewing as/).selectOption(id);
   const shot = (name: string) => page.screenshot({ path: resolve(out, name + '.png'), fullPage: true });
   try {
     await page.goto(trial + '/selector');
     await expect(page.getByRole('button', { name: 'Run screening', exact: true })).toBeDisabled();
-    await expect(page.getByText('FICTIONAL PROTOCOL · SYNTHETIC PATIENTS ONLY')).toBeVisible();
+    await expect(page.getByText(/Decision support only/)).toBeVisible();
 
     await page.goto(trial + '/protocol');
     await actor('ACT-COORD-01');
     await page.getByLabel(/PDF file/).setInputFiles(resolve(__dirname, '../../../fixtures/protocols/px104-v1/PX-104-v1.0-fictional.pdf'));
     await page.getByLabel('Version label', { exact: true }).fill(`IC-browser-${Date.now()}`);
-    await page.getByLabel('This document is fictional and contains no real patient or sponsor data.').check();
+    await page.getByLabel('This document contains no real patient or sponsor data.').check();
     const upload = page.waitForResponse(r => r.request().method() === 'POST' && r.url().endsWith('/protocols'));
     await page.getByRole('button', { name: 'Upload PDF', exact: true }).click();
     expect((await upload).status()).toBe(201);
@@ -79,6 +79,8 @@ test('real protocol → screening → evidence → dated event → human case �
     evidence.baseline_assessments = assessments;
     const statuses = Object.fromEntries(assessments.map((a: {patient_id:string;candidate_status:string}) => [a.patient_id, a.candidate_status]));
     expect(statuses).toMatchObject({ 'P-042': 'POTENTIAL_MATCH', 'P-175': 'PROTOCOL_CONFLICT', 'P-124': 'NEEDS_REVIEW', 'P-083': 'NEEDS_REVIEW', 'P-117': 'PROTOCOL_CONFLICT', 'P-118': 'POTENTIAL_MATCH', 'P-140': 'NEEDS_REVIEW' });
+    // The list opens on "Needs review"; P-042 is a potential match, so show all patients.
+    await page.getByRole('tab', { name: /All patients/ }).click();
     await expect(page.getByRole('link', { name: 'P-042', exact: true })).toBeVisible();
     await shot('02-selector-real-results');
     await page.reload();
@@ -137,17 +139,17 @@ test('real protocol → screening → evidence → dated event → human case �
     expect((evidence.review_case as {decisions: {actor_id:string}[]}).decisions[0].actor_id).toBe('ACT-MON-01');
     await shot('05-human-case-review');
     await page.reload();
-    await expect(page.locator('span').filter({ hasText: /^ACKNOWLEDGED$/ }).first()).toBeVisible();
+    await expect(page.locator('span').filter({ hasText: /^Acknowledged$/ }).first()).toBeVisible();
 
     await page.goto(trial + '/audit');
     await actor('ACT-AUD-01');
-    await expect(page.getByText('PROTOCOL_APPROVED', { exact: true })).toBeVisible();
+    await expect(page.getByText('Approved the protocol', { exact: true }).first()).toBeVisible();
     await shot('06-audit');
     evidence.audit = (await get('/trials/TR-PX104/audit?limit=100')).items;
     expect(errors).toEqual([]);
     evidence.browser_errors = errors;
     const accessibility: { path: string; violations: unknown[] }[] = [];
-    for (const path of ['/protocol', `/selector?run=${run}`, `/patients/P-042?run=${run}`, '/monitor', `/cases?case=${caseId}`, '/audit']) {
+    for (const path of ['/protocol', `/selector?run=${run}&status=ALL`, `/patients/P-042?run=${run}`, '/monitor', `/cases?case=${caseId}`, '/audit']) {
       await page.goto(trial + path);
       await actor('ACT-INV-01');
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();

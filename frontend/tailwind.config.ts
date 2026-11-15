@@ -1,22 +1,22 @@
 import type { Config } from 'tailwindcss';
 
-// Restrained clinical-operations palette. Status hues always pair with a text label;
+// Calm green clinical palette. Status hues always pair with a text label;
 // colour is never the only signal (NFR-011).
 const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        ink: { DEFAULT: '#1c2430', muted: '#4a5565', faint: '#566173' },
-        line: { DEFAULT: '#d9dee5', strong: '#b8c0cc' },
-        canvas: '#f5f6f8',
+        ink: { DEFAULT: '#1a2d25', muted: '#475c51', faint: '#52665b' },
+        line: { DEFAULT: '#d5e5db', strong: '#b9cec1' },
+        canvas: '#f0f7f2',
         surface: '#ffffff',
-        brand: { DEFAULT: '#1f4e79', hover: '#173d60', soft: '#e6eef6' },
-        pass: { fg: '#1d5c3a', bg: '#e3f1e8', line: '#a8d1b7' },
-        fail: { fg: '#8a1f2b', bg: '#fbe7e9', line: '#eab0b7' },
-        unknown: { fg: '#7a4b00', bg: '#fdf1d8', line: '#ebcd8e' },
-        info: { fg: '#24476b', bg: '#e6eef6', line: '#b3c8de' },
-        neutral: { fg: '#3d4654', bg: '#eceff3', line: '#cdd3db' },
+        brand: { DEFAULT: '#14523c', hover: '#0e3f2e', soft: '#dff1e7' },
+        pass: { fg: '#1f6b4a', bg: '#e6f4ec', line: '#b5dcc6' },
+        fail: { fg: '#a12c36', bg: '#fcebec', line: '#f0bfc4' },
+        unknown: { fg: '#8a5a00', bg: '#fff4dc', line: '#eed39a' },
+        info: { fg: '#24557a', bg: '#e7f0f8', line: '#bbd2e6' },
+        neutral: { fg: '#3d4654', bg: '#e6eee9', line: '#c9d6ce' },
       },
       fontFamily: {
         sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],

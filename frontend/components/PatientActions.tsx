@@ -88,7 +88,7 @@ export function PatientActions({ trialId, patient, assessment, protocolVersionId
 
   return (
     <section className="card card-pad space-y-3" aria-labelledby="actions-heading">
-      <h2 id="actions-heading">Human actions</h2>
+      <h2 id="actions-heading">Next step</h2>
       {notice && <p role="status" className="rounded border border-info-line bg-info-bg p-2 text-xs text-info-fg">{notice}</p>}
       {error ? <ErrorPanel error={error} /> : null}
       <div className="flex flex-wrap gap-2">

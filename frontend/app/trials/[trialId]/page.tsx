@@ -3,96 +3,148 @@
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useActor } from '@/components/ActorContext';
-import { CaseRow } from '@/components/CaseRow';
+import { CaseTable } from '@/components/CaseRow';
 import { ErrorPanel } from '@/components/ErrorBoundary';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
-import { ProtocolStatePill } from '@/components/StatusPill';
 import { TrialHeader, useTrial } from '@/components/TrialHeader';
 import { useApiQuery } from '@/lib/api/hooks';
+import { CAN_READ, ROLE_LABEL, STEPS, caseIssue } from '@/lib/api/labels';
 import { getApi } from '@/lib/api/runtime';
-import type { Page, ReviewCase } from '@/lib/api/types';
+import type { ActorRole, Page, ReviewCase } from '@/lib/api/types';
 
 function countLabel(page: Page<unknown>['page'], shown: number): string {
   if (page.total_count !== null) return String(page.total_count);
   return page.next_cursor ? `${shown}+` : String(shown);
 }
 
+interface AttentionItem { tone: 'urgent' | 'warn' | 'info'; title: string; detail: string; cta: string; href: string }
+const TONE: Record<AttentionItem['tone'], string> = {
+  urgent: 'border-fail-line bg-fail-bg',
+  warn: 'border-unknown-line bg-unknown-bg',
+  info: 'border-line bg-canvas',
+};
+const is = (role: ActorRole, ...roles: ActorRole[]) => roles.includes(role);
+
 export default function TrialOverviewPage() {
   const { trialId } = useParams<{ trialId: string }>();
   const { actor } = useActor();
   const trial = useTrial(trialId);
   const protocols = useApiQuery(() => getApi().listProtocols(trialId, { sort: '-created_at', limit: 10 }).then((r) => r.data), [trialId, actor.actor_id]);
-  const openCases = useApiQuery(() => getApi().listCases(trialId, { status: 'OPEN', sort: '-updated_at', limit: 5 }).then((r) => r.data), [trialId, actor.actor_id]);
-  const reopened = useApiQuery(() => getApi().listCases(trialId, { status: 'REOPENED', limit: 5 }).then((r) => r.data), [trialId, actor.actor_id]);
+  const readsCases = CAN_READ.cases.includes(actor.role);
+  const openCases = useApiQuery(readsCases ? () => getApi().listCases(trialId, { status: 'OPEN', sort: '-updated_at', limit: 5 }).then((r) => r.data) : null, [trialId, actor.actor_id, readsCases]);
+  const reopened = useApiQuery(readsCases ? () => getApi().listCases(trialId, { status: 'REOPENED', limit: 5 }).then((r) => r.data) : null, [trialId, actor.actor_id, readsCases]);
+  const hasStep = (key: string) => STEPS.some((s) => s.key === key && s.roles.includes(actor.role));
 
   const base = `/trials/${encodeURIComponent(trialId)}`;
+  const role = actor.role;
   const latest = protocols.data?.items[0] ?? null;
   const active = protocols.data?.items.find((p) => p.state === 'ACTIVE') ?? null;
   const needsApproval = !active && latest && latest.state === 'EXTRACTION_REVIEW';
   const attentionCases: ReviewCase[] = [...(reopened.data?.items ?? []), ...(openCases.data?.items ?? [])];
 
+  // Only what the current role can act on.
+  const items: AttentionItem[] = [];
+  if (protocols.data && !latest && is(role, 'COORDINATOR', 'RESEARCH_IT')) {
+    items.push({ tone: 'warn', title: 'No protocol has been uploaded', detail: 'Upload the protocol document to start.', cta: 'Upload protocol', href: `${base}/protocol` });
+  }
+  if (latest?.state === 'EXTRACTION_FAILED' && is(role, 'COORDINATOR', 'INVESTIGATOR')) {
+    items.push({ tone: 'urgent', title: 'The protocol rules could not be read', detail: 'Try again or upload a text-readable document.', cta: 'Open protocol', href: `${base}/protocol` });
+  }
+  if (needsApproval && latest) {
+    if (role === 'INVESTIGATOR') items.push({ tone: 'warn', title: `${latest.criteria.length} protocol rules are waiting for your approval`, detail: 'Screening stays unavailable until you approve them.', cta: 'Review rules', href: `${base}/protocol` });
+    else if (role === 'COORDINATOR') items.push({ tone: 'info', title: 'Protocol rules are waiting for the investigator', detail: 'Screening becomes available after approval.', cta: 'View protocol', href: `${base}/protocol` });
+  }
+  if (attentionCases.length > 0 && is(role, 'INVESTIGATOR', 'MONITOR')) {
+    const first = attentionCases[0];
+    items.push({
+      tone: 'urgent',
+      title: `${attentionCases.length} safety case${attentionCases.length === 1 ? ' is' : 's are'} waiting for review`,
+      detail: `Patient ${first.patient_id} · ${caseIssue(first.current_summary)}`,
+      cta: 'Review case', href: `${base}/cases?case=${encodeURIComponent(first.case_id)}`,
+    });
+  }
+  if (active && is(role, 'INVESTIGATOR', 'COORDINATOR')) {
+    items.push({ tone: 'info', title: 'Patient screening is available', detail: 'The protocol is approved. Screen patients or review the candidates.', cta: 'Screen patients', href: `${base}/selector` });
+  }
+  if (is(role, 'AUDITOR', 'SPONSOR_OPS')) {
+    items.push({ tone: 'info', title: 'The audit trail is up to date', detail: 'Every protocol, screening and review action is recorded.', cta: 'Open audit trail', href: `${base}/audit` });
+  }
+
+  const tile = 'card block p-5 text-ink no-underline hover:bg-canvas';
   return (
     <div>
-      <TrialHeader trialId={trialId} />
-      <h2 className="mb-3">What needs a clinician&apos;s attention</h2>
-      <div className="grid gap-4 md:grid-cols-3">
-        <section className="card card-pad" aria-labelledby="att-protocol">
-          <h3 id="att-protocol" className="mb-2">Protocol rules</h3>
-          {protocols.loading && <LoadingSkeleton rows={2} />}
+      <div className="space-y-5">
+        <section className="card card-pad space-y-3" aria-labelledby="attention">
+          <h2 id="attention">What needs your attention as {ROLE_LABEL[role] === 'Research IT' ? 'research IT' : ROLE_LABEL[role].toLowerCase()}</h2>
+          {(protocols.loading || openCases.loading || reopened.loading) && <LoadingSkeleton rows={2} />}
           {protocols.error ? <ErrorPanel error={protocols.error} onRetry={protocols.reload} /> : null}
-          {protocols.data && !latest && <p className="text-ink-muted">No protocol version uploaded.</p>}
-          {latest && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2"><span className="mono">{latest.protocol_version_id}</span><ProtocolStatePill state={latest.state} /></div>
-              {needsApproval && (
-                <p className="text-unknown-fg">{latest.criteria.length} proposed rules and {latest.coverage.length} coverage sections await investigator review. Screening stays disabled until approval.</p>
-              )}
-              {latest.state === 'EXTRACTION_FAILED' && <p className="text-fail-fg">Extraction failed. Re-run or re-upload before review.</p>}
-              {active && <p className="text-ink-muted">Approved set <span className="mono break-all">{active.approved_set_hash}</span></p>}
-              <Link className="btn-secondary" href={`${base}/protocol`}>{needsApproval ? 'Review rules' : 'Open trial setup'}</Link>
-            </div>
-          )}
-        </section>
-
-        <section className="card card-pad" aria-labelledby="att-cases">
-          <h3 id="att-cases" className="mb-2">Open review cases</h3>
-          {(openCases.loading || reopened.loading) && <LoadingSkeleton rows={2} />}
           {openCases.error ? <ErrorPanel error={openCases.error} onRetry={openCases.reload} /> : null}
-          {openCases.data && reopened.data && (
-            <>
-              <p className="text-2xl font-semibold">{countLabel(openCases.data.page, openCases.data.items.length)}<span className="ml-2 text-sm font-normal text-ink-muted">open</span>
-                {reopened.data.items.length > 0 && <span className="ml-3 text-sm font-normal text-unknown-fg">+{countLabel(reopened.data.page, reopened.data.items.length)} reopened</span>}
-              </p>
-              <Link className="btn-secondary mt-2" href={`${base}/cases`}>Open review queue</Link>
-            </>
-          )}
-        </section>
-
-        <section className="card card-pad" aria-labelledby="att-monitor">
-          <h3 id="att-monitor" className="mb-2">Monitoring findings</h3>
-          {trial.data && (
-            <>
-              <p className="text-2xl font-semibold">{trial.data.finding_count}<span className="ml-2 text-sm font-normal text-ink-muted">findings on record</span></p>
-              <p className="text-ink-muted">{trial.data.patient_count} synthetic patients in this trial.</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                <Link className="btn-secondary" href={`${base}/monitor`}>Safety monitor</Link>
-                <Link className="btn-secondary" href={`${base}/selector`}>Patient selector</Link>
+          {items.map((item, i) => (
+            <div key={item.title} className={`flex flex-wrap items-center justify-between gap-4 rounded-lg border p-4 ${TONE[item.tone]}`}>
+              <div className="min-w-0">
+                <p className="font-semibold">{item.title}</p>
+                <p className="text-ink-muted">{item.detail}</p>
               </div>
-            </>
-          )}
+              <Link className={i === 0 ? 'btn-primary' : 'btn-secondary'} href={item.href}>{item.cta}</Link>
+            </div>
+          ))}
+          {protocols.data && (!readsCases || (openCases.data && reopened.data)) && items.length === 0 && <p className="note">Nothing needs your attention right now.</p>}
         </section>
-      </div>
 
-      {attentionCases.length > 0 && (
-        <section className="card mt-5 overflow-x-auto" aria-labelledby="att-list">
-          <h3 id="att-list" className="px-4 pt-3">Cases awaiting human review</h3>
-          <table className="data-table mt-2">
-            <thead><tr><th>Case</th><th>Patient</th><th>Rule</th><th>Status</th><th>Priority</th><th>Owner</th><th>Updated</th></tr></thead>
-            <tbody>{attentionCases.map((c) => <CaseRow key={c.case_id} trialId={trialId} reviewCase={c} />)}</tbody>
-          </table>
-        </section>
-      )}
-      {trial.data && <p className="mt-5 text-xs text-ink-faint">{trial.data.trial_notice}</p>}
+        {trial.data && (
+          <section aria-label="Study summary" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {hasStep('screen') && (
+              <Link href={`${base}/selector`} className={tile}>
+                <span className="block text-ink-muted">Patients in the study</span>
+                <span className="block text-3xl font-bold tabular-nums">{trial.data.patient_count}</span>
+                <span className="block font-semibold text-brand">View candidates</span>
+              </Link>
+            )}
+            {hasStep('protocol') ? (
+              <Link href={`${base}/protocol`} className={tile}>
+                <span className="block text-ink-muted">Protocol</span>
+                <span className="block text-3xl font-bold">{active ? 'Approved' : latest ? 'In review' : 'Not uploaded'}</span>
+                <span className="block font-semibold text-brand">View protocol</span>
+              </Link>
+            ) : (
+              <div className="card p-5">
+                <span className="block text-ink-muted">Protocol</span>
+                <span className="block text-3xl font-bold">{active ? 'Approved' : latest ? 'In review' : 'Not uploaded'}</span>
+              </div>
+            )}
+            {hasStep('safety') && (
+              <>
+                <Link href={`${base}/monitor`} className={tile}>
+                  <span className="block text-ink-muted">Safety findings</span>
+                  <span className="block text-3xl font-bold tabular-nums">{trial.data.finding_count}</span>
+                  <span className="block font-semibold text-brand">Open safety</span>
+                </Link>
+                <Link href={`${base}/monitor`} className={tile}>
+                  <span className="block text-ink-muted">Open safety cases</span>
+                  <span className="block text-3xl font-bold tabular-nums">
+                    {openCases.data && reopened.data ? countLabel(openCases.data.page, openCases.data.items.length + reopened.data.items.length) : '–'}
+                  </span>
+                  <span className="block font-semibold text-brand">Review cases</span>
+                </Link>
+              </>
+            )}
+            {hasStep('audit') && (
+              <Link href={`${base}/audit`} className={tile}>
+                <span className="block text-ink-muted">Audit trail</span>
+                <span className="block text-3xl font-bold">Up to date</span>
+                <span className="block font-semibold text-brand">Open audit trail</span>
+              </Link>
+            )}
+          </section>
+        )}
+
+        {attentionCases.length > 0 && (
+          <section className="space-y-3" aria-labelledby="att-list">
+            <h2 id="att-list">Cases waiting for review</h2>
+            <CaseTable trialId={trialId} cases={attentionCases} />
+          </section>
+        )}
+      </div>
     </div>
   );
 }

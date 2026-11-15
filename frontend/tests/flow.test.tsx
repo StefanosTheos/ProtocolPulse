@@ -126,7 +126,7 @@ describe('upload constraints', () => {
     renderAs('ACT-COORD-01', <ProtocolUpload trialId="TR-PX104" onUploaded={() => {}} />);
     await user.click(screen.getByRole('button', { name: 'Upload PDF' }));
     expect(screen.getByRole('alert')).toHaveTextContent('Choose a PDF file.');
-    expect(screen.getByRole('alert')).toHaveTextContent('Confirm the document is fictional/synthetic.');
+    expect(screen.getByRole('alert')).toHaveTextContent('Confirm the document contains no real patient data.');
     expect(calls.filter((c) => c.method === 'POST')).toHaveLength(0);
   });
   it('an investigator cannot upload', () => {
@@ -154,13 +154,14 @@ describe('J-03 evidence display', () => {
     evidence_refs: [], considered_interval: null, explanation: 'No eGFR specimen in window.', evaluated_at: '2026-10-31T22:01:00Z',
   };
 
-  it('shows UNKNOWN as an amber Unknown with its reason, never as a pass', () => {
+  it('shows UNKNOWN as an amber Unclear with its reason and how to resolve it, never as met', () => {
     render(<CriterionMatrix results={[unknown]} criteriaById={{}} selectedId={null} onSelect={() => {}} />);
-    const pill = screen.getByText('Unknown').closest('span')!;
+    const pill = screen.getByText('Unclear').closest('span')!;
     expect(pill.className).toMatch(/unknown/);
     expect(pill.className).not.toMatch(/pass/);
-    expect(screen.queryByText('Pass')).not.toBeInTheDocument();
-    expect(screen.getByText('MISSING_LAB')).toBeInTheDocument();
+    expect(screen.queryByText('Met')).not.toBeInTheDocument();
+    expect(screen.getByText('No lab result on record.')).toBeInTheDocument();
+    expect(screen.getByText(/To resolve: Add a lab result/)).toBeInTheDocument();
   });
 
   it('keeps conflicting medication entries separate and flags the conflict', () => {

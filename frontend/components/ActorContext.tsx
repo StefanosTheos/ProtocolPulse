@@ -10,6 +10,9 @@ const ActorContext = createContext<ActorContextValue | null>(null);
 
 export function ActorProvider({ children, initialActorId }: { children: ReactNode; initialActorId?: string }) {
   const [actorId, setActorIdState] = useState(initialActorId ?? getCurrentActorId());
+  // The saved role is only readable in the browser. Until it has been read, nothing role-dependent
+  // renders or fetches, so a page load never shows (or requests data as) the default role first.
+  const [ready, setReady] = useState(Boolean(initialActorId));
 
   useEffect(() => {
     if (initialActorId) return;
@@ -20,6 +23,7 @@ export function ActorProvider({ children, initialActorId }: { children: ReactNod
         setActorIdState(stored);
       }
     } catch { /* storage unavailable: keep default */ }
+    setReady(true);
   }, [initialActorId]);
 
   useEffect(() => { setCurrentActorId(actorId); }, [actorId]);
@@ -31,7 +35,7 @@ export function ActorProvider({ children, initialActorId }: { children: ReactNod
   }, []);
 
   const value = useMemo(() => ({ actor: actorById(actorId) ?? DEMO_ACTORS[0], setActorId }), [actorId, setActorId]);
-  return <ActorContext.Provider value={value}>{children}</ActorContext.Provider>;
+  return <ActorContext.Provider value={value}>{ready ? children : null}</ActorContext.Provider>;
 }
 
 export function useActor(): ActorContextValue {

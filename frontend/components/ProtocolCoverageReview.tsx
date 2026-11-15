@@ -307,7 +307,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
         open={approveOpen} title={`Approve ${protocol.criteria.length} rules as ${actor.actor_id}`} confirmLabel="Approve and activate" busy={busy}
         confirmDisabled={!attested || !decisionReason.trim()} onCancel={() => setApproveOpen(false)} onConfirm={approve}
       >
-        <p>You are signing, as synthetic investigator <span className="mono">{actor.actor_id}</span>, revision {protocol.revision} of <span className="mono">{protocol.protocol_version_id}</span>:</p>
+        <p>You are signing, as investigator <span className="mono">{actor.actor_id}</span>, revision {protocol.revision} of <span className="mono">{protocol.protocol_version_id}</span>:</p>
         <p className="mono rounded bg-canvas p-2">{protocol.criteria.map((c) => c.criterion_id).join(', ')}</p>
         <label className="flex items-start gap-2">
           <input type="checkbox" className="mt-0.5" checked={attested} onChange={(e) => setAttested(e.target.checked)} />
