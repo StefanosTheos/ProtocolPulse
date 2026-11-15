@@ -97,7 +97,7 @@ function SelectorInner() {
   const criteriaById = useMemo(() => Object.fromEntries((protocol.data?.criteria ?? []).map((c) => [c.criterion_id, c])) as Record<string, Criterion>, [protocol.data]);
 
   async function startScreening() {
-    if (!activeId || !date) return;
+    if (!activeId || !date || !gate.allowed || !canRun) return;
     setScreenError(null);
     setJustRan(false);
     try {
@@ -154,9 +154,11 @@ function SelectorInner() {
           {protocol.loading && <LoadingSkeleton rows={1} />}
           {!gate.allowed && (
             <div className="rounded-lg border border-unknown-line bg-unknown-bg p-3 text-unknown-fg">
-              <p className="font-semibold">Screening disabled</p>
+              <p className="font-semibold">{trial.data?.patient_count === 0 ? 'No patients to screen' : 'Screening disabled'}</p>
               <ul className="list-disc pl-5">{gate.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
-              <Link href={`${base}/protocol`} className="mt-1 inline-block underline">Review protocol rules</Link>
+              {trial.data?.patient_count === 0
+                ? <Link href={base} className="mt-1 inline-block underline">Choose another study</Link>
+                : <Link href={`${base}/protocol`} className="mt-1 inline-block underline">Review protocol rules</Link>}
             </div>
           )}
           {!canRun && <p className="note">Screening is run by the Clinical Lead.</p>}

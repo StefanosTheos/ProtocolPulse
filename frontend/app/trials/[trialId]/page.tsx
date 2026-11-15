@@ -78,10 +78,13 @@ export default function TrialOverviewPage() {
       cta: 'Review case', href: `${base}/cases?case=${encodeURIComponent(first.case_id)}`,
     });
   }
-  if (active && role === 'INVESTIGATOR') {
+  if (active && trial.data?.patient_count === 0) {
+    items.push({ tone: 'info', title: 'No patients to screen', detail: 'The protocol is approved, but this study has no patient records. Choose a study with patients from the Study dropdown above.', cta: 'Choose another study', href: '/' });
+  }
+  if (active && (trial.data?.patient_count ?? 0) > 0 && role === 'INVESTIGATOR') {
     items.push({ tone: 'info', title: 'Patient screening is available', detail: 'The protocol is approved. Screen patients or review the candidates.', cta: 'Screen patients', href: `${base}/selector` });
   }
-  if (active && role === 'COORDINATOR') {
+  if (active && (trial.data?.patient_count ?? 0) > 0 && role === 'COORDINATOR') {
     items.push({ tone: 'info', title: 'Protocol approved — clinical review continues', detail: 'The Clinical Lead can screen patients and record external participation. Enter new patient records from Safety when available; the system checks relevant events automatically.', cta: 'Open Safety', href: `${base}/monitor` });
   }
   if (is(role, 'AUDITOR', 'SPONSOR_OPS')) {
