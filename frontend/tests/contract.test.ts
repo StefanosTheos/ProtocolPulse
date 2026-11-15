@@ -52,20 +52,20 @@ describe('shared protocol fixture (px104-protocol-v1)', () => {
   it('zero blockers never enables screening on the unsigned proposal', () => {
     const gate = screeningGate({ active_protocol_version_id: null }, fixture);
     expect(gate.allowed).toBe(false);
-    expect(gate.reasons.join(' ')).toMatch(/no Clinical Lead-approved active protocol/);
-    expect(gate.reasons.join(' ')).toMatch(/8 of 8 rules lack/);
-    expect(gate.reasons.join(' ')).toMatch(/Coverage has not been signed/);
+    expect(gate.reasons.join(' ')).toMatch(/no protocol approved by the Clinical Lead/);
+    expect(gate.reasons.join(' ')).toMatch(/8 of 8 rules are waiting for Clinical Lead approval/);
+    expect(gate.reasons.join(' ')).toMatch(/coverage has not been signed/);
   });
 
   it('only an investigator may approve; blocking coverage and clarification block approval', () => {
     expect(approvalGate(fixture, 'INVESTIGATOR', false).allowed).toBe(true);
     expect(approvalGate(fixture, 'COORDINATOR', false).allowed).toBe(false);
     const blocked: ProtocolDetail = { ...fixture, blocking_count: 1, coverage: fixture.coverage.map((c, i) => (i === 0 ? { ...c, status: 'BLOCKING' } : c)) };
-    expect(approvalGate(blocked, 'INVESTIGATOR', false).reasons.join(' ')).toMatch(/BLOCKING/);
+    expect(approvalGate(blocked, 'INVESTIGATOR', false).reasons.join(' ')).toMatch(/marked as blocking/);
     const unclear: ProtocolDetail = { ...fixture, criteria: fixture.criteria.map((c, i) => (i === 0 ? { ...c, workflow_status: 'NEEDS_CLARIFICATION' } : c)) };
-    expect(approvalGate(unclear, 'INVESTIGATOR', false).reasons.join(' ')).toMatch(/PX-INC-01 need clarification/);
+    expect(approvalGate(unclear, 'INVESTIGATOR', false).reasons.join(' ')).toMatch(/Needs clarification: Inclusion rule 1/);
     const ambiguous: ProtocolDetail = { ...fixture, criteria: fixture.criteria.map((c, i) => (i === 1 ? { ...c, ambiguity: 'unclear unit' } : c)) };
-    expect(approvalGate(ambiguous, 'INVESTIGATOR', false).reasons.join(' ')).toMatch(/PX-INC-02 carry an unresolved ambiguity/);
+    expect(approvalGate(ambiguous, 'INVESTIGATOR', false).reasons.join(' ')).toMatch(/Unresolved note on: Inclusion rule 2/);
   });
 
   it('a reset-seeded DRAFT proposal is reviewable (backend approves DRAFT or EXTRACTION_REVIEW)', () => {

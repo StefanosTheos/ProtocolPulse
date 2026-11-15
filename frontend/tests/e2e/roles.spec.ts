@@ -53,10 +53,10 @@ test('mocked protocol reads demonstrate serial review handoff and cross-window a
   await page.goto(base + '/protocol');
   await expect(page.getByText('Waiting for a Clinical Lead to approve these rules')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Start screening' })).toBeDisabled();
-  await expect(page.getByRole('button', { name: /Approve criteria/ })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Approve rules' })).toBeDisabled();
   await page.getByLabel('Viewing as').selectOption('ACT-INV-01');
   await expect(page.getByText('Next: Review and approve these rules')).toBeVisible();
-  await expect(page.getByRole('button', { name: /Approve criteria/ })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Approve rules' })).toBeEnabled();
   await expect(page.getByRole('button', { name: 'Upload PDF' })).toHaveCount(0);
   await page.getByLabel('Viewing as').selectOption('ACT-COORD-01');
   await expect(page.getByText('Waiting for a Clinical Lead to approve these rules')).toBeVisible();

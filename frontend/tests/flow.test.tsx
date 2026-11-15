@@ -1,3 +1,4 @@
+import { ruleLabel, sentenceCase } from '@/lib/api/labels';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ReactNode } from 'react';
@@ -46,19 +47,23 @@ describe('J-01 protocol review and approval', () => {
   it('renders all 8 proposed rules and 12 coverage sections, including 4 informational, as unsigned', () => {
     useMock();
     renderAs('ACT-INV-01', <ProtocolCoverageReview trialId="TR-PX104" protocol={fixture} onChanged={() => {}} />);
-    for (const c of fixture.criteria) expect(screen.getAllByText(c.criterion_id).length).toBeGreaterThan(0);
-    const coverageTable = screen.getByRole('heading', { name: /Extraction coverage/ }).closest('section')!;
+    // Rules are named in plain words; raw rule IDs are not shown outside the audit trail.
+    for (const c of fixture.criteria) {
+      expect(screen.getAllByText(sentenceCase(ruleLabel(c.criterion_id))).length).toBeGreaterThan(0);
+      expect(screen.queryByText(c.criterion_id)).not.toBeInTheDocument();
+    }
+    const coverageTable = screen.getByRole('heading', { name: /Section coverage/ }).closest('section')!;
     const rows = within(coverageTable).getAllByRole('row').slice(1);
     expect(rows).toHaveLength(12);
     expect(within(coverageTable).getAllByText('Background only')).toHaveLength(4);
     expect(within(coverageTable).getByText('not signed')).toBeInTheDocument();
-    expect(screen.getByText(/Zero blockers does not approve anything by itself/)).toBeInTheDocument();
+    expect(screen.getByText(/Approving signs all 8 rules/)).toBeInTheDocument();
   });
 
   it('a coordinator cannot approve; the button is disabled with the reason', () => {
     useMock();
     renderAs('ACT-COORD-01', <ProtocolCoverageReview trialId="TR-PX104" protocol={fixture} onChanged={() => {}} />);
-    expect(screen.getByRole('button', { name: /Approve criteria/ })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Approve rules' })).toBeDisabled();
     expect(screen.getByText(/Only the Clinical Lead can approve/)).toBeInTheDocument();
   });
 
@@ -66,8 +71,8 @@ describe('J-01 protocol review and approval', () => {
     useMock();
     const blocked: ProtocolDetail = { ...fixture, blocking_count: 1, coverage: fixture.coverage.map((c, i) => (i === 2 ? { ...c, status: 'BLOCKING' } : c)) };
     renderAs('ACT-INV-01', <ProtocolCoverageReview trialId="TR-PX104" protocol={blocked} onChanged={() => {}} />);
-    expect(screen.getByRole('button', { name: /Approve criteria/ })).toBeDisabled();
-    expect(screen.getByText(/coverage section\(s\) are BLOCKING/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Approve rules' })).toBeDisabled();
+    expect(screen.getByText(/protocol section\(s\) are marked as blocking/)).toBeInTheDocument();
   });
 
   it('approval needs explicit attestation and a reason, then calls the API with If-Match and all 8 IDs', async () => {
@@ -75,9 +80,9 @@ describe('J-01 protocol review and approval', () => {
     const onChanged = vi.fn();
     const user = userEvent.setup();
     renderAs('ACT-INV-01', <ProtocolCoverageReview trialId="TR-PX104" protocol={fixture} onChanged={onChanged} />);
-    await user.click(screen.getByRole('button', { name: /Approve criteria/ }));
+    await user.click(screen.getByRole('button', { name: 'Approve rules' }));
     const dialog = screen.getByRole('dialog');
-    const confirm = within(dialog).getByRole('button', { name: 'Approve and activate' });
+    const confirm = within(dialog).getByRole('button', { name: 'Approve and put into use' });
     expect(confirm).toBeDisabled();
     await user.click(within(dialog).getByRole('checkbox'));
     expect(confirm).toBeDisabled();
@@ -97,11 +102,11 @@ describe('J-01 protocol review and approval', () => {
     const stale: ProtocolDetail = { ...fixture, revision: 9 };
     const user = userEvent.setup();
     renderAs('ACT-INV-01', <ProtocolCoverageReview trialId="TR-PX104" protocol={stale} onChanged={() => {}} />);
-    await user.click(screen.getByRole('button', { name: /Approve criteria/ }));
+    await user.click(screen.getByRole('button', { name: 'Approve rules' }));
     const dialog = screen.getByRole('dialog');
     await user.click(within(dialog).getByRole('checkbox'));
     await user.type(within(dialog).getByLabelText(/Decision reason/), 'reason');
-    await user.click(within(dialog).getByRole('button', { name: 'Approve and activate' }));
+    await user.click(within(dialog).getByRole('button', { name: 'Approve and put into use' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('REVISION_CONFLICT');
     expect(screen.queryByText(/Protocol approved by/)).not.toBeInTheDocument();
   });
@@ -144,8 +149,8 @@ describe('J-02 screening gate', () => {
     navigation.params = { trialId: 'TR-PX104' };
     navigation.pathname = '/trials/TR-PX104/selector';
     renderAs('ACT-COORD-01', <SelectorPage />);
-    expect(await screen.findByText('Screening disabled')).toBeInTheDocument();
-    expect(screen.getByText(/no Clinical Lead-approved active protocol/)).toBeInTheDocument();
+    expect(await screen.findByText('Screening is not available yet')).toBeInTheDocument();
+    expect(screen.getByText(/no protocol approved by the Clinical Lead/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Run screening' })).toBeDisabled();
   });
 });
@@ -169,7 +174,7 @@ describe('J-03 evidence display', () => {
   it('keeps conflicting medication entries separate and flags the conflict', () => {
     const p140 = mockPatient360('P-140', 'NOT_ENROLLED', null);
     render(<MedicationTimeline medications={p140.medications} openItems={p140.open_items} timeZone="Europe/Athens" />);
-    expect(screen.getByRole('note')).toHaveTextContent(/Conflicting sources \(CONFLICTING_SOURCES\)/);
+    expect(screen.getByRole('note')).toHaveTextContent(/Records disagree/);
     expect(screen.getByRole('note')).toHaveTextContent(/neither is chosen automatically/);
     expect(screen.getByText('Reported use')).toBeInTheDocument();
     expect(screen.getByText('Discontinuation')).toBeInTheDocument();
@@ -191,17 +196,17 @@ describe('J-04 event simulation and refresh', () => {
     const onProcessed = vi.fn();
     const user = userEvent.setup();
     renderAs('ACT-COORD-01', <EventSimulator trialId="TR-PX104" onProcessed={onProcessed} />);
-    await user.click(screen.getByRole('button', { name: /Simulate new record/ }));
-    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Post event' }));
-    expect(await screen.findByText('Awaiting backend re-evaluation')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Simulate new record' }));
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Add record' }));
+    expect(await screen.findByText('Safety check')).toBeInTheDocument();
     expect(onProcessed).not.toHaveBeenCalled();
     await waitFor(() => expect(onProcessed).toHaveBeenCalledTimes(1), { timeout: 4000 });
     expect(onProcessed.mock.calls[0][0].status).toBe('SUCCEEDED');
 
-    await user.click(screen.getByRole('button', { name: /Simulate new record/ }));
-    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Post event' }));
-    expect(await screen.findByText('Deduplicated replay')).toBeInTheDocument();
-    expect(screen.getByText(/No second event, finding or case is created/)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Simulate new record' }));
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Add record' }));
+    expect(await screen.findByText('Already added')).toBeInTheDocument();
+    expect(screen.getByText(/no second finding or case/)).toBeInTheDocument();
   });
 
   it('the monitor shows no finding until the backend job succeeds, then refreshes from the API', async () => {
@@ -215,9 +220,9 @@ describe('J-04 event simulation and refresh', () => {
     const user = userEvent.setup();
     renderAs('ACT-COORD-01', <MonitorPage />);
     expect(await screen.findByText('No findings')).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: /Simulate new record/ }));
-    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Post event' }));
-    expect(await screen.findByText('Awaiting backend re-evaluation')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Simulate new record' }));
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Add record' }));
+    expect(await screen.findByText('Safety check')).toBeInTheDocument();
     expect(screen.getByText('No findings')).toBeInTheDocument();
     expect(await screen.findByRole('link', { name: /Open case for patient P-042/ }, { timeout: 4000 })).toBeInTheDocument();
     expect(screen.queryByText('No findings')).not.toBeInTheDocument();
@@ -251,15 +256,15 @@ describe('J-05 review update', () => {
     expect(within(statusSelect).getByRole('option', { name: /^Resolved/ })).toBeEnabled();
     expect(within(statusSelect).getByRole('option', { name: /^Closed/ })).toBeEnabled();
     expect(within(screen.getByLabelText('Owner')).getAllByRole('option').map((o) => o.textContent)).toEqual(['Unassigned', 'Clinical Lead']);
-    expect(screen.getByText('System-generated deterministic summary')).toBeInTheDocument();
+    expect(screen.getByText('Summary generated by the system')).toBeInTheDocument();
 
     await user.selectOptions(statusSelect, 'ACKNOWLEDGED');
     await user.selectOptions(screen.getByLabelText('Owner'), 'ACT-INV-01');
-    await user.type(screen.getByLabelText('Disposition'), 'REVIEW_REQUIRED');
+    await user.type(screen.getByLabelText('Decision'), 'REVIEW_REQUIRED');
     await user.type(screen.getByLabelText('Rationale'), 'Source administration requires investigator review');
-    const evidenceBox = await screen.findByRole('checkbox', { name: /EV-EVT-/ });
+    const evidenceBox = await screen.findByRole('checkbox', { name: /record, / });
     await user.click(evidenceBox);
-    await user.click(screen.getByRole('button', { name: /Review and submit/ }));
+    await user.click(screen.getByRole('button', { name: 'Review and submit' }));
     await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Submit decision' }));
     await waitFor(() => expect(onUpdated).toHaveBeenCalled());
 
@@ -280,10 +285,11 @@ describe('J-06 agent activity', () => {
     error_code: 'TOOL_TIMEOUT', model_id: 'gemini-3.8-flash', created_at: '2026-11-20T09:00:02Z', finished_at: '2026-11-20T09:00:32Z',
   };
 
-  it('shows a failed execution honestly with its recorded tool trace only', () => {
+  it('shows a failed execution honestly, without tool names or error codes', () => {
     render(<AgentExecutionView execution={base} />);
-    expect(screen.getByText(/automated summary didn.t finish/)).toHaveTextContent('TOOL_TIMEOUT');
-    expect(screen.getByText('get_medication_timeline')).toBeInTheDocument();
+    const message = screen.getByText(/automated summary didn.t finish/);
+    expect(message).not.toHaveTextContent('TOOL_TIMEOUT');
+    expect(screen.queryByText('get_medication_timeline')).not.toBeInTheDocument();
     expect(screen.getByText(/nothing below was concluded by the automated summary/)).toBeInTheDocument();
   });
 

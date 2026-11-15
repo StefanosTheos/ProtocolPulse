@@ -1,6 +1,6 @@
 // Plain-language display text for backend enums and codes. Display only: nothing here changes
-// what the backend decided, and the raw values stay available in "Technical details".
-import type { ActorRole, Criterion, CriterionResult, PatientAssessment, UnknownReason } from './types';
+// what the backend decided, and the raw values stay available in the audit trail.
+import type { ActorRole, Criterion, CriterionResult, PatientAssessment, ProtocolState, UnknownReason, WindowSpec } from './types';
 
 export const ROLE_LABEL: Record<ActorRole, string> = {
   INVESTIGATOR: 'Clinical Lead',
@@ -198,4 +198,46 @@ export function actorRoleLabel(actorId: string | null | undefined, roleOf: (id: 
   if (!actorId) return '—';
   const role = roleOf(actorId);
   return role ? `the ${ROLE_LABEL[role].toLowerCase()}` : 'a reviewer';
+}
+
+// Plain names for protocol versions, sections and time windows. Raw identifiers stay in the audit trail.
+export const PROTOCOL_STATE_LABEL: Record<ProtocolState, string> = {
+  DRAFT: 'Uploaded',
+  EXTRACTING: 'Reading rules',
+  EXTRACTION_REVIEW: 'Waiting for approval',
+  EXTRACTION_FAILED: 'Rules could not be read',
+  APPROVED: 'Approved',
+  ACTIVE: 'In use',
+  SUPERSEDED: 'Replaced',
+};
+
+const SECTION_KIND: Record<string, string> = { INC: 'Inclusion criteria', EXC: 'Exclusion criteria', MON: 'Safety monitoring' };
+// "PX-SECTION-INC-01" -> "Inclusion criteria · 1"; "PX-INFO-CALENDAR" -> "Calendar"
+export function sectionLabel(sectionId: string): string {
+  const rule = /-(INC|EXC|MON)-0*(\d+)$/.exec(sectionId);
+  if (rule) return `${SECTION_KIND[rule[1]]} · ${rule[2]}`;
+  const rest = sectionId.replace(/^.*?-(?:INFO|SECTION)-/, '');
+  return sentenceCase(rest.replace(/-/g, '_'));
+}
+
+const days = (n: number) => `${n} day${n === 1 ? '' : 's'}`;
+export function windowText(w: WindowSpec | null): string {
+  if (!w) return 'Any time';
+  if (w.anchor === 'PARTICIPATION') return 'During participation';
+  const anchor = w.anchor === 'SCREENING_DATE' ? 'screening' : 'the record';
+  const from = w.start_offset_days;
+  const to = w.end_offset_days;
+  if (from === 0 && to === 0) return w.anchor === 'SCREENING_DATE' ? 'On the screening date' : 'At the time of the record';
+  if (from !== null && from < 0 && (to === 0 || to === null)) return `Within ${days(-from)} before ${anchor}`;
+  if ((from === 0 || from === null) && to !== null && to > 0) return `Within ${days(to)} after ${anchor}`;
+  if (from !== null && to !== null) return `From ${days(Math.abs(from))} ${from < 0 ? 'before' : 'after'} to ${days(Math.abs(to))} ${to < 0 ? 'before' : 'after'} ${anchor}`;
+  return `Relative to ${anchor}`;
+}
+
+// Medication and class codes from the seed data, in plain words.
+export function medicationName(code: string): string {
+  if (/^SYN-MED-R\d*$/.test(code)) return 'Restricted medication';
+  if (/^SYN-MED-N\d*$/.test(code)) return 'Other medication (not restricted)';
+  if (/^SYN-CLASS-R$/.test(code)) return 'Restricted medication class';
+  return plainText(code);
 }

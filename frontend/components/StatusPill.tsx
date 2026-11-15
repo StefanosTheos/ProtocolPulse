@@ -1,4 +1,4 @@
-import { sentenceCase } from '@/lib/api/labels';
+import { PROTOCOL_STATE_LABEL, sentenceCase } from '@/lib/api/labels';
 import type {
   AgentStatus, CandidateStatus, CaseStatus, CriterionStatus, EvidenceState, FindingCategory,
   FindingPriority, JobStatus, MedicationEvidenceType, ProtocolState,
@@ -49,12 +49,13 @@ const PROTOCOL_TONE: Record<ProtocolState, Tone> = {
   APPROVED: 'info', ACTIVE: 'pass', SUPERSEDED: 'neutral',
 };
 export function ProtocolStatePill({ state }: { state: ProtocolState }) {
-  return <Pill tone={PROTOCOL_TONE[state]}>{sentenceCase(state)}</Pill>;
+  return <Pill tone={PROTOCOL_TONE[state]}>{PROTOCOL_STATE_LABEL[state]}</Pill>;
 }
 
 const JOB_TONE: Record<JobStatus, Tone> = { QUEUED: 'neutral', RUNNING: 'info', SUCCEEDED: 'pass', FAILED: 'fail' };
+const JOB_LABEL: Record<JobStatus, string> = { QUEUED: 'Waiting to start', RUNNING: 'In progress', SUCCEEDED: 'Done', FAILED: 'Failed' };
 export function JobStatusPill({ status }: { status: JobStatus }) {
-  return <Pill tone={JOB_TONE[status]}>Job {status.toLowerCase()}</Pill>;
+  return <Pill tone={JOB_TONE[status]}>{JOB_LABEL[status]}</Pill>;
 }
 
 const CASE_TONE: Record<CaseStatus, Tone> = { OPEN: 'unknown', ACKNOWLEDGED: 'info', INVESTIGATING: 'info', RESOLVED: 'neutral', CLOSED: 'neutral', REOPENED: 'unknown' };
@@ -78,8 +79,9 @@ export function CategoryPill({ category }: { category: FindingCategory }) {
 }
 
 const AGENT_TONE: Record<AgentStatus, Tone> = { QUEUED: 'neutral', RUNNING: 'info', SUCCEEDED: 'pass', FAILED: 'fail', UNAVAILABLE: 'neutral', PARTIAL: 'unknown' };
+const AGENT_LABEL: Record<AgentStatus, string> = { QUEUED: 'Summary waiting to start', RUNNING: 'Summary in progress', SUCCEEDED: 'Summary ready', FAILED: 'Summary failed', UNAVAILABLE: 'Summary unavailable', PARTIAL: 'Summary incomplete' };
 export function AgentStatusPill({ status }: { status: AgentStatus }) {
-  return <Pill tone={AGENT_TONE[status]}>Agent {status.toLowerCase()}</Pill>;
+  return <Pill tone={AGENT_TONE[status]}>{AGENT_LABEL[status]}</Pill>;
 }
 
 export const EVIDENCE_STATE_LABEL: Record<EvidenceState, string> = {

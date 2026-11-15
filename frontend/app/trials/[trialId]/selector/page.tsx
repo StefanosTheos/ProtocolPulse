@@ -174,14 +174,14 @@ function SelectorInner() {
                 <input id="screen-date" type="date" className="input" value={date} disabled={!canRun} onChange={(e) => { screenKey.reset(); setScreeningDate(e.target.value); }} />
               </div>
               <button type="button" className="btn-primary" disabled={!gate.allowed || !canRun || screenJob.running || !date} onClick={startScreening}>
-                {screenJob.running ? 'Screening…' : 'Run screening'}
+                {screenJob.running ? 'Screening' : 'Run screening'}
               </button>
             </div>
           </div>
           {protocol.loading && <LoadingSkeleton rows={1} />}
           {!gate.allowed && (
             <div className="rounded-lg border border-unknown-line bg-unknown-bg p-3 text-unknown-fg">
-              <p className="font-semibold">Screening disabled</p>
+              <p className="font-semibold">Screening is not available yet</p>
               <ul className="list-disc pl-5">{gate.reasons.map((r) => <li key={r}>{r}</li>)}</ul>
               <Link href={`${base}/protocol`} className="mt-1 inline-block underline">Review protocol rules</Link>
             </div>
@@ -190,22 +190,6 @@ function SelectorInner() {
           <JobProgress job={screenJob.job} error={screenJob.error} running={screenJob.running} label="Screening" />
           {screenError ? <ErrorPanel error={screenError} context="Screening" /> : null}
           {run.data?.error_code && <p className="text-fail-fg">Screening did not finish. Run it again.</p>}
-          {run.data && (
-            <details className="text-xs">
-              <summary className="font-semibold text-ink-muted">Technical details</summary>
-              <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1">
-                <dt className="text-ink-muted">Run</dt><dd className="mono break-all">{run.data.run_id}</dd>
-                <dt className="text-ink-muted">Status</dt><dd>{sentenceCase(run.data.status)}</dd>
-                <dt className="text-ink-muted">Records up to</dt><dd>{formatInstant(run.data.evidence_cutoff_at, tz)}</dd>
-                <dt className="text-ink-muted">Protocol</dt><dd className="mono break-all">{run.data.protocol_version_id}</dd>
-                <dt className="text-ink-muted">Rule-set hash</dt><dd className="mono break-all">{run.data.approved_set_hash}</dd>
-                <dt className="text-ink-muted">Engine</dt><dd className="mono">{run.data.engine_version}</dd>
-                <dt className="text-ink-muted">Terminology</dt><dd className="mono">{run.data.terminology_map_version}</dd>
-                <dt className="text-ink-muted">Snapshot</dt><dd className="mono break-all">{run.data.evidence_snapshot_id}</dd>
-                {run.data.error_code && <><dt className="text-ink-muted">Error</dt><dd className="mono">{run.data.error_code}</dd></>}
-              </dl>
-            </details>
-          )}
         </section>
 
         {justRan && run.data && runComplete && (

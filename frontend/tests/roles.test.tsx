@@ -74,7 +74,7 @@ describe('serial protocol handoff', () => {
     const clear = vi.spyOn(window, 'clearInterval');
     const { server } = setup('ACT-COORD-01', <ProtocolPage />);
     await screen.findByText('Waiting for a Clinical Lead to approve these rules');
-    expect(screen.getByRole('button', { name: /Approve criteria/ })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Approve rules' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Start screening' })).toBeDisabled();
     expect(interval).toHaveBeenCalledWith(expect.any(Function), 5000);
     const timer = interval.mock.results.at(-1)?.value;
@@ -101,7 +101,7 @@ describe('serial protocol handoff', () => {
   it('gives the reviewer an actionable approval step and no upload form', async () => {
     setup('ACT-INV-01', <ProtocolPage />);
     await screen.findByText('Next: Review and approve these rules');
-    expect(screen.getByRole('button', { name: /Approve criteria/ })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Approve rules' })).toBeEnabled();
     expect(screen.queryByRole('button', { name: 'Upload PDF' })).not.toBeInTheDocument();
     expect(screen.queryByText('Waiting for a Clinical Lead to approve these rules')).not.toBeInTheDocument();
   });

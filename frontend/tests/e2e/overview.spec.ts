@@ -2,8 +2,8 @@ import { test, expect } from '@playwright/test';
 import { displayTitle } from '../../lib/api/labels';
 import type { Trial, TrialDetail } from '../../lib/api/types';
 
-for (const [role, actor] of [['Sponsor', 'ACT-COORD-01'], ['Clinical Lead', 'ACT-INV-01']] as const) {
-  test(`${role} selects and switches studies from an initially empty Overview`, async ({ page, request }) => {
+for (const [role, actor, landingTitle] of [['Sponsor', 'ACT-COORD-01', 'Start a study from its protocol'], ['Clinical Lead', 'ACT-INV-01', 'Review, screen and keep patients safe']] as const) {
+  test(`${role} opens a study from the landing page and switches studies`, async ({ page, request }) => {
     const api = 'http://127.0.0.1:8000/api/v1';
     const headers = { 'X-Demo-Actor-Id': actor };
     const response = await request.get(api + '/trials?limit=100&sort=-created_at', { headers });
@@ -20,16 +20,16 @@ for (const [role, actor] of [['Sponsor', 'ACT-COORD-01'], ['Clinical Lead', 'ACT
     });
     await page.addInitScript((id) => localStorage.setItem('protocolpulse.demoActor', id), actor);
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1, name: 'Overview' })).toBeVisible();
-    const nav = page.getByRole('navigation', { name: 'Study workflow' });
-    await expect(nav.getByRole('link', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
-    const selector = page.getByLabel('Study', { exact: true });
-    await expect(selector).toBeEnabled();
-    await expect(selector).toHaveValue('');
+    // The landing page lists studies as cards; the workflow tabs appear once a study is open.
+    await expect(page.getByRole('heading', { level: 1, name: landingTitle })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Study workflow' })).toHaveCount(0);
     await expect(page.getByRole('region', { name: 'Study summary' })).toHaveCount(0);
     await expect(page.getByRole('heading', { name: /What needs your attention/ })).toHaveCount(0);
-    await expect(nav.getByRole('button', { name: 'Protocol' })).toBeDisabled();
     expect(apiPaths.every((path) => !path.startsWith('/api/v1/trials/'))).toBe(true);
+    await page.getByRole('link', { name: new RegExp(displayTitle(studies[0].title)) }).first().click();
+    const nav = page.getByRole('navigation', { name: 'Study workflow' });
+    const selector = page.getByLabel('Study', { exact: true });
+    await expect(selector).toBeEnabled();
 
     for (const study of studies.slice(0, 2)) {
       const detailResponse = await request.get(api + '/trials/' + encodeURIComponent(study.trial_id), { headers });
@@ -54,7 +54,7 @@ for (const [role, actor] of [['Sponsor', 'ACT-COORD-01'], ['Clinical Lead', 'ACT
     await expect(page.getByRole('heading', { level: 1, name: displayTitle(studies[1].title), exact: true })).toBeVisible();
     await selector.selectOption('');
     await expect(page).toHaveURL('http://localhost:3000/');
-    await expect(page.getByRole('heading', { level: 1, name: 'Overview' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: landingTitle })).toBeVisible();
     await expect(page.getByRole('region', { name: 'Study summary' })).toHaveCount(0);
     expect(errors).toEqual([]);
   });
