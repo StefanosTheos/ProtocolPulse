@@ -1,0 +1,24 @@
+{
+  "review_date": "2026-11-15",
+  "timezone": "Europe/Athens",
+  "commit": "127f01da682d9d8bfdaa51289bb37539a8551e5f",
+  "source_sha256": {
+    "ai/agents/coordinator.py": "c0b926ffe1a14c7cf5ab5034a3243f3de6d6f9dda3ab5145b7942bcb8b174fa4",
+    "ai/agents/protocol_preparation.py": "a9e8549dde7f1426df109a78a1c14892fa5ac40801b21e604bc29a5c5a1c5577",
+    "ai/providers/gemini.py": "39c031e84ee3982707d6708dcf337e2a7cee9a512b5da908121c14b15ae518de",
+    "backend/app/integrations/agent_adapter.py": "ab8336119dec9629e85404a8a4bfcb36fe97bedb5da747740b397d24474b7cb5",
+    "backend/app/integrations/evidence_gateway.py": "796d4e41b5d7003c41e4413652654cbc04b4db15f6dc0762a040c07d8947f4d3",
+    "backend/app/services/event_processor.py": "759fcfb0c177e2a2bc9e72650fd0098cdadb975f41884744d70e89c37b6b9f10",
+    "frontend/components/PatientActions.tsx": "273fc0498cab203a7b5c5b5904c5ab0558c0d8f3d28e27df419fe2744899d75f"
+  },
+  "matches_prior_manifest": {
+    "ai/agents/coordinator.py": false,
+    "ai/agents/protocol_preparation.py": false,
+    "ai/providers/gemini.py": false,
+    "backend/app/integrations/agent_adapter.py": true,
+    "backend/app/integrations/evidence_gateway.py": true
+  },
+  "independent_python_tests": 175,
+  "independent_frontend_tests": 42,
+  "frontend_tests_skipped": 10
+}

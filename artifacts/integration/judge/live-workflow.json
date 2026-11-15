@@ -1,0 +1,3941 @@
+{
+  "mode": "INDEPENDENT_LIVE_MODEL_REAL_HTTP_SQLITE",
+  "executions": [],
+  "health": {
+    "status": "ok",
+    "database": "ok",
+    "migrations": "current",
+    "worker": "running",
+    "llm": "enabled",
+    "synthetic_only": true,
+    "api_version": "v1",
+    "contract_version": "1.0.0-rc2"
+  },
+  "patients_after": {
+    "P-124": {
+      "patient_id": "P-124",
+      "trial_id": "TR-PX104",
+      "synthetic_only": true,
+      "site_id": "SITE-SYN-01",
+      "screening_snapshot_date": "2026-10-31",
+      "demographics": {
+        "birth_date": {
+          "fact_id": "FACT-P-124-birth_date",
+          "value": "1972-03-12",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-birth_date",
+            "source_id": "SRC-P-124-birth_date",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 41
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "sex_at_birth": {
+          "fact_id": "FACT-P-124-sex_at_birth",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-sex_at_birth",
+            "source_id": "SRC-P-124-sex_at_birth",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 35
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_RECORDED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "location_jurisdiction": {
+          "fact_id": "FACT-P-124-location_jurisdiction",
+          "value": "Synthetic Athens site; Greece",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-location_jurisdiction",
+            "source_id": "SRC-P-124-location_jurisdiction",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 71
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      },
+      "index_disease": {
+        "code": "SYN-CONDITION-A",
+        "diagnosis_criteria": [
+          {
+            "fact_id": "COND-P-124-A",
+            "value": "SYN-CONDITION-A",
+            "unit": null,
+            "effective_at": "2024-05-31T21:00:00Z",
+            "onset_date": "2024-06-01",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "COND-P-124-A",
+              "source_id": "SRC-P-124-diagnosis",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2024-05-31T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 59
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "severity": {
+          "fact_id": "FACT-P-124-severity",
+          "value": "Synthetic moderate label; no selection restriction",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-severity",
+            "source_id": "SRC-P-124-severity",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 79
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "first_onset": {
+          "fact_id": "FACT-P-124-first_onset",
+          "value": "2024-06-01",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-first_onset",
+            "source_id": "SRC-P-124-first_onset",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 42
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "diagnostic_evidence": [
+          {
+            "evidence_id": "COND-P-124-A",
+            "source_id": "SRC-P-124-diagnosis",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2024-05-31T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 59
+          }
+        ]
+      },
+      "medical_conditions": [
+        {
+          "fact_id": "COND-P-124-A",
+          "value": "SYN-CONDITION-A",
+          "unit": null,
+          "effective_at": "2024-05-31T21:00:00Z",
+          "onset_date": "2024-06-01",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "COND-P-124-A",
+            "source_id": "SRC-P-124-diagnosis",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2024-05-31T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 59
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "surgeries_hospitalizations": [
+        {
+          "fact_id": "FACT-P-124-surgery_history",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-surgery_history",
+            "source_id": "SRC-P-124-surgery_history",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 38
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "family_history": [
+        {
+          "fact_id": "FACT-P-124-family_history",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-family_history",
+            "source_id": "SRC-P-124-family_history",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 37
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_RECORDED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "genetics": [
+        {
+          "fact_id": "FACT-P-124-genotype",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-genotype",
+            "source_id": "SRC-P-124-genotype",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 31
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "symptom_history": [
+        {
+          "fact_id": "FACT-P-124-symptom_course",
+          "value": "Synthetic symptoms recorded 2024-06; stable at October encounter",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-symptom_course",
+            "source_id": "SRC-P-124-symptom_course",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 99
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "observations": [
+        {
+          "kind": "LAB",
+          "analyte_code": "egfr",
+          "observation": {
+            "fact_id": "LAB-P-124-0",
+            "value": 75.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "effective_at": "2026-08-31T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "LAB-P-124-0",
+              "source_id": "SRC-P-124-lab-0",
+              "source_version": 1,
+              "evidence_type": "LAB",
+              "effective_at": "2026-08-31T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 52
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "FUNCTIONAL",
+          "analyte_code": "SYN-FUNCTIONAL",
+          "observation": {
+            "fact_id": "OBS-P-124-FUNCTIONAL",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-124-FUNCTIONAL",
+              "source_id": "SRC-P-124-FUNCTIONAL",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 33
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "PULMONARY",
+          "analyte_code": "SYN-PULMONARY",
+          "observation": {
+            "fact_id": "OBS-P-124-PULMONARY",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-124-PULMONARY",
+              "source_id": "SRC-P-124-PULMONARY",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 32
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "ECG",
+          "analyte_code": "SYN-ECG",
+          "observation": {
+            "fact_id": "OBS-P-124-ECG",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-124-ECG",
+              "source_id": "SRC-P-124-ECG",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 26
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "IMAGING",
+          "analyte_code": "SYN-IMAGING",
+          "observation": {
+            "fact_id": "OBS-P-124-IMAGING",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-124-IMAGING",
+              "source_id": "SRC-P-124-IMAGING",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 30
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "VITAL",
+          "analyte_code": "SYN-VITAL",
+          "observation": {
+            "fact_id": "OBS-P-124-VITAL",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-124-VITAL",
+              "source_id": "SRC-P-124-VITAL",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 28
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        }
+      ],
+      "medications": [],
+      "study_product_exposure": {
+        "blinded": true,
+        "assignment_masked": {
+          "fact_id": "FACT-P-124-assignment_masked",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-assignment_masked",
+            "source_id": "SRC-P-124-assignment_masked",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 40
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_APPLICABLE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "exposures": []
+      },
+      "prior_clinical_research": [
+        {
+          "research_id": "RES-P-124",
+          "kind": "OBSERVATIONAL",
+          "exposure": null,
+          "last_dose_at": null,
+          "half_life_hours": null,
+          "completion_status": "NOT_ASSESSED",
+          "ongoing_restrictions": [],
+          "source": {
+            "evidence_id": "RES-P-124",
+            "source_id": "SRC-P-124-prior",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 70
+          }
+        }
+      ],
+      "procedures_and_imaging": [
+        {
+          "fact_id": "FACT-P-124-procedure_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-procedure_review",
+            "source_id": "SRC-P-124-procedure_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 39
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "allergies": [
+        {
+          "fact_id": "FACT-P-124-allergy_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-allergy_review",
+            "source_id": "SRC-P-124-allergy_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 37
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "pregnancy_contraception": [
+        {
+          "fact_id": "FACT-P-124-pregnancy_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-124-pregnancy_review",
+            "source_id": "SRC-P-124-pregnancy_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 39
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "decision_capacity": {
+        "fact_id": "FACT-P-124-decision_capacity",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-124-decision_capacity",
+          "source_id": "SRC-P-124-decision_capacity",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 40
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "study_partner": {
+        "fact_id": "FACT-P-124-study_partner",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-124-study_partner",
+          "source_id": "SRC-P-124-study_partner",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 36
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_RECORDED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "administration_ability": {
+        "fact_id": "FACT-P-124-administration_ability",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-124-administration_ability",
+          "source_id": "SRC-P-124-administration_ability",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 45
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "encounters": [
+        {
+          "encounter_id": "ENC-P-124",
+          "occurred_at": "2026-10-30T10:00:00Z",
+          "source_ids": [
+            "SRC-P-124-narrative"
+          ],
+          "summary": "Synthetic pre-screen source review"
+        }
+      ],
+      "source_document_index": [
+        {
+          "source_id": "SRC-P-124-birth_date",
+          "source_version": 1,
+          "sha256": "0b1e280dd52c849323bd9da3add05c7a04459049ea59e65b829eff7e5d104546",
+          "filename": "SRC-P-124-birth_date.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-sex_at_birth",
+          "source_version": 1,
+          "sha256": "ea56d46f019597d3859aea2f2f8a4c287c90102c4160ab2a35316ba627b779c3",
+          "filename": "SRC-P-124-sex_at_birth.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-location_jurisdiction",
+          "source_version": 1,
+          "sha256": "b1091874111696341e94ca5f7c4881727953b0678d1b3cf1d7f348878154fede",
+          "filename": "SRC-P-124-location_jurisdiction.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-severity",
+          "source_version": 1,
+          "sha256": "8043859ed6e55ca27697375ab9fe0c7f6feca640fc6bf8f69af7865173611354",
+          "filename": "SRC-P-124-severity.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-first_onset",
+          "source_version": 1,
+          "sha256": "4190fbe6682cb73243f19fd5b12b2a1500bc729b40f67fed39d48e208f42f8d0",
+          "filename": "SRC-P-124-first_onset.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-surgery_history",
+          "source_version": 1,
+          "sha256": "1a508ef5f2f4ed746145f4232a5405e27608f8c20b0ce650c7740ddd148f9b24",
+          "filename": "SRC-P-124-surgery_history.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-family_history",
+          "source_version": 1,
+          "sha256": "35be2716484a9a6df77469c2cea017f5ef31fa8690fbe3e8bc1b452124e88959",
+          "filename": "SRC-P-124-family_history.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-genotype",
+          "source_version": 1,
+          "sha256": "894c38e781ef416b286ba212d9cd3ea469d976fe498c87ae8b8260e3ddcc2b58",
+          "filename": "SRC-P-124-genotype.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-symptom_course",
+          "source_version": 1,
+          "sha256": "00a7c7db6f0a2b8624c8d421bd8bab8408d966e6946137e0c1d8b5b74ab67695",
+          "filename": "SRC-P-124-symptom_course.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-procedure_review",
+          "source_version": 1,
+          "sha256": "f65a8a7c13becaefdbfa2d353abfa5ef31433920d09d0854d3b34d7e66b9d9a5",
+          "filename": "SRC-P-124-procedure_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-allergy_review",
+          "source_version": 1,
+          "sha256": "77888b2730ea0d7ae95ef41cfcf1414c577652526951997f742ed2c7b5533158",
+          "filename": "SRC-P-124-allergy_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-pregnancy_review",
+          "source_version": 1,
+          "sha256": "17ef72d4a149a7f37b44a4f4cc6e6fe37a9a7725a43d5d1f758e5ce6a3148ec4",
+          "filename": "SRC-P-124-pregnancy_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-decision_capacity",
+          "source_version": 1,
+          "sha256": "a91c2c2a2af58133e7bfff7e9a4886988aa345e77cdddfb1355ef0b8eea9280d",
+          "filename": "SRC-P-124-decision_capacity.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-study_partner",
+          "source_version": 1,
+          "sha256": "812a48749e550e5e934568e6a8656909223123ffcb0737177615ec37eb9ea151",
+          "filename": "SRC-P-124-study_partner.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-administration_ability",
+          "source_version": 1,
+          "sha256": "0ad84c6a0387c9dedb104df48d777c127db962b4b8d877bd122dd16e8de72931",
+          "filename": "SRC-P-124-administration_ability.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-assignment_masked",
+          "source_version": 1,
+          "sha256": "02eaaead33ad616f799eea5a1f06b8d09ed89fd825102560b07a257a75fbd3d3",
+          "filename": "SRC-P-124-assignment_masked.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-excluded_condition_absence",
+          "source_version": 1,
+          "sha256": "13f61578a548d894418909e680a66de769e5cb62eea389ed2c55cc2e2e5da254",
+          "filename": "SRC-P-124-excluded_condition_absence.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-no_restricted_use",
+          "source_version": 1,
+          "sha256": "73390e3dbdad82e8227b6af30c195505e2499ed242201ff79576d2d079c0b499",
+          "filename": "SRC-P-124-no_restricted_use.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-diagnosis",
+          "source_version": 1,
+          "sha256": "60fb08499d0ca772db16d5e68824d0e1ee759c5cb0dc70b80a8a82b8a7e3997d",
+          "filename": "SRC-P-124-diagnosis.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-lab-0",
+          "source_version": 1,
+          "sha256": "88a36155ef7e38d2889dbca33ae062094fc58d2d8a6ade7690adc31d663c84c7",
+          "filename": "SRC-P-124-lab-0.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-FUNCTIONAL",
+          "source_version": 1,
+          "sha256": "0a9032b7472a3711b97fb362cf7fe8f3b443051fef60d4978723944792c5ac83",
+          "filename": "SRC-P-124-FUNCTIONAL.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-PULMONARY",
+          "source_version": 1,
+          "sha256": "ef6f52bbc340115e9cd6192bce20485d3c81e9a7e5c87943769f4531c706b845",
+          "filename": "SRC-P-124-PULMONARY.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-ECG",
+          "source_version": 1,
+          "sha256": "4bef1d07c25ea393c0489da34a3d03264841cb152ead0b953648e9d55b358550",
+          "filename": "SRC-P-124-ECG.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-IMAGING",
+          "source_version": 1,
+          "sha256": "7c5a211d8154fc936b14fb80437b84c77f5f79863f2722da6c96cd4cf39dead2",
+          "filename": "SRC-P-124-IMAGING.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-VITAL",
+          "source_version": 1,
+          "sha256": "24bafd28e1f76debedf1056cfa5065a1ffd7360f9b5282306fa4b948b53bb50b",
+          "filename": "SRC-P-124-VITAL.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-prior",
+          "source_version": 1,
+          "sha256": "498f236cb4078708dcf2d2835a794322b6576cb07d7563bfea9dcc57d8955664",
+          "filename": "SRC-P-124-prior.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-narrative",
+          "source_version": 1,
+          "sha256": "9cc79a3d3a59f49eaf3d39bcc4515e7b31588a73eb5618b7f8fd2f6d42494570",
+          "filename": "SRC-P-124-narrative.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-124-external",
+          "source_version": 1,
+          "sha256": "7d73c9197f90611b09b9d6b595db7cacf2c3aca97b37c9fbce9bc1a77596eff0",
+          "filename": "SRC-P-124-external.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        }
+      ],
+      "clinical_narratives": [
+        {
+          "note_id": "NOTE-P-124",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "NOTE-P-124",
+            "source_id": "SRC-P-124-narrative",
+            "source_version": 1,
+            "evidence_type": "NOTE",
+            "effective_at": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "text": "P-124 is a wholly invented patient at the synthetic Athens site. The only available eGFR specimen is stale; a current result must not be invented. The index condition is represented by a verified fictional code with a separate source. Family history and genetics remain unassessed or unrecorded rather than presumed negative. Functional, pulmonary, ECG and imaging sections preserve explicit gaps. Prior research exposure, capacity, study partner and administration ability require further assessment. No study product has been assigned or administered in this screening record. These notes are claims for reviewer inspection; structured source evidence and approved rules determine screening. No clinical enrollment, treatment change or safety conclusion is implied.",
+          "extraction_status": "REVIEWED"
+        }
+      ],
+      "open_items": [
+        {
+          "open_item_id": "OPEN-P-124",
+          "reason_code": "SOURCE_UNAVAILABLE",
+          "description": "Long-tail unassessed sections require review; they are not extra eligibility rules",
+          "blocking": false,
+          "status": "OPEN",
+          "conflicting_evidence_ids": [],
+          "requested_for_role": "COORDINATOR"
+        }
+      ],
+      "participation_status": "NOT_ENROLLED",
+      "current_assessment_id": "ASM-06c001d0eb934141ade5fa47a2f809d4",
+      "data_watermark": "2026-10-30T10:00:00Z"
+    },
+    "P-083": {
+      "patient_id": "P-083",
+      "trial_id": "TR-PX104",
+      "synthetic_only": true,
+      "site_id": "SITE-SYN-01",
+      "screening_snapshot_date": "2026-10-31",
+      "demographics": {
+        "birth_date": {
+          "fact_id": "FACT-P-083-birth_date",
+          "value": "1976-03-12",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-birth_date",
+            "source_id": "SRC-P-083-birth_date",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 41
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "sex_at_birth": {
+          "fact_id": "FACT-P-083-sex_at_birth",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-sex_at_birth",
+            "source_id": "SRC-P-083-sex_at_birth",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 35
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_RECORDED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "location_jurisdiction": {
+          "fact_id": "FACT-P-083-location_jurisdiction",
+          "value": "Synthetic Athens site; Greece",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-location_jurisdiction",
+            "source_id": "SRC-P-083-location_jurisdiction",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 71
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      },
+      "index_disease": {
+        "code": "SYN-CONDITION-A",
+        "diagnosis_criteria": [
+          {
+            "fact_id": "COND-P-083-A",
+            "value": "SYN-CONDITION-A",
+            "unit": null,
+            "effective_at": "2024-05-31T21:00:00Z",
+            "onset_date": "2024-06-01",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "COND-P-083-A",
+              "source_id": "SRC-P-083-diagnosis",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2024-05-31T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 59
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "severity": {
+          "fact_id": "FACT-P-083-severity",
+          "value": "Synthetic moderate label; no selection restriction",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-severity",
+            "source_id": "SRC-P-083-severity",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 79
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "first_onset": {
+          "fact_id": "FACT-P-083-first_onset",
+          "value": "2024-06-01",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-first_onset",
+            "source_id": "SRC-P-083-first_onset",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 42
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "diagnostic_evidence": [
+          {
+            "evidence_id": "COND-P-083-A",
+            "source_id": "SRC-P-083-diagnosis",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2024-05-31T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 59
+          }
+        ]
+      },
+      "medical_conditions": [
+        {
+          "fact_id": "COND-P-083-A",
+          "value": "SYN-CONDITION-A",
+          "unit": null,
+          "effective_at": "2024-05-31T21:00:00Z",
+          "onset_date": "2024-06-01",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "COND-P-083-A",
+            "source_id": "SRC-P-083-diagnosis",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2024-05-31T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 59
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "surgeries_hospitalizations": [
+        {
+          "fact_id": "FACT-P-083-surgery_history",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-surgery_history",
+            "source_id": "SRC-P-083-surgery_history",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 38
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "family_history": [
+        {
+          "fact_id": "FACT-P-083-family_history",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-family_history",
+            "source_id": "SRC-P-083-family_history",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 37
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_RECORDED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "genetics": [
+        {
+          "fact_id": "FACT-P-083-genotype",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-genotype",
+            "source_id": "SRC-P-083-genotype",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 31
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "symptom_history": [
+        {
+          "fact_id": "FACT-P-083-symptom_course",
+          "value": "Synthetic symptoms recorded 2024-06; stable at October encounter",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-symptom_course",
+            "source_id": "SRC-P-083-symptom_course",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 99
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "observations": [
+        {
+          "kind": "LAB",
+          "analyte_code": "egfr",
+          "observation": {
+            "fact_id": "LAB-P-083-0",
+            "value": 78.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "effective_at": "2026-10-19T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "LAB-P-083-0",
+              "source_id": "SRC-P-083-lab-0",
+              "source_version": 1,
+              "evidence_type": "LAB",
+              "effective_at": "2026-10-19T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 52
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "FUNCTIONAL",
+          "analyte_code": "SYN-FUNCTIONAL",
+          "observation": {
+            "fact_id": "OBS-P-083-FUNCTIONAL",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-083-FUNCTIONAL",
+              "source_id": "SRC-P-083-FUNCTIONAL",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 33
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "PULMONARY",
+          "analyte_code": "SYN-PULMONARY",
+          "observation": {
+            "fact_id": "OBS-P-083-PULMONARY",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-083-PULMONARY",
+              "source_id": "SRC-P-083-PULMONARY",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 32
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "ECG",
+          "analyte_code": "SYN-ECG",
+          "observation": {
+            "fact_id": "OBS-P-083-ECG",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-083-ECG",
+              "source_id": "SRC-P-083-ECG",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 26
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "IMAGING",
+          "analyte_code": "SYN-IMAGING",
+          "observation": {
+            "fact_id": "OBS-P-083-IMAGING",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-083-IMAGING",
+              "source_id": "SRC-P-083-IMAGING",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 30
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "VITAL",
+          "analyte_code": "SYN-VITAL",
+          "observation": {
+            "fact_id": "OBS-P-083-VITAL",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-083-VITAL",
+              "source_id": "SRC-P-083-VITAL",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 28
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        }
+      ],
+      "medications": [
+        {
+          "exposure_id": "MED-P-083-1",
+          "medication_code": "SYN-MED-R1",
+          "mapped_class": "SYN-CLASS-R",
+          "evidence_type": "ORDER",
+          "asserted_start_at": "2026-10-14T21:00:00Z",
+          "asserted_end_exclusive_at": null,
+          "dose": {
+            "fact_id": "MED-P-083-1",
+            "value": 1.0,
+            "unit": "synthetic-unit",
+            "effective_at": "2026-10-14T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "MED-P-083-1",
+              "source_id": "SRC-P-083-med",
+              "source_version": 1,
+              "evidence_type": "ORDER",
+              "effective_at": "2026-10-14T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 41
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "route": {
+            "fact_id": "MED-P-083-1",
+            "value": "ORAL",
+            "unit": null,
+            "effective_at": "2026-10-14T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "MED-P-083-1",
+              "source_id": "SRC-P-083-med",
+              "source_version": 1,
+              "evidence_type": "ORDER",
+              "effective_at": "2026-10-14T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 41
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "last_changed_at": "2026-10-30T10:00:00Z",
+          "stop_reason": null,
+          "adverse_reactions": [],
+          "evidence": {
+            "fact_id": "MED-P-083-1",
+            "value": "SYN-MED-R1",
+            "unit": null,
+            "effective_at": "2026-10-14T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "MED-P-083-1",
+              "source_id": "SRC-P-083-med",
+              "source_version": 1,
+              "evidence_type": "ORDER",
+              "effective_at": "2026-10-14T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 41
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "source": {
+            "evidence_id": "MED-P-083-1",
+            "source_id": "SRC-P-083-med",
+            "source_version": 1,
+            "evidence_type": "ORDER",
+            "effective_at": "2026-10-14T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 41
+          }
+        }
+      ],
+      "study_product_exposure": {
+        "blinded": true,
+        "assignment_masked": {
+          "fact_id": "FACT-P-083-assignment_masked",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-assignment_masked",
+            "source_id": "SRC-P-083-assignment_masked",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 40
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_APPLICABLE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "exposures": []
+      },
+      "prior_clinical_research": [
+        {
+          "research_id": "RES-P-083",
+          "kind": "OBSERVATIONAL",
+          "exposure": null,
+          "last_dose_at": null,
+          "half_life_hours": null,
+          "completion_status": "NOT_ASSESSED",
+          "ongoing_restrictions": [],
+          "source": {
+            "evidence_id": "RES-P-083",
+            "source_id": "SRC-P-083-prior",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 70
+          }
+        }
+      ],
+      "procedures_and_imaging": [
+        {
+          "fact_id": "FACT-P-083-procedure_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-procedure_review",
+            "source_id": "SRC-P-083-procedure_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 39
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "allergies": [
+        {
+          "fact_id": "FACT-P-083-allergy_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-allergy_review",
+            "source_id": "SRC-P-083-allergy_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 37
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "pregnancy_contraception": [
+        {
+          "fact_id": "FACT-P-083-pregnancy_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-083-pregnancy_review",
+            "source_id": "SRC-P-083-pregnancy_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 39
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "decision_capacity": {
+        "fact_id": "FACT-P-083-decision_capacity",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-083-decision_capacity",
+          "source_id": "SRC-P-083-decision_capacity",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 40
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "study_partner": {
+        "fact_id": "FACT-P-083-study_partner",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-083-study_partner",
+          "source_id": "SRC-P-083-study_partner",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 36
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_RECORDED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "administration_ability": {
+        "fact_id": "FACT-P-083-administration_ability",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-083-administration_ability",
+          "source_id": "SRC-P-083-administration_ability",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 45
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "encounters": [
+        {
+          "encounter_id": "ENC-P-083",
+          "occurred_at": "2026-10-30T10:00:00Z",
+          "source_ids": [
+            "SRC-P-083-narrative"
+          ],
+          "summary": "Synthetic pre-screen source review"
+        }
+      ],
+      "source_document_index": [
+        {
+          "source_id": "SRC-P-083-birth_date",
+          "source_version": 1,
+          "sha256": "2a0fa96d0a235cc0b6461c229f758831ef725a3d398d6da7024275f34ec8949c",
+          "filename": "SRC-P-083-birth_date.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-sex_at_birth",
+          "source_version": 1,
+          "sha256": "7ef27d11fa6ae656ebfcbcb8c484a16ff89c837b1c02a7b7403c7eb6fee699b1",
+          "filename": "SRC-P-083-sex_at_birth.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-location_jurisdiction",
+          "source_version": 1,
+          "sha256": "97686249774f5613d92838df00bd2df4d430c7d0d5c37cd4d7a1b374534e648f",
+          "filename": "SRC-P-083-location_jurisdiction.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-severity",
+          "source_version": 1,
+          "sha256": "cc07524a1d93808e3efd8970dba01280b10d341c8f3f3b2a562998fee51bbfcc",
+          "filename": "SRC-P-083-severity.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-first_onset",
+          "source_version": 1,
+          "sha256": "5de631ffb7093c5a9dd5a4f5c56a3dd3ece690815ae9cce27be6fec46978cdb0",
+          "filename": "SRC-P-083-first_onset.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-surgery_history",
+          "source_version": 1,
+          "sha256": "bb643cea1ffe814163a78291887af06c24e09baf706a7698888769c8c62e77a2",
+          "filename": "SRC-P-083-surgery_history.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-family_history",
+          "source_version": 1,
+          "sha256": "ae54b444064a05ab17deb2dc706be97a3049033e55f58f7545fc25edd28b3aec",
+          "filename": "SRC-P-083-family_history.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-genotype",
+          "source_version": 1,
+          "sha256": "147dd4546a03217c697b33b41ca0caa43231d88382dac9f1643c0fd6a1834284",
+          "filename": "SRC-P-083-genotype.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-symptom_course",
+          "source_version": 1,
+          "sha256": "5aa19592adef79a7834907f383d00489dad157e677105aba43180806302a9fe3",
+          "filename": "SRC-P-083-symptom_course.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-procedure_review",
+          "source_version": 1,
+          "sha256": "4bbed9e28f56c3fe370cad6b6934a5b83dde0702b9009ce4642d1bda4ce86ac7",
+          "filename": "SRC-P-083-procedure_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-allergy_review",
+          "source_version": 1,
+          "sha256": "595dc254d27764d293f5008e5b9187f04bff8a657201d1928fd60dc73ce973c2",
+          "filename": "SRC-P-083-allergy_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-pregnancy_review",
+          "source_version": 1,
+          "sha256": "669acb77f4577934b73d224d51f119fa8401e1f172b4dbc264fc9e0da3a54c56",
+          "filename": "SRC-P-083-pregnancy_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-decision_capacity",
+          "source_version": 1,
+          "sha256": "eaf32a711c335dda6ba575577d2d712df44c31e382adf3246f5a446ac0843e6b",
+          "filename": "SRC-P-083-decision_capacity.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-study_partner",
+          "source_version": 1,
+          "sha256": "563caacb24b73128ab543cf7c1553e4656b272a260724bec8ba7f8d78a7bd4fd",
+          "filename": "SRC-P-083-study_partner.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-administration_ability",
+          "source_version": 1,
+          "sha256": "245f6255676b972d433f5960211045af58a9461513eec0c16cb00bbc4dcb12f0",
+          "filename": "SRC-P-083-administration_ability.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-assignment_masked",
+          "source_version": 1,
+          "sha256": "e3e3fba2e874accc933290945226b378bdb266cd0829ef50e6dc757f3b159381",
+          "filename": "SRC-P-083-assignment_masked.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-excluded_condition_absence",
+          "source_version": 1,
+          "sha256": "cd70373197a067c13b35c24486e4453316f8d67fcf4331de1829b598b21e87bd",
+          "filename": "SRC-P-083-excluded_condition_absence.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-diagnosis",
+          "source_version": 1,
+          "sha256": "60fb08499d0ca772db16d5e68824d0e1ee759c5cb0dc70b80a8a82b8a7e3997d",
+          "filename": "SRC-P-083-diagnosis.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-lab-0",
+          "source_version": 1,
+          "sha256": "73902c05b7087239a60784f5fedaafa8c31c3fa33e7c7a7820f26deaeb7f2b84",
+          "filename": "SRC-P-083-lab-0.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-FUNCTIONAL",
+          "source_version": 1,
+          "sha256": "0a9032b7472a3711b97fb362cf7fe8f3b443051fef60d4978723944792c5ac83",
+          "filename": "SRC-P-083-FUNCTIONAL.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-PULMONARY",
+          "source_version": 1,
+          "sha256": "ef6f52bbc340115e9cd6192bce20485d3c81e9a7e5c87943769f4531c706b845",
+          "filename": "SRC-P-083-PULMONARY.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-ECG",
+          "source_version": 1,
+          "sha256": "4bef1d07c25ea393c0489da34a3d03264841cb152ead0b953648e9d55b358550",
+          "filename": "SRC-P-083-ECG.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-IMAGING",
+          "source_version": 1,
+          "sha256": "7c5a211d8154fc936b14fb80437b84c77f5f79863f2722da6c96cd4cf39dead2",
+          "filename": "SRC-P-083-IMAGING.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-VITAL",
+          "source_version": 1,
+          "sha256": "24bafd28e1f76debedf1056cfa5065a1ffd7360f9b5282306fa4b948b53bb50b",
+          "filename": "SRC-P-083-VITAL.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-med",
+          "source_version": 1,
+          "sha256": "ae273795be7b8a6f4f51652c8cb55f63cbbc630d4afa9069e533b8904dfcb6b1",
+          "filename": "SRC-P-083-med.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-prior",
+          "source_version": 1,
+          "sha256": "498f236cb4078708dcf2d2835a794322b6576cb07d7563bfea9dcc57d8955664",
+          "filename": "SRC-P-083-prior.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-narrative",
+          "source_version": 1,
+          "sha256": "accfe3a3ff7220c79a2cf8a74c8544431d38ad768b3103ffae67e5a0b4c94239",
+          "filename": "SRC-P-083-narrative.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-083-external",
+          "source_version": 1,
+          "sha256": "c38a1d2f8d69420af4e176ab1d7366babbf1dc1f341f7f2df379b44e0656cdb5",
+          "filename": "SRC-P-083-external.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        }
+      ],
+      "clinical_narratives": [
+        {
+          "note_id": "NOTE-P-083",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "NOTE-P-083",
+            "source_id": "SRC-P-083-narrative",
+            "source_version": 1,
+            "evidence_type": "NOTE",
+            "effective_at": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "text": "P-083 is a wholly invented patient at the synthetic Athens site. An October order exists, but administration and ingestion have not been established. The index condition is represented by a verified fictional code with a separate source. Family history and genetics remain unassessed or unrecorded rather than presumed negative. Functional, pulmonary, ECG and imaging sections preserve explicit gaps. Prior research exposure, capacity, study partner and administration ability require further assessment. No study product has been assigned or administered in this screening record. These notes are claims for reviewer inspection; structured source evidence and approved rules determine screening. No clinical enrollment, treatment change or safety conclusion is implied.",
+          "extraction_status": "REVIEWED"
+        }
+      ],
+      "open_items": [
+        {
+          "open_item_id": "OPEN-P-083",
+          "reason_code": "SOURCE_UNAVAILABLE",
+          "description": "Long-tail unassessed sections require review; they are not extra eligibility rules",
+          "blocking": false,
+          "status": "OPEN",
+          "conflicting_evidence_ids": [],
+          "requested_for_role": "COORDINATOR"
+        }
+      ],
+      "participation_status": "NOT_ENROLLED",
+      "current_assessment_id": "ASM-c43956e0b7f44321a104679e338ed76e",
+      "data_watermark": "2026-10-30T10:00:00Z"
+    },
+    "P-140": {
+      "patient_id": "P-140",
+      "trial_id": "TR-PX104",
+      "synthetic_only": true,
+      "site_id": "SITE-SYN-01",
+      "screening_snapshot_date": "2026-10-31",
+      "demographics": {
+        "birth_date": {
+          "fact_id": "FACT-P-140-birth_date",
+          "value": "1977-03-12",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-birth_date",
+            "source_id": "SRC-P-140-birth_date",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 41
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "sex_at_birth": {
+          "fact_id": "FACT-P-140-sex_at_birth",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-sex_at_birth",
+            "source_id": "SRC-P-140-sex_at_birth",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 35
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_RECORDED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "location_jurisdiction": {
+          "fact_id": "FACT-P-140-location_jurisdiction",
+          "value": "Synthetic Athens site; Greece",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-location_jurisdiction",
+            "source_id": "SRC-P-140-location_jurisdiction",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 71
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      },
+      "index_disease": {
+        "code": "SYN-CONDITION-A",
+        "diagnosis_criteria": [
+          {
+            "fact_id": "COND-P-140-A",
+            "value": "SYN-CONDITION-A",
+            "unit": null,
+            "effective_at": "2024-05-31T21:00:00Z",
+            "onset_date": "2024-06-01",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "COND-P-140-A",
+              "source_id": "SRC-P-140-diagnosis",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2024-05-31T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 59
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          }
+        ],
+        "severity": {
+          "fact_id": "FACT-P-140-severity",
+          "value": "Synthetic moderate label; no selection restriction",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-severity",
+            "source_id": "SRC-P-140-severity",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 79
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "first_onset": {
+          "fact_id": "FACT-P-140-first_onset",
+          "value": "2024-06-01",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-first_onset",
+            "source_id": "SRC-P-140-first_onset",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 42
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "diagnostic_evidence": [
+          {
+            "evidence_id": "COND-P-140-A",
+            "source_id": "SRC-P-140-diagnosis",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2024-05-31T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 59
+          }
+        ]
+      },
+      "medical_conditions": [
+        {
+          "fact_id": "COND-P-140-A",
+          "value": "SYN-CONDITION-A",
+          "unit": null,
+          "effective_at": "2024-05-31T21:00:00Z",
+          "onset_date": "2024-06-01",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "COND-P-140-A",
+            "source_id": "SRC-P-140-diagnosis",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2024-05-31T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 59
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "surgeries_hospitalizations": [
+        {
+          "fact_id": "FACT-P-140-surgery_history",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-surgery_history",
+            "source_id": "SRC-P-140-surgery_history",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 38
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "family_history": [
+        {
+          "fact_id": "FACT-P-140-family_history",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-family_history",
+            "source_id": "SRC-P-140-family_history",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 37
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_RECORDED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "genetics": [
+        {
+          "fact_id": "FACT-P-140-genotype",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-genotype",
+            "source_id": "SRC-P-140-genotype",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 31
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "symptom_history": [
+        {
+          "fact_id": "FACT-P-140-symptom_course",
+          "value": "Synthetic symptoms recorded 2024-06; stable at October encounter",
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-symptom_course",
+            "source_id": "SRC-P-140-symptom_course",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 99
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "POSITIVE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "observations": [
+        {
+          "kind": "LAB",
+          "analyte_code": "egfr",
+          "observation": {
+            "fact_id": "LAB-P-140-0",
+            "value": 78.0,
+            "unit": "mL/min/1.73m\u00b2",
+            "effective_at": "2026-10-19T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "LAB-P-140-0",
+              "source_id": "SRC-P-140-lab-0",
+              "source_version": 1,
+              "evidence_type": "LAB",
+              "effective_at": "2026-10-19T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 52
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "POSITIVE",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "FUNCTIONAL",
+          "analyte_code": "SYN-FUNCTIONAL",
+          "observation": {
+            "fact_id": "OBS-P-140-FUNCTIONAL",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-140-FUNCTIONAL",
+              "source_id": "SRC-P-140-FUNCTIONAL",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 33
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "PULMONARY",
+          "analyte_code": "SYN-PULMONARY",
+          "observation": {
+            "fact_id": "OBS-P-140-PULMONARY",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-140-PULMONARY",
+              "source_id": "SRC-P-140-PULMONARY",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 32
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "ECG",
+          "analyte_code": "SYN-ECG",
+          "observation": {
+            "fact_id": "OBS-P-140-ECG",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-140-ECG",
+              "source_id": "SRC-P-140-ECG",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 26
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "IMAGING",
+          "analyte_code": "SYN-IMAGING",
+          "observation": {
+            "fact_id": "OBS-P-140-IMAGING",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-140-IMAGING",
+              "source_id": "SRC-P-140-IMAGING",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 30
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        },
+        {
+          "kind": "VITAL",
+          "analyte_code": "SYN-VITAL",
+          "observation": {
+            "fact_id": "OBS-P-140-VITAL",
+            "value": null,
+            "unit": null,
+            "effective_at": "2026-10-30T10:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "OBS-P-140-VITAL",
+              "source_id": "SRC-P-140-VITAL",
+              "source_version": 1,
+              "evidence_type": "OTHER",
+              "effective_at": "2026-10-30T10:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 28
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "NOT_ASSESSED",
+            "time_uncertainty": null,
+            "verification_status": "VERIFIED"
+          },
+          "interpretation": null
+        }
+      ],
+      "medications": [
+        {
+          "exposure_id": "MED-P-140-1",
+          "medication_code": "SYN-MED-R1",
+          "mapped_class": "SYN-CLASS-R",
+          "evidence_type": "REPORTED_USE",
+          "asserted_start_at": "2026-10-14T21:00:00Z",
+          "asserted_end_exclusive_at": null,
+          "dose": {
+            "fact_id": "MED-P-140-1",
+            "value": 1.0,
+            "unit": "synthetic-unit",
+            "effective_at": "2026-10-14T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "MED-P-140-1",
+              "source_id": "SRC-P-140-med",
+              "source_version": 1,
+              "evidence_type": "REPORTED_USE",
+              "effective_at": "2026-10-14T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 48
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "UNCERTAIN",
+            "time_uncertainty": null,
+            "verification_status": "CONFLICTED"
+          },
+          "route": {
+            "fact_id": "MED-P-140-1",
+            "value": "ORAL",
+            "unit": null,
+            "effective_at": "2026-10-14T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "MED-P-140-1",
+              "source_id": "SRC-P-140-med",
+              "source_version": 1,
+              "evidence_type": "REPORTED_USE",
+              "effective_at": "2026-10-14T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 48
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "UNCERTAIN",
+            "time_uncertainty": null,
+            "verification_status": "CONFLICTED"
+          },
+          "last_changed_at": "2026-10-30T10:00:00Z",
+          "stop_reason": null,
+          "adverse_reactions": [],
+          "evidence": {
+            "fact_id": "MED-P-140-1",
+            "value": "SYN-MED-R1",
+            "unit": null,
+            "effective_at": "2026-10-14T21:00:00Z",
+            "onset_date": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "ingested_at": "2026-10-30T10:00:00Z",
+            "source": {
+              "evidence_id": "MED-P-140-1",
+              "source_id": "SRC-P-140-med",
+              "source_version": 1,
+              "evidence_type": "REPORTED_USE",
+              "effective_at": "2026-10-14T21:00:00Z",
+              "recorded_at": "2026-10-30T10:00:00Z",
+              "page": null,
+              "span_start": 0,
+              "span_end": 48
+            },
+            "evidence_quality": "HIGH",
+            "evidence_state": "UNCERTAIN",
+            "time_uncertainty": null,
+            "verification_status": "CONFLICTED"
+          },
+          "source": {
+            "evidence_id": "MED-P-140-1",
+            "source_id": "SRC-P-140-med",
+            "source_version": 1,
+            "evidence_type": "REPORTED_USE",
+            "effective_at": "2026-10-14T21:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 48
+          }
+        }
+      ],
+      "study_product_exposure": {
+        "blinded": true,
+        "assignment_masked": {
+          "fact_id": "FACT-P-140-assignment_masked",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-assignment_masked",
+            "source_id": "SRC-P-140-assignment_masked",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 40
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_APPLICABLE",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        },
+        "exposures": []
+      },
+      "prior_clinical_research": [
+        {
+          "research_id": "RES-P-140",
+          "kind": "OBSERVATIONAL",
+          "exposure": null,
+          "last_dose_at": null,
+          "half_life_hours": null,
+          "completion_status": "NOT_ASSESSED",
+          "ongoing_restrictions": [],
+          "source": {
+            "evidence_id": "RES-P-140",
+            "source_id": "SRC-P-140-prior",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 70
+          }
+        }
+      ],
+      "procedures_and_imaging": [
+        {
+          "fact_id": "FACT-P-140-procedure_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-procedure_review",
+            "source_id": "SRC-P-140-procedure_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 39
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "allergies": [
+        {
+          "fact_id": "FACT-P-140-allergy_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-allergy_review",
+            "source_id": "SRC-P-140-allergy_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 37
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "pregnancy_contraception": [
+        {
+          "fact_id": "FACT-P-140-pregnancy_review",
+          "value": null,
+          "unit": null,
+          "effective_at": "2026-10-30T10:00:00Z",
+          "onset_date": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "ingested_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "FACT-P-140-pregnancy_review",
+            "source_id": "SRC-P-140-pregnancy_review",
+            "source_version": 1,
+            "evidence_type": "OTHER",
+            "effective_at": "2026-10-30T10:00:00Z",
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": 0,
+            "span_end": 39
+          },
+          "evidence_quality": "HIGH",
+          "evidence_state": "NOT_ASSESSED",
+          "time_uncertainty": null,
+          "verification_status": "VERIFIED"
+        }
+      ],
+      "decision_capacity": {
+        "fact_id": "FACT-P-140-decision_capacity",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-140-decision_capacity",
+          "source_id": "SRC-P-140-decision_capacity",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 40
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "study_partner": {
+        "fact_id": "FACT-P-140-study_partner",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-140-study_partner",
+          "source_id": "SRC-P-140-study_partner",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 36
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_RECORDED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "administration_ability": {
+        "fact_id": "FACT-P-140-administration_ability",
+        "value": null,
+        "unit": null,
+        "effective_at": "2026-10-30T10:00:00Z",
+        "onset_date": null,
+        "recorded_at": "2026-10-30T10:00:00Z",
+        "ingested_at": "2026-10-30T10:00:00Z",
+        "source": {
+          "evidence_id": "FACT-P-140-administration_ability",
+          "source_id": "SRC-P-140-administration_ability",
+          "source_version": 1,
+          "evidence_type": "OTHER",
+          "effective_at": "2026-10-30T10:00:00Z",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": null,
+          "span_start": 0,
+          "span_end": 45
+        },
+        "evidence_quality": "HIGH",
+        "evidence_state": "NOT_ASSESSED",
+        "time_uncertainty": null,
+        "verification_status": "VERIFIED"
+      },
+      "encounters": [
+        {
+          "encounter_id": "ENC-P-140",
+          "occurred_at": "2026-10-30T10:00:00Z",
+          "source_ids": [
+            "SRC-P-140-narrative"
+          ],
+          "summary": "Synthetic pre-screen source review"
+        }
+      ],
+      "source_document_index": [
+        {
+          "source_id": "SRC-P-140-birth_date",
+          "source_version": 1,
+          "sha256": "845955ff84650706fff89fbbacba00ebf92f6863187c4ab9c2b1a22f3fd95971",
+          "filename": "SRC-P-140-birth_date.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-sex_at_birth",
+          "source_version": 1,
+          "sha256": "393025110847058ba3febce3c4084c80f17a3d066e21396d8d0b5d2ecb98321a",
+          "filename": "SRC-P-140-sex_at_birth.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-location_jurisdiction",
+          "source_version": 1,
+          "sha256": "26ea0da60a01f9beff829202270168254c3c56a4936265987b21ce3a597807ca",
+          "filename": "SRC-P-140-location_jurisdiction.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-severity",
+          "source_version": 1,
+          "sha256": "6dad697a2fcda58cb7715e782e86516842c9c8f690a8c0a1ca7449ca9853e911",
+          "filename": "SRC-P-140-severity.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-first_onset",
+          "source_version": 1,
+          "sha256": "d0fe4fd33d4e0da7649cb038bee93442a3d5f4b67c8fd7309bc37d3848f08ab4",
+          "filename": "SRC-P-140-first_onset.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-surgery_history",
+          "source_version": 1,
+          "sha256": "f3d11fdd439002fb6156adfdf472b7822f99ac5f57361cba02b3af8e8f26d651",
+          "filename": "SRC-P-140-surgery_history.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-family_history",
+          "source_version": 1,
+          "sha256": "daa45abe4fcc3a058522edf05d6c884478729e5e44a84c81c265079f60dedde8",
+          "filename": "SRC-P-140-family_history.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-genotype",
+          "source_version": 1,
+          "sha256": "13a329fa6a194726e12fb07b9559a062a590549c674032d5b78b8e5d9483ecae",
+          "filename": "SRC-P-140-genotype.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-symptom_course",
+          "source_version": 1,
+          "sha256": "0fabf5ce591bb7456b77b8b5a5e2e5e75cabf78c53f010ecb06be5b6e98da2de",
+          "filename": "SRC-P-140-symptom_course.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-procedure_review",
+          "source_version": 1,
+          "sha256": "411002c6f954b408fc0191e944b36d2f9aaf6c96daad4917a54e9d221d17162d",
+          "filename": "SRC-P-140-procedure_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-allergy_review",
+          "source_version": 1,
+          "sha256": "6ac133b8f046257b89b8de6f3789a22c06b13b5bdb64b5d2c346d58597950d0f",
+          "filename": "SRC-P-140-allergy_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-pregnancy_review",
+          "source_version": 1,
+          "sha256": "e26f20b21c16075936858d8dcb2ff94032b06009ca5a9e87ba85971502899270",
+          "filename": "SRC-P-140-pregnancy_review.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-decision_capacity",
+          "source_version": 1,
+          "sha256": "f4d4b404cc347b25f223d3eafd9264fbf7b948f3069e8fda2e3164d808ba8831",
+          "filename": "SRC-P-140-decision_capacity.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-study_partner",
+          "source_version": 1,
+          "sha256": "3b9de261ccbeaa4f9286744a5fa8ce7ec0c16ae4dbf915f2db74e7cd8b807c44",
+          "filename": "SRC-P-140-study_partner.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-administration_ability",
+          "source_version": 1,
+          "sha256": "f60dac7d2e61ebdf40bcad8aeb200aae984e6e42cbd84f474b4eca7ee9c3bf29",
+          "filename": "SRC-P-140-administration_ability.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-assignment_masked",
+          "source_version": 1,
+          "sha256": "d3b76a52be411244b7d159e16375f39fcd28e550944d0c9139edf330859cc66f",
+          "filename": "SRC-P-140-assignment_masked.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-excluded_condition_absence",
+          "source_version": 1,
+          "sha256": "13bf8afaa7337a3a67eef585f9ba326bb41ba312a839ef3883848be89b460a4d",
+          "filename": "SRC-P-140-excluded_condition_absence.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-diagnosis",
+          "source_version": 1,
+          "sha256": "60fb08499d0ca772db16d5e68824d0e1ee759c5cb0dc70b80a8a82b8a7e3997d",
+          "filename": "SRC-P-140-diagnosis.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-lab-0",
+          "source_version": 1,
+          "sha256": "73902c05b7087239a60784f5fedaafa8c31c3fa33e7c7a7820f26deaeb7f2b84",
+          "filename": "SRC-P-140-lab-0.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-FUNCTIONAL",
+          "source_version": 1,
+          "sha256": "0a9032b7472a3711b97fb362cf7fe8f3b443051fef60d4978723944792c5ac83",
+          "filename": "SRC-P-140-FUNCTIONAL.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-PULMONARY",
+          "source_version": 1,
+          "sha256": "ef6f52bbc340115e9cd6192bce20485d3c81e9a7e5c87943769f4531c706b845",
+          "filename": "SRC-P-140-PULMONARY.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-ECG",
+          "source_version": 1,
+          "sha256": "4bef1d07c25ea393c0489da34a3d03264841cb152ead0b953648e9d55b358550",
+          "filename": "SRC-P-140-ECG.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-IMAGING",
+          "source_version": 1,
+          "sha256": "7c5a211d8154fc936b14fb80437b84c77f5f79863f2722da6c96cd4cf39dead2",
+          "filename": "SRC-P-140-IMAGING.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-VITAL",
+          "source_version": 1,
+          "sha256": "24bafd28e1f76debedf1056cfa5065a1ffd7360f9b5282306fa4b948b53bb50b",
+          "filename": "SRC-P-140-VITAL.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-med",
+          "source_version": 1,
+          "sha256": "cdfd424b17eda1d2a2a5a30049ca98c37f6c8f900adc2b3124a40f251d2c3473",
+          "filename": "SRC-P-140-med.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-prior",
+          "source_version": 1,
+          "sha256": "498f236cb4078708dcf2d2835a794322b6576cb07d7563bfea9dcc57d8955664",
+          "filename": "SRC-P-140-prior.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-narrative",
+          "source_version": 1,
+          "sha256": "49bf484284171026a3745ac4a6426d74aacc21b9f639036c184e5f1172ed124f",
+          "filename": "SRC-P-140-narrative.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-conflict-0",
+          "source_version": 1,
+          "sha256": "8de5d4faffe7e936c473d04a8e4dd0c2e9999efb75d3be8e69a38381781a7d42",
+          "filename": "SRC-P-140-conflict-0.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-conflict-1",
+          "source_version": 1,
+          "sha256": "0f53ea4b0cfdbf227a2ee6a1880e0e25ab9ac4a34c9505966c71766d3a418b2c",
+          "filename": "SRC-P-140-conflict-1.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        },
+        {
+          "source_id": "SRC-P-140-external",
+          "source_version": 1,
+          "sha256": "975ed6b58b2d6239447c9a1bd5a7ccd18d8a7a1b1467474a4e30b34de03cf6ae",
+          "filename": "SRC-P-140-external.txt",
+          "mime_type": "text/plain",
+          "created_at": "2026-10-30T10:00:00Z",
+          "synthetic_only": true
+        }
+      ],
+      "clinical_narratives": [
+        {
+          "note_id": "NOTE-P-140",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "NOTE-P-140",
+            "source_id": "SRC-P-140-narrative",
+            "source_version": 1,
+            "evidence_type": "NOTE",
+            "effective_at": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "text": "P-140 is a wholly invented patient at the synthetic Athens site. One note claims continuing use; another claims use stopped before October. Dates conflict. The index condition is represented by a verified fictional code with a separate source. Family history and genetics remain unassessed or unrecorded rather than presumed negative. Functional, pulmonary, ECG and imaging sections preserve explicit gaps. Prior research exposure, capacity, study partner and administration ability require further assessment. No study product has been assigned or administered in this screening record. These notes are claims for reviewer inspection; structured source evidence and approved rules determine screening. No clinical enrollment, treatment change or safety conclusion is implied.",
+          "extraction_status": "CONFLICTED"
+        },
+        {
+          "note_id": "NOTE-P-140-0",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "NOTE-P-140-0",
+            "source_id": "SRC-P-140-conflict-0",
+            "source_version": 1,
+            "evidence_type": "NOTE",
+            "effective_at": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "text": "Synthetic claim: continuing SYN-MED-R1 use; timing uncertain.",
+          "extraction_status": "CONFLICTED"
+        },
+        {
+          "note_id": "NOTE-P-140-1",
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "source": {
+            "evidence_id": "NOTE-P-140-1",
+            "source_id": "SRC-P-140-conflict-1",
+            "source_version": 1,
+            "evidence_type": "NOTE",
+            "effective_at": null,
+            "recorded_at": "2026-10-30T10:00:00Z",
+            "page": null,
+            "span_start": null,
+            "span_end": null
+          },
+          "text": "Synthetic claim: stopped SYN-MED-R1 before October; timing uncertain.",
+          "extraction_status": "CONFLICTED"
+        }
+      ],
+      "open_items": [
+        {
+          "open_item_id": "OPEN-P-140",
+          "reason_code": "CONFLICTING_SOURCES",
+          "description": "Conflicting continuing/stopped-use claims need reconciliation",
+          "blocking": true,
+          "status": "OPEN",
+          "conflicting_evidence_ids": [
+            "NOTE-P-140-0",
+            "NOTE-P-140-1"
+          ],
+          "requested_for_role": "INVESTIGATOR"
+        }
+      ],
+      "participation_status": "NOT_ENROLLED",
+      "current_assessment_id": "ASM-14e985c0a8a049c29599d81bb1243de6",
+      "data_watermark": "2026-10-30T10:00:00Z"
+    }
+  },
+  "upload": {
+    "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+    "trial_id": "TR-PX104",
+    "label": "JUDGE-LIVE-80a11fe7",
+    "state": "DRAFT",
+    "revision": 1,
+    "source": {
+      "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+      "source_version": 1,
+      "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+      "filename": "fictional.pdf",
+      "mime_type": "application/pdf",
+      "created_at": "2026-11-15T08:31:48.766918Z",
+      "synthetic_only": true
+    },
+    "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+    "criteria": [],
+    "coverage": [],
+    "coverage_signed_by": null,
+    "coverage_signed_at": null,
+    "approved_set_hash": null,
+    "approved_at": null,
+    "extraction_job_id": null,
+    "blocking_count": 0
+  },
+  "extraction_job": {
+    "job_id": "JOB-546fb7fee0c84f89be917a443a9950f8",
+    "kind": "PROTOCOL_EXTRACT",
+    "status": "SUCCEEDED",
+    "resource_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+    "correlation_id": "68f5d911-bee7-4cc8-98ad-57354714a78e",
+    "poll_url": "/api/v1/jobs/JOB-546fb7fee0c84f89be917a443a9950f8",
+    "created_at": "2026-11-15T08:31:48.824432Z",
+    "attempts": 1,
+    "max_attempts": 3,
+    "started_at": "2026-11-15T08:31:48.956512Z",
+    "finished_at": "2026-11-15T08:31:55.717539Z",
+    "progress_percent": 100.0,
+    "result": {
+      "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+      "execution_id": "EXEC-d12378328747434c984171eaea2f332c",
+      "agent_job_id": "JOB-61a41fd404354633bf427cf5345b3955",
+      "proposal_origin": "MODEL",
+      "agent_status": "SUCCEEDED"
+    },
+    "error": null
+  },
+  "extracted": {
+    "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+    "trial_id": "TR-PX104",
+    "label": "JUDGE-LIVE-80a11fe7",
+    "state": "EXTRACTION_REVIEW",
+    "revision": 2,
+    "source": {
+      "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+      "source_version": 1,
+      "sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+      "filename": "fictional.pdf",
+      "mime_type": "application/pdf",
+      "created_at": "2026-11-15T08:31:48.766918Z",
+      "synthetic_only": true
+    },
+    "file_sha256": "fca6e604ad017811cd62ce16f25f31306d36023c744cbc61eeb80f6cc67d5576",
+    "criteria": [
+      {
+        "criterion_id": "PX-EXC-01",
+        "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+        "type": "EXCLUSION",
+        "clinical_subject": "condition",
+        "operator": "ABSENCE_CONFIRMED_ACTIVE",
+        "threshold": "SYN-EXCLUDED-CONDITION",
+        "unit": null,
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": 0,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": true,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Reviewed record-completeness declaration supporting absence of active condition",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "6. PX-EXC-01 - Excluded active condition\nThe patient must have no confirmed active SYN-EXCLUDED-CONDITION at screening. A verified active\ncondition fails this criterion. Passing requires a reviewed record-completeness declaration supporting\nabsence at screening. No chart entry by itself is not evidence of absence; insufficient or contradictory\nevidence yields UNKNOWN. Preserve active, resolved and suspected clinical states separately from\nevidence verification.\n",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "source_page": 3,
+        "source_anchor": {
+          "start": 97,
+          "end": 563
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "PROPOSED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": null,
+        "approved_at": null
+      },
+      {
+        "criterion_id": "PX-EXC-02",
+        "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+        "type": "EXCLUSION",
+        "clinical_subject": "medication",
+        "operator": "NO_RESTRICTED_USE",
+        "threshold": "SYN-CLASS-R",
+        "unit": null,
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": -30,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": false,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Explicitly reviewed no-use reconciliation for SYN-CLASS-R covering the 30-day window",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "7. PX-EXC-02 - Restricted use before screening\nThe patient must have no documented administration or reported use of SYN-CLASS-R during the 30\npreceding calendar days: [2026-10-01 00:00, 2026-10-31 00:00) in Europe/Athens. The start is included;\nthe end is excluded. Verified use overlapping this window fails. Passing requires explicitly reviewed no-use\nreconciliation covering the entire window. An order or dispense alone, missing dates, contradictory sources\nor an uncertain endpoint that could change overlap yields UNKNOWN. Do not infer stop dates or equate\nprescription or supply with ingestion.\n",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "source_page": 3,
+        "source_anchor": {
+          "start": 563,
+          "end": 1166
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "PROPOSED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": null,
+        "approved_at": null
+      },
+      {
+        "criterion_id": "PX-INC-01",
+        "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+        "type": "INCLUSION",
+        "clinical_subject": "age",
+        "operator": "AGE_RANGE_INCLUSIVE",
+        "threshold": [
+          40.0,
+          70.0
+        ],
+        "unit": "years",
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": 0,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": true,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Sourced birth date establishing age at screening",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "3. PX-INC-01 - Age at screening\nThe patient must be 40 to 70 years old, inclusive, on 2026-10-31. Calculate age from a sourced birth date\nusing the site-local screening date. If birth-date precision cannot establish the age conclusively, return\nUNKNOWN. A confirmed age outside this inclusive range fails this criterion.\n",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "source_page": 2,
+        "source_anchor": {
+          "start": 97,
+          "end": 418
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "PROPOSED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": null,
+        "approved_at": null
+      },
+      {
+        "criterion_id": "PX-INC-02",
+        "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+        "type": "INCLUSION",
+        "clinical_subject": "diagnosis",
+        "operator": "CODE_CONFIRMED",
+        "threshold": "SYN-CONDITION-A",
+        "unit": null,
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": 0,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": true,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Verified condition code or adjudicated note for SYN-CONDITION-A",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "4. PX-INC-02 - Confirmed index diagnosis\nThe patient must have a confirmed diagnosis of SYN-CONDITION-A at screening. Accept a verified\ncondition code or a synthetic adjudicated note establishing that diagnosis. An ambiguous or unconfirmed\nlabel does not establish the diagnosis and yields UNKNOWN. This criterion defines no disease-severity,\nsymptom-duration or genotype restriction.\n",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "source_page": 2,
+        "source_anchor": {
+          "start": 418,
+          "end": 803
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "PROPOSED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": null,
+        "approved_at": null
+      },
+      {
+        "criterion_id": "PX-INC-03",
+        "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+        "type": "INCLUSION",
+        "clinical_subject": "egfr",
+        "operator": "LAB_GTE",
+        "threshold": 60.0,
+        "unit": "mL/min/1.73m\u00b2",
+        "window": {
+          "anchor": "SCREENING_DATE",
+          "start_offset_days": -30,
+          "end_offset_days": 0,
+          "start_inclusive": true,
+          "end_inclusive": true,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "LOCAL_DATE"
+        },
+        "evidence_requirement": "Latest timely eGFR lab specimen in window",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "5. PX-INC-03 - Latest timely eGFR\nThe latest relevant eGFR must be at least 60 mL/min/1.73m\u00b2. Its specimen local calendar date must be in\n[2026-10-01, 2026-10-31], including both endpoints. Use specimen date, not issued, recorded or ingestion\ntime. Missing or stale evidence yields UNKNOWN; unsupported units yield UNKNOWN unless a reviewed\nconversion exists. A valid timely value below 60 fails. This threshold is fictional and is not a clinical\nrecommendation.\n",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "source_page": 2,
+        "source_anchor": {
+          "start": 803,
+          "end": 1266
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-ELIGIBILITY-ALL",
+        "workflow_status": "PROPOSED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": null,
+        "approved_at": null
+      },
+      {
+        "criterion_id": "PX-MON-01",
+        "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+        "type": "MONITORING",
+        "clinical_subject": "medication",
+        "operator": "EVENT_RESTRICTED_USE",
+        "threshold": "SYN-CLASS-R",
+        "unit": null,
+        "window": {
+          "anchor": "PARTICIPATION",
+          "start_offset_days": null,
+          "end_offset_days": null,
+          "start_inclusive": true,
+          "end_inclusive": false,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "INSTANT"
+        },
+        "evidence_requirement": "Confirmed administration or documented use of SYN-CLASS-R during participation",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "8. PX-MON-01 - Confirmed restricted use\nDuring human-recorded participation, a new confirmed administration or documented use of\nSYN-CLASS-R requires investigator review. Reliable dated administration or reported-use evidence\ntriggers a CONFIRMED_PROTOCOL_CONFLICT finding linked to a review case. Evaluate\nclinical-effective time; preserve the earlier screening assessment. This is a rule conflict, not a determination\nof harm. It authorizes no automatic treatment change or withdrawal.\n",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "source_page": 4,
+        "source_anchor": {
+          "start": 110,
+          "end": 598
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+        "workflow_status": "PROPOSED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": null,
+        "approved_at": null
+      },
+      {
+        "criterion_id": "PX-MON-02",
+        "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+        "type": "MONITORING",
+        "clinical_subject": "medication",
+        "operator": "EVENT_ORDER_ONLY",
+        "threshold": "SYN-CLASS-R",
+        "unit": null,
+        "window": {
+          "anchor": "PARTICIPATION",
+          "start_offset_days": null,
+          "end_offset_days": null,
+          "start_inclusive": true,
+          "end_inclusive": false,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "INSTANT"
+        },
+        "evidence_requirement": "New order or dispense of SYN-CLASS-R without confirmed use during participation",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "9. PX-MON-02 - Order or dispense without use\nDuring human-recorded participation, a new order or dispense of SYN-CLASS-R without confirmed use\nrequires medication reconciliation. Open a POTENTIAL_SAFETY_REVIEW case; actual exposure remains\nunknown. Retrieve administration and reported-use evidence where available. An order or dispense is not\nproof of ingestion and must not be reported as a confirmed-use conflict. A clinician supplies or reviews any\nreconciliation evidence.\n",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "source_page": 4,
+        "source_anchor": {
+          "start": 598,
+          "end": 1076
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+        "workflow_status": "PROPOSED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": null,
+        "approved_at": null
+      },
+      {
+        "criterion_id": "PX-MON-03",
+        "protocol_version_id": "PV-4a126e0ae56241db8d22fe0859e1e4e2",
+        "type": "MONITORING",
+        "clinical_subject": "egfr",
+        "operator": "EVENT_LAB_LT",
+        "threshold": 60.0,
+        "unit": "mL/min/1.73m\u00b2",
+        "window": {
+          "anchor": "PARTICIPATION",
+          "start_offset_days": null,
+          "end_offset_days": null,
+          "start_inclusive": true,
+          "end_inclusive": false,
+          "time_zone": "Europe/Athens",
+          "anchor_granularity": "INSTANT"
+        },
+        "evidence_requirement": "Synthetic eGFR lab result below 60 mL/min/1.73m\u00b2 during participation",
+        "missing_data_policy": "UNKNOWN_UNLESS_RECONCILED",
+        "source_quote": "10. PX-MON-03 - New low eGFR\nDuring human-recorded participation, a new synthetic eGFR result below 60 mL/min/1.73m\u00b2 requires clinical\nreview. Use the clinical specimen/effective time, valid units and provenance. The result opens a\nrule-specific monitoring finding for human assessment; it is not a diagnosis, toxicity determination or\nautonomous withdrawal instruction. This rule adds no scheduled testing requirement or new screening\ncriterion.\n",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "source_page": 4,
+        "source_anchor": {
+          "start": 1076,
+          "end": 1523
+        },
+        "applicable_site_ids": [
+          "SITE-SYN-01"
+        ],
+        "terminology_map_version": "px104-terminology-v1",
+        "logical_group_id": "PX104-MONITORING-INDEPENDENT",
+        "workflow_status": "PROPOSED",
+        "ambiguity": null,
+        "revision": 1,
+        "approved_by": null,
+        "approved_at": null
+      }
+    ],
+    "coverage": [
+      {
+        "section_id": "PX-INFO-CALENDAR",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 1,
+        "span_start": 567,
+        "span_end": 1146,
+        "status": "INFORMATIONAL",
+        "criterion_ids": [],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-INFO-EVIDENCE",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 5,
+        "span_start": 123,
+        "span_end": 717,
+        "status": "INFORMATIONAL",
+        "criterion_ids": [],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-INFO-IDENTITY",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 1,
+        "span_start": 106,
+        "span_end": 567,
+        "status": "INFORMATIONAL",
+        "criterion_ids": [],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-INFO-REVIEW",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 5,
+        "span_start": 717,
+        "span_end": 1491,
+        "status": "INFORMATIONAL",
+        "criterion_ids": [],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-SECTION-EXC-01",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 3,
+        "span_start": 97,
+        "span_end": 563,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-EXC-01"
+        ],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-SECTION-EXC-02",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 3,
+        "span_start": 563,
+        "span_end": 1166,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-EXC-02"
+        ],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-SECTION-INC-01",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 2,
+        "span_start": 97,
+        "span_end": 418,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-INC-01"
+        ],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-SECTION-INC-02",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 2,
+        "span_start": 418,
+        "span_end": 803,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-INC-02"
+        ],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-SECTION-INC-03",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 2,
+        "span_start": 803,
+        "span_end": 1266,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-INC-03"
+        ],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-SECTION-MON-01",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 4,
+        "span_start": 110,
+        "span_end": 598,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-MON-01"
+        ],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-SECTION-MON-02",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 4,
+        "span_start": 598,
+        "span_end": 1076,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-MON-02"
+        ],
+        "review_note": null
+      },
+      {
+        "section_id": "PX-SECTION-MON-03",
+        "source_id": "SRC-PDF-0e36397e9d6c43d796d182031650e916",
+        "page": 4,
+        "span_start": 1076,
+        "span_end": 1523,
+        "status": "MAPPED",
+        "criterion_ids": [
+          "PX-MON-03"
+        ],
+        "review_note": null
+      }
+    ],
+    "coverage_signed_by": null,
+    "coverage_signed_at": null,
+    "approved_set_hash": null,
+    "approved_at": null,
+    "extraction_job_id": "JOB-546fb7fee0c84f89be917a443a9950f8",
+    "blocking_count": 0
+  },
+  "automatic_event": {
+    "receipt": {
+      "event_id": "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+      "patient_id": "P-042",
+      "trial_id": "TR-PX104",
+      "ingested_at": "2026-11-15T08:31:55.960169Z",
+      "deduplicated": false,
+      "job": {
+        "job_id": "JOB-e603551a8bcd45908a9d7bf5e75c5aac",
+        "kind": "INGEST_EVENT",
+        "status": "QUEUED",
+        "resource_id": "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+        "correlation_id": "ebf1d63c-4de8-479a-879c-adebebd3dfe5",
+        "poll_url": "/api/v1/jobs/JOB-e603551a8bcd45908a9d7bf5e75c5aac",
+        "created_at": "2026-11-15T08:31:55.960169Z"
+      }
+    },
+    "core_job": {
+      "job_id": "JOB-e603551a8bcd45908a9d7bf5e75c5aac",
+      "kind": "INGEST_EVENT",
+      "status": "SUCCEEDED",
+      "resource_id": "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+      "correlation_id": "ebf1d63c-4de8-479a-879c-adebebd3dfe5",
+      "poll_url": "/api/v1/jobs/JOB-e603551a8bcd45908a9d7bf5e75c5aac",
+      "created_at": "2026-11-15T08:31:55.960169Z",
+      "attempts": 1,
+      "max_attempts": 3,
+      "started_at": "2026-11-15T08:31:56.220362Z",
+      "finished_at": "2026-11-15T08:31:56.321213Z",
+      "progress_percent": 100.0,
+      "result": {
+        "relevance": "RELEVANT",
+        "assessment_ids": [
+          "ASM-fcd9c79a3bae4db983fb4605bb0b3e68"
+        ],
+        "finding_ids": [
+          "FIND-77dcae1768ee4084ac069157310b3892"
+        ],
+        "case_ids": [
+          "CASE-becdb38ec477449290178a8ac6a41844"
+        ]
+      },
+      "error": null
+    },
+    "case": {
+      "case_id": "CASE-becdb38ec477449290178a8ac6a41844",
+      "trial_id": "TR-PX104",
+      "patient_id": "P-042",
+      "protocol_version_id": "PV-PX104-1.0",
+      "criterion_id": "PX-MON-01",
+      "issue_key": "medication:SYN-CLASS-R",
+      "status": "REOPENED",
+      "priority": "HIGH",
+      "assigned_actor_id": "ACT-INV-01",
+      "finding_ids": [
+        "FIND-57adffb1630b4acebc4841be13c3832e",
+        "FIND-77dcae1768ee4084ac069157310b3892"
+      ],
+      "current_summary": "Event EVT-1f00bdf6fe784bc9870304c8a17217f6 was classified as RELEVANT for criterion PX-MON-01 due to confirmed protocol restriction. Existing case CASE-becdb38ec477449290178a8ac6a41844 is in status REOPENED and assigned to ACT-INV-01 with linked findings FIND-57adffb1630b4acebc4841be13c3832e and FIND-77dcae1768ee4084ac069157310b3892. Prior evaluation reflects a FAIL assessment before and after the trigger event. Drafted for human investigator review.",
+      "summary_origin": "AI_DRAFT",
+      "agent_execution_id": "EXEC-1a72102418f748c3ba4d0c77637dfce4",
+      "revision": 9,
+      "opened_at": "2026-11-15T08:24:12.545964Z",
+      "updated_at": "2026-11-15T08:32:10.259351Z",
+      "decisions": [
+        {
+          "decision_id": "DEC-758c62bbbc504d4ca54b0324bc8af919",
+          "actor_id": "ACT-INV-01",
+          "actor_role": "INVESTIGATOR",
+          "from_status": "OPEN",
+          "to_status": "ACKNOWLEDGED",
+          "disposition": "REVIEWED",
+          "rationale": "Independent synthetic QA",
+          "cited_evidence_ids": [
+            "EVT-a6e1b312226f437cadf6740fd2bc715e"
+          ],
+          "decided_at": "2026-11-15T08:24:12.649059Z"
+        },
+        {
+          "decision_id": "DEC-3b93b200d4b14d6092edeacff4a6660e",
+          "actor_id": "ACT-INV-01",
+          "actor_role": "INVESTIGATOR",
+          "from_status": "ACKNOWLEDGED",
+          "to_status": "INVESTIGATING",
+          "disposition": "REVIEWED",
+          "rationale": "Independent synthetic QA",
+          "cited_evidence_ids": [
+            "EVT-a6e1b312226f437cadf6740fd2bc715e"
+          ],
+          "decided_at": "2026-11-15T08:24:12.701804Z"
+        },
+        {
+          "decision_id": "DEC-c9c97800f269425fbbaa80cf28e6673e",
+          "actor_id": "ACT-INV-01",
+          "actor_role": "INVESTIGATOR",
+          "from_status": "INVESTIGATING",
+          "to_status": "RESOLVED",
+          "disposition": "REVIEWED",
+          "rationale": "Independent synthetic QA",
+          "cited_evidence_ids": [
+            "EVT-a6e1b312226f437cadf6740fd2bc715e"
+          ],
+          "decided_at": "2026-11-15T08:24:12.715031Z"
+        },
+        {
+          "decision_id": "DEC-c148d1b63c9d4abb8dbb84ec59296f3f",
+          "actor_id": "ACT-INV-01",
+          "actor_role": "INVESTIGATOR",
+          "from_status": "RESOLVED",
+          "to_status": "CLOSED",
+          "disposition": "REVIEWED",
+          "rationale": "Independent synthetic QA",
+          "cited_evidence_ids": [
+            "EVT-a6e1b312226f437cadf6740fd2bc715e"
+          ],
+          "decided_at": "2026-11-15T08:24:12.726804Z"
+        }
+      ]
+    },
+    "execution": {
+      "execution_id": "EXEC-1a72102418f748c3ba4d0c77637dfce4",
+      "role": "MONITORING_WORKFLOW",
+      "status": "SUCCEEDED",
+      "trial_id": "TR-PX104",
+      "patient_id": "P-042",
+      "protocol_version_id": "PV-PX104-1.0",
+      "criterion_ids": [
+        "PX-MON-01"
+      ],
+      "event_id": "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+      "correlation_id": "ebf1d63c-4de8-479a-879c-adebebd3dfe5",
+      "evidence_refs": [
+        {
+          "evidence_id": "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+          "source_id": "SRC-JUDGE-AUTO-1a696f3b6b754bd68eae8b513f393bec",
+          "source_version": 1,
+          "evidence_type": "ADMINISTRATION",
+          "effective_at": "2026-11-20T07:30:00Z",
+          "recorded_at": "2026-11-21T09:00:00Z",
+          "page": null,
+          "span_start": null,
+          "span_end": null
+        },
+        {
+          "evidence_id": "SPAN-0cdc17b617a849249802758d35a42c90",
+          "source_id": "SRC-PROTOCOL-PX104-V1",
+          "source_version": 1,
+          "evidence_type": "PDF",
+          "effective_at": null,
+          "recorded_at": "2026-10-30T10:00:00Z",
+          "page": 4,
+          "span_start": 150,
+          "span_end": 598
+        }
+      ],
+      "summary": "Event EVT-1f00bdf6fe784bc9870304c8a17217f6 was classified as RELEVANT for criterion PX-MON-01 due to confirmed protocol restriction. Existing case CASE-becdb38ec477449290178a8ac6a41844 is in status REOPENED and assigned to ACT-INV-01 with linked findings FIND-57adffb1630b4acebc4841be13c3832e and FIND-77dcae1768ee4084ac069157310b3892. Prior evaluation reflects a FAIL assessment before and after the trigger event. Drafted for human investigator review.",
+      "unknown_reasons": [],
+      "verification_questions": [
+        "Please verify the status and clinical context of the reopened monitoring case CASE-becdb38ec477449290178a8ac6a41844 regarding restricted medication use during participation."
+      ],
+      "trace": [
+        {
+          "tool_name": "get_case_status",
+          "input_reference_ids": [
+            "CASE-becdb38ec477449290178a8ac6a41844",
+            "EXEC-1a72102418f748c3ba4d0c77637dfce4",
+            "P-042",
+            "PV-PX104-1.0",
+            "TR-PX104",
+            "ebf1d63c-4de8-479a-879c-adebebd3dfe5"
+          ],
+          "output_reference_ids": [
+            "FIND-57adffb1630b4acebc4841be13c3832e",
+            "FIND-77dcae1768ee4084ac069157310b3892"
+          ],
+          "result_code": "OK",
+          "elapsed_ms": 0,
+          "error_code": null
+        },
+        {
+          "tool_name": "classify_event_relevance",
+          "input_reference_ids": [
+            "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+            "EXEC-1a72102418f748c3ba4d0c77637dfce4",
+            "P-042",
+            "PV-PX104-1.0",
+            "TR-PX104",
+            "ebf1d63c-4de8-479a-879c-adebebd3dfe5"
+          ],
+          "output_reference_ids": [
+            "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+            "PX-MON-01",
+            "SRC-JUDGE-AUTO-1a696f3b6b754bd68eae8b513f393bec"
+          ],
+          "result_code": "OK",
+          "elapsed_ms": 0,
+          "error_code": null
+        },
+        {
+          "tool_name": "get_prior_evaluation",
+          "input_reference_ids": [
+            "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+            "EXEC-1a72102418f748c3ba4d0c77637dfce4",
+            "P-042",
+            "PV-PX104-1.0",
+            "PX-MON-01",
+            "TR-PX104",
+            "ebf1d63c-4de8-479a-879c-adebebd3dfe5"
+          ],
+          "output_reference_ids": [
+            "ASM-de4a11ebea2f4ace85fe1f49206a15e5",
+            "ASM-fcd9c79a3bae4db983fb4605bb0b3e68",
+            "EVT-1f00bdf6fe784bc9870304c8a17217f6",
+            "PX-MON-01",
+            "SRC-JUDGE-AUTO-1a696f3b6b754bd68eae8b513f393bec"
+          ],
+          "result_code": "OK",
+          "elapsed_ms": 15,
+          "error_code": null
+        },
+        {
+          "tool_name": "retrieve_patient_evidence",
+          "input_reference_ids": [
+            "EXEC-1a72102418f748c3ba4d0c77637dfce4",
+            "P-042",
+            "PV-PX104-1.0",
+            "PX-MON-01",
+            "SNAP-1759a0d55b74459c88b3507e95f2578d",
+            "TR-PX104",
+            "ebf1d63c-4de8-479a-879c-adebebd3dfe5"
+          ],
+          "output_reference_ids": [
+            "SPAN-0cdc17b617a849249802758d35a42c90",
+            "SRC-PROTOCOL-PX104-V1"
+          ],
+          "result_code": "OK",
+          "elapsed_ms": 31,
+          "error_code": null
+        }
+      ],
+      "error_code": null,
+      "model_id": "gemini-3.8-flash",
+      "created_at": "2026-11-15T08:31:56.335281Z",
+      "finished_at": "2026-11-15T08:32:10.259351Z"
+    }
+  }
+}

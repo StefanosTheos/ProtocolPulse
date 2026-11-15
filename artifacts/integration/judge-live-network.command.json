@@ -1,0 +1,8 @@
+{
+  "command": [
+    "backend/var/venv312/Scripts/python.exe",
+    "tools/integration/judge_live.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 39.017
+}
