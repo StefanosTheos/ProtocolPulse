@@ -6,7 +6,7 @@ import { EmptyState, ErrorPanel } from '@/components/ErrorBoundary';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
 import { Pill } from '@/components/StatusPill';
 import { useApiQuery } from '@/lib/api/hooks';
-import { displayTitle } from '@/lib/api/labels';
+import { displayTitle, formatDay } from '@/lib/api/labels';
 import { getApi } from '@/lib/api/runtime';
 
 export default function TrialListPage() {
@@ -35,7 +35,7 @@ export default function TrialListPage() {
                     <Link className="font-medium text-brand underline-offset-2 hover:underline" href={`/trials/${encodeURIComponent(t.trial_id)}`}>{displayTitle(t.title)}</Link>
                   </td>
                   <td>{t.site_timezone}</td>
-                  <td className="whitespace-nowrap">{t.planned_start_date} → {t.planned_end_date}</td>
+                  <td className="whitespace-nowrap">{formatDay(t.planned_start_date)} – {formatDay(t.planned_end_date)}</td>
                   <td>{t.active_protocol_version_id ? <Pill tone="pass">Approved</Pill> : <Pill tone="unknown">Not approved</Pill>}</td>
                 </tr>
               ))}

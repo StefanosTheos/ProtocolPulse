@@ -29,9 +29,8 @@ export function useTrial(trialId: string) {
   return hasShared ? shared.state : fallback;
 }
 
-export function TrialHeader({ trialId }: { trialId: string }) {
+export function TrialHeader({ trialId, trial }: { trialId: string; trial: QueryState<TrialDetail> }) {
   const { actor } = useActor();
-  const trial = useTrial(trialId);
   const pathname = usePathname() ?? '';
   const base = `/trials/${encodeURIComponent(trialId)}`;
 
@@ -66,8 +65,8 @@ export function TrialHeader({ trialId }: { trialId: string }) {
         </div>
         {trial.data && (protocolApproved ? <Pill tone="pass">Protocol approved</Pill> : <Pill tone="unknown">No approved protocol</Pill>)}
       </div>
-      <nav aria-label="Study workflow" className="overflow-x-auto border-b border-line">
-        <ul className="flex min-w-max gap-1">
+      <nav aria-label="Study workflow" className="border-b border-line">
+        <ul className="flex flex-wrap gap-x-1">
           {steps.map((s, i) => {
             const active = s.key === current.key;
             const done = s.key === 'protocol' && protocolApproved;

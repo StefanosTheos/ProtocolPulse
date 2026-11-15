@@ -30,12 +30,13 @@ export function createEndpoints(client: ApiClient) {
       input: { file: File; versionLabel: string },
       idempotencyKey: string,
       onUploadProgress?: (fraction: number) => void,
+      signal?: AbortSignal,
     ): Promise<ApiResult<ProtocolDetail>> => {
       const form = new FormData();
       form.append('file', input.file);
       form.append('version_label', input.versionLabel);
       form.append('source_declared_synthetic', 'true');
-      return client.request('POST', `/trials/${enc(trialId)}/protocols`, { body: form, idempotencyKey, onUploadProgress });
+      return client.request('POST', `/trials/${enc(trialId)}/protocols`, { body: form, idempotencyKey, onUploadProgress, signal });
     },
     getProtocol: (trialId: string, versionId: string): Promise<ApiResult<ProtocolDetail>> =>
       client.request('GET', `/trials/${enc(trialId)}/protocols/${enc(versionId)}`),

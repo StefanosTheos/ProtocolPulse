@@ -24,7 +24,7 @@ export function EventTimeline({ trialId, findings, timeZone }: { trialId: string
                 Occurred {formatInstant(ev?.effective_at ?? null, timeZone)} · Recorded {formatInstant(ev?.recorded_at ?? null, timeZone)} · Found {formatInstant(f.created_at, timeZone)} · {f.evidence_refs.length} supporting record{f.evidence_refs.length === 1 ? '' : 's'}
               </p>
             </div>
-            <Link className="btn-primary" aria-label={`Open case ${f.case_id}`} href={`${base}/cases?case=${encodeURIComponent(f.case_id)}`}>Open case</Link>
+            <Link className="btn-primary" aria-label={`Open case for patient ${f.patient_id}`} href={`${base}/cases?case=${encodeURIComponent(f.case_id)}`}>Open case</Link>
           </li>
         );
       })}

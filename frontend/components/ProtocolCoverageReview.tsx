@@ -7,9 +7,13 @@ import { ErrorPanel } from './ErrorBoundary';
 import { ProtocolCitation } from './ProtocolCitation';
 import { Pill, type Tone } from './StatusPill';
 import { REVIEWABLE_STATES, approvalGate, formatThreshold, formatWindow, parseThresholdInput } from '@/lib/api/gates';
-import { getApi } from '@/lib/api/runtime';
+import { actorById, getApi } from '@/lib/api/runtime';
 import { formatInstant } from '@/lib/api/time';
 import type { CoverageItem, Criterion, CriterionDraftInput, ProtocolDetail } from '@/lib/api/types';
+import { notifyTrialChanged } from '@/lib/api/events';
+import { COVERAGE_LABEL, MISSING_DATA_TEXT, actorRoleLabel, criterionName, operatorText, plainText, ruleLabel, sentenceCase } from '@/lib/api/labels';
+
+const roleOf = (id: string) => actorById(id)?.role;
 
 const WORKFLOW_TONE: Record<Criterion['workflow_status'], Tone> = { PROPOSED: 'unknown', NEEDS_CLARIFICATION: 'fail', APPROVED: 'pass', REJECTED: 'fail' };
 const COVERAGE_TONE: Record<CoverageItem['status'], Tone> = { MAPPED: 'info', INFORMATIONAL: 'neutral', BLOCKING: 'fail' };
@@ -41,8 +45,10 @@ function toDraft(c: Criterion, edit: CriterionEdit | undefined): CriterionDraftI
   };
 }
 
-export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
+export function ProtocolCoverageReview({ trialId, protocol, onChanged, initialNotice = null, onNotice }: {
   trialId: string; protocol: ProtocolDetail; onChanged: (next: ProtocolDetail) => void;
+  // The page remounts this panel when the protocol revision changes, so it keeps the last message.
+  initialNotice?: string | null; onNotice?: (message: string) => void;
 }) {
   const { actor } = useActor();
   const [criterionEdits, setCriterionEdits] = useState<Record<string, CriterionEdit>>({});
@@ -56,7 +62,8 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
   const [approveKey, setApproveKey] = useState('');
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<unknown>(null);
-  const [notice, setNotice] = useState<string | null>(null);
+  const [notice, setNoticeState] = useState<string | null>(initialNotice);
+  const setNotice = (message: string | null) => { setNoticeState(message); if (message) onNotice?.(message); };
 
   const hasEdits = Object.keys(criterionEdits).length + Object.keys(coverageEdits).length > 0;
   const reviewable = REVIEWABLE_STATES.includes(protocol.state);
@@ -117,7 +124,8 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
       const ids = protocol.criteria.map((c) => c.criterion_id);
       const res = await getApi().approveProtocol(trialId, protocol.protocol_version_id, { criterion_ids: ids, coverage_attestation: true, activate: true, decision_reason: decisionReason.trim() }, protocol.revision, approveKey);
       setApproveOpen(false);
-      setNotice(`Approved by ${res.data.approved_by} at ${formatInstant(res.data.approved_at)}. ${res.data.signed_criterion_ids.length} rules signed; protocol is ${res.data.state}.`);
+      setNotice(`✓ Protocol approved by the investigator on ${formatInstant(res.data.approved_at)}. ${res.data.signed_criterion_ids.length} rules are now in use, and patient screening is available.`);
+      notifyTrialChanged();
       const refreshed = await getApi().getProtocol(trialId, protocol.protocol_version_id);
       onChanged(refreshed.data);
     } catch (e) {
@@ -150,7 +158,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
         <div className="overflow-x-auto">
           <table className="data-table">
             <thead>
-              <tr><th>Rule</th><th>Subject / operator</th><th>Threshold</th><th>Window</th><th>Evidence requirement</th><th>Status</th><th>Source</th></tr>
+              <tr><th>Rule</th><th>What is checked</th><th>Threshold</th><th>Time window</th><th>Evidence needed</th><th>Status</th><th>Source</th></tr>
             </thead>
             <tbody>
               {protocol.criteria.map((c) => {
@@ -159,10 +167,10 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
                   <Fragment key={c.criterion_id}>
                     <tr>
                       <td className="whitespace-nowrap">
-                        <div className="mono font-semibold">{c.criterion_id}</div>
-                        <div className="text-2xs text-ink-faint">{c.type}</div>
+                        <div className="font-semibold">{criterionName(c, c.criterion_id)}</div>
+                        <div className="text-2xs text-ink-faint">{sentenceCase(ruleLabel(c.criterion_id))} · <span className="mono">{c.criterion_id}</span></div>
                       </td>
-                      <td><div>{c.clinical_subject}</div><div className="mono text-ink-faint">{c.operator}</div></td>
+                      <td><div>{operatorText(c.operator)}</div><div className="text-xs text-ink-faint">{plainText(c.clinical_subject)}</div></td>
                       <td className="whitespace-nowrap">
                         {editing ? (
                           <div className="flex w-40 flex-col gap-1">
@@ -171,7 +179,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
                             <label className="sr-only" htmlFor={`unit-${c.criterion_id}`}>Unit for {c.criterion_id}</label>
                             <input id={`unit-${c.criterion_id}`} className="input" placeholder="unit" value={edit?.unit ?? c.unit ?? ''} onChange={(e) => editCriterion(c, { unit: e.target.value })} />
                           </div>
-                        ) : formatThreshold(c)}
+                        ) : plainText(formatThreshold(c))}
                       </td>
                       <td className="text-xs">{formatWindow(c.window)}</td>
                       <td className="min-w-[14rem] text-xs">
@@ -182,8 +190,8 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
                           </>
                         ) : (
                           <>
-                            {c.evidence_requirement}
-                            <div className="mt-1 text-ink-faint">Missing data: {c.missing_data_policy}</div>
+                            {plainText(c.evidence_requirement)}
+                            <div className="mt-1 text-ink-faint">{MISSING_DATA_TEXT[c.missing_data_policy] ?? `Missing data: ${sentenceCase(c.missing_data_policy)}`}</div>
                           </>
                         )}
                       </td>
@@ -192,26 +200,26 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
                           <div className="flex w-44 flex-col gap-1">
                             <label className="sr-only" htmlFor={`wf-${c.criterion_id}`}>Review status for {c.criterion_id}</label>
                             <select id={`wf-${c.criterion_id}`} className="input" value={edit?.workflow_status ?? (c.workflow_status === 'NEEDS_CLARIFICATION' ? 'NEEDS_CLARIFICATION' : 'PROPOSED')} onChange={(e) => editCriterion(c, { workflow_status: e.target.value as CriterionEdit['workflow_status'] })}>
-                              <option value="PROPOSED">PROPOSED</option>
-                              <option value="NEEDS_CLARIFICATION">NEEDS_CLARIFICATION</option>
+                              <option value="PROPOSED">Proposed</option>
+                              <option value="NEEDS_CLARIFICATION">Needs clarification</option>
                             </select>
                             <label className="sr-only" htmlFor={`amb-${c.criterion_id}`}>Ambiguity note for {c.criterion_id}</label>
                             <input id={`amb-${c.criterion_id}`} className="input" placeholder="ambiguity note" value={edit?.ambiguity ?? c.ambiguity ?? ''} onChange={(e) => editCriterion(c, { ambiguity: e.target.value })} />
                           </div>
                         ) : (
                           <div className="space-y-1">
-                            <Pill tone={WORKFLOW_TONE[c.workflow_status]}>{c.workflow_status.replace('_', ' ')}</Pill>
-                            {c.approved_by && <div className="text-2xs text-ink-muted">by <span className="mono">{c.approved_by}</span><br />{formatInstant(c.approved_at)}</div>}
+                            <Pill tone={WORKFLOW_TONE[c.workflow_status]}>{sentenceCase(c.workflow_status)}</Pill>
+                            {c.approved_by && <div className="text-2xs text-ink-muted">by {actorRoleLabel(c.approved_by, roleOf)}<br />{formatInstant(c.approved_at)}</div>}
                             {c.ambiguity && <div className="text-2xs text-unknown-fg">{c.ambiguity}</div>}
                           </div>
                         )}
                       </td>
-                      <td className="whitespace-nowrap text-xs">p. {c.source_page}<div className="mono text-ink-faint">[{c.source_anchor.start}, {c.source_anchor.end})</div></td>
+                      <td className="whitespace-nowrap text-xs">Page {c.source_page}</td>
                     </tr>
                     <tr className="hover:bg-transparent">
                       <td colSpan={7} className="bg-canvas/50">
                         <details>
-                          <summary className="cursor-pointer text-xs text-brand">Source quote for {c.criterion_id}</summary>
+                          <summary className="cursor-pointer text-xs text-brand">Source text for {criterionName(c, c.criterion_id).toLowerCase()} ({ruleLabel(c.criterion_id)})</summary>
                           <div className="mt-2">
                             <ProtocolCitation trialId={trialId} sourceId={c.source_id} page={c.source_page} start={c.source_anchor.start} end={c.source_anchor.end} quote={c.source_quote} />
                           </div>
@@ -236,7 +244,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
         </div>
         <div className="overflow-x-auto">
           <table className="data-table">
-            <thead><tr><th>Section</th><th>Coverage</th><th>Mapped rules</th><th>Page / span</th><th>Review note</th></tr></thead>
+            <thead><tr><th>Section</th><th>Coverage</th><th>Rules from this section</th><th>Page</th><th>Review note</th></tr></thead>
             <tbody>
               {protocol.coverage.map((item) => {
                 const edit = coverageEdits[item.section_id];
@@ -248,15 +256,15 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
                         <>
                           <label className="sr-only" htmlFor={`cov-${item.section_id}`}>Coverage status for {item.section_id}</label>
                           <select id={`cov-${item.section_id}`} className="input w-40" value={edit?.status ?? item.status} onChange={(e) => editCoverage(item, { status: e.target.value as CoverageItem['status'] })}>
-                            <option value="MAPPED">MAPPED</option>
-                            <option value="INFORMATIONAL">INFORMATIONAL</option>
-                            <option value="BLOCKING">BLOCKING</option>
+                            <option value="MAPPED">Covered by a rule</option>
+                            <option value="INFORMATIONAL">Background only</option>
+                            <option value="BLOCKING">Blocking</option>
                           </select>
                         </>
-                      ) : <Pill tone={COVERAGE_TONE[item.status]}>{item.status}</Pill>}
+                      ) : <Pill tone={COVERAGE_TONE[item.status]}>{COVERAGE_LABEL[item.status]}</Pill>}
                     </td>
-                    <td className="mono">{item.criterion_ids.length ? item.criterion_ids.join(', ') : <span className="text-ink-faint">none</span>}</td>
-                    <td className="whitespace-nowrap text-xs">p. {item.page} <span className="mono text-ink-faint">[{item.span_start}, {item.span_end})</span></td>
+                    <td>{item.criterion_ids.length ? item.criterion_ids.map((id) => sentenceCase(ruleLabel(id))).join(', ') : <span className="text-ink-faint">none</span>}</td>
+                    <td className="whitespace-nowrap text-xs">Page {item.page}</td>
                     <td className="text-xs">
                       {editing ? (
                         <>
@@ -273,7 +281,7 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
         </div>
         <div className="border-t border-line px-4 py-3 text-xs text-ink-muted">
           Coverage signed: {protocol.coverage_signed_by
-            ? <><span className="mono">{protocol.coverage_signed_by}</span> at {formatInstant(protocol.coverage_signed_at)}</>
+            ? <>by {actorRoleLabel(protocol.coverage_signed_by, roleOf)} on {formatInstant(protocol.coverage_signed_at)}</>
             : <strong className="text-unknown-fg">not signed</strong>}
         </div>
       </section>
@@ -304,11 +312,11 @@ export function ProtocolCoverageReview({ trialId, protocol, onChanged }: {
       </ConfirmReviewDialog>
 
       <ConfirmReviewDialog
-        open={approveOpen} title={`Approve ${protocol.criteria.length} rules as ${actor.actor_id}`} confirmLabel="Approve and activate" busy={busy}
+        open={approveOpen} title={`Approve ${protocol.criteria.length} protocol rules`} confirmLabel="Approve and activate" busy={busy}
         confirmDisabled={!attested || !decisionReason.trim()} onCancel={() => setApproveOpen(false)} onConfirm={approve}
       >
-        <p>You are signing, as investigator <span className="mono">{actor.actor_id}</span>, revision {protocol.revision} of <span className="mono">{protocol.protocol_version_id}</span>:</p>
-        <p className="mono rounded bg-canvas p-2">{protocol.criteria.map((c) => c.criterion_id).join(', ')}</p>
+        <p>As the investigator, you are approving protocol version {protocol.label} with these rules:</p>
+        <ul className="list-disc rounded bg-canvas py-2 pl-8 pr-2">{protocol.criteria.map((c) => <li key={c.criterion_id}>{criterionName(c, c.criterion_id)} ({ruleLabel(c.criterion_id)})</li>)}</ul>
         <label className="flex items-start gap-2">
           <input type="checkbox" className="mt-0.5" checked={attested} onChange={(e) => setAttested(e.target.checked)} />
           <span>I reviewed every rule against its cited source clause and attest that all {protocol.coverage.length} coverage sections are accounted for.</span>

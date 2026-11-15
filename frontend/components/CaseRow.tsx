@@ -22,8 +22,8 @@ export function CaseRow({ trialId, reviewCase: c, selected, onSelect }: {
       <td className="whitespace-nowrap text-xs">{formatInstant(c.updated_at)}</td>
       <td className="whitespace-nowrap">
         {onSelect
-          ? <button type="button" className="btn-secondary px-2 py-1 text-xs" aria-label={`Case ${c.case_id}`} onClick={() => onSelect(c.case_id)}>Review</button>
-          : <Link className="btn-secondary px-2 py-1 text-xs" aria-label={`Case ${c.case_id}`} href={`${base}/cases?case=${encodeURIComponent(c.case_id)}`}>Review</Link>}
+          ? <button type="button" className="btn-secondary px-2 py-1 text-xs" aria-label={`Review case for patient ${c.patient_id}`} onClick={() => onSelect(c.case_id)}>Review</button>
+          : <Link className="btn-secondary px-2 py-1 text-xs" aria-label={`Review case for patient ${c.patient_id}`} href={`${base}/cases?case=${encodeURIComponent(c.case_id)}`}>Review</Link>}
       </td>
     </tr>
   );

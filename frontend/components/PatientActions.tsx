@@ -8,6 +8,7 @@ import { SourceViewer } from './ProtocolCitation';
 import { useIdempotencyKey } from '@/lib/api/hooks';
 import { getApi } from '@/lib/api/runtime';
 import type { Patient360, PatientAssessment, ScreeningDispositionCreate } from '@/lib/api/types';
+import { notifyTrialChanged } from '@/lib/api/events';
 
 const DISPOSITIONS: { value: ScreeningDispositionCreate['disposition']; label: string }[] = [
   { value: 'INVITE_FOR_FORMAL_SCREENING', label: 'Invite for formal screening (external)' },
@@ -55,6 +56,7 @@ export function PatientActions({ trialId, patient, assessment, protocolVersionId
       setDialog(null);
       setNotice(`Recorded external participation ${res.data.from_status} → ${res.data.to_status} by ${res.data.actor_id}. This mirrors an external record; ProtocolPulse does not enroll patients.`);
       onChanged();
+      notifyTrialChanged();
     } catch (e) { setError(e); } finally { setBusy(false); }
   }
 
@@ -68,22 +70,24 @@ export function PatientActions({ trialId, patient, assessment, protocolVersionId
       setDialog(null);
       setNotice(`Screening disposition ${res.data.disposition} recorded by ${res.data.actor_id}. Enrollment remains an external, manual process.`);
       onChanged();
+      notifyTrialChanged();
     } catch (e) { setError(e); } finally { setBusy(false); }
   }
 
   async function requestInvestigation() {
-    if (!protocolVersionId) return;
+    if (!protocolVersionId || busy) return;
     setError(null);
     setNotice(null);
+    setBusy(true);
     try {
-      const res = await getApi().createAgentInvestigation({
+      await getApi().createAgentInvestigation({
         role: 'EVIDENCE_INVESTIGATOR', trial_id: trialId, protocol_version_id: protocolVersionId, patient_id: patient.patient_id,
         criterion_ids: (assessment?.criteria ?? []).filter((c) => c.status === 'UNKNOWN').map((c) => c.criterion_id), event_id: null,
         objective: 'Retrieve evidence for unresolved criteria and propose verification questions.',
       }, investigationKey.current());
       investigationKey.reset();
-      setNotice(`Investigation accepted as job ${res.data.job_id}. It is not complete until the job reports SUCCEEDED.`);
-    } catch (e) { setError(e); }
+      setNotice('Automated summary requested. It appears on this patient\'s safety case when it is ready.');
+    } catch (e) { setError(e); } finally { setBusy(false); }
   }
 
   return (
@@ -92,12 +96,15 @@ export function PatientActions({ trialId, patient, assessment, protocolVersionId
       {notice && <p role="status" className="rounded border border-info-line bg-info-bg p-2 text-xs text-info-fg">{notice}</p>}
       {error ? <ErrorPanel error={error} /> : null}
       <div className="flex flex-wrap gap-2">
-        <button type="button" className="btn-secondary" disabled={!isInvestigator || !assessment} onClick={() => open('disposition')}>Record screening disposition…</button>
+        <button type="button" className="btn-primary" disabled={!isInvestigator || !assessment || busy} onClick={() => open('disposition')}>Record screening decision…</button>
         <button type="button" className="btn-secondary" disabled={!isInvestigator || !nextParticipation} onClick={() => open('participation')}>
           {nextParticipation === 'ENDED' ? 'Record participation ended…' : 'Record external participation…'}
         </button>
-        <button type="button" className="btn-secondary" disabled={!protocolVersionId || actor.role === 'AUDITOR'} onClick={requestInvestigation}>Request agent investigation</button>
+        <button type="button" className="btn-secondary" disabled={!protocolVersionId || actor.role === 'AUDITOR' || busy} onClick={requestInvestigation}>Request automated summary</button>
       </div>
+      {!isInvestigator && <p className="text-xs text-ink-muted">Screening decisions and participation are recorded by the investigator.</p>}
+      {isInvestigator && !assessment && <p className="text-xs text-ink-muted">Open this patient from the candidate list to record a screening decision.</p>}
+      {!protocolVersionId && <p className="text-xs text-ink-muted">An automated summary needs an approved protocol.</p>}
       {!isInvestigator && <p className="text-xs text-ink-muted">Dispositions and participation records are investigator-only.</p>}
       {!assessment && <p className="text-xs text-ink-muted">Open this patient from a screening run to record a disposition against that assessment.</p>}
 

@@ -16,8 +16,8 @@ import { CANDIDATE_LABEL, CandidateStatusPill, Pill } from '@/components/StatusP
 import { TrialHeader, useTrial } from '@/components/TrialHeader';
 import { ApiError } from '@/lib/api/client';
 import { useApiQuery } from '@/lib/api/hooks';
-import { criteriaSummary, plainReason, sentenceCase } from '@/lib/api/labels';
-import { forgetRun, getLastRun } from '@/lib/api/lastRun';
+import { criteriaSummary, formatDay, plainReason, sentenceCase } from '@/lib/api/labels';
+import { forgetRun, getLastRun, getListUrl } from '@/lib/api/lastRun';
 import { factsByEvidenceId } from '@/lib/api/patient';
 import { getApi } from '@/lib/api/runtime';
 import type { Criterion, PatientAssessment } from '@/lib/api/types';
@@ -46,6 +46,8 @@ function PatientInner() {
   const [rememberedRun, setRememberedRun] = useState<string | null>(null);
   useEffect(() => { setRememberedRun(getLastRun(trialId)); }, [trialId]);
   const runId = search?.get('run') ?? rememberedRun;
+  const [listUrl, setListUrl] = useState<string | null>(null);
+  useEffect(() => { setListUrl(getListUrl(trialId, runId)); }, [trialId, runId]);
   const { actor } = useActor();
   const trial = useTrial(trialId);
   const tz = trial.data?.site_timezone;
@@ -76,7 +78,7 @@ function PatientInner() {
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        {runId ? <Link href={`${base}/selector?run=${encodeURIComponent(runId)}`} className="btn-ghost">← All candidates</Link> : <span />}
+        <Link href={listUrl ?? (runId ? `${base}/selector?run=${encodeURIComponent(runId)}` : `${base}/selector`)} className="btn-ghost">← All candidates</Link>
         {position.data && position.data.index >= 0 && statusLabel && (
           <div className="flex flex-wrap items-center gap-3">
             <span className="text-ink-muted">Patient {position.data.index + 1} of {position.data.total} · {statusLabel}</span>
@@ -100,7 +102,7 @@ function PatientInner() {
               </div>
               {assessment.data && <p className="text-base">{plainReason(assessment.data, criteriaById)}. <span className="text-ink-muted">{criteriaSummary(assessment.data.criteria)}.</span></p>}
               <p className="text-ink-muted">
-                {assessment.data?.screening_date ? `Screened for ${assessment.data.screening_date} · ` : ''}
+                {assessment.data?.screening_date ? `Screened for ${formatDay(assessment.data.screening_date)} · ` : ''}
                 {patient.data.participation_status === 'PARTICIPATING' ? 'Currently participating' : sentenceCase(patient.data.participation_status)}
               </p>
               {!assessment.data && <p className="text-ink-muted">{runId ? 'Loading screening result…' : 'Open this patient from the candidate list to see the screening result.'}</p>}

@@ -53,7 +53,7 @@ test('real protocol → screening → evidence → dated event → human case �
     evidence.extraction = { origin: 'CURATED_FIXTURE_NOT_MODEL_EXTRACTION', source: proposal.source, criteria: proposal.criteria, coverage: proposal.coverage };
 
     await actor('ACT-INV-01');
-    await page.getByText('Source quote for PX-INC-01', { exact: true }).click();
+    await page.getByText(/^Source text for age \(inclusion rule 1\)$/).click();
     await page.getByRole('button', { name: 'Show in source page', exact: true }).click();
     await expect(page.locator('mark').first()).toContainText('40 to 70');
     await page.getByRole('button', { name: 'Edit proposals', exact: true }).click();
@@ -131,7 +131,7 @@ test('real protocol → screening → evidence → dated event → human case �
     await page.getByLabel('Owner', { exact: true }).selectOption('ACT-INV-01');
     await page.getByLabel('Disposition', { exact: true }).fill('REVIEW_REQUIRED');
     await page.getByLabel('Rationale', { exact: true }).fill('Actual source administration requires investigator review under the approved fictional rule.');
-    await page.getByLabel(findings[0].evidence_refs[0].evidence_id, { exact: true }).check();
+    await page.getByLabel(new RegExp(findings[0].evidence_refs[0].evidence_id)).check();
     await page.getByRole('button', { name: 'Review and submit…', exact: true }).click();
     await page.getByRole('dialog').getByRole('button', { name: /Confirm|Submit|Record/ }).click();
     await expect.poll(async () => (await get('/cases/' + caseId)).status).toBe('ACKNOWLEDGED');

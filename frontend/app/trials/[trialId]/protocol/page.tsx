@@ -25,6 +25,7 @@ function ProtocolPageInner() {
   const trial = useTrial(trialId);
   const protocols = useApiQuery(() => getApi().listProtocols(trialId, { sort: '-created_at', limit: 50 }).then((r) => r.data), [trialId, actor.actor_id]);
   const [override, setOverride] = useState<ProtocolDetail | null>(null);
+  const [reviewNotice, setReviewNotice] = useState<string | null>(null);
   const extractJob = useJobRunner({ intervalMs: 1000, timeoutMs: 120_000 });
   const extractKey = useIdempotencyKey('extract');
   const [extractError, setExtractError] = useState<unknown>(null);
@@ -92,7 +93,7 @@ function ProtocolPageInner() {
               {items.length > 1 && (
                 <label className="flex items-center gap-2 text-xs">
                   <span className="text-ink-muted">Version</span>
-                  <select className="input w-auto py-1" value={protocol.protocol_version_id} onChange={(e) => { setOverride(null); router.replace(`${base}/protocol?version=${encodeURIComponent(e.target.value)}`); }}>
+                  <select className="input w-auto py-1" value={protocol.protocol_version_id} onChange={(e) => { setOverride(null); setReviewNotice(null); router.replace(`${base}/protocol?version=${encodeURIComponent(e.target.value)}`); }}>
                     {items.map((p) => <option key={p.protocol_version_id} value={p.protocol_version_id}>{p.label} · {sentenceCase(p.state)}</option>)}
                   </select>
                 </label>
@@ -128,7 +129,7 @@ function ProtocolPageInner() {
           )}
 
           {protocol && protocol.criteria.length > 0 && (
-            <ProtocolCoverageReview key={`${protocol.protocol_version_id}-${protocol.revision}`} trialId={trialId} protocol={protocol} onChanged={(p) => { setOverride(p); protocols.reload(); trial.reload(); }} />
+            <ProtocolCoverageReview key={`${protocol.protocol_version_id}-${protocol.revision}`} trialId={trialId} protocol={protocol} initialNotice={reviewNotice} onNotice={setReviewNotice} onChanged={(p) => { setOverride(p); protocols.reload(); trial.reload(); }} />
           )}
         </div>
 

@@ -50,7 +50,7 @@ describe('J-01 protocol review and approval', () => {
     const coverageTable = screen.getByRole('heading', { name: /Extraction coverage/ }).closest('section')!;
     const rows = within(coverageTable).getAllByRole('row').slice(1);
     expect(rows).toHaveLength(12);
-    expect(within(coverageTable).getAllByText('INFORMATIONAL')).toHaveLength(4);
+    expect(within(coverageTable).getAllByText('Background only')).toHaveLength(4);
     expect(within(coverageTable).getByText('not signed')).toBeInTheDocument();
     expect(screen.getByText(/Zero blockers does not approve anything by itself/)).toBeInTheDocument();
   });
@@ -89,7 +89,7 @@ describe('J-01 protocol review and approval', () => {
     expect(approveCall.headers['Idempotency-Key']).toMatch(/^approve-PV-PX104-1\.0-r1-/);
     expect((approveCall.body as { criterion_ids: string[] }).criterion_ids).toEqual(fixture.criteria.map((c) => c.criterion_id));
     expect(onChanged.mock.calls[0][0].state).toBe('ACTIVE');
-    expect(screen.getByRole('status')).toHaveTextContent(/Approved by ACT-INV-01/);
+    expect(screen.getByRole('status')).toHaveTextContent(/Protocol approved by the investigator/);
   });
 
   it('shows a revision conflict from the API instead of a success', async () => {
@@ -103,7 +103,7 @@ describe('J-01 protocol review and approval', () => {
     await user.type(within(dialog).getByLabelText(/Decision reason/), 'reason');
     await user.click(within(dialog).getByRole('button', { name: 'Approve and activate' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('REVISION_CONFLICT');
-    expect(screen.queryByText(/Approved by/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Protocol approved by/)).not.toBeInTheDocument();
   });
 });
 
@@ -114,10 +114,10 @@ describe('upload constraints', () => {
     expect(validateUpload(pdf(10), '1.1')).toEqual([]);
   });
   it('rejects non-PDF, empty, oversize files and missing labels', () => {
-    expect(validateUpload(pdf(10, 'p.docx', 'application/msword'), '1.1')).toContain('Only PDF files are accepted.');
-    expect(validateUpload(pdf(0), '1.1')).toContain('The file is empty.');
-    expect(validateUpload(pdf(12 * 1024 * 1024 + 1), '1.1')).toContain('The file exceeds 12 MB.');
-    expect(validateUpload(pdf(10), '  ')).toContain('Enter a version label.');
+    expect(validateUpload(pdf(10, 'p.docx', 'application/msword'), '1.1')).toContain('Only PDF files can be uploaded. "p.docx" is a DOCX file.');
+    expect(validateUpload(pdf(0), '1.1').join(' ')).toMatch(/is empty\. Choose a file with content\./);
+    expect(validateUpload(pdf(12 * 1024 * 1024 + 1), '1.1').join(' ')).toMatch(/larger than 12 MB\. Choose a smaller file\./);
+    expect(validateUpload(pdf(10), '  ')).toContain('Enter a version label, for example 1.1.');
     expect(validateUpload(null, '1.1')).toContain('Choose a PDF file.');
   });
   it('blocks submission and lists problems', async () => {
@@ -125,8 +125,10 @@ describe('upload constraints', () => {
     const user = userEvent.setup();
     renderAs('ACT-COORD-01', <ProtocolUpload trialId="TR-PX104" onUploaded={() => {}} />);
     await user.click(screen.getByRole('button', { name: 'Upload PDF' }));
-    expect(screen.getByRole('alert')).toHaveTextContent('Choose a PDF file.');
-    expect(screen.getByRole('alert')).toHaveTextContent('Confirm the document contains no real patient data.');
+    // Each problem is shown next to its field.
+    expect(screen.getByText('Choose a PDF file.')).toBeInTheDocument();
+    expect(screen.getByText('Enter a version label, for example 1.1.')).toBeInTheDocument();
+    expect(screen.getByText('Confirm the document contains no real patient data.')).toBeInTheDocument();
     expect(calls.filter((c) => c.method === 'POST')).toHaveLength(0);
   });
   it('an investigator cannot upload', () => {
@@ -217,7 +219,7 @@ describe('J-04 event simulation and refresh', () => {
     await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: 'Post event' }));
     expect(await screen.findByText('Awaiting backend re-evaluation')).toBeInTheDocument();
     expect(screen.getByText('No findings')).toBeInTheDocument();
-    expect(await screen.findByRole('link', { name: /Open case CASE-P-042-PX-MON-01/ }, { timeout: 4000 })).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /Open case for patient P-042/ }, { timeout: 4000 })).toBeInTheDocument();
     expect(screen.queryByText('No findings')).not.toBeInTheDocument();
     expect(screen.getAllByText('Confirmed protocol conflict').some((el) => el.tagName === 'SPAN')).toBe(true);
   });
@@ -246,8 +248,8 @@ describe('J-05 review update', () => {
     const user = userEvent.setup();
     renderAs('ACT-MON-01', <CaseReviewPanel trialId="TR-PX104" caseId={caseId} onUpdated={onUpdated} />);
     const statusSelect = await screen.findByLabelText('Next status');
-    expect(within(statusSelect).getByRole('option', { name: /RESOLVED — investigator only/ })).toBeDisabled();
-    expect(within(statusSelect).getByRole('option', { name: /CLOSED — investigator only/ })).toBeDisabled();
+    expect(within(statusSelect).getByRole('option', { name: /Resolved — investigator only/ })).toBeDisabled();
+    expect(within(statusSelect).getByRole('option', { name: /Closed — investigator only/ })).toBeDisabled();
     expect(screen.getByText('System-generated deterministic summary')).toBeInTheDocument();
 
     await user.selectOptions(statusSelect, 'ACKNOWLEDGED');
@@ -264,7 +266,7 @@ describe('J-05 review update', () => {
     expect(Object.keys(patch.body as object).sort()).toEqual(['assigned_actor_id', 'cited_evidence_ids', 'disposition', 'expected_revision', 'next_status', 'rationale']);
     expect(patch.body).toMatchObject({ expected_revision: 1, next_status: 'ACKNOWLEDGED', assigned_actor_id: 'ACT-INV-01', disposition: 'REVIEW_REQUIRED' });
     expect(patch.headers['If-Match']).toBe('"1"');
-    expect(await screen.findByText(/Case moved to ACKNOWLEDGED \(revision 2\)/)).toBeInTheDocument();
+    expect(await screen.findByText(/Case moved to Acknowledged/)).toBeInTheDocument();
     expect(await screen.findByText('Human review decisions (1)')).toBeInTheDocument();
   });
 });
@@ -279,24 +281,25 @@ describe('J-06 agent activity', () => {
 
   it('shows a failed execution honestly with its recorded tool trace only', () => {
     render(<AgentExecutionView execution={base} />);
-    expect(screen.getByText(/Agent execution failed/)).toHaveTextContent('TOOL_TIMEOUT');
+    expect(screen.getByText(/automated summary didn.t finish/)).toHaveTextContent('TOOL_TIMEOUT');
     expect(screen.getByText('get_medication_timeline')).toBeInTheDocument();
-    expect(screen.getByText(/nothing below was concluded by the agent/)).toBeInTheDocument();
+    expect(screen.getByText(/nothing below was concluded by the automated summary/)).toBeInTheDocument();
   });
 
   it('shows UNAVAILABLE without any trace or summary', () => {
     render(<AgentExecutionView execution={{ ...base, status: 'UNAVAILABLE', trace: [], error_code: 'LLM_DISABLED', model_id: null }} />);
-    expect(screen.getByText(/Agent capability unavailable/)).toHaveTextContent('No model ran');
+    expect(screen.getByText(/Automated summary unavailable/)).toHaveTextContent('No model ran');
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
 });
 
 describe('empty and error states', () => {
-  it('error panel shows code, status, details and request ID', () => {
+  it('error panel explains in plain words and keeps code, details and request ID for support', () => {
     const err = new ApiError({ status: 409, code: 'APPROVAL_BLOCKED', message: 'Unresolved items.', details: [{ field: 'coverage', reason: 'BLOCKING section X' }], requestId: 'req-123' });
     render(<ErrorPanel error={err} context="Approval" />);
     const alert = screen.getByRole('alert');
-    expect(alert).toHaveTextContent('Approval: APPROVAL_BLOCKED (HTTP 409)');
+    expect(alert).toHaveTextContent('Approval: Approval is blocked');
+    expect(alert).toHaveTextContent('APPROVAL_BLOCKED (HTTP 409)');
     expect(alert).toHaveTextContent('BLOCKING section X');
     expect(alert).toHaveTextContent('req-123');
   });

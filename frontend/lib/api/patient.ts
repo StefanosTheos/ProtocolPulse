@@ -1,11 +1,12 @@
 // Read-only views over a Patient360 DTO for display. No clinical interpretation happens here.
+import { plainText, sentenceCase } from './labels';
 import type { MedicationEvidence, Patient360, ProvenancedFact } from './types';
 
 export interface LabelledFact { section: string; label: string; fact: ProvenancedFact<unknown> }
 
 export function collectFacts(p: Patient360): LabelledFact[] {
   const out: LabelledFact[] = [];
-  const add = (section: string, label: string, fact: ProvenancedFact<unknown> | null | undefined) => { if (fact) out.push({ section, label, fact }); };
+  const add = (section: string, label: string, fact: ProvenancedFact<unknown> | null | undefined) => { if (fact) out.push({ section, label: plainText(label), fact }); };
   const addAll = (section: string, label: string, facts: ProvenancedFact<unknown>[]) => facts.forEach((f, i) => add(section, `${label} ${i + 1}`, f));
   add('Demographics', 'Birth date', p.demographics.birth_date);
   add('Demographics', 'Sex at birth', p.demographics.sex_at_birth);
@@ -19,8 +20,8 @@ export function collectFacts(p: Patient360): LabelledFact[] {
   addAll('Family history & genetics', 'Genetics', p.genetics);
   addAll('Symptoms', 'Symptom', p.symptom_history);
   p.observations.forEach((o, i) => {
-    add('Observations', `${o.kind} ${o.analyte_code ?? ''} ${i + 1}`.trim(), o.observation);
-    add('Observations', `${o.kind} interpretation ${i + 1}`, o.interpretation);
+    add('Observations', `${sentenceCase(o.kind)} ${o.analyte_code ?? ''} ${i + 1}`.trim(), o.observation);
+    add('Observations', `${sentenceCase(o.kind)} interpretation ${i + 1}`, o.interpretation);
   });
   const meds = (list: MedicationEvidence[], section: string) => list.forEach((m) => {
     add(section, `${m.medication_code} ${m.evidence_type}`, m.evidence);
@@ -55,7 +56,7 @@ export function factsByEvidenceId(p: Patient360): Map<string, LabelledFact[]> {
 
 export function formatFactValue(fact: ProvenancedFact<unknown>): string {
   if (fact.value === null) return '—';
-  const v = typeof fact.value === 'object' ? JSON.stringify(fact.value) : String(fact.value);
+  const v = typeof fact.value === 'object' ? JSON.stringify(fact.value) : plainText(String(fact.value));
   return fact.unit ? `${v} ${fact.unit}` : v;
 }
 

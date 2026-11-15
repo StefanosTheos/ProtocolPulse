@@ -11,6 +11,7 @@ export interface ApiRequest {
   headers: Record<string, string>;
   body?: unknown; // JSON-serialisable, or FormData for multipart upload
   onUploadProgress?: (fraction: number) => void;
+  signal?: AbortSignal; // lets the user cancel a long request such as an upload
 }
 
 export interface ApiResponse {
@@ -25,7 +26,8 @@ export type ClientErrorCode =
   | 'NETWORK_ERROR' // fetch rejected: backend down, wrong URL or CORS rejection
   | 'BAD_RESPONSE' // body is not a contract Envelope/ErrorEnvelope
   | 'POLL_TIMEOUT' // job still not terminal after the polling budget
-  | 'CONFIG_ERROR'; // API base URL missing
+  | 'CONFIG_ERROR' // API base URL missing
+  | 'CANCELLED'; // the user cancelled the request
 
 export class ApiError extends Error {
   readonly status: number; // 0 for client-side errors
@@ -69,6 +71,7 @@ export interface RequestOptions {
   idempotencyKey?: string;
   ifMatchRevision?: number;
   onUploadProgress?: (fraction: number) => void;
+  signal?: AbortSignal;
 }
 
 export interface ClientConfig {
@@ -134,10 +137,11 @@ export class ApiClient {
     let res: ApiResponse;
     try {
       res = await this.config.transport({
-        method, path, query: opts.query, headers, body: opts.body, onUploadProgress: opts.onUploadProgress,
+        method, path, query: opts.query, headers, body: opts.body, onUploadProgress: opts.onUploadProgress, signal: opts.signal,
       });
     } catch (cause) {
       if (cause instanceof ApiError) throw cause;
+      if (opts.signal?.aborted) throw new ApiError({ status: 0, code: 'CANCELLED', message: 'The request was cancelled.', requestId });
       throw new ApiError({
         status: 0,
         code: 'NETWORK_ERROR',
@@ -147,6 +151,7 @@ export class ApiClient {
       });
     }
 
+    if (opts.signal?.aborted) throw new ApiError({ status: 0, code: 'CANCELLED', message: 'The request was cancelled.', requestId });
     const echoedId = res.requestIdHeader ?? requestId;
     if (res.status >= 400) {
       if (isErrorEnvelope(res.body)) {
