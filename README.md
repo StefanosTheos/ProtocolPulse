@@ -19,6 +19,7 @@ Set-Content frontend/.env.local 'NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000/
 New-Item -ItemType Directory -Force backend/var/protocols | Out-Null
 .venv/Scripts/python.exe -m alembic -c backend/alembic.ini upgrade head
 .venv/Scripts/python.exe -m backend.app.seed --dataset px104-15
+.venv/Scripts/python.exe -m tools.add_demo_patients
 .venv/Scripts/python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 1
 ```
 
@@ -46,6 +47,7 @@ printf 'NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000/api/v1\n' > frontend/.env
 mkdir -p backend/var/protocols
 python -m alembic -c backend/alembic.ini upgrade head
 python -m backend.app.seed --dataset px104-15
+python -m tools.add_demo_patients
 python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 1
 # second terminal: npm --prefix frontend run dev -- --hostname localhost --port 3000
 ```
@@ -62,6 +64,25 @@ The Python lock captures tested package versions. POSIX commands were not execut
 6. As coordinator, post day-18 administration in Safety monitor. Wait for the backend case. Replay the preset to verify deduplication. A monitor/investigator records assignment and a review decision with **cited evidence**, rationale and disposition. Inspect audit.
 
 **Reset:** stop the API first, then deliberately run `.venv/Scripts/python.exe -m backend.app.seed --dataset px104-15 --reset-demo` (POSIX: `python -m ...`). This replaces the entire local synthetic dataset, including approvals, screens, events, cases and reviews. Restart the API afterward. Ordinary restarts preserve data.
+
+## Shared additional patients (30-patient cohort)
+
+After pulling the repository and completing the normal migrations and initial
+`px104-15` seed, run from the repository root with your Python environment:
+
+```powershell
+.venv/Scripts/python.exe -m tools.add_demo_patients
+```
+
+POSIX: `python -m tools.add_demo_patients` with the virtual environment activated.
+This imports the same fifteen synthetic patients **P-301 through P-315** that were
+added to the demo, including their source-linked records and narratives. It uses
+the existing synthetic patient generator with fixed IDs and seed indices 15–29.
+Existing patients, protocols, approvals, events and screening results are preserved;
+rerunning skips existing patients. The database comes from your local `DATABASE_URL`;
+SQLite runtime files and `.env` stay outside Git. A normal fresh setup has 30 patients
+after this import. Run a **new screening** to include them; historical runs retain
+their original cohort. After a demo reset, rerun the import to restore the extra fifteen.
 
 ## AI configuration
 
