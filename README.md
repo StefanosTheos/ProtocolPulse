@@ -8,7 +8,7 @@
 
 **AI-assisted clinical trial screening and monitoring, with evidence at every step.**
 
-[Watch the 60-second demo](demo/final_demo.mp4) · [Run locally](docs/GETTING_STARTED.md) · [Explore the workflow](docs/WORKFLOW.md)
+[Watch the 60-second demo](https://youtu.be/Fgcc1lhQZOM) · [Run locally](docs/GETTING_STARTED.md) · [Explore the workflow](docs/WORKFLOW.md)
 
 </div>
 
